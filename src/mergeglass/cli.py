@@ -1,0 +1,117 @@
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+import tempfile
+from pathlib import Path
+from typing import Any
+
+from . import __version__
+from .audit import audit
+from .storage import AuditError
+
+
+def render(report: dict[str, Any]) -> str:
+    lines = [
+        "Mergeglass | saved LoRA merge audit",
+        "",
+        "MODULE                           DTYPE   CHANGED    UNCHANGED*  REL.ERROR",
+    ]
+    for layer in report["layers"]:
+        fraction = layer["unchanged_nonzero_update_fraction"]
+        residual = layer["relative_residual"]
+        unchanged = "n/a" if fraction is None else f"{fraction:.1%}"
+        error = "n/a" if residual is None else f"{residual:.4g}"
+        # repr prevents control sequences in checkpoint tensor names reaching
+        # a terminal. Full names remain available in the structured JSON.
+        name = ascii(layer["module"])[1:-1]
+        if len(name) > 31:
+            name = "..." + name[-28:]
+        lines.append(
+            f"{name:<32} {layer['merged_dtype']:<6} "
+            f"{layer['changed_elements']:>8,} {unchanged:>12} {error:>10}"
+        )
+        if layer["status"] != "observed-update":
+            lines.append("  " + layer["status"])
+    summary = report["summary"]
+    lines.extend(
+        [
+            "",
+            "* Nonzero intended update elements equal to the dtype-cast base.",
+            "Relative error = ||observed change - intended update|| / ||intended update||.",
+            f"Checked {summary['checked_tensors']} tensors; "
+            f"{summary['unadapted_changed_tensors']} unadapted tensor(s) changed.",
+            "Equal weights alone cannot tell rounding from an omitted adapter.",
+            "This measures saved weights, not model quality.",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def _write(path: Path, text: str) -> None:
+    # Replacing only after serialization succeeds preserves an earlier report
+    # if the audit refuses or the destination runs out of space mid-write.
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", dir=path.parent, prefix=".mergeglass-", delete=False
+        ) as stream:
+            temporary = Path(stream.name)
+            stream.write(text)
+            stream.write("\n")
+        os.replace(temporary, path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Inspect a saved LoRA merge, locally and read-only."
+    )
+    parser.add_argument("base", type=Path, help="original safetensors file or HF directory")
+    parser.add_argument(
+        "adapter", type=Path, help="PEFT adapter directory with adapter_config.json"
+    )
+    parser.add_argument("merged", type=Path, help="saved merged safetensors file or HF directory")
+    parser.add_argument("--json", metavar="PATH", help="write a report; '-' writes JSON to stdout")
+    parser.add_argument(
+        "--block-mib", type=int, default=16, help="block workspace target (default 16)"
+    )
+    parser.add_argument(
+        "--max-adapter-mib",
+        type=int,
+        default=512,
+        help="maximum decoded A matrix size (default 512)",
+    )
+    parser.add_argument("--version", action="version", version=__version__)
+    args = parser.parse_args(argv)
+    try:
+        if args.json and args.json != "-":
+            destination = Path(args.json).resolve()
+            for source in (args.base, args.adapter, args.merged):
+                resolved = source.resolve()
+                if destination == resolved or (
+                    resolved.is_dir() and destination.is_relative_to(resolved)
+                ):
+                    raise AuditError("Write the report outside the input checkpoint paths")
+        report = audit(
+            args.base,
+            args.adapter,
+            args.merged,
+            block_mib=args.block_mib,
+            max_adapter_mib=args.max_adapter_mib,
+        )
+        serialized = json.dumps(report, indent=2, allow_nan=False)
+        if args.json == "-":
+            print(serialized)
+        else:
+            if args.json:
+                _write(Path(args.json), serialized)
+            print(render(report))
+    except (AuditError, OSError, ValueError, OverflowError) as exc:
+        print(f"mergeglass: {exc}", file=sys.stderr)
+        return 2
+    return 0
