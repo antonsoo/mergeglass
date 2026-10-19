@@ -11,7 +11,7 @@ original base, the saved LoRA factors and the actual merged safetensors. It
 reports what changed, what stayed equal, and the residual against the intended
 update, with original tensor coordinates and artifact hashes.
 
-![An actual native PEFT merge: the small update disappears in BF16 while the large update survives](docs/assets/rounding.png)
+![An actual saved BF16 merge of the pinned public SmolLM2 adapter, with count and squared-norm measurements](docs/assets/public-bf16.png)
 
 ## Checked on a public adapter
 
@@ -83,6 +83,7 @@ sequence. [Native controls, complete receipts and reproduction](studies/merge-co
 
 ```sh
 mergeglass ./original-base ./saved-adapter ./merged-model --json merge-report.json
+mergeglass ./original-base ./saved-adapter ./merged-model --summary --json merge-report.json
 mergeglass ./original-base ./saved-adapter ./merged-model --block-mib 4 --json -
 ```
 
@@ -92,6 +93,9 @@ Face directory; the adapter directory needs `adapter_config.json` and its
 safetensors. Indexed shards and ordinary Hugging Face snapshot symlinks work.
 All paths are local. The JSON destination must be outside the input directories
 and cannot resolve to an input file.
+
+`--summary` shows checkpoint totals, matrix states and gain/residual ranges.
+It performs the same complete audit and retains every layer in JSON.
 
 Exit 0 means the audit completed, including when it finds absent updates or
 unrelated edits. Exit 2 means invalid/unsupported evidence or an I/O failure.
@@ -122,7 +126,8 @@ Base --> cast to merged dtype --> compare to merge --+
 - Across the checkpoint: every unadapted tensor checked against its cast base,
   with unrelated changes retained individually. Large integer values stay exact.
 - Plain Linear LoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
-  and F64 storage. Finite signed alpha coefficients keep their declared sign.
+  and F64 storage. Finite [signed alpha coefficients](studies/signed-scale/README.md)
+  keep their declared sign.
   Unknown variants and incomplete inventories refuse.
 - JSON with schema version, arithmetic definitions, original file hashes,
   full module identities, concrete measurements and limitations.
@@ -145,10 +150,16 @@ and never allocates a full-layer dense update. NumPy and the Rust safetensors
 validator are its only runtime dependencies; PyTorch and PEFT belong to the
 separate verification environment.
 
+On the public SmolLM2 BF16 case above, a fresh installed CLI process checks
+272 tensors across 540,004,492 input-file bytes at **61.24 MiB peak RSS** on this
+host. It loads no model class or PyTorch. This is a single local measurement;
+the block option is a workspace target rather than a hard process limit.
+[Method and retained input/module identities](studies/streaming/README.md).
+
 A measured synthetic 4096 x 8192, rank-8 case checks all 33,554,432 weights.
 A single full binary64 delta would occupy 256 MiB. The default 16 MiB block
-setting measured about 60 MiB process peak RSS on this 14-vCPU, 48-GB WSL2 Linux
-machine with one BLAS thread. This is a local measurement; the block setting is
+setting measured about 60 MiB process peak RSS on this WSL2 Linux host with
+14 logical CPUs and one BLAS thread. This is a local measurement; the block setting is
 not a hard RSS cap. A, headers, BLAS and at least one full row also need memory.
 [Benchmark method and complete results](studies/streaming/README.md).
 

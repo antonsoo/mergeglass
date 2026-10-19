@@ -16,5 +16,7 @@ Measures the reference squared norm at unchanged positions per layer and across
 the checkpoint, so equal-count and magnitude-weighted fractions stay distinct.
 Accepts native finite signed global/per-layer alpha coefficients, with positive
 integer ranks and independently checked rsLoRA exports in three storage dtypes.
+Adds an aggregate CLI view with complete JSON coverage and a real public-adapter
+terminal capture. The installed public BF16 audit measures 61.24 MiB peak RSS.
 
 No registry release or hosted service accompanies this version.

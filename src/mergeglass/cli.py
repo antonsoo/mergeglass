@@ -5,6 +5,7 @@ import json
 import os
 import sys
 import tempfile
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -13,31 +14,52 @@ from .audit import audit
 from .storage import AuditError
 
 
-def render(report: dict[str, Any]) -> str:
-    lines = [
-        "Mergeglass | saved LoRA merge audit",
-        "",
-        "MODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID",
-    ]
-    for layer in report["layers"]:
-        fraction = layer["unchanged_nonzero_update_fraction"]
-        residual = layer["relative_residual"]
-        projection = layer["projection_gain"]
-        unchanged = "n/a" if fraction is None else f"{fraction:.1%}"
-        error = "n/a" if residual is None else f"{residual:.4g}"
-        gain = "n/a" if projection is None else f"{projection:.4g}"
-        # repr prevents control sequences in checkpoint tensor names reaching
-        # a terminal. Full names remain available in the structured JSON.
-        name = ascii(layer["module"])[1:-1]
-        if len(name) > 27:
-            name = "..." + name[-24:]
-        lines.append(
-            f"{name:<28} {layer['merged_dtype']:<6} "
-            f"{layer['changed_elements']:>8,} {unchanged:>12} {gain:>8} {error:>10}"
-        )
-        if layer["status"] != "observed-update":
-            lines.append("  " + layer["status"])
+def _range(layers: list[dict[str, Any]], field: str) -> str:
+    values = [layer[field] for layer in layers if layer[field] is not None]
+    return f"{min(values):.4g}..{max(values):.4g}" if values else "n/a"
+
+
+def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
+    lines = ["Mergeglass | saved LoRA merge audit", ""]
     summary = report["summary"]
+    if summary_only:
+        layers = report["layers"]
+        dtypes = Counter(layer["merged_dtype"] for layer in layers)
+        storage = ", ".join(f"{dtype}: {count}" for dtype, count in sorted(dtypes.items()))
+        observed = sum(layer["status"] == "observed-update" for layer in layers)
+        changed_zero = sum(layer["status"] == "change-with-zero-reference" for layer in layers)
+        lines.extend(
+            [
+                f"Adapted matrices: {summary['adapted_tensors']} ({storage}).",
+                f"Matrix states: {observed} observed; "
+                f"{summary['no_observed_update_tensors']} with no observed update.",
+                f"Zero-reference matrices: {summary['zero_update_tensors']} unchanged; "
+                f"{changed_zero} changed.",
+                f"Gain range: {_range(layers, 'projection_gain')}; "
+                f"relative residual range: {_range(layers, 'relative_residual')}.",
+            ]
+        )
+    else:
+        lines.append(
+            "MODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID"
+        )
+        for layer in report["layers"]:
+            fraction = layer["unchanged_nonzero_update_fraction"]
+            residual = layer["relative_residual"]
+            projection = layer["projection_gain"]
+            unchanged = "n/a" if fraction is None else f"{fraction:.1%}"
+            error = "n/a" if residual is None else f"{residual:.4g}"
+            gain = "n/a" if projection is None else f"{projection:.4g}"
+            # Escape control sequences in names; JSON retains full identities.
+            name = ascii(layer["module"])[1:-1]
+            if len(name) > 27:
+                name = "..." + name[-24:]
+            lines.append(
+                f"{name:<28} {layer['merged_dtype']:<6} "
+                f"{layer['changed_elements']:>8,} {unchanged:>12} {gain:>8} {error:>10}"
+            )
+            if layer["status"] != "observed-update":
+                lines.append("  " + layer["status"])
     total = summary["intended_nonzero_elements"]
     unchanged_total = summary["unchanged_nonzero_update_elements"]
     aggregate = (
@@ -52,9 +74,10 @@ def render(report: dict[str, Any]) -> str:
         lines.append(
             f"Those unchanged entries contain {100 * energy:.4g}% of the reference squared norm."
         )
+    if not summary_only:
+        lines.append("* Nonzero intended update elements equal to the dtype-cast base.")
     lines.extend(
         [
-            "* Nonzero intended update elements equal to the dtype-cast base.",
             "Relative error = ||observed change - intended update|| / ||intended update||.",
             "Gain = projection of the observed change onto the intended update (ideal 1).",
             f"Checked {summary['checked_tensors']} tensors; "
@@ -93,6 +116,11 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("merged", type=Path, help="saved merged safetensors file or HF directory")
     parser.add_argument("--json", metavar="PATH", help="write a report; '-' writes JSON to stdout")
+    parser.add_argument(
+        "--summary",
+        action="store_true",
+        help="show totals and metric ranges without per-layer rows",
+    )
     parser.add_argument(
         "--block-mib", type=int, default=16, help="block workspace target (default 16)"
     )
@@ -138,7 +166,7 @@ def main(argv: list[str] | None = None) -> int:
         else:
             if args.json:
                 _write(Path(args.json), serialized)
-            print(render(report))
+            print(render(report, summary_only=args.summary))
     except (AuditError, OSError, ValueError, OverflowError) as exc:
         message = ascii(str(exc))[1:-1]
         print(f"mergeglass: {message}", file=sys.stderr)

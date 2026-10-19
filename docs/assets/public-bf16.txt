@@ -1,0 +1,14 @@
+Mergeglass | saved LoRA merge audit
+
+Adapted matrices: 60 (BF16: 60).
+Matrix states: 60 observed; 0 with no observed update.
+Zero-reference matrices: 0 unchanged; 0 changed.
+Gain range: 0.848..0.9997; relative residual range: 0.1212..0.5761.
+
+Of 13,271,040 nonzero intended updates, 5,886,980 are unchanged (44.36%).
+Those unchanged entries contain 15.05% of the reference squared norm.
+Relative error = ||observed change - intended update|| / ||intended update||.
+Gain = projection of the observed change onto the intended update (ideal 1).
+Checked 272 tensors; 0 unadapted tensor(s) changed.
+Equal weights alone cannot tell rounding from an omitted adapter.
+This measures saved weights, not model quality.

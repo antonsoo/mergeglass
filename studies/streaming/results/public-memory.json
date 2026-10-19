@@ -1,0 +1,120 @@
+{
+  "peak_rss_kib": 62708,
+  "case": "pinned public SmolLM2-135M and unchanged SmolTalk adapter, native BF16 merge",
+  "cli_options": [
+    "base",
+    "adapter",
+    "merged-bf16",
+    "--summary"
+  ],
+  "blas_threads": 1,
+  "python": "3.15.0",
+  "numpy": "2.5.4",
+  "safetensors": "0.8.0",
+  "input_file_bytes": 540004492,
+  "summary": {
+    "adapted_tensors": 60,
+    "checked_tensors": 272,
+    "adapted_elements": 13271040,
+    "intended_nonzero_elements": 13271040,
+    "changed_adapted_elements": 7384060,
+    "unchanged_nonzero_update_elements": 5886980,
+    "unchanged_nonzero_update_fraction": 0.44359598042052467,
+    "unchanged_reference_energy_fraction": 0.1504909218708162,
+    "zero_update_tensors": 0,
+    "no_observed_update_tensors": 0,
+    "unadapted_changed_tensors": 0,
+    "unadapted_changed_elements": 0
+  },
+  "inputs": {
+    "base": [
+      {
+        "file": "config.json",
+        "bytes": 704,
+        "sha256": "1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843"
+      },
+      {
+        "file": "model.safetensors",
+        "bytes": 269060552,
+        "sha256": "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1"
+      }
+    ],
+    "adapter": [
+      {
+        "file": "adapter_config.json",
+        "bytes": 1027,
+        "sha256": "be90cade5d5b4d9d2da5db766f850a8569f202b047ef1e1c135927d8a25642b6"
+      },
+      {
+        "file": "adapter_model.safetensors",
+        "bytes": 1858776,
+        "sha256": "e80ad8bd5a5f3aa35928acb1da87c3b353508b6c83b2bdcb3b13d390bc6c5398"
+      }
+    ],
+    "merged": [
+      {
+        "file": "config.json",
+        "bytes": 794,
+        "sha256": "ec1fcf8ceae099f9b0a13d013d8f087665f3f2c64f01d6010f2745cac58b9b0a"
+      },
+      {
+        "file": "model-00001-of-00008.safetensors",
+        "bytes": 56623240,
+        "sha256": "b8fbd8fe86c15a114162f98ed3a722876a9778be3e7800631227116ba22132c2"
+      },
+      {
+        "file": "model-00002-of-00008.safetensors",
+        "bytes": 31865160,
+        "sha256": "d60a39d375c1e11b0def6178bc5a5010edc12027818df09d446fa520b33759b3"
+      },
+      {
+        "file": "model-00003-of-00008.safetensors",
+        "bytes": 31866760,
+        "sha256": "e8bedea7c11d5b4d8465349d48224cd95a92fd632b741602f29240e586598e05"
+      },
+      {
+        "file": "model-00004-of-00008.safetensors",
+        "bytes": 31863928,
+        "sha256": "2c896bd90a100408daf088fc9f072b964d6775e8aa5a044a2295f3fb1925a5f9"
+      },
+      {
+        "file": "model-00005-of-00008.safetensors",
+        "bytes": 31866800,
+        "sha256": "46ab35db88fec912b5b6ada7416e3d0acac923a2dbedb9c6a5e0d5b38fb04c0e"
+      },
+      {
+        "file": "model-00006-of-00008.safetensors",
+        "bytes": 31863944,
+        "sha256": "b6207b2dfcc2391a284e46b3372d79fe3c7120f4a248ca7155df95846704027a"
+      },
+      {
+        "file": "model-00007-of-00008.safetensors",
+        "bytes": 31866800,
+        "sha256": "eb900d83b40449a095e0ffa96c93153d9e77bbf4ef00fee646fe7f0fe1ba7b18"
+      },
+      {
+        "file": "model-00008-of-00008.safetensors",
+        "bytes": 21243568,
+        "sha256": "0b2e5118b60595cc2c43ebf9e937dae22d2faaf36b2fa908208170ebb628c792"
+      },
+      {
+        "file": "model.safetensors.index.json",
+        "bytes": 22439,
+        "sha256": "e34239de0e8ec31e8b30863cc69f23d05f4f0e7adddb7641e33a38ded6baa48a"
+      }
+    ]
+  },
+  "runtime_modules": {
+    "__init__.py": "10ea91c0beb8fc6c9b2390d0e89c09dc51598c11a2837f8f780f64b5514877a9",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "d2cca2fbc91cbbaff6e21097c21b912cd644b9b7f1fe03b816b1de02da8434cf",
+    "audit.py": "1febdb81a60972c498063310acce6366c1749af495c951c492889666bcc3ef74",
+    "cli.py": "8cadf1bda243a94d430a6023b5d27fee351626bf7a3cf16d0b0ae7dfd9e57005",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "method": "GNU time maximum process RSS on Linux, fresh installed CLI process; no Torch in environment",
+  "scope": "single shared-host measurement, not a hard RSS cap or throughput benchmark",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "logical_cpus": 14,
+  "torch_available": false
+}
