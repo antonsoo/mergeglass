@@ -1,0 +1,15 @@
+{
+  "source_protocol": "protocol.json",
+  "selection": "all records in the two pinned categories; references with no allowed required alternatives remain excluded and named",
+  "reference_call": "first allowed nonempty alternative for each required parameter, omit optional parameters with the empty-string sentinel, preserve source order, Python repr inside one bracketed call; require the unchanged upstream AST checker to accept every selected target",
+  "continuation": "tokenize the selected call without special tokens, append the pinned tokenizer EOS, concatenate after the unchanged prompt token IDs",
+  "context": "no truncation; assert each prompt plus target fits the model context",
+  "profiles": ["base-f32", "unmerged-f32", "merged-f32", "unmerged-bf16", "merged-bf16", "as-lora-f32"],
+  "runtime": "same pinned models, adapter, tokenizer, eager attention, two torch threads and cached DoRA weight norms as the generation protocol",
+  "teacher_forcing": "all profiles receive identical prompt and target-prefix IDs at every measured position, including the final EOS position",
+  "probabilities": "float64 log-softmax of the actual native forward logits; finite logits and metrics required",
+  "metric": "per-question mean target-token negative log likelihood in nats; token-weighted aggregate retained separately",
+  "drift": "at identical prefixes, KL(reference || candidate), total variation and argmax disagreement against unmerged-f32 and unmerged-bf16; also retain the first continuation-token predictions",
+  "limits": "a selected valid answer is not the full set of acceptable answers; these are conditional probability and numerical diagnostics, not BFCL accuracy, generation success, held-out quality or a full leaderboard submission",
+  "training_overlap": "unknown"
+}

@@ -1,0 +1,24 @@
+{
+  "bfcl_repository": "https://github.com/ShishirPatil/gorilla",
+  "bfcl_revision": "f7cf7359b7ac615a0b294831c5ba2bc95ee4a000",
+  "categories": ["simple_python", "live_simple"],
+  "selection": "all records in both pinned single-function categories; no outcome-based selection",
+  "prompt": "pinned BFCL default Python prompting protocol, rendered by the adapter's pinned chat template",
+  "model_sources": "../dora/public-sources.json",
+  "tokenizer_repository": "ehyoussef/smollm2-135m-function-dora-adapter",
+  "tokenizer_revision": "8ce55268048940efdc497bf9ea6d2b45d9eb2ab1",
+  "tokenizer_files": [
+    {"file": "chat_template.jinja", "bytes": 368, "sha256": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788"},
+    {"file": "tokenizer.json", "bytes": 3522656, "sha256": "7d27c493c729a66ecefc837280b05d948b1ed50d130eebdbf911b1b36cf38ed7"},
+    {"file": "tokenizer_config.json", "bytes": 3398, "sha256": "9dbdbc7ab7cceb06ae50460dc323f4400bd5bda608cbbecb9db8c3cfb08cf208"},
+    {"file": "special_tokens_map.json", "bytes": 655, "sha256": "2b7379f3ae813529281a5c602bc5a11c1d4e0a99107aaa597fe936c1e813ca52"}
+  ],
+  "generation": {"do_sample": false, "max_new_tokens": 160, "use_cache": true},
+  "attention": "eager",
+  "torch_threads": 2,
+  "dora_weight_caching": true,
+  "profiles": ["base-f32", "unmerged-f32", "merged-f32", "unmerged-bf16", "merged-bf16", "as-lora-f32"],
+  "scoring": "pinned BFCL default Python decoder and AST type/value checker; empty required answer-alternative sets and binary/lambda expressions are retained as ungraded rather than filled or evaluated",
+  "training_overlap": "unknown; this is not established as held-out data for the public adapter",
+  "scope": "this fixed local runtime and prompt protocol on two categories, not a full BFCL leaderboard submission"
+}
