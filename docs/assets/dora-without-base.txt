@@ -1,0 +1,10 @@
+Mergeglass | DoRA norms without a base
+
+Partial observations: reference directions and complete updates are unmeasured.
+Observed 21 rows in 3 DoRA matrices.
+
+DoRA full-row norm factor (saved / |m|): 0.58632906..1.5554567; 17 nonzero row pairs.
+Nonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 4.
+Checkpoint: 4 tensors; 1 unmapped tensor(s) have no base comparison.
+A matching norm does not establish a correct merge or direction.
+No pass/fail threshold is applied. This measures saved weights, not model quality.

@@ -25,6 +25,24 @@ The complete audit of the same artifact finds 32.48% of nonzero intended
 entries unchanged. That comparison requires an original base and a declared
 numerical reference. This partial report does not supply those measurements.
 
+For a small example requiring no model downloads, use the bundled, authored
+native PEFT control from a source checkout:
+
+```sh
+uv run --no-dev mergeglass --dora-norms examples/dora/adapter examples/dora/as-lora-f32 --summary
+```
+
+![Actual installed norm-only CLI on the bundled incorrect-merge control](assets/dora-without-base.png)
+
+The saved artifact was deliberately produced by loading DoRA factors as plain
+LoRA. The norm observations detect wrong lengths and four zero targets saved
+nonzero, using only the
+adapter and merged inputs. Reference directions and update residuals remain
+unmeasured in this mode, even though the example also provides a base for
+an optional complete audit.
+
+[Unedited captured output](assets/dora-without-base.txt).
+
 ## A necessary condition with an explicit limit
 
 Suppose a direction is `[3, 4]` and the saved magnitude is 5. Saving `[-3, -4]`

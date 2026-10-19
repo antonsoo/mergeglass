@@ -1,0 +1,34 @@
+{
+  "example": "bundled authored native PEFT DoRA loaded as ordinary LoRA",
+  "wheel_sha256": "b03fba35f40a7a1b07679d9398e3bf76cc81391e14744ab79797af940ca0163b",
+  "summary": {
+    "norm_observed_tensors": 3,
+    "norm_observed_rows": 21,
+    "checkpoint_tensors": 4,
+    "unmapped_tensors": 1
+  },
+  "inputs": {
+    "adapter": [
+      {
+        "file": "adapter_config.json",
+        "bytes": 1226,
+        "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+      },
+      {
+        "file": "adapter_model.safetensors",
+        "bytes": 1676,
+        "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+      }
+    ],
+    "merged": [
+      {
+        "file": "model.safetensors",
+        "bytes": 1080,
+        "sha256": "a1887ab3b5a7c10b28dd57e8942bd0c8b7662b0906dd3877b02a98d7b45ef43b"
+      }
+    ]
+  },
+  "stdout_identical_in_minimum_and_modern_installs": true,
+  "stdout_sha256": "66afb4bd4af61cfad9428e0e63bf136cfc9697470bde7083056d199ffed334d9",
+  "screenshot_sha256": "89a6b58b809b6793f5b959ad9685d13fe86633ad5308510d7086c91f72028586"
+}
