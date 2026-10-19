@@ -1,0 +1,26 @@
+[
+  {
+    "name": "merge-explanation",
+    "text": "A LoRA adapter adds a low-rank update to a frozen weight matrix. After merging the adapter, the stored matrix is"
+  },
+  {
+    "name": "python-function",
+    "text": "def clamp(value, lower, upper):\n    \"\"\"Return value limited to the interval [lower, upper].\"\"\"\n    return"
+  },
+  {
+    "name": "calendar-reasoning",
+    "text": "A package arrives every 12 days. The last package arrived on Monday. The next package will arrive on"
+  },
+  {
+    "name": "table-reading",
+    "text": "Temperature in degrees Celsius:\nMonday: 19\nTuesday: 21\nWednesday: 18\nThe highest temperature was recorded on"
+  },
+  {
+    "name": "checkpoint-handling",
+    "text": "Before replacing the checkpoint, copy the original weights and save the adapter configuration. Compare the two files by"
+  },
+  {
+    "name": "conversation-format",
+    "text": "User: Explain why rounding a small weight update to bfloat16 can leave a weight unchanged.\nAssistant:"
+  }
+]

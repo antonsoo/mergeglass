@@ -32,6 +32,13 @@ quality are not independently established. The merges were made locally from
 the exact pinned artifacts; no third-party weights are redistributed here.
 [Inputs, producer, complete measurements and reproduction](studies/community/README.md).
 
+Actual forwards provide a separate measurement. On six authored probes with
+146 shared prefix positions, FP32 merging changed no greedy next-token choices
+relative to the unmerged adapter; BF16 merging changed six. Mean probability
+total variation was 0.000001612 and 0.02337044, respectively. These short probes
+compare numerical behavior, **not accuracy or free-running generation**.
+[Runtime settings, original token IDs and complete results](studies/forward/README.md).
+
 ## Try the recorded example
 
 With Python 3.10+ and [uv](https://docs.astral.sh/uv/):
@@ -177,6 +184,8 @@ uv build
 The wheel contains the library and CLI; the source distribution includes the
 examples and studies. Heavy native-producer dependencies are optional and
 documented separately. [Contributing](CONTRIBUTING.md) describes the evidence bar.
+[Public source and installed verification](docs/publication.md) retains the
+archive and package identities for the published implementation snapshot.
 
 ## License
 
