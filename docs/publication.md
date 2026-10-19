@@ -66,3 +66,7 @@ and where the combined unnormalized norm exceeds binary64 range.
 The subsequent FP16 study extends the native producer and forward comparisons;
 it leaves these runtime modules unchanged. The pinned snapshot remains the
 boundary for the artifact identities above.
+
+The [later complete summary-build verification](final-verification.md) records
+62 cases, three installed environments, signed native coefficients and the public
+checkpoint summary at source `e0eca864fd03f4dce907eec9e622940d07e5a2f8`.
