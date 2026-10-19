@@ -1,0 +1,204 @@
+{
+  "source_commit": "37aa24e1810ca9b087ad574297c5db378c8dcbd2",
+  "remote_main_at_push": "37aa24e1810ca9b087ad574297c5db378c8dcbd2",
+  "verification": "every changed file compared byte-for-byte against immutable public GitHub raw bytes",
+  "files": [
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 1936,
+      "sha256": "a96781b054c96f819f2417ccd2acd47a272eb8b10516e46370ff94f85b24df89"
+    },
+    {
+      "file": "README.md",
+      "bytes": 13675,
+      "sha256": "c6b73bda1d7fbf2bd2edd8ea2c8fbed7c5e0ed71a2242d71d43db6e621d536b8"
+    },
+    {
+      "file": "docs/arithmetic.md",
+      "bytes": 13408,
+      "sha256": "04b92c6314c0e9137015be0944cd4101f104aedb5053a1ceb9c024ce0f5b5e65"
+    },
+    {
+      "file": "docs/assets/dora.png",
+      "bytes": 228562,
+      "sha256": "c27b9ab8a2227cbe00aab671b5ab1619b139fe02bfc9bb348728dd80b9eefd69"
+    },
+    {
+      "file": "docs/assets/dora.txt",
+      "bytes": 1036,
+      "sha256": "0468932a91faa2278a618fd4af4de06148e48fbfa7b36ab4ba78c52101d99792"
+    },
+    {
+      "file": "docs/dora-verification.md",
+      "bytes": 5317,
+      "sha256": "486fd64e751919f87f058868043a98491e27381fc0fe6c5b839959f1219be00e"
+    },
+    {
+      "file": "examples/dora/README.md",
+      "bytes": 1706,
+      "sha256": "f6b974e4c1fec84ac3a6ce0231111747717d3bc65c441e19a75921e1458895cd"
+    },
+    {
+      "file": "examples/dora/adapter/adapter_config.json",
+      "bytes": 1226,
+      "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+    },
+    {
+      "file": "examples/dora/adapter/adapter_model.safetensors",
+      "bytes": 1676,
+      "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+    },
+    {
+      "file": "examples/dora/as-lora-f32/model.safetensors",
+      "bytes": 1080,
+      "sha256": "a1887ab3b5a7c10b28dd57e8942bd0c8b7662b0906dd3877b02a98d7b45ef43b"
+    },
+    {
+      "file": "examples/dora/base/model.safetensors",
+      "bytes": 1080,
+      "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+    },
+    {
+      "file": "examples/dora/correct-bf16-safe-false/model.safetensors",
+      "bytes": 704,
+      "sha256": "9716cab3493deeee0dcd763f99f41e3596b7a65e7d908075b4c0698cc7332e4f"
+    },
+    {
+      "file": "examples/dora/correct-f32-safe-false/model.safetensors",
+      "bytes": 1080,
+      "sha256": "41ab4476855e2336e4073e23c2d9f8e31a508a6e62cbde52ccb3ff1d9c37416b"
+    },
+    {
+      "file": "examples/dora/omitted/model.safetensors",
+      "bytes": 1080,
+      "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+    },
+    {
+      "file": "examples/dora/producer.json",
+      "bytes": 8570,
+      "sha256": "99e1fcf3faa41606a30cb9228f608632d863ea10aecdbabe39ad148464e6ba58"
+    },
+    {
+      "file": "pyproject.toml",
+      "bytes": 964,
+      "sha256": "77e5976238a40ad5f795e801e05c4c2991ff2904b9b4cc772cf0bf28ff18145a"
+    },
+    {
+      "file": "src/mergeglass/__init__.py",
+      "bytes": 197,
+      "sha256": "221fe57ab5e6e32d83d551e75218efe34c792c759b90767cc4b9f0c4e69bb11d"
+    },
+    {
+      "file": "src/mergeglass/adapter.py",
+      "bytes": 7979,
+      "sha256": "0e306a0aecc9f4cbd3e1b7944b891ae2fdc0b568c87ed66062e0a57ee8b7cd8d"
+    },
+    {
+      "file": "src/mergeglass/audit.py",
+      "bytes": 17682,
+      "sha256": "9017cdffb4c3003310ce8f6bd1d89fc656e1dcdbbbbf847c6a71bb0d94635f04"
+    },
+    {
+      "file": "src/mergeglass/cli.py",
+      "bytes": 7961,
+      "sha256": "6117eaa6e1fd87ddb5a5d9607be4dc401358c5573b7003011294b4f86e463e83"
+    },
+    {
+      "file": "studies/community/fetch.py",
+      "bytes": 2027,
+      "sha256": "505c78e5fc50b52cb07bafeb30d1809cea75afa5e670f6dbb0b0089fdd02f4b0"
+    },
+    {
+      "file": "studies/dora/README.md",
+      "bytes": 13467,
+      "sha256": "313a053418d195e3306c573d740739ec02b744077b2742d39fa72c5786c08835"
+    },
+    {
+      "file": "studies/dora/decimal_oracle.py",
+      "bytes": 6435,
+      "sha256": "62cd6b2b99d57e9bc19669631590bc1e80ea38f7c33b3231da364e6d6d514cc7"
+    },
+    {
+      "file": "studies/dora/produce.py",
+      "bytes": 8407,
+      "sha256": "24d37d3e84074db5722759fa23ed96dbf9ef8d51a62b0e0a6ca6aac07300dfc4"
+    },
+    {
+      "file": "studies/dora/public-sources.json",
+      "bytes": 2234,
+      "sha256": "04e1401ac7cac207214ae36df267f80e310fff4a7ff760b4e73a841c8b594301"
+    },
+    {
+      "file": "studies/dora/public.py",
+      "bytes": 4457,
+      "sha256": "d601fb9a6e443f219fad3a2fd572c2e4f93c67940a9b00623f9a988a5afe8481"
+    },
+    {
+      "file": "studies/dora/results/before.json",
+      "bytes": 2105,
+      "sha256": "949a2f831c1d9751c55ae6a50a99da8cb05377e9599511dbe845344912b3ae9a"
+    },
+    {
+      "file": "studies/dora/results/decimal.json",
+      "bytes": 10044,
+      "sha256": "e69676fe9216cd32bdf2ca5f457d3fd4d43cd1803493bde1ff0aee425889c8a3"
+    },
+    {
+      "file": "studies/dora/results/installed.json",
+      "bytes": 16870,
+      "sha256": "326ff1b5e16dceca94ef761f2029b955ba69fa189e320b882b41a9daaea9b7a4"
+    },
+    {
+      "file": "studies/dora/results/lora-compatibility.json",
+      "bytes": 2653,
+      "sha256": "498fa61df7fa0faeaacf68a0b36df47a8c07b56d232a3b37f5dffd54227dda9c"
+    },
+    {
+      "file": "studies/dora/results/public.json",
+      "bytes": 1992593,
+      "sha256": "98cf729ffbbc5feb1f458446f93e3e00030034d8ebee868aaecd6f23158da693"
+    },
+    {
+      "file": "studies/dora/results/rounding.json",
+      "bytes": 1747,
+      "sha256": "193bc37fed3861a04c43e7975e14fa175cf632548868a6625362a3f6533ffc77"
+    },
+    {
+      "file": "studies/dora/results/streaming.json",
+      "bytes": 8913,
+      "sha256": "9df4c5060372ae7d25f475a1213bf053abd7cc28a0d85d09f49edd36b0aee93c"
+    },
+    {
+      "file": "studies/dora/results/verification.json",
+      "bytes": 136968,
+      "sha256": "1ee5a8a3d38c84b42b2fb7e4e4ce0beed8bb0baebea22721ef1c74fa6fb3c75c"
+    },
+    {
+      "file": "studies/dora/rounding.py",
+      "bytes": 3100,
+      "sha256": "8353059bbb814f64f3a009bdf5378fb1baa0a1f5cf00ff68c30bab825e2864b0"
+    },
+    {
+      "file": "studies/dora/streaming.py",
+      "bytes": 6118,
+      "sha256": "e5c1bed9d63f1208a98a81509342d942d7363c103988626db889eb97ad6a16a2"
+    },
+    {
+      "file": "studies/dora/verify.py",
+      "bytes": 9490,
+      "sha256": "a266943d905011f3a0c4be1f6389aa7ba8e9551396b47a0accc0530ad2f7391b"
+    },
+    {
+      "file": "tests/test_audit.py",
+      "bytes": 17836,
+      "sha256": "2d148e3143c1e5c707f7c05fba6d8ffeced1ed5f0366bceee84663f3e42374b5"
+    },
+    {
+      "file": "tests/test_dora.py",
+      "bytes": 7964,
+      "sha256": "0999029b808da04ca9b8d326e29985113594b2c46d13c85b201c2e60be574ba5"
+    }
+  ],
+  "registry_release_performed": false,
+  "deployment_performed": false
+}

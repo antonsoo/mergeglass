@@ -9,7 +9,8 @@ merged checkpoint.
 The [baseline CLI replay](results/before.json), run from source commit
 `068b150`, refuses all 12 native artifact/control cases with exit 2 and
 `Unsupported adapter option: use_dora`. The extension completes these audits.
-This is new local functionality; no release or deployment is claimed.
+The implementation is now available in public source. [All changed public files](results/publication.json)
+match the verified local commit. No registry release or deployment accompanies it.
 
 ## What the native producer establishes
 

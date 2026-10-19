@@ -109,7 +109,9 @@ merges, both native safe-merge modes, rsLoRA scales, rank/alpha overrides and
 an actual sharded Transformers save. A dense PyTorch oracle and a separate
 80-digit scalar calculation check the reference. Missing magnitudes and
 undefined zero directions refuse. [Artifacts, arithmetic, memory and reproduction](studies/dora/README.md).
-This addition is local and unreleased.
+This capability is available in the public source; no package-registry release
+accompanies it. [Public source bytes](studies/dora/results/publication.json)
+match the verified implementation.
 
 The [public-artifact replay](studies/dora/README.md#unchanged-public-dora-artifacts)
 also checks a pinned SmolLM2 DoRA adapter across 210 adapted matrices and a

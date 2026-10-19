@@ -5,8 +5,10 @@ ordinary Linear DoRA audit support. The previous source at `068b150` refused
 all 12 native DoRA cases. The [study](../studies/dora/README.md) retains those
 before/after imports, small runnable artifacts and independent calculations.
 
-This is a local, unreleased change. No push, tag, package release, hosted service
-or site deployment was performed. The public model inputs were read as pinned
+The implementation was verified locally before publication. The subsequent
+[source publication receipt](../studies/dora/results/publication.json) compares
+all changed files at public commit `37aa24e` byte for byte. No tag, package release,
+hosted service or site deployment was performed. The public model inputs were read as pinned
 evidence, not published by this work. Quantized and non-Linear adapters remain
 outside the supported arithmetic contract; numerical agreement does not certify
 task quality or training provenance.
