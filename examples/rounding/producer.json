@@ -1,0 +1,82 @@
+{
+  "synthetic": true,
+  "script_sha256": "95496a9c5970c272798ca2455e13af7e7d36bfcf5a6444d1e759868ef1a3827e",
+  "python": "3.12.12",
+  "pythonhashseed": "0",
+  "seed": 71019,
+  "training": {
+    "steps": 12,
+    "optimizer": "SGD",
+    "lr": 0.001,
+    "data": "seeded random 32x8 inputs; targets = 0.2 * input",
+    "losses": [
+      0.7755181789398193,
+      0.7753716111183167,
+      0.775225043296814,
+      0.775078535079956,
+      0.7749320864677429,
+      0.7747857570648193,
+      0.7746394276618958,
+      0.7744930982589722,
+      0.7743468284606934,
+      0.7742006778717041,
+      0.7740544676780701,
+      0.7739084362983704
+    ]
+  },
+  "post_training_controls": {
+    "small_B_multiplier": 0.0001,
+    "large_B_multiplier": 100,
+    "zero_B": "set to zero"
+  },
+  "versions": {
+    "torch": "2.14.1+cpu",
+    "peft": "0.21.0",
+    "transformers": "5.20.1",
+    "safetensors": "0.8.0",
+    "numpy": "2.5.4"
+  },
+  "merge": "PEFT merge_and_unload(safe_merge=False), FP32 adapters, CPU, one thread",
+  "files": [
+    {
+      "file": "adapter/adapter_config.json",
+      "bytes": 1156,
+      "sha256": "3108ec14d0e0881e6ebb10272ca3c0061756eebaf5ec0868d3765c172f66af3a"
+    },
+    {
+      "file": "adapter/adapter_model.safetensors",
+      "bytes": 984,
+      "sha256": "9548783b1d515f7f1cf0f75f0daf9820f476cb2f2ffac4b527b98c9c55f35e4b"
+    },
+    {
+      "file": "base/model.safetensors",
+      "bytes": 1320,
+      "sha256": "f31739f63a137348502c23a605837c8885d0a525aeda97385931c0cfb0eefe34"
+    },
+    {
+      "file": "merged-bf16/model.safetensors",
+      "bytes": 808,
+      "sha256": "4a91d94d7e5353c967d7ded800500cdc4ec0e432ad85b6655eb337017610846e"
+    },
+    {
+      "file": "merged-f16/model.safetensors",
+      "bytes": 800,
+      "sha256": "3b3f993391b755900919103ae77911e1108347890181ae5599ee8d3d744c9932"
+    },
+    {
+      "file": "merged-f32/model.safetensors",
+      "bytes": 1320,
+      "sha256": "dc54cadd19f6678ff9c15d2c0c66bdd14df626440ab0bb3a0a90b687074772f6"
+    },
+    {
+      "file": "omitted/model.safetensors",
+      "bytes": 1320,
+      "sha256": "f31739f63a137348502c23a605837c8885d0a525aeda97385931c0cfb0eefe34"
+    },
+    {
+      "file": "unrelated-edit/model.safetensors",
+      "bytes": 1320,
+      "sha256": "6779fdb072cb3617754df7a246642fa7021278d48f9391acf81aa0413f7958c1"
+    }
+  ]
+}

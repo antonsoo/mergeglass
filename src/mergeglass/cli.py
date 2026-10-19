@@ -17,7 +17,7 @@ def render(report: dict[str, Any]) -> str:
     lines = [
         "Mergeglass | saved LoRA merge audit",
         "",
-        "MODULE                           DTYPE   CHANGED    UNCHANGED*  REL.ERROR",
+        "MODULE                           DTYPE   CHANGED    UNCHANGED*  REL.RESID",
     ]
     for layer in report["layers"]:
         fraction = layer["unchanged_nonzero_update_fraction"]
@@ -36,9 +36,18 @@ def render(report: dict[str, Any]) -> str:
         if layer["status"] != "observed-update":
             lines.append("  " + layer["status"])
     summary = report["summary"]
+    total = summary["intended_nonzero_elements"]
+    unchanged_total = summary["unchanged_nonzero_update_elements"]
+    aggregate = (
+        f"Of {total:,} nonzero intended updates, {unchanged_total:,} are unchanged "
+        f"({summary['unchanged_nonzero_update_fraction']:.2%})."
+        if total
+        else "The reference update is zero across all adapted weights."
+    )
     lines.extend(
         [
             "",
+            aggregate,
             "* Nonzero intended update elements equal to the dtype-cast base.",
             "Relative error = ||observed change - intended update|| / ||intended update||.",
             f"Checked {summary['checked_tensors']} tensors; "
@@ -104,6 +113,18 @@ def main(argv: list[str] | None = None) -> int:
             block_mib=args.block_mib,
             max_adapter_mib=args.max_adapter_mib,
         )
+        if args.json and args.json != "-":
+            # Snapshot files can be symlinks into a cache outside the supplied
+            # directory. Protect those actual input files too, after inventory.
+            for role, source in (
+                ("base", args.base),
+                ("adapter", args.adapter),
+                ("merged", args.merged),
+            ):
+                for item in report["inputs"][role]:
+                    input_file = source / item["file"] if source.is_dir() else source
+                    if destination == input_file.resolve():
+                        raise AuditError("The report destination resolves to an input file")
         serialized = json.dumps(report, indent=2, allow_nan=False)
         if args.json == "-":
             print(serialized)
@@ -112,6 +133,7 @@ def main(argv: list[str] | None = None) -> int:
                 _write(Path(args.json), serialized)
             print(render(report))
     except (AuditError, OSError, ValueError, OverflowError) as exc:
-        print(f"mergeglass: {exc}", file=sys.stderr)
+        message = ascii(str(exc))[1:-1]
+        print(f"mergeglass: {message}", file=sys.stderr)
         return 2
     return 0

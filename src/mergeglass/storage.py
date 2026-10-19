@@ -52,12 +52,18 @@ def _unique_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
+def _nonfinite_json(value: str) -> None:
+    raise AuditError(f"Nonfinite JSON number: {value}")
+
+
 def read_json(path: Path) -> dict[str, Any]:
     if path.stat().st_size > MAX_HEADER:
         raise AuditError(f"JSON exceeds the 16 MiB metadata limit: {path.name}")
     try:
-        result = json.loads(path.read_text("utf-8"), object_pairs_hook=_unique_pairs)
-    except (UnicodeError, json.JSONDecodeError) as exc:
+        result = json.loads(
+            path.read_text("utf-8"), object_pairs_hook=_unique_pairs, parse_constant=_nonfinite_json
+        )
+    except (UnicodeError, json.JSONDecodeError, RecursionError) as exc:
         raise AuditError(f"Invalid JSON in {path.name}: {exc}") from exc
     if not isinstance(result, dict):
         raise AuditError(f"Expected a JSON object in {path.name}")
@@ -153,8 +159,10 @@ def _tensors(path: Path) -> dict[str, Tensor]:
         if length > MAX_HEADER:
             raise AuditError(f"Safetensors header exceeds 16 MiB: {path.name}")
         try:
-            header = json.loads(stream.read(length), object_pairs_hook=_unique_pairs)
-        except (UnicodeError, json.JSONDecodeError) as exc:
+            header = json.loads(
+                stream.read(length), object_pairs_hook=_unique_pairs, parse_constant=_nonfinite_json
+            )
+        except (UnicodeError, json.JSONDecodeError, RecursionError) as exc:
             raise AuditError(f"Invalid safetensors header: {path.name}") from exc
     result: dict[str, Tensor] = {}
     try:
@@ -217,9 +225,13 @@ class Checkpoint:
                 for name in dict.fromkeys(expected.values()):
                     if not isinstance(name, str) or not name.endswith(".safetensors"):
                         raise AuditError("Shard filenames must be local safetensors paths")
-                    path = (self.source / name).resolve()
-                    if not path.is_relative_to(self.source):
+                    relative = Path(name)
+                    if relative.is_absolute() or ".." in relative.parts:
                         raise AuditError("Shard path escapes its checkpoint directory")
+                    # HF cache snapshots use symlinks to sibling blob storage.
+                    # Validate the index's logical path, retain it for evidence,
+                    # and let ordinary local file reads follow that snapshot link.
+                    path = self.source / relative
                     paths.append(path)
             elif single.is_file():
                 paths = [single]

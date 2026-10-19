@@ -71,15 +71,21 @@ LITERAL_PATH = re.compile(r"[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)*\Z")
 
 
 def _number(value: Any, field: str, *, rank: bool = False) -> float:
-    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise AuditError(f"{field} must be a finite number")
+    try:
+        number = float(value)
+    except OverflowError as exc:
+        raise AuditError(f"{field} exceeds the numeric range") from exc
+    if not math.isfinite(number):
         raise AuditError(f"{field} must be a finite number")
     if value < (1 if rank else 0) or (rank and int(value) != value):
         raise AuditError(f"{field} must be {'a positive integer' if rank else 'nonnegative'}")
-    return float(value)
+    return number
 
 
 def _pattern(config: dict[str, Any], field: str) -> dict[str, float]:
-    patterns = config.get(field) or {}
+    patterns = config.get(field, {})
     if not isinstance(patterns, dict):
         raise AuditError(f"{field} must be an object")
     result = {}

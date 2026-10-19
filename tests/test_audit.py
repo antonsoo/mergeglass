@@ -1,0 +1,236 @@
+from __future__ import annotations
+
+import json
+import struct
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+import pytest
+from safetensors.numpy import save_file
+
+from mergeglass import AuditError, audit
+from mergeglass.cli import main
+from mergeglass.storage import Checkpoint, cast
+
+
+def fixture(tmp_path: Path, *, alpha: float = 1, rs: bool = False) -> tuple[Path, Path, Path]:
+    base, adapter, merged = (tmp_path / name for name in ["base", "adapter", "merged"])
+    for path in [base, adapter, merged]:
+        path.mkdir()
+    config = {"peft_type": "LORA", "r": 1, "lora_alpha": alpha, "bias": "none", "use_rslora": rs}
+    (adapter / "adapter_config.json").write_text(json.dumps(config))
+    save_file(
+        {
+            "linear.weight": np.ones((2, 3), dtype=np.float32),
+            "control": np.arange(4, dtype=np.int64),
+        },
+        base / "model.safetensors",
+    )
+    save_file(
+        {
+            "base_model.model.linear.lora_A.weight": np.ones((1, 3), dtype=np.float32),
+            "base_model.model.linear.lora_B.weight": np.full((2, 1), 0.125, dtype=np.float32),
+        },
+        adapter / "adapter_model.safetensors",
+    )
+    save_file(
+        {
+            "linear.weight": np.full((2, 3), 1.125 * alpha if alpha else 1, dtype=np.float32),
+            "control": np.arange(4, dtype=np.int64),
+        },
+        merged / "model.safetensors",
+    )
+    return base, adapter, merged
+
+
+def change_config(adapter: Path, **updates: Any) -> None:
+    path = adapter / "adapter_config.json"
+    config = json.loads(path.read_text())
+    config.update(updates)
+    path.write_text(json.dumps(config))
+
+
+def test_dense_hand_calculated_update_and_complete_inventory(tmp_path: Path) -> None:
+    inputs = fixture(tmp_path)
+    report = audit(*inputs)
+    layer = report["layers"][0]
+    assert layer["relative_residual"] == 0
+    assert layer["norms"]["delta"] == pytest.approx(np.sqrt(6) / 8)
+    assert layer["changed_elements"] == 6
+    assert layer["reference_merge_mismatches"] == 0
+    assert layer["unchanged_nonzero_update_fraction"] == 0
+    assert report["summary"]["checked_tensors"] == 2
+    assert len(report["inputs"]["adapter"]) == 2
+
+
+def test_copied_base_is_observed_absence_not_a_rounding_diagnosis(tmp_path: Path) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    (merged / "model.safetensors").write_bytes((base / "model.safetensors").read_bytes())
+    layer = audit(base, adapter, merged)["layers"][0]
+    assert layer["status"] == "no-observed-update"
+    assert layer["relative_residual"] == 1
+    assert layer["unchanged_nonzero_update_fraction"] == 1
+
+
+def test_zero_scale_is_a_zero_update_with_undefined_relative_error(tmp_path: Path) -> None:
+    layer = audit(*fixture(tmp_path, alpha=0))["layers"][0]
+    assert layer["status"] == "zero-update"
+    assert layer["relative_residual"] is None
+    assert layer["unchanged_nonzero_update_fraction"] is None
+
+
+@pytest.mark.parametrize(
+    "option,value",
+    [
+        ("use_dora", True),
+        ("fan_in_fan_out", True),
+        ("bias", "all"),
+        ("modules_to_save", ["lm_head"]),
+        ("target_parameters", ["experts"]),
+        ("init_lora_weights", "pissa"),
+        ("future_variant", None),
+        ("lora_bias", True),
+        ("rank_pattern", {"linear$": 1}),
+        ("r", True),
+        ("lora_alpha", float("nan")),
+    ],
+)
+def test_unsupported_configuration_refuses(tmp_path: Path, option: str, value: Any) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    change_config(adapter, **{option: value})
+    with pytest.raises(AuditError):
+        audit(base, adapter, merged)
+
+
+def test_unadapted_integer_changes_are_retained_exactly(tmp_path: Path) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    save_file(
+        {
+            "linear.weight": np.full((2, 3), 1.125, dtype=np.float32),
+            "control": np.array([0, 1, 2, 2**62 + 3], dtype=np.int64),
+        },
+        merged / "model.safetensors",
+    )
+    report = audit(base, adapter, merged)
+    assert report["summary"]["unadapted_changed_elements"] == 1
+    assert report["unadapted_changes"][0]["first_change"]["merged"] == 2**62 + 3
+
+
+def test_conversion_is_separate_from_adapter_update(tmp_path: Path) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    original = np.full((2, 3), 1.0001, dtype=np.float32)
+    save_file(
+        {"linear.weight": original, "control": np.arange(4, dtype=np.int64)},
+        base / "model.safetensors",
+    )
+    save_file(
+        {
+            "linear.weight": (original + 0.125).astype(np.float16),
+            "control": np.arange(4, dtype=np.int64),
+        },
+        merged / "model.safetensors",
+    )
+    layer = audit(base, adapter, merged)["layers"][0]
+    assert layer["norms"]["base_cast_drift"] > 0
+    assert layer["relative_residual"] == 0
+
+
+@pytest.mark.parametrize("kind", ["missing", "shape", "nonfinite", "incomplete", "extra"])
+def test_incomplete_or_invalid_evidence_refuses(tmp_path: Path, kind: str) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    if kind in {"missing", "shape", "nonfinite", "extra"}:
+        tensors = {
+            "linear.weight": np.ones((2, 3), dtype=np.float32),
+            "control": np.arange(4, dtype=np.int64),
+        }
+        if kind == "missing":
+            del tensors["control"]
+        if kind == "shape":
+            tensors["linear.weight"] = np.ones((3, 2), dtype=np.float32)
+        if kind == "nonfinite":
+            tensors["linear.weight"][0, 0] = np.nan
+        if kind == "extra":
+            tensors["extra"] = np.zeros(1, dtype=np.float32)
+        save_file(tensors, merged / "model.safetensors")
+    else:
+        save_file(
+            {"base_model.model.linear.lora_A.weight": np.ones((1, 3), dtype=np.float32)},
+            adapter / "adapter_model.safetensors",
+        )
+    with pytest.raises(AuditError):
+        audit(base, adapter, merged)
+
+
+def test_bf16_ties_subnormals_and_double_rounding() -> None:
+    values = np.array(
+        [
+            1.00390625,
+            1.00390625 + 2**-50,
+            1.01171875,
+            -1.00390625 - 2**-50,
+            2**-134,
+            3 * 2**-134,
+            -0.0,
+        ]
+    )
+    expected = [1, 1.0078125, 1.015625, -1.0078125, 0, 2**-132, -0.0]
+    np.testing.assert_array_equal(cast(values, "BF16"), expected)
+    assert np.signbit(cast(values, "BF16")[-1])
+
+
+def test_sharded_checkpoint_inventory_and_index_validation(tmp_path: Path) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    checkpoint = Checkpoint(base)
+    weights = {
+        name: tensor.raw().reshape(tensor.shape) for name, tensor in checkpoint.tensors.items()
+    }
+    (base / "model.safetensors").unlink()
+    mapping = {}
+    for index, (name, value) in enumerate(weights.items()):
+        shard = f"part-{index}.safetensors"
+        save_file({name: value}, base / shard)
+        mapping[name] = shard
+    index_path = base / "model.safetensors.index.json"
+    index_path.write_text(json.dumps({"weight_map": mapping}))
+    assert audit(base, adapter, merged)["layers"][0]["relative_residual"] == 0
+    mapping["missing"] = "part-0.safetensors"
+    index_path.write_text(json.dumps({"weight_map": mapping}))
+    with pytest.raises(AuditError, match="missing tensors"):
+        audit(base, adapter, merged)
+
+
+def test_duplicate_safetensors_header_is_not_silently_overwritten(tmp_path: Path) -> None:
+    header = (
+        b'{"x":{"dtype":"F32","shape":[1],"data_offsets":[0,4]},'
+        b'"x":{"dtype":"F32","shape":[1],"data_offsets":[0,4]}}'
+    )
+    path = tmp_path / "bad.safetensors"
+    path.write_bytes(struct.pack("<Q", len(header)) + header + b"\0" * 4)
+    with pytest.raises(AuditError, match="Duplicate"):
+        Checkpoint(path)
+
+
+def test_cli_refusal_preserves_earlier_report_and_inputs(tmp_path: Path, capsys: Any) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    report = tmp_path / "report.json"
+    report.write_text("earlier result")
+    original = (base / "model.safetensors").read_bytes()
+    assert (
+        main([str(base), str(adapter), str(merged), "--json", str(base / "model.safetensors")]) == 2
+    )
+    assert (base / "model.safetensors").read_bytes() == original
+    change_config(adapter, use_dora=True)
+    assert main([str(base), str(adapter), str(merged), "--json", str(report)]) == 2
+    assert report.read_text() == "earlier result"
+    assert capsys.readouterr().err
+
+
+def test_cli_json_is_parseable_and_does_not_include_machine_paths(
+    tmp_path: Path, capsys: Any
+) -> None:
+    paths = fixture(tmp_path)
+    assert main([*(str(p) for p in paths), "--json", "-"]) == 0
+    text = capsys.readouterr().out
+    assert json.loads(text)["schema_version"] == 1
+    assert str(tmp_path) not in text

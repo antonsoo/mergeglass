@@ -266,6 +266,18 @@ def audit(
         "summary": {
             "adapted_tensors": len(layers),
             "checked_tensors": len(before.tensors),
+            "adapted_elements": sum(layer["elements"] for layer in layers),
+            "intended_nonzero_elements": sum(
+                layer["intended_nonzero_elements"] for layer in layers
+            ),
+            "changed_adapted_elements": sum(layer["changed_elements"] for layer in layers),
+            "unchanged_nonzero_update_elements": sum(
+                layer["unchanged_nonzero_update_elements"] for layer in layers
+            ),
+            "unchanged_nonzero_update_fraction": _ratio(
+                sum(layer["unchanged_nonzero_update_elements"] for layer in layers),
+                sum(layer["intended_nonzero_elements"] for layer in layers),
+            ),
             "zero_update_tensors": sum(layer["status"] == "zero-update" for layer in layers),
             "no_observed_update_tensors": sum(
                 layer["status"] == "no-observed-update" for layer in layers
