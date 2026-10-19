@@ -19,7 +19,7 @@ import peft.tuners.lora.dora as dora_runtime
 import torch
 from bfcl import BFCL, canonical, digest
 from peft import PeftModel
-from replay import file_sha, state_sha, validate_inputs
+from replay import file_sha, select_records, state_sha, validate_inputs
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from verify_grader import literal
 
@@ -85,6 +85,8 @@ def main() -> None:
     parser.add_argument(
         "--limit", type=int, help="diagnostic pilot only, not the complete protocol"
     )
+    parser.add_argument("--chunk-start", type=int, default=0)
+    parser.add_argument("--chunk-stop", type=int)
     args = parser.parse_args()
     frozen = {
         name: file_sha(HERE / name)
@@ -149,15 +151,17 @@ def main() -> None:
     assert len(records) + len(excluded) == len(benchmark.rows)
     assert len(benchmark.rows) == len(expected_prompts)
     complete_records = len(records)
-    if args.limit is not None:
-        assert args.limit > 0
-        records = records[: args.limit]
+    try:
+        records, selection = select_records(records, args.chunk_start, args.chunk_stop, args.limit)
+    except ValueError as error:
+        parser.error(str(error))
     print(
         json.dumps(
             {
                 "prepared": len(records),
                 "excluded": excluded,
                 "complete_protocol_records": complete_records,
+                "selection": selection,
             }
         ),
         flush=True,
@@ -191,6 +195,7 @@ def main() -> None:
         identities[profile] = {
             "before_state_sha256": state_sha(model),
             "parameter_dtypes": sorted({str(p.dtype) for p in model.parameters()}),
+            "parameter_devices": sorted({str(p.device) for p in model.parameters()}),
         }
         models[profile] = model
     summaries = {
@@ -275,6 +280,7 @@ def main() -> None:
         "questions": len(records),
         "complete_protocol_records": complete_records,
         "is_limited_pilot": args.limit is not None,
+        "selection": selection,
         "excluded": excluded,
         "weight_identities": identities,
         "probability_control": probability_control,

@@ -60,6 +60,28 @@ def validate_inputs(root: Path, protocol: dict[str, Any]) -> dict[str, Any]:
     return {"public_sources": manifest, "native_merges": public["merges"]}
 
 
+def select_records(
+    records: list[dict[str, Any]], start: int, stop: int | None, limit: int | None
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Partition source order only; selection never depends on an outcome."""
+    total = len(records)
+    if limit is not None:
+        if limit <= 0 or start != 0 or stop is not None:
+            raise ValueError("A positive pilot --limit cannot be combined with chunk bounds")
+        stop = min(total, limit)
+    stop = total if stop is None else stop
+    if not 0 <= start < stop <= total:
+        raise ValueError(f"Require 0 <= chunk-start < chunk-stop <= {total}")
+    return records[start:stop], {
+        "start": start,
+        "stop": stop,
+        "available_records": total,
+        "selected_records": stop - start,
+        "is_complete_cohort": start == 0 and stop == total,
+        "is_limited_pilot": limit is not None,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("models", type=Path)
@@ -68,6 +90,9 @@ def main() -> None:
     parser.add_argument("--profile", action="append")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--cache-control", action="store_true")
+    parser.add_argument("--chunk-start", type=int, default=0)
+    parser.add_argument("--chunk-stop", type=int)
+    parser.add_argument("--prepare-only", action="store_true")
     args = parser.parse_args()
     protocol_path = Path(__file__).with_name("protocol.json")
     protocol_bytes = protocol_path.read_bytes()
@@ -86,7 +111,7 @@ def main() -> None:
     torch.manual_seed(71123)
     dora_runtime.ENABLE_DORA_CACHING = protocol["dora_weight_caching"]
     records = []
-    for row in benchmark.rows[: args.limit]:
+    for row in benchmark.rows:
         messages = benchmark.messages(row)
         ids = tokenizer.apply_chat_template(
             messages, tokenize=True, add_generation_prompt=True, return_dict=False
@@ -101,7 +126,7 @@ def main() -> None:
                 "prompt_hash": digest(canonical(ids)),
             }
         )
-    prompt_receipt = [
+    full_prompt_receipt = [
         {
             "id": r["source"]["id"],
             "question_hash": r["question_hash"],
@@ -110,6 +135,31 @@ def main() -> None:
         }
         for r in records
     ]
+    full_prompt_bytes = (json.dumps(full_prompt_receipt) + "\n").encode()
+    source_prompts_sha = digest(full_prompt_bytes)
+    if args.prepare_only:
+        assert script_hash == file_sha(Path(__file__))
+        assert helper_hash == file_sha(helper_path)
+        assert digest(protocol_bytes) == file_sha(protocol_path)
+        (args.output / "prompts.json").write_bytes(full_prompt_bytes)
+        prepared = {
+            "records": len(records),
+            "prompts_sha256": source_prompts_sha,
+            "script_sha256": script_hash,
+            "helper_sha256": helper_hash,
+            "protocol_sha256": digest(protocol_bytes),
+            "input_sources": sources,
+            "benchmark_files": benchmark.data_files,
+            "incomplete_references": benchmark.incomplete_references,
+        }
+        (args.output / "prepared.json").write_text(json.dumps(prepared, indent=2) + "\n")
+        print(json.dumps({"prepared_records": len(records), "prompts_sha256": source_prompts_sha}))
+        return
+    try:
+        records, selection = select_records(records, args.chunk_start, args.chunk_stop, args.limit)
+    except ValueError as error:
+        parser.error(str(error))
+    prompt_receipt = full_prompt_receipt[selection["start"] : selection["stop"]]
     (args.output / "prompts.json").write_text(json.dumps(prompt_receipt) + "\n")
     print(
         json.dumps(
@@ -117,6 +167,7 @@ def main() -> None:
                 "prepared_records": len(records),
                 "max_prompt_tokens": max(len(r["input_ids"]) for r in records),
                 "incomplete_references": benchmark.incomplete_references,
+                "selection": selection,
             }
         ),
         flush=True,
@@ -239,6 +290,7 @@ def main() -> None:
             "model_state_sha256": identity,
             "post_generation_state_sha256": after_identity,
             "adapter_dtypes": adapter_dtypes,
+            "parameter_devices": sorted({str(p.device) for p in model.parameters()}),
             "records": len(records),
             "correct": correct,
             "status_counts": counts,
@@ -257,6 +309,8 @@ def main() -> None:
     receipt = {
         "protocol": protocol,
         "protocol_sha256": digest(protocol_bytes),
+        "selection": selection,
+        "source_prompts_sha256": source_prompts_sha,
         "script_sha256": script_hash,
         "grader_wrapper_sha256": helper_hash,
         "incomplete_references": benchmark.incomplete_references,
