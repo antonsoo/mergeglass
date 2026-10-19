@@ -1,0 +1,138 @@
+{
+  "source_commit": "0a8cfa9c3e31c3d4daac60f4fc4784bd0e6217ee",
+  "method": "public immutable raw GitHub bytes equal local git blobs",
+  "files_verified": 26,
+  "files": [
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 2392,
+      "sha256": "02eeaea8bc03886e1cec486ac16d187d099a4d6b9de5b2dc2af1959e1df79dd7"
+    },
+    {
+      "file": "README.md",
+      "bytes": 14275,
+      "sha256": "42d472e444bb2e3112aa27b6a87b6f37b6d4a3e29fde234c10cf55e87d380661"
+    },
+    {
+      "file": "docs/assets/dora-rows.png",
+      "bytes": 251666,
+      "sha256": "9728c8772820fed8db80742d5ebe9b0a93de679a0f29af706d48505d1042feda"
+    },
+    {
+      "file": "docs/assets/dora-rows.txt",
+      "bytes": 1046,
+      "sha256": "d601d2ff6ab5c14f7633ccbe79faec7c93c36d8509f875da41ec3839e7930e8d"
+    },
+    {
+      "file": "docs/dora-rows.md",
+      "bytes": 6561,
+      "sha256": "5f4636b4f55af89515074e6c86154ac5a4d9bc4bbea940b96bae0c6eff5b4ff0"
+    },
+    {
+      "file": "src/mergeglass/audit.py",
+      "bytes": 18517,
+      "sha256": "9c73589184123a42ef798807d3769e9c17d98c9e96fd9ea7b330b4005f443bfc"
+    },
+    {
+      "file": "src/mergeglass/cli.py",
+      "bytes": 9542,
+      "sha256": "c294176b325aaedbdf6964e4bbb35098cae2fddec862419f698496a5545f6c38"
+    },
+    {
+      "file": "src/mergeglass/dora_rows.py",
+      "bytes": 6354,
+      "sha256": "d5a9e42c72d6dab55482ccb28416c6939d1985b86f768c1d91dcabaa19e122ff"
+    },
+    {
+      "file": "studies/dora/README.md",
+      "bytes": 13994,
+      "sha256": "58db2fd4f30d630b4ab14d6e112d31015d78297941248d705c96badf0a3ac85a"
+    },
+    {
+      "file": "studies/dora/row_diagnostics.py",
+      "bytes": 8085,
+      "sha256": "1b1d8ab518ed3676a61f53e17e905b1f0867eb8347cd00c513d6e917d0c35546"
+    },
+    {
+      "file": "studies/dora/rows/compatibility.json.gz",
+      "bytes": 11806,
+      "sha256": "3d910abd6a750832220b5ebedf79a1ddc092b1c94dc95ed7fe2e6a8a7c3db408"
+    },
+    {
+      "file": "studies/dora/rows/dense-oracle.json.gz",
+      "bytes": 117304,
+      "sha256": "649d09a63f4b8b103c6325aa9cd806e18584060bb7e9d3b1bba4427e7e062b1c"
+    },
+    {
+      "file": "studies/dora/rows/installed-310-tests.txt",
+      "bytes": 179,
+      "sha256": "bafc316e0d67dbeed04f5acaa6c7bed60e05dca602d55e0d805f27ebf8ed0441"
+    },
+    {
+      "file": "studies/dora/rows/installed-310.json",
+      "bytes": 840,
+      "sha256": "8cb4122931bad0357aeb92da666caea4547db37ff7d553e1c5a38a4814c073c3"
+    },
+    {
+      "file": "studies/dora/rows/installed-315-tests.txt",
+      "bytes": 179,
+      "sha256": "8814816e2c6d4036824e994732c432e62f98d9551bcfec3e32c66e4680eef36e"
+    },
+    {
+      "file": "studies/dora/rows/installed-315.json",
+      "bytes": 838,
+      "sha256": "15bc5c348c69a5f7128cbc5f0b7dd8debad0b013c310da1ee5a4b3946e75328c"
+    },
+    {
+      "file": "studies/dora/rows/streaming.json.gz",
+      "bytes": 1684,
+      "sha256": "de857cff37b314a6681e4b507ea4078af9d1a3dc15fccb57acc933233764e4c5"
+    },
+    {
+      "file": "studies/dora/rows/verification.json",
+      "bytes": 2066,
+      "sha256": "add9fab175901fd9095e5686162c6e240723c8a9cda92d398c9f9f51438ee321"
+    },
+    {
+      "file": "studies/function-calls/bfcl.py",
+      "bytes": 6551,
+      "sha256": "5b22fec2246e7f5ebd1217807c4082fb7fd3a527a845056309b9466ebfc482cb"
+    },
+    {
+      "file": "studies/function-calls/protocol.json",
+      "bytes": 1812,
+      "sha256": "88ed3f171f23ecffa4ceafbd02b516b53249db5cd876b73aad9b4aedfd8acc5f"
+    },
+    {
+      "file": "studies/function-calls/replay.py",
+      "bytes": 14940,
+      "sha256": "ab07f4b5273040aafdbab07aed155effdd246e7fd50c4daab7ec7d4e81f94b1b"
+    },
+    {
+      "file": "studies/function-calls/run_chunks.py",
+      "bytes": 11053,
+      "sha256": "e5be7fcc392e321e69f287fb1e98d69cd0748f3f9cf0274dfcffbd9795956946"
+    },
+    {
+      "file": "studies/function-calls/teacher-forced-protocol.json",
+      "bytes": 1794,
+      "sha256": "2d973b3dce717a7bbd10dce6e03537185462b5322fa7bfea9586cc0b457f5c20"
+    },
+    {
+      "file": "studies/function-calls/teacher_forced.py",
+      "bytes": 13083,
+      "sha256": "c250b99a7fa23e0c8d40d6e1b572cd4c65d2a9e674a55d360d20bc4885aff660"
+    },
+    {
+      "file": "studies/function-calls/verify_grader.py",
+      "bytes": 4193,
+      "sha256": "c01122263c8e2fe41b59d6e207516e119d1afc0bb0064e06388efb3d08b2b75e"
+    },
+    {
+      "file": "tests/test_dora.py",
+      "bytes": 12892,
+      "sha256": "f210549d2fe01d6811e6ff3926a69269494fcfb702bbbb2cd455c701b0561d51"
+    }
+  ],
+  "registry_release": "not performed"
+}

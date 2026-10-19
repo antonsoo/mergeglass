@@ -128,6 +128,12 @@ four zero targets are saved nonzero. Zero rows stay explicit, and factored
 lengths retain observations beyond float64's ordinary norm range.
 [Closed-form controls and native row measurements](docs/dora-rows.md).
 
+When the original base is unavailable, `mergeglass --dora-norms ADAPTER MERGED`
+still compares saved row lengths with the learned magnitudes. Its separate
+partial report leaves directions, complete updates and unmapped tensors
+unmeasured. A matching norm cannot establish a correct merge.
+[No-base example and report contract](docs/dora-without-base.md).
+
 ## Use your checkpoints
 
 ```sh
@@ -196,7 +202,7 @@ can differ from the binary64 reference.
 
 ## Memory and verification
 
-Only A is decoded in full. The auditor reads B, DoRA magnitudes, base and merged rows in blocks
+In a full audit, only A is decoded in full. The auditor reads B, DoRA magnitudes, base and merged rows in blocks
 and never allocates a full-layer dense update. NumPy and the Rust safetensors
 validator are its only runtime dependencies; PyTorch and PEFT belong to the
 separate verification environment.
@@ -224,7 +230,8 @@ on 65,280 of those deliberately chosen boundary cases.
 
 ## Limits
 
-- Supply the original base weights. A model name does not establish training
+- Supply the original base weights for a complete audit. The optional DoRA
+  norm-only mode provides partial observations without one. A model name does not establish training
   identity, and the auditor does not reconstruct an unseen architecture.
 - Coverage is the saved A/B pairs. If both factors are absent, metadata alone
   cannot establish that the missing pair should have existed.

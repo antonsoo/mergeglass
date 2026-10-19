@@ -11,6 +11,7 @@ from typing import Any
 
 from . import __version__
 from .audit import audit
+from .dora_norms import audit_dora_norms
 from .storage import AuditError
 
 
@@ -22,7 +23,7 @@ def _factor_text(log2: float) -> str:
     return f"{value:.8g}" if value else f"2^({log2:.4g})"
 
 
-def _dora_row_lines(layers: list[dict[str, Any]]) -> list[str]:
+def _dora_row_lines(layers: list[dict[str, Any]], *, include_direction: bool = True) -> list[str]:
     rows = [layer["dora_rows"] for layer in layers if "dora_rows" in layer]
     if not rows:
         return []
@@ -32,7 +33,7 @@ def _dora_row_lines(layers: list[dict[str, Any]]) -> list[str]:
         if row["log2_row_norm_factor_range"] is not None
     ]
     directions = [
-        row["direction_cosine_range"] for row in rows if row["direction_cosine_range"] is not None
+        row["direction_cosine_range"] for row in rows if row.get("direction_cosine_range")
     ]
     factors = (
         f"{_factor_text(min(pair[0] for pair in norms))}.."
@@ -45,16 +46,21 @@ def _dora_row_lines(layers: list[dict[str, Any]]) -> list[str]:
         if directions
         else "n/a"
     )
-    return [
+    lines = [
         f"DoRA full-row norm factor (saved / |m|): {factors}; "
         f"{sum(row['norm_comparable_rows'] for row in rows):,} nonzero row pairs.",
-        f"Full-row direction cosine: {cosines}; "
-        f"{sum(row['direction_comparable_rows'] for row in rows):,} nonzero row pairs.",
         f"Nonzero magnitudes saved as zero rows: "
         f"{sum(row['nonzero_magnitude_zero_saved_rows'] for row in rows):,}; "
         f"zero magnitudes saved nonzero: "
         f"{sum(row['zero_magnitude_nonzero_saved_rows'] for row in rows):,}.",
     ]
+    if include_direction:
+        lines.insert(
+            1,
+            f"Full-row direction cosine: {cosines}; "
+            f"{sum(row['direction_comparable_rows'] for row in rows):,} nonzero row pairs.",
+        )
+    return lines
 
 
 def _range(layers: list[dict[str, Any]], field: str) -> str:
@@ -63,6 +69,8 @@ def _range(layers: list[dict[str, Any]], field: str) -> str:
 
 
 def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
+    if report.get("schema") == "mergeglass.dora-norms":
+        return _render_norms(report, summary_only=summary_only)
     variants = Counter(layer.get("adapter_variant", "lora") for layer in report["layers"])
     kind = "LoRA"
     if variants.get("dora"):
@@ -145,6 +153,36 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
     return "\n".join(lines)
 
 
+def _render_norms(report: dict[str, Any], *, summary_only: bool) -> str:
+    summary = report["summary"]
+    lines = [
+        "Mergeglass | DoRA norms without a base",
+        "",
+        "Partial observations: reference directions and complete updates are unmeasured.",
+        f"Observed {summary['norm_observed_rows']:,} rows in "
+        f"{summary['norm_observed_tensors']:,} DoRA matrices.",
+    ]
+    if not summary_only:
+        lines.extend(["", "MODULE                       DTYPE      NORM FACTOR RANGE"])
+        for layer in report["layers"]:
+            name = ascii(layer["module"])[1:-1]
+            if len(name) > 27:
+                name = "..." + name[-24:]
+            pair = layer["dora_rows"]["log2_row_norm_factor_range"]
+            factors = "n/a" if pair is None else f"{_factor_text(pair[0])}..{_factor_text(pair[1])}"
+            lines.append(f"{name:<28} {layer['merged_dtype']:<6} {factors:>21}")
+    lines.extend(["", *_dora_row_lines(report["layers"], include_direction=False)])
+    lines.extend(
+        [
+            f"Checkpoint: {summary['checkpoint_tensors']:,} tensors; "
+            f"{summary['unmapped_tensors']:,} unmapped tensor(s) have no base comparison.",
+            "A matching norm does not establish a correct merge or direction.",
+            "No pass/fail threshold is applied. This measures saved weights, not model quality.",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def _write(path: Path, text: str) -> None:
     # Replacing only after serialization succeeds preserves an earlier report
     # if the audit refuses or the destination runs out of space mid-write.
@@ -163,10 +201,20 @@ def _write(path: Path, text: str) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    # Respect the usual '--' separator: a checkpoint can literally have the
+    # flag's name without changing the existing three-path invocation.
+    options = arguments[: arguments.index("--")] if "--" in arguments else arguments
+    norms_only = "--dora-norms" in options
     parser = argparse.ArgumentParser(
-        description="Inspect a saved LoRA or DoRA merge, locally and read-only."
+        description=(
+            "Observe saved DoRA row norms without an original base."
+            if norms_only
+            else "Inspect a saved LoRA or DoRA merge, locally and read-only."
+        )
     )
-    parser.add_argument("base", type=Path, help="original safetensors file or HF directory")
+    if not norms_only:
+        parser.add_argument("base", type=Path, help="original safetensors file or HF directory")
     parser.add_argument(
         "adapter", type=Path, help="PEFT adapter directory with adapter_config.json"
     )
@@ -181,37 +229,44 @@ def main(argv: list[str] | None = None) -> int:
         "--block-mib", type=int, default=16, help="block workspace target (default 16)"
     )
     parser.add_argument(
-        "--max-adapter-mib",
-        type=int,
-        default=512,
-        help="maximum decoded A matrix size (default 512)",
+        "--dora-norms", action="store_true", help="omit BASE and observe DoRA row norms only"
     )
+    if not norms_only:
+        parser.add_argument(
+            "--max-adapter-mib",
+            type=int,
+            default=512,
+            help="maximum decoded A matrix size (default 512)",
+        )
     parser.add_argument("--version", action="version", version=__version__)
-    args = parser.parse_args(argv)
+    args = parser.parse_args(arguments)
     try:
+        sources = {"adapter": args.adapter, "merged": args.merged}
+        if not norms_only:
+            sources["base"] = args.base
         if args.json and args.json != "-":
             destination = Path(args.json).resolve()
-            for source in (args.base, args.adapter, args.merged):
+            for source in sources.values():
                 resolved = source.resolve()
                 if destination == resolved or (
                     resolved.is_dir() and destination.is_relative_to(resolved)
                 ):
                     raise AuditError("Write the report outside the input checkpoint paths")
-        report = audit(
-            args.base,
-            args.adapter,
-            args.merged,
-            block_mib=args.block_mib,
-            max_adapter_mib=args.max_adapter_mib,
+        report = (
+            audit_dora_norms(args.adapter, args.merged, block_mib=args.block_mib)
+            if norms_only
+            else audit(
+                args.base,
+                args.adapter,
+                args.merged,
+                block_mib=args.block_mib,
+                max_adapter_mib=args.max_adapter_mib,
+            )
         )
         if args.json and args.json != "-":
             # Snapshot files can be symlinks into a cache outside the supplied
             # directory. Protect those actual input files too, after inventory.
-            for role, source in (
-                ("base", args.base),
-                ("adapter", args.adapter),
-                ("merged", args.merged),
-            ):
+            for role, source in sources.items():
                 for item in report["inputs"][role]:
                     input_file = source / item["file"] if source.is_dir() else source
                     if destination == input_file.resolve():

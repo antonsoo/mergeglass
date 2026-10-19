@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+Add `--dora-norms ADAPTER MERGED` and `audit_dora_norms` for base-independent
+row-length observations. Use a separate partial-report schema; leave reference
+directions, complete updates and unmapped tensor comparisons unmeasured.
+Validate all adapter factors and scan all floating inputs for finite values,
+without decoding a whole A matrix. Retain checkpoint input protection.
+
 Add full-row DoRA norm factors, signed-reference direction cosines and explicit
 zero-row counts. Preserve logarithmic ratios when ordinary factors cannot fit
 float64, with a concrete original-row witness for the largest nonzero log-ratio

@@ -104,7 +104,9 @@ Peak process RSS was 38.94 / 62.21 / 135.16 MiB for 1 / 16 / 64 MiB block
 targets, with zero residual and zero reference-cast mismatches. Block size is
 a workspace target, not a process memory cap. Concurrent inference makes the
 recorded elapsed times unsuitable for a throughput comparison. These are
-local artifact measurements; they do not establish a registry release.
+local artifact measurements; they do not establish a registry release. The
+[publication receipt](../studies/dora/rows/publication.json) separately verifies
+26 changed files from public immutable GitHub URLs against their git blobs.
 
 Re-run the dense oracle with the optional native producer environment from
 [the DoRA study](../studies/dora/README.md), using its generated native directory

@@ -128,7 +128,9 @@ class Pair:
     magnitude: Tensor | None = None
 
 
-def adapter_pairs(adapter: Checkpoint, base: Checkpoint) -> list[Pair]:
+def adapter_pairs(
+    adapter: Checkpoint, base: Checkpoint, *, weight_role: str = "base"
+) -> list[Pair]:
     config = adapter.config
     if config.get("peft_type") != "LORA":
         raise AuditError("Only PEFT LORA adapters are supported")
@@ -199,7 +201,7 @@ def adapter_pairs(adapter: Checkpoint, base: Checkpoint) -> list[Pair]:
         a, b = sides["A"], sides["B"]
         weight = path + ".weight"
         if weight not in base.tensors:
-            raise AuditError(f"No exact base tensor for adapter module: {weight}")
+            raise AuditError(f"No exact {weight_role} tensor for adapter module: {weight}")
         shape = base.tensors[weight].shape
         rank = int(_override(path, ranks, r))
         layer_alpha = _override(path, alphas, alpha)
@@ -209,7 +211,7 @@ def adapter_pairs(adapter: Checkpoint, base: Checkpoint) -> list[Pair]:
             or a.shape != (rank, shape[1])
             or b.shape != (shape[0], rank)
         ):
-            raise AuditError(f"Adapter/base/rank shape mismatch at {path}")
+            raise AuditError(f"Adapter/{weight_role}/rank shape mismatch at {path}")
         if magnitude is not None and magnitude.shape != (shape[0],):
             raise AuditError(f"DoRA magnitude shape must match the output rows at {path}")
         scale = layer_alpha / (math.sqrt(rank) if rs else rank)

@@ -55,16 +55,14 @@ class DoraRows:
     zero_reference: int = 0
 
     def add(
-        self, row: int, magnitude: FloatArray, reference: FloatArray, after: FloatArray
+        self, row: int, magnitude: FloatArray, reference: FloatArray | None, after: FloatArray
     ) -> None:
         units, scale, length = _unit_rows(after)
-        reference_units, reference_scale, _ = _unit_rows(reference)
         self.rows += len(magnitude)
         target = np.abs(magnitude)
         self.zero_magnitude += int(np.count_nonzero(target == 0))
         self.negative_magnitude += int(np.count_nonzero(magnitude < 0))
         self.zero_saved += int(np.count_nonzero(scale == 0))
-        self.zero_reference += int(np.count_nonzero(reference_scale == 0))
         self.nonzero_magnitude_zero_saved += int(np.count_nonzero((target != 0) & (scale == 0)))
         self.zero_magnitude_nonzero_saved += int(np.count_nonzero((target == 0) & (scale != 0)))
         comparable = np.flatnonzero((target != 0) & (scale != 0))
@@ -100,6 +98,10 @@ class DoraRows:
                     "row_norm_factor": _factor(value),
                     "log2_row_norm_factor": value,
                 }
+        if reference is None:
+            return
+        reference_units, reference_scale, _ = _unit_rows(reference)
+        self.zero_reference += int(np.count_nonzero(reference_scale == 0))
         directions = (scale != 0) & (reference_scale != 0)
         if directions.any():
             cosine = np.clip(np.einsum("ij,ij->i", units, reference_units)[directions], -1, 1)
@@ -108,8 +110,8 @@ class DoraRows:
             self.direction_max = max(self.direction_max, float(np.max(cosine)))
             self.direction_total = math.fsum((self.direction_total, float(np.sum(cosine))))
 
-    def result(self) -> dict[str, Any]:
-        return {
+    def result(self, *, include_direction: bool = True) -> dict[str, Any]:
+        result = {
             "rows": self.rows,
             "zero_magnitude_rows": self.zero_magnitude,
             "negative_magnitude_rows": self.negative_magnitude,
@@ -129,6 +131,11 @@ class DoraRows:
                 self.norm_log2_abs_total / self.norm_pairs if self.norm_pairs else None
             ),
             "largest_nonzero_log2_norm_error": self.largest_norm_ratio_error,
+        }
+        if not include_direction:
+            return result
+        return {
+            **result,
             "zero_numerical_reference_rows": self.zero_reference,
             "direction_comparable_rows": self.direction_pairs,
             "direction_cosine_range": (
