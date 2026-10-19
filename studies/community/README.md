@@ -1,4 +1,4 @@
-# An unchanged public adapter, merged in FP32 and BF16
+# An unchanged public adapter, merged in FP32, FP16 and BF16
 
 This study uses the public
 [hfm8tr/smollm2-135m-smoltalk-lora](https://huggingface.co/hfm8tr/smollm2-135m-smoltalk-lora/tree/fb39c7012c3b125f94d2bb1a093254994053f4ca)
@@ -21,21 +21,21 @@ and source do not relicense either upstream artifact.
 
 `merge.py` hash-checks the downloaded files, then uses built-in Transformers
 Llama code and PEFT 0.21.0 locally, with `trust_remote_code=False`, offline mode
-and `local_files_only=True`. It makes two new merges with FP32 adapter factors:
-one FP32 base and one BF16 base, each through
+and `local_files_only=True`. It makes three new merges with FP32 adapter factors:
+an FP32, FP16 and BF16 base, each through
 `merge_and_unload(safe_merge=False)`. The resulting HF safetensors shards are
 the actual audit inputs. This is not a claim about a third party's deployed merge.
 
-| Measurement | FP32 merge | BF16 merge |
-| --- | ---: | ---: |
-| Complete checkpoint tensors checked | 272 | 272 |
-| Adapted matrices | 60 | 60 |
-| Nonzero reference update entries | 13,271,040 | 13,271,040 |
-| Entries unchanged from the dtype-cast base | 105 | 5,886,980 |
-| Share of nonzero updates with no observed change | 0.000791% | 44.36% |
-| Reference squared norm at unchanged positions | 1.24e-13% | 15.05% |
-| Unadapted tensors differing from cast base | 0 / 212 | 0 / 212 |
-| Per-layer relative residual range | 0.00000184–0.00001187 | 0.1212–0.5761 |
+| Measurement | FP32 merge | FP16 merge | BF16 merge |
+| --- | ---: | ---: | ---: |
+| Complete checkpoint tensors checked | 272 | 272 | 272 |
+| Adapted matrices | 60 | 60 | 60 |
+| Nonzero reference update entries | 13,271,040 | 13,271,040 | 13,271,040 |
+| Entries unchanged from the dtype-cast base | 105 | 973,661 | 5,886,980 |
+| Share of nonzero updates with no observed change | 0.000791% | 7.34% | 44.36% |
+| Reference squared norm at unchanged positions | 1.24e-13% | 0.1044% | 15.05% |
+| Unadapted tensors differing from cast base | 0 / 212 | 0 / 212 | 0 / 212 |
+| Per-layer relative residual range | 0.00000184-0.00001187 | 0.01510-0.09582 | 0.1212-0.5761 |
 
 These are counts and norms over saved weights. Small entries count equally
 with large ones in the 44.36% count fraction. Those unchanged entries contain
@@ -43,7 +43,7 @@ with large ones in the 44.36% count fraction. Those unchanged entries contain
 matrices, not averaged from per-layer percentages. Changed positions can still
 undershoot, overshoot or reverse direction, so neither percentage measures
 retained observed energy, accuracy loss or downstream quality. No matrix disappears
-entirely in either merge. The dense reference is numerical binary64, and
+entirely in any merge. The dense reference is numerical binary64, and
 producer matmul/addition precision can differ.
 
 The [full receipt](results/verification.json) records every layer, largest-residual
@@ -52,6 +52,11 @@ version. The independent dense PyTorch oracle checks the same quantities as the
 [controlled native study](../native-peft/README.md), including all unadapted
 weights and different audit block settings. It uses PEFT's configuration resolver
 for scale, not the auditor's scale parser.
+
+Adding FP16 reproduced every earlier FP32/BF16 output file hash, keeping those
+original cases identical. This is a measurement on one configured public base
+and adapter, not a general precision recommendation or an overflow guarantee
+for other models. Base dtype conversion remains separate from adapter changes.
 
 The [separate forward study](../forward/README.md) runs the exact saved merges
 and unmerged adapter on six authored texts. It records actual logit and token

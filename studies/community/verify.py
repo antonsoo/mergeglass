@@ -30,7 +30,7 @@ def main() -> None:
             path = root / merge["name"] / item["file"]
             assert path.stat().st_size == item["bytes"]
             assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"]
-    cases = [oracle.verify(root, "merged-f32"), oracle.verify(root, "merged-bf16")]
+    cases = [oracle.verify(root, name) for name in ("merged-f32", "merged-f16", "merged-bf16")]
     for case in cases:
         report = case["report"]
         case["aggregate"] = {

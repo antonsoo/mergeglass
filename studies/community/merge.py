@@ -23,7 +23,11 @@ def main() -> None:
             assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"]
     torch.set_num_threads(1)
     merges = []
-    for name, dtype in [("merged-f32", torch.float32), ("merged-bf16", torch.bfloat16)]:
+    for name, dtype in [
+        ("merged-f32", torch.float32),
+        ("merged-f16", torch.float16),
+        ("merged-bf16", torch.bfloat16),
+    ]:
         base = AutoModelForCausalLM.from_pretrained(
             root / "base", dtype=dtype, local_files_only=True, trust_remote_code=False
         )

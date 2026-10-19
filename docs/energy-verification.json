@@ -1,0 +1,51 @@
+{
+  "source_commit": "fdc1e3293abe197c26ec91a6865bc04bc59fda5f",
+  "source_archive_sha256": "8021736035e565eb6ce54c39ea9eb6d508f63ebdfcc0c8a3664eacdd104f291a",
+  "artifacts": [
+    {
+      "file": "mergeglass-0.1.0-py3-none-any.whl",
+      "bytes": 20833,
+      "sha256": "b95155efa1fd7410a149621d06e17a6769b1d669e063332cd848545ba2e72963"
+    },
+    {
+      "file": "mergeglass-0.1.0.tar.gz",
+      "bytes": 387743,
+      "sha256": "d43d89a548e95f769675b80f0ff6a7a33bde305a2d2a6bb502c5cc52bd4812c1"
+    }
+  ],
+  "installed_environments": [
+    {
+      "environment": "minimum",
+      "python": "3.10.21",
+      "wheel_content_files_identical": 10,
+      "installer_record_excluded": true
+    },
+    {
+      "environment": "wheel-current",
+      "python": "3.15.0",
+      "wheel_content_files_identical": 10,
+      "installer_record_excluded": true
+    },
+    {
+      "environment": "producer-clean",
+      "python": "3.12.12",
+      "wheel_content_files_identical": 10,
+      "installer_record_excluded": true
+    }
+  ],
+  "checks": {
+    "clean_archive_tests": 55,
+    "minimum_installed_tests": 55,
+    "independent_build_bytes_match": true,
+    "all_native_cases_and_public_energy_checked_by_dense_oracle": true,
+    "minimum_dependencies_complete_public_report_agrees": true
+  },
+  "public_bf16": {
+    "unchanged_entry_fraction": 0.44359598042052467,
+    "unchanged_reference_energy_fraction": 0.1504909218708162
+  },
+  "publication": {
+    "source_pushed": true,
+    "pypi_release_created": false
+  }
+}

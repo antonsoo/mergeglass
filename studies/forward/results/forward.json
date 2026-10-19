@@ -1,7 +1,7 @@
 {
   "scope": "numerical forward probes on authored text; not a task-quality evaluation",
-  "community_merge_receipt_sha256": "184b4b61d98646c7af921a619e75d59524556b44b392828bde59d9ea59b6a039",
-  "script_sha256": "5356c4705f3e24da912679e50a10ba8e9140ee0bfd57971b27de96b440178e97",
+  "community_merge_receipt_sha256": "14270b205d0b0ad7fc849f13bbcb576a50f598ef403014381ebfeca4aaa64ea9",
+  "script_sha256": "3aa16b2cb7592e88d56c939bc3a1a49eacbcb579d70b01f174327e3f0ab5f60f",
   "probes_source_sha256": "c82d38bb9b9e065d8a956a47be2d8b3e78312949aec268b4ff7152053b5057ba",
   "tokenizer": {
     "repository": "HuggingFaceTB/SmolLM2-135M",
@@ -452,6 +452,242 @@
       ]
     },
     {
+      "name": "base-f16",
+      "adapter_dtypes": [],
+      "outputs": [
+        {
+          "probe": "merge-explanation",
+          "file": "base-f16-merge-explanation.npy",
+          "bytes": 4915328,
+          "sha256": "b447c9af68d5371546327ba399096c41cf9aee64d0570bbbbe246675f50eba93",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            25,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "python-function",
+          "file": "base-f16-python-function.npy",
+          "bytes": 4915328,
+          "sha256": "a22068906569ea3e13167aa6021043c651391719d26f87c749eb4248a91a0101",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            25,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "calendar-reasoning",
+          "file": "base-f16-calendar-reasoning.npy",
+          "bytes": 4325504,
+          "sha256": "271d08741bf60099add57a156919dd622adfc55986262da966f6e5743947e8cc",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            22,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "table-reading",
+          "file": "base-f16-table-reading.npy",
+          "bytes": 5898368,
+          "sha256": "fd33fb694b0b00e4e643037a7c39e47cceb1cf572747ef4d083e6f7d7ca132ba",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            30,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "checkpoint-handling",
+          "file": "base-f16-checkpoint-handling.npy",
+          "bytes": 3932288,
+          "sha256": "c7e5bbfea7ccf07e4dd540bd2d13a2b8933d3392a4dae503a83377a161db91d2",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            20,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "conversation-format",
+          "file": "base-f16-conversation-format.npy",
+          "bytes": 4718720,
+          "sha256": "de7da7d9e311344d87832ec09c7d795ef13a6d9f244e32ea6a95dfd09ad5bcae",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            24,
+            49152
+          ],
+          "repeated_forward_identical": true
+        }
+      ]
+    },
+    {
+      "name": "wrapped-f16",
+      "adapter_dtypes": [
+        "torch.float32"
+      ],
+      "outputs": [
+        {
+          "probe": "merge-explanation",
+          "file": "wrapped-f16-merge-explanation.npy",
+          "bytes": 4915328,
+          "sha256": "1bb41478b81104a9f18f0b78fe8f52f5da580b42786de9f398ab71dcbd51c435",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            25,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "python-function",
+          "file": "wrapped-f16-python-function.npy",
+          "bytes": 4915328,
+          "sha256": "13ad902a4ee2b98d3b2af5cf58256b10143663528a4608bae01eeac8097e54f3",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            25,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "calendar-reasoning",
+          "file": "wrapped-f16-calendar-reasoning.npy",
+          "bytes": 4325504,
+          "sha256": "ec8c6e202c5a7fc5e9c7754af57de20ed4efb5e17fe6bec65ba656655ad222ee",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            22,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "table-reading",
+          "file": "wrapped-f16-table-reading.npy",
+          "bytes": 5898368,
+          "sha256": "43a6e0c82909937662b0ef36c135d691abfce866ed1c542976d5bfafd205af2b",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            30,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "checkpoint-handling",
+          "file": "wrapped-f16-checkpoint-handling.npy",
+          "bytes": 3932288,
+          "sha256": "2c6bb823cedbd4d8bcc6cabbfd6c321bf74dbc17248ae03525a3e9195a62cc0a",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            20,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "conversation-format",
+          "file": "wrapped-f16-conversation-format.npy",
+          "bytes": 4718720,
+          "sha256": "e144b629af32bd891469187b9d0fa03c8b3b065f4b639d32ad47b60e65b2f742",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            24,
+            49152
+          ],
+          "repeated_forward_identical": true
+        }
+      ]
+    },
+    {
+      "name": "merged-f16",
+      "adapter_dtypes": [],
+      "outputs": [
+        {
+          "probe": "merge-explanation",
+          "file": "merged-f16-merge-explanation.npy",
+          "bytes": 4915328,
+          "sha256": "2c16cf33aa25c2f49a87f1fb1a2179e564fcd04b5e7354257054e08a480532b6",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            25,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "python-function",
+          "file": "merged-f16-python-function.npy",
+          "bytes": 4915328,
+          "sha256": "b8d56660421ebd29e34ec078106971358d1c19214677fe0e049e625df918b71c",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            25,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "calendar-reasoning",
+          "file": "merged-f16-calendar-reasoning.npy",
+          "bytes": 4325504,
+          "sha256": "b59bbc811237af7edc746b9a4b85e48fb177c81da49188dbae0e0129ce2fa555",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            22,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "table-reading",
+          "file": "merged-f16-table-reading.npy",
+          "bytes": 5898368,
+          "sha256": "4472930bc5ec0b3c50827e88a49cd60fdf84d8ec937e7ec55d8b037fe0641970",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            30,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "checkpoint-handling",
+          "file": "merged-f16-checkpoint-handling.npy",
+          "bytes": 3932288,
+          "sha256": "a2d708d02aa7a06ab019328543a8d57e1654998e44514cb5fd793c6cfbcaafb0",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            20,
+            49152
+          ],
+          "repeated_forward_identical": true
+        },
+        {
+          "probe": "conversation-format",
+          "file": "merged-f16-conversation-format.npy",
+          "bytes": 4718720,
+          "sha256": "b04bafcc12ff9484dc7647b4f696a839981dcdb4dd86eaefe8c72e0352783b23",
+          "native_logit_dtype": "torch.float16",
+          "shape": [
+            24,
+            49152
+          ],
+          "repeated_forward_identical": true
+        }
+      ]
+    },
+    {
       "name": "base-bf16",
       "adapter_dtypes": [],
       "outputs": [
@@ -767,6 +1003,89 @@
       ]
     },
     {
+      "reference": "wrapped-f16",
+      "candidate": "merged-f16",
+      "meaning": "FP16 saved merge versus unmerged FP16 base/FP32 factors",
+      "positions": 146,
+      "changed_top1_positions": 1,
+      "max_abs_logit_difference": 0.46875,
+      "mean_probability_total_variation": 0.0032610652353642273,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.46875,
+          "logit_rmse": 0.04984572208189124,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.004098860944113466,
+          "max_probability_total_variation": 0.021191162528152153,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.1640625,
+          "logit_rmse": 0.019196060880877136,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.003451250899606484,
+          "max_probability_total_variation": 0.013226559538436483,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.46875,
+          "logit_rmse": 0.052718562432835014,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0029264133542137995,
+          "max_probability_total_variation": 0.021191162528152153,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.296875,
+          "logit_rmse": 0.028628498789154935,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0022698576350696402,
+          "max_probability_total_variation": 0.019721037097245382,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.080078125,
+          "logit_rmse": 0.017522761588836363,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.003456531724569763,
+          "max_probability_total_variation": 0.007366848743325804,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.234375,
+          "logit_rmse": 0.030150229737394767,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.003573136288916265,
+          "max_probability_total_variation": 0.014549881022431523,
+          "first_top1_changes": [
+            {
+              "position": 17,
+              "reference_token_id": 6850,
+              "candidate_token_id": 282
+            }
+          ]
+        }
+      ]
+    },
+    {
       "reference": "wrapped-bf16",
       "candidate": "merged-bf16",
       "meaning": "BF16 saved merge versus unmerged BF16 base/FP32 factors",
@@ -1035,6 +1354,158 @@
       ]
     },
     {
+      "reference": "base-f16",
+      "candidate": "wrapped-f16",
+      "meaning": "adapter's observed effect in the FP16 runtime",
+      "positions": 146,
+      "changed_top1_positions": 14,
+      "max_abs_logit_difference": 2.671875,
+      "mean_probability_total_variation": 0.05109721451061385,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 2.078125,
+          "logit_rmse": 0.3975524361181486,
+          "changed_top1_positions": 4,
+          "mean_probability_total_variation": 0.06103984339262671,
+          "max_probability_total_variation": 0.10996437911850585,
+          "first_top1_changes": [
+            {
+              "position": 0,
+              "reference_token_id": 30,
+              "candidate_token_id": 25
+            },
+            {
+              "position": 8,
+              "reference_token_id": 28,
+              "candidate_token_id": 277
+            },
+            {
+              "position": 12,
+              "reference_token_id": 450,
+              "candidate_token_id": 14210
+            },
+            {
+              "position": 13,
+              "reference_token_id": 6736,
+              "candidate_token_id": 30
+            }
+          ]
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 2.19921875,
+          "logit_rmse": 0.4383242092834057,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.03712241527953929,
+          "max_probability_total_variation": 0.08131605088261609,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 2.134765625,
+          "logit_rmse": 0.35595536939481726,
+          "changed_top1_positions": 3,
+          "mean_probability_total_variation": 0.050714329713421685,
+          "max_probability_total_variation": 0.1261791236522368,
+          "first_top1_changes": [
+            {
+              "position": 0,
+              "reference_token_id": 30,
+              "candidate_token_id": 25
+            },
+            {
+              "position": 10,
+              "reference_token_id": 582,
+              "candidate_token_id": 8567
+            },
+            {
+              "position": 16,
+              "reference_token_id": 808,
+              "candidate_token_id": 1596
+            }
+          ]
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 1.94921875,
+          "logit_rmse": 0.3950693329955344,
+          "changed_top1_positions": 2,
+          "mean_probability_total_variation": 0.03492780032701557,
+          "max_probability_total_variation": 0.10454271516470734,
+          "first_top1_changes": [
+            {
+              "position": 6,
+              "reference_token_id": 28,
+              "candidate_token_id": 42
+            },
+            {
+              "position": 8,
+              "reference_token_id": 33,
+              "candidate_token_id": 34
+            }
+          ]
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 2.671875,
+          "logit_rmse": 0.39047389204886807,
+          "changed_top1_positions": 3,
+          "mean_probability_total_variation": 0.07339724937488996,
+          "max_probability_total_variation": 0.11548084492219007,
+          "first_top1_changes": [
+            {
+              "position": 0,
+              "reference_token_id": 260,
+              "candidate_token_id": 346
+            },
+            {
+              "position": 10,
+              "reference_token_id": 260,
+              "candidate_token_id": 601
+            },
+            {
+              "position": 11,
+              "reference_token_id": 725,
+              "candidate_token_id": 27759
+            }
+          ]
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 1.5703125,
+          "logit_rmse": 0.36159754538096,
+          "changed_top1_positions": 2,
+          "mean_probability_total_variation": 0.05727677503091374,
+          "max_probability_total_variation": 0.0902475751132622,
+          "first_top1_changes": [
+            {
+              "position": 15,
+              "reference_token_id": 260,
+              "candidate_token_id": 346
+            },
+            {
+              "position": 17,
+              "reference_token_id": 282,
+              "candidate_token_id": 6850
+            }
+          ]
+        }
+      ]
+    },
+    {
       "reference": "base-bf16",
       "candidate": "wrapped-bf16",
       "meaning": "adapter's observed effect in the BF16 runtime",
@@ -1286,6 +1757,83 @@
               "candidate_token_id": 282
             }
           ]
+        }
+      ]
+    },
+    {
+      "reference": "wrapped-f32",
+      "candidate": "wrapped-f16",
+      "meaning": "runtime dtype difference; not solely merge rounding",
+      "positions": 146,
+      "changed_top1_positions": 0,
+      "max_abs_logit_difference": 0.532963752746582,
+      "mean_probability_total_variation": 0.0030739360758551245,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.20176315307617188,
+          "logit_rmse": 0.01806580021140919,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.002857484979457895,
+          "max_probability_total_variation": 0.012507962720556333,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.5256338119506836,
+          "logit_rmse": 0.027461511250025494,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0038184158709340904,
+          "max_probability_total_variation": 0.03665298573461086,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.20176315307617188,
+          "logit_rmse": 0.024009709859129792,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0027563422293828905,
+          "max_probability_total_variation": 0.012507962720556333,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.18485641479492188,
+          "logit_rmse": 0.01950502730550847,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.002118121233668341,
+          "max_probability_total_variation": 0.016395246973801403,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.532963752746582,
+          "logit_rmse": 0.056220276148314666,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.004264067085772811,
+          "max_probability_total_variation": 0.026551399042502463,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.17195701599121094,
+          "logit_rmse": 0.017998129886862994,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.003018026585129937,
+          "max_probability_total_variation": 0.01485988947642444,
+          "first_top1_changes": []
         }
       ]
     }

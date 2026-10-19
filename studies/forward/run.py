@@ -95,7 +95,11 @@ def main() -> None:
     torch.set_num_threads(1)
     torch.manual_seed(71022)
     profiles = []
-    for precision, dtype in [("f32", torch.float32), ("bf16", torch.bfloat16)]:
+    for precision, dtype in [
+        ("f32", torch.float32),
+        ("f16", torch.float16),
+        ("bf16", torch.bfloat16),
+    ]:
         for kind in ("base", "wrapped", "merged"):
             folder = root / (f"merged-{precision}" if kind == "merged" else "base")
             model = AutoModelForCausalLM.from_pretrained(
@@ -146,10 +150,13 @@ def main() -> None:
     comparisons = []
     for reference, candidate, meaning in [
         ("wrapped-f32", "merged-f32", "FP32 saved merge versus unmerged FP32 adapter"),
+        ("wrapped-f16", "merged-f16", "FP16 saved merge versus unmerged FP16 base/FP32 factors"),
         ("wrapped-bf16", "merged-bf16", "BF16 saved merge versus unmerged BF16 base/FP32 factors"),
         ("base-f32", "wrapped-f32", "adapter's observed effect in the FP32 runtime"),
+        ("base-f16", "wrapped-f16", "adapter's observed effect in the FP16 runtime"),
         ("base-bf16", "wrapped-bf16", "adapter's observed effect in the BF16 runtime"),
         ("wrapped-f32", "wrapped-bf16", "runtime dtype difference; not solely merge rounding"),
+        ("wrapped-f32", "wrapped-f16", "runtime dtype difference; not solely merge rounding"),
     ]:
         measurements = []
         for probe in probes:

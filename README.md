@@ -22,6 +22,7 @@ native PEFT merges of a pinned SmolLM2-135M base produced:
 | Saved merge | Nonzero intended update entries | Entries unchanged from base | Share unchanged | Reference squared norm at unchanged entries |
 | --- | ---: | ---: | ---: | ---: |
 | FP32 | 13,271,040 | 105 | 0.000791% | 1.24e-13% |
+| FP16 | 13,271,040 | 973,661 | 7.34% | 0.1044% |
 | BF16 | 13,271,040 | 5,886,980 | 44.36% | 15.05% |
 
 All 60 adapted matrices had some observed change. All 212 unadapted tensors
@@ -36,8 +37,9 @@ the exact pinned artifacts; no third-party weights are redistributed here.
 
 Actual forwards provide a separate measurement. On six authored probes with
 146 shared prefix positions, FP32 merging changed no greedy next-token choices
-relative to the unmerged adapter; BF16 merging changed six. Mean probability
-total variation was 0.000001612 and 0.02337044, respectively. These short probes
+relative to the unmerged adapter; FP16 changed one and BF16 changed six. Mean
+probability total variation was 0.000001612, 0.00326107 and 0.02337044, respectively.
+These short probes
 compare numerical behavior, **not accuracy or free-running generation**.
 [Runtime settings, original token IDs and complete results](studies/forward/README.md).
 

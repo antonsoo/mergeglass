@@ -41,3 +41,28 @@ installed artifacts, public source, CI or generation quality as interchangeable
 claims. The [public native study](../studies/community/README.md),
 [failure controls](../studies/merge-controls/README.md) and
 [orientation study](../studies/orientation/README.md) retain their own evidence.
+
+## Reference-energy measurements at fdc1e32
+
+The [additional receipt](energy-verification.json) identifies source
+`fdc1e3293abe197c26ec91a6865bc04bc59fda5f`, its archive and build artifacts.
+The clean archived source completes the quickstart, lint/format, strict mypy,
+55 contract cases and build. Minimum-dependency installed checks also complete
+all 55 cases and reproduce the complete public BF16 report. All runtime and
+metadata content files agree with the built wheel in three installed environments;
+the installer's rewritten `RECORD` is excluded from a byte comparison.
+
+The dense oracle independently checks per-layer and global squared-reference
+norm fractions on the unchanged native artifacts. For the public BF16 case,
+44.36% of entries remain unchanged, containing 15.05% of the reference squared
+norm. The calculation also handles tests where raw squares underflow/overflow
+and where the combined unnormalized norm exceeds binary64 range.
+
+| File at this source snapshot | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `mergeglass-0.1.0-py3-none-any.whl` | 20,833 | `b95155efa1fd7410a149621d06e17a6769b1d669e063332cd848545ba2e72963` |
+| `mergeglass-0.1.0.tar.gz` | 387,743 | `d43d89a548e95f769675b80f0ff6a7a33bde305a2d2a6bb502c5cc52bd4812c1` |
+
+The subsequent FP16 study extends the native producer and forward comparisons;
+it leaves these runtime modules unchanged. The pinned snapshot remains the
+boundary for the artifact identities above.

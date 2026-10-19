@@ -14,9 +14,12 @@ roll out free-running completions.
 | Comparison on these 146 prefix positions | Changed greedy next-token choices | Maximum absolute logit difference | Mean probability total variation |
 | --- | ---: | ---: | ---: |
 | FP32 saved merge versus unmerged FP32 adapter | 0 | 0.00007153 | 0.000001612 |
+| FP16 saved merge versus unmerged FP16 base + FP32 adapter factors | 1 | 0.46875 | 0.00326107 |
 | BF16 saved merge versus unmerged BF16 base + FP32 adapter factors | 6 | 2.375 | 0.02337044 |
+| Unmerged FP16 runtime versus unmerged FP32 runtime | 0 | 0.5329638 | 0.00307394 |
 | Unmerged BF16 runtime versus unmerged FP32 runtime | 7 | 5.392186 | 0.02583185 |
 | Unmerged FP32 adapter versus base-only FP32 | 15 | 2.679738 | 0.05079504 |
+| Unmerged FP16 adapter versus base-only FP16 | 14 | 2.671875 | 0.05109721 |
 | Unmerged BF16 adapter versus base-only BF16 | 11 | 2.6875 | 0.05612345 |
 
 Total variation is `sum(abs(softmax(candidate) - softmax(reference))) / 2`,
@@ -40,7 +43,7 @@ separate from the merge comparisons.
 The [receipt](results/forward.json) retains exact probe text and token IDs,
 the revision/hash of the original tokenizer, all producer versions and settings,
 per-probe measurements, concrete changed top-1 token IDs, and hashes/shapes of
-all 36 full-logit arrays. Large logits and third-party weights stay in throwaway
+all 54 full-logit arrays. Large logits and third-party weights stay in throwaway
 storage. The original model/adapter and native merged checkpoint hashes must
 match the previously recorded public merge receipt before any model executes.
 
@@ -57,10 +60,11 @@ The wrapped profiles keep FP32 adapter factors. No chat template is inferred
 from the adapter. These choices make the comparison explicit; they do not
 establish instruction quality or behavior under another execution kernel.
 
-Every forward is repeated and must return bit-identical logits. A second
-independent process also reproduced all 36 stored logit arrays byte for byte.
-This establishes reproducibility on this pinned runtime and host, rather than
-cross-platform numerical identity.
+Every forward is repeated and must return bit-identical logits. The 36 original
+FP32/BF16 arrays also reproduce across independent processes, including after
+adding FP16 profiles. A separate NumPy calculation checks all 48 per-probe
+comparison measurements. This establishes observed reproducibility on this
+pinned runtime and host, rather than cross-platform numerical identity.
 
 ## Reproduce
 
@@ -75,6 +79,6 @@ The first run explicitly retrieves the pinned tokenizer if it is absent from
 the output directory. After that file is cached, model loading and inference
 operate only on local files. `HF_HUB_OFFLINE` constrains Hub loaders; the explicit
 tokenizer preparation fetch remains visible in the script. The output directory
-stores roughly 170 MiB of logits, plus the tokenizer; use throwaway storage.
+stores roughly 250 MiB of logits, plus the tokenizer; use throwaway storage.
 Compare the new small JSON with the retained receipt using tolerances suitable
 for another platform. Check its versions/settings before interpreting differences.
