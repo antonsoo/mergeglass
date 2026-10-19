@@ -7,6 +7,8 @@ adapter and the configured
 Their exact revisions, file sizes and SHA-256 values are pinned in
 [sources.json](sources.json). The four original files total 270,921,059 bytes.
 They are fetched unchanged to local throwaway storage and are not redistributed.
+Reports retain a few scalar weight values at the largest-residual coordinates;
+they contain no complete tensor or checkpoint payload.
 
 The author's card describes a learning project trained on 2,000 SmolTalk
 everyday-conversation samples. Those training claims and original base revision
@@ -63,4 +65,3 @@ The saved merged checkpoints need additional disk space. `fetch.py` reuses only
 hash-verified cached files. Output weights remain outside the repository. If
 upstream files disappear, the source and recorded hashes remain inspectable;
 the downloaded weights are not bundled as a fallback.
-

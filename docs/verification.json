@@ -1,0 +1,209 @@
+{
+  "date": "2026-10-19",
+  "source_commit": "ea93d6811eeb141d0ba4e85f976842bb03d5770b",
+  "archive_sha256": "760c5cb8e60c73dd6b6b66a92756a84dc88c76d25a0647bb959a4430b9d12768",
+  "archived_files": {
+    ".editorconfig": "f66d1aeedbe3f57871ab939f40ca05c7ee70750cc8651c1c11783908da8e0259",
+    ".github/workflows/ci.yml": "2bdc13268616dd253ed50de8074742255efeda775a4375a61bafb1f81ee46d0d",
+    ".gitignore": "d882c609443e5af8a7e154b6063d43e82d01d65d2ed9c3eea9ff8208d502a2ec",
+    "CHANGELOG.md": "d85fc8e1e23602573e19712c7018aca9558aaa76e1a021bb4ff51b2a117fec07",
+    "CONTRIBUTING.md": "33734384d31000923d746959da2e2c8adc9f4e38448bc0ff1fb87a522a735f9c",
+    "LICENSE": "989d70c5d12b126ecb1742dee253d116fc61ad52095bb0f16a6fab3305ebf467",
+    "README.md": "655c25f9bffc8cb892d58adbc343232dbd06ff9ec8e9f4a6e6481c3533f70bc1",
+    "docs/arithmetic.md": "0bc42d62c66f7cc686a773abc657e5bec994f0130a06b5d40dc87d04ce2d957e",
+    "docs/assets/rounding.png": "62e0fdf55894db4b20de3a705a36f3bd88e7385ed46a6e64dcb0b4a7c9d450a7",
+    "docs/assets/rounding.txt": "04948d51be923099834fe7bee691b5354e9d429b0339da7ec1f7681909560e03",
+    "examples/rounding/adapter/adapter_config.json": "3108ec14d0e0881e6ebb10272ca3c0061756eebaf5ec0868d3765c172f66af3a",
+    "examples/rounding/adapter/adapter_model.safetensors": "9548783b1d515f7f1cf0f75f0daf9820f476cb2f2ffac4b527b98c9c55f35e4b",
+    "examples/rounding/base/model.safetensors": "f31739f63a137348502c23a605837c8885d0a525aeda97385931c0cfb0eefe34",
+    "examples/rounding/merged-bf16/model.safetensors": "4a91d94d7e5353c967d7ded800500cdc4ec0e432ad85b6655eb337017610846e",
+    "examples/rounding/merged-f16/model.safetensors": "3b3f993391b755900919103ae77911e1108347890181ae5599ee8d3d744c9932",
+    "examples/rounding/merged-f32/model.safetensors": "dc54cadd19f6678ff9c15d2c0c66bdd14df626440ab0bb3a0a90b687074772f6",
+    "examples/rounding/omitted/model.safetensors": "f31739f63a137348502c23a605837c8885d0a525aeda97385931c0cfb0eefe34",
+    "examples/rounding/producer.json": "4ae9206da0a4334967bba74efee6712b6efe884811ba7353452507637465c4fc",
+    "examples/rounding/unrelated-edit/model.safetensors": "6779fdb072cb3617754df7a246642fa7021278d48f9391acf81aa0413f7958c1",
+    "pyproject.toml": "1fdb616152276ab5c5320d3c39659d150f4fc81a35d198fcbb12474ad0e5981e",
+    "src/mergeglass/__init__.py": "10ea91c0beb8fc6c9b2390d0e89c09dc51598c11a2837f8f780f64b5514877a9",
+    "src/mergeglass/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src/mergeglass/adapter.py": "5c442f48a5544132f267323888ab5351c1f266e5721b34f54e38911c28bc1e0a",
+    "src/mergeglass/audit.py": "91eb00d0c3d84fb4eb68d6ff6708ea27774a914d7f906ea077026ad8a38af7e9",
+    "src/mergeglass/cli.py": "fc0f5f04ecfa3d580f6ba77cdde2787a4728d237cf304d0077914a021209930c",
+    "src/mergeglass/storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+    "studies/community/README.md": "5a7f67229a760e4084f70612bb4a7fcda39e4ad9060bc3e4b3decf0c0366cca7",
+    "studies/community/fetch.py": "5718a021cb80ebb1d0749647877fa3eb9ffd571ea6570ad0396d2671b7f69351",
+    "studies/community/merge.py": "4a6838b200fb5b88cfa644db4f6841d468b21fa6d13194ba093bf63134c8debf",
+    "studies/community/results/verification.json": "0dc4751b87863d71a15951503a7ad5c4b976e50d6e116335e9576414fd66bf7c",
+    "studies/community/sources.json": "995c9fc64c6098b0485caf2a061d50d2d35acaa21e3f6e5465b069aead2105d2",
+    "studies/community/verify.py": "78821c30c9e0ae694c3a8e1e413fab70d7095b6510da01a215676f03ef6141e4",
+    "studies/native-peft/README.md": "944f785a2d287d7262af2a91b157a86a5de9cbf3cf303c64e23479a7b4413a19",
+    "studies/native-peft/produce.py": "95496a9c5970c272798ca2455e13af7e7d36bfcf5a6444d1e759868ef1a3827e",
+    "studies/native-peft/requirements.txt": "86dc30d1746f5842a84a02d8489b9b51586ca362bb7a0e63b166af550bf4fe1d",
+    "studies/native-peft/results/verification.json": "f754418414e122d35533f7089d95ded6a10aa750592646c43d6c827b9a47fe25",
+    "studies/native-peft/transformer.py": "c9aeffd2db8f3186c0ed59be3151f0be81e47c2dadc8bc7b9287d7175aae5d34",
+    "studies/native-peft/verify.py": "f38fede0e871ae5c30ec09286f8bb9c1f143197bb39df23e06096d333b11e697",
+    "studies/rounding/README.md": "6a9cda21044c79bfb0dd104b4795e4013cf6b9e6e902338338b1027e416ac1c8",
+    "studies/rounding/oracle.py": "105fb07b0c07b0964d3c49f98f3ca9d9833a03d5be88c9d0c58768c790d2fc8c",
+    "studies/rounding/results/oracle.json": "6df781b42bc8057fee8d4e6c9710955c3f610437537d9ea7346e2b08b8efe91d",
+    "studies/streaming/README.md": "7a71353975f6ffe741e4b700e16c8bee3a06061fcfa2f81327d6b4d01785e6bd",
+    "studies/streaming/benchmark.py": "8573fbad8997558b55ffd029987d26af80898a39c7a113b0b61c4732a3e27f89",
+    "studies/streaming/results/benchmark.json": "ec8f2605fb875c984cc7fcd85dabaa5944efac29b320b1cee040bcbef8aa1b2f",
+    "tests/test_audit.py": "f1f1e52f7539dc6deece1d87bd6be4bcee060394f7f6c7bcc27f7c1448d11067",
+    "tests/test_contracts.py": "d5686285bb298ff65515fc3fb2eaa826fbde8ceb1be1243542e5cb4331aec011",
+    "uv.lock": "1351b0a6a158577f9bbf7739912ceadeb03fab41e97cc91de0ad7e0895f101a0"
+  },
+  "runtime_modules": {
+    "__init__.py": "10ea91c0beb8fc6c9b2390d0e89c09dc51598c11a2837f8f780f64b5514877a9",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "5c442f48a5544132f267323888ab5351c1f266e5721b34f54e38911c28bc1e0a",
+    "audit.py": "91eb00d0c3d84fb4eb68d6ff6708ea27774a914d7f906ea077026ad8a38af7e9",
+    "cli.py": "fc0f5f04ecfa3d580f6ba77cdde2787a4728d237cf304d0077914a021209930c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "artifacts": {
+    "mergeglass-0.1.0-py3-none-any.whl": {
+      "bytes": 18665,
+      "sha256": "a5491e33d09e27b189bb6f2035e92a51c66a1171fab1c8f1c1656e3f35ecf8d5",
+      "built_from_verified_archive": true,
+      "working_checkout_build_byte_identical": true
+    },
+    "mergeglass-0.1.0.tar.gz": {
+      "bytes": 300668,
+      "sha256": "a4f983794dfdf27bf3d90cc21fa5f40ad9bdcdb2263ba501085927f446614fcf",
+      "built_from_verified_archive": true,
+      "wheel_build_from_sdist_passed": true
+    }
+  },
+  "environments": [
+    {
+      "python": "3.15.0",
+      "versions": {
+        "mergeglass": "0.1.0",
+        "numpy": "2.5.4",
+        "safetensors": "0.8.0"
+      },
+      "torch_present": false,
+      "modules": {
+        "__init__.py": "10ea91c0beb8fc6c9b2390d0e89c09dc51598c11a2837f8f780f64b5514877a9",
+        "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "adapter.py": "5c442f48a5544132f267323888ab5351c1f266e5721b34f54e38911c28bc1e0a",
+        "audit.py": "91eb00d0c3d84fb4eb68d6ff6708ea27774a914d7f906ea077026ad8a38af7e9",
+        "cli.py": "fc0f5f04ecfa3d580f6ba77cdde2787a4728d237cf304d0077914a021209930c",
+        "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+      },
+      "isolated_site_packages": true,
+      "role": "wheel-current"
+    },
+    {
+      "python": "3.10.21",
+      "versions": {
+        "mergeglass": "0.1.0",
+        "numpy": "1.24.0",
+        "safetensors": "0.6.2"
+      },
+      "torch_present": false,
+      "modules": {
+        "__init__.py": "10ea91c0beb8fc6c9b2390d0e89c09dc51598c11a2837f8f780f64b5514877a9",
+        "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "adapter.py": "5c442f48a5544132f267323888ab5351c1f266e5721b34f54e38911c28bc1e0a",
+        "audit.py": "91eb00d0c3d84fb4eb68d6ff6708ea27774a914d7f906ea077026ad8a38af7e9",
+        "cli.py": "fc0f5f04ecfa3d580f6ba77cdde2787a4728d237cf304d0077914a021209930c",
+        "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+      },
+      "isolated_site_packages": true,
+      "role": "minimum"
+    },
+    {
+      "python": "3.12.12",
+      "versions": {
+        "mergeglass": "0.1.0",
+        "numpy": "2.5.4",
+        "safetensors": "0.8.0"
+      },
+      "torch_present": true,
+      "modules": {
+        "__init__.py": "10ea91c0beb8fc6c9b2390d0e89c09dc51598c11a2837f8f780f64b5514877a9",
+        "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "adapter.py": "5c442f48a5544132f267323888ab5351c1f266e5721b34f54e38911c28bc1e0a",
+        "audit.py": "91eb00d0c3d84fb4eb68d6ff6708ea27774a914d7f906ea077026ad8a38af7e9",
+        "cli.py": "fc0f5f04ecfa3d580f6ba77cdde2787a4728d237cf304d0077914a021209930c",
+        "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+      },
+      "isolated_site_packages": true,
+      "role": "producer-clean"
+    }
+  ],
+  "checks": [
+    {
+      "environment": "fresh source archive; Python 3.15",
+      "command": "uv sync --locked --no-dev",
+      "exit_code": 0
+    },
+    {
+      "environment": "fresh source archive; Python 3.15",
+      "command": "uv run --no-dev mergeglass examples/rounding/base examples/rounding/adapter examples/rounding/merged-bf16 --json report.json",
+      "exit_code": 0
+    },
+    {
+      "environment": "fresh source archive; Python 3.15",
+      "command": "uv sync --locked; uv run ruff check .; uv run ruff format --check .; uv run mypy src; uv run pytest -q; uv build",
+      "exit_code": 0,
+      "tests_passed": 37
+    },
+    {
+      "environment": "installed wheel; Python 3.10; numpy 1.24.0; safetensors 0.6.2",
+      "command": "python -m pytest -q",
+      "exit_code": 0,
+      "tests_passed": 37
+    },
+    {
+      "environment": "installed wheel; Python 3.12; fresh pinned producer requirements",
+      "command": "studies/native-peft/verify.py",
+      "exit_code": 0,
+      "native_cases": 8,
+      "receipt_byte_identical_to_source_run": true
+    },
+    {
+      "environment": "installed wheel; Python 3.12; fresh pinned producer requirements",
+      "command": "studies/community/verify.py",
+      "exit_code": 0,
+      "public_merge_cases": 2,
+      "receipt_byte_identical_to_source_run": true
+    },
+    {
+      "environment": "installed wheel; Python 3.10; minimum dependencies",
+      "command": "mergeglass BASE ADAPTER MERGED_BF16 --block-mib 4 --json REPORT",
+      "exit_code": 0,
+      "public_counts_and_norms_agree": true
+    },
+    {
+      "environment": "installed wheels; Python 3.10 and Python 3.15",
+      "command": "studies/rounding/oracle.py",
+      "exit_code": 0,
+      "cases_each": 195840,
+      "disagreements_each": 0
+    }
+  ],
+  "fresh_producer_reproduction": {
+    "teaching": {
+      "files_byte_identical": 8
+    },
+    "transformer": {
+      "files_byte_identical": 50
+    }
+  },
+  "installed_benchmark": "studies/streaming/results/benchmark.json",
+  "screenshot": {
+    "file": "docs/assets/rounding.png",
+    "sha256": "fdbfa4b994e7c919a553f6efe63c12f773764e552287421d472ab72c5f98dd2a",
+    "visually_inspected": true
+  },
+  "publication": {
+    "git_remote": false,
+    "pushed": false,
+    "tagged": false,
+    "registry_release": false,
+    "hosted_demo": false
+  },
+  "scope": "Source/runtime/package/local native replay evidence; no inference-quality or publication claim",
+  "later_changes": "Verification documents, benchmark receipt and a synthetic label on the screenshot; runtime source and README are unchanged"
+}

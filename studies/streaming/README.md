@@ -12,6 +12,9 @@ worker process per setting on 14-vCPU, 48-GB WSL2 Linux, with one OpenBLAS/OMP
 thread. Elapsed time includes input validation, arithmetic and artifact hashes;
 it excludes interpreter/import startup and synthetic input creation. This is
 a warm-cache local measurement, not a cross-machine speed claim.
+The retained installed-wheel run used the shared host under ordinary session
+activity; its elapsed times are not an isolated throughput benchmark. Process RSS is the
+quantity used for the README's memory result.
 
 Preparation has its own short-lived child process. Preparing a dense input in
 the parent would contaminate the Linux peak-RSS value inherited by later workers.
