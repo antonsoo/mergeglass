@@ -93,6 +93,7 @@ def verify(root: Path, name: str) -> dict[str, Any]:
             "base_cast_drift": float(
                 torch.linalg.vector_norm(baseline - original[weight].double())
             ),
+            "unchanged_reference": float(torch.linalg.vector_norm(delta[observed == 0])),
         }
         for key, expected in norm_values.items():
             close(layer["norms"][key], expected)
@@ -106,6 +107,10 @@ def verify(root: Path, name: str) -> dict[str, Any]:
         close(
             layer["relative_residual"],
             norm_values["residual"] / denominator if denominator else None,
+        )
+        close(
+            layer["unchanged_reference_energy_fraction"],
+            (norm_values["unchanged_reference"] / denominator) ** 2 if denominator else None,
         )
         assert layer["rank"] == rank
         close(layer["scale"], scale)
@@ -144,6 +149,12 @@ def verify(root: Path, name: str) -> dict[str, Any]:
     assert len(unadapted) == report["summary"]["unadapted_changed_tensors"]
     assert (
         sum(row["changed"] for row in unadapted) == report["summary"]["unadapted_changed_elements"]
+    )
+    reference_energy = sum(layer["norms"]["delta"] ** 2 for layer in results)
+    unchanged_energy = sum(layer["norms"]["unchanged_reference"] ** 2 for layer in results)
+    close(
+        report["summary"]["unchanged_reference_energy_fraction"],
+        unchanged_energy / reference_energy if reference_energy else None,
     )
     # Blocks are a resource choice, not an arithmetic or evidence choice.
     large_blocks = audit(root / "base", root / "adapter", root / name, block_mib=16)

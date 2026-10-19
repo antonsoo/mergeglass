@@ -969,7 +969,7 @@
       }
     ]
   },
-  "oracle_source_sha256": "7e2db6bf379833131ea0fed227fd05dd7929d323239e956c98e6eed660127d8d",
+  "oracle_source_sha256": "b491be19cb0997e251fe4abb84cb7b156d6a8cdee12481ac589ad7efc247ba8f",
   "cases": [
     {
       "name": "correct-f32",
@@ -981,6 +981,7 @@
         "changed_adapted_elements": 3072,
         "unchanged_nonzero_update_elements": 0,
         "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
         "zero_update_tensors": 0,
         "no_observed_update_tensors": 0,
         "unadapted_changed_tensors": 0,
@@ -996,7 +997,8 @@
             "delta": 0.4534912717259697,
             "observed": 0.45349127338185574,
             "residual": 2.8224463129500115e-08,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 4.0,
           "rank": 4,
@@ -1012,7 +1014,8 @@
             "delta": 0.15474380492338127,
             "observed": 0.1547438039430233,
             "residual": 1.310097875611938e-08,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 2.0,
           "rank": 4,
@@ -1028,7 +1031,8 @@
             "delta": 0.45184199935315783,
             "observed": 0.45184199228802713,
             "residual": 2.894094218090377e-08,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 5.65685424949238,
           "rank": 2,
@@ -1044,7 +1048,8 @@
             "delta": 0.16087817097130155,
             "observed": 0.16087817104920374,
             "residual": 1.4422335353421448e-08,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 2.0,
           "rank": 4,
@@ -1063,6 +1068,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -1236,6 +1242,7 @@
           "changed_adapted_elements": 3072,
           "unchanged_nonzero_update_elements": 0,
           "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 0,
           "unadapted_changed_tensors": 0,
@@ -1264,11 +1271,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4534912717259698,
               "observed": 0.453491273381856,
               "residual": 2.8224463129500115e-08,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 6.223816176677211e-08,
             "observed_to_intended_norm": 1.000000003651418,
@@ -1310,11 +1319,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.15474380492338127,
               "observed": 0.15474380394302334,
               "residual": 1.3100978756119378e-08,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 8.466237961904906e-08,
             "observed_to_intended_norm": 0.9999999936646385,
@@ -1356,11 +1367,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4518419993531578,
               "observed": 0.4518419922880274,
               "residual": 2.8940942180903764e-08,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 6.405102275205641e-08,
             "observed_to_intended_norm": 0.9999999843637148,
@@ -1402,11 +1415,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.16087817097130158,
               "observed": 0.16087817104920374,
               "residual": 1.4422335353421453e-08,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 8.964755918311748e-08,
             "observed_to_intended_norm": 1.0000000004842307,
@@ -1449,6 +1464,7 @@
         "changed_adapted_elements": 0,
         "unchanged_nonzero_update_elements": 3072,
         "unchanged_nonzero_update_fraction": 1.0,
+        "unchanged_reference_energy_fraction": 1.0,
         "zero_update_tensors": 0,
         "no_observed_update_tensors": 4,
         "unadapted_changed_tensors": 0,
@@ -1464,7 +1480,8 @@
             "delta": 0.4534912717259697,
             "observed": 0.0,
             "residual": 0.4534912717259697,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.4534912717259697
           },
           "scale": 4.0,
           "rank": 4,
@@ -1480,7 +1497,8 @@
             "delta": 0.15474380492338127,
             "observed": 0.0,
             "residual": 0.15474380492338127,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.15474380492338127
           },
           "scale": 2.0,
           "rank": 4,
@@ -1496,7 +1514,8 @@
             "delta": 0.45184199935315783,
             "observed": 0.0,
             "residual": 0.45184199935315783,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.45184199935315783
           },
           "scale": 5.65685424949238,
           "rank": 2,
@@ -1512,7 +1531,8 @@
             "delta": 0.16087817097130155,
             "observed": 0.0,
             "residual": 0.16087817097130155,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.16087817097130155
           },
           "scale": 2.0,
           "rank": 4,
@@ -1531,6 +1551,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -1704,6 +1725,7 @@
           "changed_adapted_elements": 0,
           "unchanged_nonzero_update_elements": 3072,
           "unchanged_nonzero_update_fraction": 1.0,
+          "unchanged_reference_energy_fraction": 1.0,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 4,
           "unadapted_changed_tensors": 0,
@@ -1732,11 +1754,13 @@
             "changed_elements": 0,
             "unchanged_nonzero_update_elements": 1024,
             "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
             "norms": {
               "delta": 0.4534912717259698,
               "observed": 0.0,
               "residual": 0.4534912717259698,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.4534912717259698
             },
             "relative_residual": 1.0,
             "observed_to_intended_norm": 0.0,
@@ -1778,11 +1802,13 @@
             "changed_elements": 0,
             "unchanged_nonzero_update_elements": 512,
             "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
             "norms": {
               "delta": 0.15474380492338127,
               "observed": 0.0,
               "residual": 0.15474380492338127,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.15474380492338127
             },
             "relative_residual": 1.0,
             "observed_to_intended_norm": 0.0,
@@ -1824,11 +1850,13 @@
             "changed_elements": 0,
             "unchanged_nonzero_update_elements": 1024,
             "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
             "norms": {
               "delta": 0.4518419993531578,
               "observed": 0.0,
               "residual": 0.4518419993531578,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.4518419993531578
             },
             "relative_residual": 1.0,
             "observed_to_intended_norm": 0.0,
@@ -1870,11 +1898,13 @@
             "changed_elements": 0,
             "unchanged_nonzero_update_elements": 512,
             "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
             "norms": {
               "delta": 0.16087817097130158,
               "observed": 0.0,
               "residual": 0.16087817097130158,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.16087817097130158
             },
             "relative_residual": 1.0,
             "observed_to_intended_norm": 0.0,
@@ -1917,6 +1947,7 @@
         "changed_adapted_elements": 3072,
         "unchanged_nonzero_update_elements": 0,
         "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
         "zero_update_tensors": 0,
         "no_observed_update_tensors": 0,
         "unadapted_changed_tensors": 0,
@@ -1932,7 +1963,8 @@
             "delta": 0.4534912717259697,
             "observed": 0.9069825449000177,
             "residual": 0.4534912731740496,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 4.0,
           "rank": 4,
@@ -1948,7 +1980,8 @@
             "delta": 0.15474380492338127,
             "observed": 0.30948760710931483,
             "residual": 0.15474380218593448,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 2.0,
           "rank": 4,
@@ -1964,7 +1997,8 @@
             "delta": 0.45184199935315783,
             "observed": 0.9036839849348652,
             "residual": 0.45184198558170946,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 5.65685424949238,
           "rank": 2,
@@ -1980,7 +2014,8 @@
             "delta": 0.16087817097130155,
             "observed": 0.321756341601201,
             "residual": 0.16087817062990048,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 2.0,
           "rank": 4,
@@ -1999,6 +2034,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -2172,6 +2208,7 @@
           "changed_adapted_elements": 3072,
           "unchanged_nonzero_update_elements": 0,
           "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 0,
           "unadapted_changed_tensors": 0,
@@ -2200,11 +2237,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4534912717259698,
               "observed": 0.9069825449000178,
               "residual": 0.45349127317404964,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 1.0000000031931813,
             "observed_to_intended_norm": 2.0000000031931777,
@@ -2246,11 +2285,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.15474380492338127,
               "observed": 0.3094876071093149,
               "residual": 0.15474380218593445,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 0.9999999823098131,
             "observed_to_intended_norm": 1.9999999823098078,
@@ -2292,11 +2333,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4518419993531578,
               "observed": 0.9036839849348656,
               "residual": 0.4518419855817094,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 0.9999999695215398,
             "observed_to_intended_norm": 1.9999999695215362,
@@ -2338,11 +2381,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.16087817097130158,
               "observed": 0.32175634160120103,
               "residual": 0.16087817062990045,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 0.9999999978778903,
             "observed_to_intended_norm": 1.9999999978778842,
@@ -2385,6 +2430,7 @@
         "changed_adapted_elements": 3072,
         "unchanged_nonzero_update_elements": 0,
         "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
         "zero_update_tensors": 0,
         "no_observed_update_tensors": 0,
         "unadapted_changed_tensors": 0,
@@ -2400,7 +2446,8 @@
             "delta": 0.4534912717259697,
             "observed": 0.4534912722111461,
             "residual": 0.9069825439371156,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 4.0,
           "rank": 4,
@@ -2416,7 +2463,8 @@
             "delta": 0.15474380492338127,
             "observed": 0.1547438037631104,
             "residual": 0.3094876086864914,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 2.0,
           "rank": 4,
@@ -2432,7 +2480,8 @@
             "delta": 0.45184199935315783,
             "observed": 0.45184199054685265,
             "residual": 0.90368398990001,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 5.65685424949238,
           "rank": 2,
@@ -2448,7 +2497,8 @@
             "delta": 0.16087817097130155,
             "observed": 0.16087817176880667,
             "residual": 0.3217563427401079,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 2.0,
           "rank": 4,
@@ -2467,6 +2517,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -2640,6 +2691,7 @@
           "changed_adapted_elements": 3072,
           "unchanged_nonzero_update_elements": 0,
           "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 0,
           "unadapted_changed_tensors": 0,
@@ -2668,11 +2720,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4534912717259698,
               "observed": 0.45349127221114627,
               "residual": 0.9069825439371155,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 2.000000001069868,
             "observed_to_intended_norm": 1.0000000010698695,
@@ -2714,11 +2768,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.15474380492338127,
               "observed": 0.15474380376311042,
               "residual": 0.3094876086864914,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 1.9999999925019865,
             "observed_to_intended_norm": 0.9999999925019883,
@@ -2760,11 +2816,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4518419993531578,
               "observed": 0.4518419905468528,
               "residual": 0.9036839899000101,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 1.9999999805102104,
             "observed_to_intended_norm": 0.9999999805102116,
@@ -2806,11 +2864,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.16087817097130158,
               "observed": 0.16087817176880667,
               "residual": 0.3217563427401079,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 2.0000000049571964,
             "observed_to_intended_norm": 1.0000000049571989,
@@ -2853,6 +2913,7 @@
         "changed_adapted_elements": 3072,
         "unchanged_nonzero_update_elements": 0,
         "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
         "zero_update_tensors": 0,
         "no_observed_update_tensors": 0,
         "unadapted_changed_tensors": 0,
@@ -2868,7 +2929,8 @@
             "delta": 0.4534912717259697,
             "observed": 0.2267456371555513,
             "residual": 0.2267456345704202,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 4.0,
           "rank": 4,
@@ -2884,7 +2946,8 @@
             "delta": 0.15474380492338127,
             "observed": 0.07737190259766916,
             "residual": 0.07737190232571402,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 2.0,
           "rank": 4,
@@ -2900,7 +2963,8 @@
             "delta": 0.45184199935315783,
             "observed": 0.3195005413470687,
             "residual": 0.1323414580060915,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 5.65685424949238,
           "rank": 2,
@@ -2916,7 +2980,8 @@
             "delta": 0.16087817097130155,
             "observed": 0.08043908621383648,
             "residual": 0.08043908475746701,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 2.0,
           "rank": 4,
@@ -2935,6 +3000,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -3108,6 +3174,7 @@
           "changed_adapted_elements": 3072,
           "unchanged_nonzero_update_elements": 0,
           "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 0,
           "unadapted_changed_tensors": 0,
@@ -3136,11 +3203,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4534912717259698,
               "observed": 0.22674563715555138,
               "residual": 0.22674563457042018,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 0.4999999971497473,
             "observed_to_intended_norm": 0.5000000028502566,
@@ -3182,11 +3251,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.15474380492338127,
               "observed": 0.07737190259766917,
               "residual": 0.077371902325714,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 0.499999999121279,
             "observed_to_intended_norm": 0.5000000008787333,
@@ -3228,11 +3299,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4518419993531578,
               "observed": 0.3195005413470688,
               "residual": 0.13234145800609148,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 0.29289321974395294,
             "observed_to_intended_norm": 0.7071067802560526,
@@ -3274,11 +3347,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.16087817097130158,
               "observed": 0.0804390862138365,
               "residual": 0.08043908475746701,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 0.49999999547369434,
             "observed_to_intended_norm": 0.5000000045263177,
@@ -3321,6 +3396,7 @@
         "changed_adapted_elements": 3072,
         "unchanged_nonzero_update_elements": 0,
         "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
         "zero_update_tensors": 0,
         "no_observed_update_tensors": 0,
         "unadapted_changed_tensors": 0,
@@ -3336,7 +3412,8 @@
             "delta": 0.4534912717259697,
             "observed": 0.44132320530414454,
             "residual": 0.6294824897218887,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 4.0,
           "rank": 4,
@@ -3352,7 +3429,8 @@
             "delta": 0.15474380492338127,
             "observed": 0.14208693916873139,
             "residual": 0.2114847888170502,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 2.0,
           "rank": 4,
@@ -3368,7 +3446,8 @@
             "delta": 0.45184199935315783,
             "observed": 0.39598058965628175,
             "residual": 0.6007971653305677,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 5.65685424949238,
           "rank": 2,
@@ -3384,7 +3463,8 @@
             "delta": 0.16087817097130155,
             "observed": 0.15315938625831574,
             "residual": 0.22405238663453936,
-            "base_cast_drift": 0.0
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
           },
           "scale": 2.0,
           "rank": 4,
@@ -3403,6 +3483,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -3576,6 +3657,7 @@
           "changed_adapted_elements": 3072,
           "unchanged_nonzero_update_elements": 0,
           "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 0,
           "unadapted_changed_tensors": 0,
@@ -3604,11 +3686,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4534912717259698,
               "observed": 0.44132320530414476,
               "residual": 0.6294824897218887,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 1.3880807172453469,
             "observed_to_intended_norm": 0.9731680250966819,
@@ -3650,11 +3734,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.15474380492338127,
               "observed": 0.14208693916873139,
               "residual": 0.2114847888170502,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 1.366676933669579,
             "observed_to_intended_norm": 0.9182076092744603,
@@ -3696,11 +3782,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4518419993531578,
               "observed": 0.39598058965628186,
               "residual": 0.6007971653305677,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 1.3296620637095473,
             "observed_to_intended_norm": 0.8763695942899392,
@@ -3742,11 +3830,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.16087817097130158,
               "observed": 0.15315938625831577,
               "residual": 0.22405238663453939,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 1.3926835771554564,
             "observed_to_intended_norm": 0.9520209319487929,
@@ -3789,6 +3879,7 @@
         "changed_adapted_elements": 3059,
         "unchanged_nonzero_update_elements": 13,
         "unchanged_nonzero_update_fraction": 0.004231770833333333,
+        "unchanged_reference_energy_fraction": 3.675064339989218e-08,
         "zero_update_tensors": 0,
         "no_observed_update_tensors": 0,
         "unadapted_changed_tensors": 0,
@@ -3804,7 +3895,8 @@
             "delta": 0.4534912717259697,
             "observed": 0.4535275540071633,
             "residual": 0.0012820827477994145,
-            "base_cast_drift": 0.0010791519224800485
+            "base_cast_drift": 0.0010791519224800485,
+            "unchanged_reference": 0.0
           },
           "scale": 4.0,
           "rank": 4,
@@ -3820,7 +3912,8 @@
             "delta": 0.15474380492338127,
             "observed": 0.1547239875255028,
             "residual": 0.0008222413273262281,
-            "base_cast_drift": 0.0007699125243519513
+            "base_cast_drift": 0.0007699125243519513,
+            "unchanged_reference": 9.439384338635373e-05
           },
           "scale": 2.0,
           "rank": 4,
@@ -3836,7 +3929,8 @@
             "delta": 0.45184199935315783,
             "observed": 0.45181324991123684,
             "residual": 0.0012823048883867341,
-            "base_cast_drift": 0.0009948487860099667
+            "base_cast_drift": 0.0009948487860099667,
+            "unchanged_reference": 3.4364597879483495e-06
           },
           "scale": 5.65685424949238,
           "rank": 2,
@@ -3852,7 +3946,8 @@
             "delta": 0.16087817097130155,
             "observed": 0.16089161598148255,
             "residual": 0.0007593746321213897,
-            "base_cast_drift": 0.0007506186308299535
+            "base_cast_drift": 0.0007506186308299535,
+            "unchanged_reference": 8.927579446688524e-05
           },
           "scale": 2.0,
           "rank": 4,
@@ -3871,6 +3966,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -4019,6 +4115,7 @@
           "changed_adapted_elements": 3059,
           "unchanged_nonzero_update_elements": 13,
           "unchanged_nonzero_update_fraction": 0.004231770833333333,
+          "unchanged_reference_energy_fraction": 3.675064339989218e-08,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 0,
           "unadapted_changed_tensors": 0,
@@ -4047,11 +4144,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4534912717259698,
               "observed": 0.45352755400716327,
               "residual": 0.0012820827477994143,
-              "base_cast_drift": 0.0010791519224800483
+              "base_cast_drift": 0.0010791519224800483,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 0.002827138751579183,
             "observed_to_intended_norm": 1.000080006570039,
@@ -4093,11 +4192,13 @@
             "changed_elements": 509,
             "unchanged_nonzero_update_elements": 3,
             "unchanged_nonzero_update_fraction": 0.005859375,
+            "unchanged_reference_energy_fraction": 3.721009648687911e-07,
             "norms": {
               "delta": 0.15474380492338127,
               "observed": 0.15472398752550282,
               "residual": 0.0008222413273262282,
-              "base_cast_drift": 0.0007699125243519514
+              "base_cast_drift": 0.0007699125243519514,
+              "unchanged_reference": 9.439384338635375e-05
             },
             "relative_residual": 0.005313565397550789,
             "observed_to_intended_norm": 0.9998719341437399,
@@ -4139,11 +4240,13 @@
             "changed_elements": 1023,
             "unchanged_nonzero_update_elements": 1,
             "unchanged_nonzero_update_fraction": 0.0009765625,
+            "unchanged_reference_energy_fraction": 5.784280419090147e-11,
             "norms": {
               "delta": 0.4518419993531578,
               "observed": 0.45181324991123684,
               "residual": 0.0012823048883867344,
-              "base_cast_drift": 0.0009948487860099667
+              "base_cast_drift": 0.0009948487860099667,
+              "unchanged_reference": 3.4364597879483495e-06
             },
             "relative_residual": 0.0028379497484130297,
             "observed_to_intended_norm": 0.99993637279854,
@@ -4185,11 +4288,13 @@
             "changed_elements": 503,
             "unchanged_nonzero_update_elements": 9,
             "unchanged_nonzero_update_fraction": 0.017578125,
+            "unchanged_reference_energy_fraction": 3.079450355553437e-07,
             "norms": {
               "delta": 0.16087817097130158,
               "observed": 0.16089161598148255,
               "residual": 0.0007593746321213896,
-              "base_cast_drift": 0.0007506186308299535
+              "base_cast_drift": 0.0007506186308299535,
+              "unchanged_reference": 8.927579446688522e-05
             },
             "relative_residual": 0.004720184395040464,
             "observed_to_intended_norm": 1.0000835726195778,
@@ -4232,6 +4337,7 @@
         "changed_adapted_elements": 3059,
         "unchanged_nonzero_update_elements": 13,
         "unchanged_nonzero_update_fraction": 0.004231770833333333,
+        "unchanged_reference_energy_fraction": 3.675064339989218e-08,
         "zero_update_tensors": 0,
         "no_observed_update_tensors": 0,
         "unadapted_changed_tensors": 0,
@@ -4247,7 +4353,8 @@
             "delta": 0.4534912717259697,
             "observed": 0.4534534154764431,
             "residual": 0.0015427500981703437,
-            "base_cast_drift": 0.0010791519224800485
+            "base_cast_drift": 0.0010791519224800485,
+            "unchanged_reference": 0.0
           },
           "scale": 4.0,
           "rank": 4,
@@ -4263,7 +4370,8 @@
             "delta": 0.15474380492338127,
             "observed": 0.15471303014183874,
             "residual": 0.0009228478583275603,
-            "base_cast_drift": 0.0007699125243519513
+            "base_cast_drift": 0.0007699125243519513,
+            "unchanged_reference": 9.439384338635373e-05
           },
           "scale": 2.0,
           "rank": 4,
@@ -4279,7 +4387,8 @@
             "delta": 0.45184199935315783,
             "observed": 0.4518632163734851,
             "residual": 0.0015900304361356895,
-            "base_cast_drift": 0.0009948487860099667
+            "base_cast_drift": 0.0009948487860099667,
+            "unchanged_reference": 3.4364597879483495e-06
           },
           "scale": 5.65685424949238,
           "rank": 2,
@@ -4295,7 +4404,8 @@
             "delta": 0.16087817097130155,
             "observed": 0.16088348026709637,
             "residual": 0.0008487952903652809,
-            "base_cast_drift": 0.0007506186308299535
+            "base_cast_drift": 0.0007506186308299535,
+            "unchanged_reference": 8.927579446688524e-05
           },
           "scale": 2.0,
           "rank": 4,
@@ -4314,6 +4424,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -4462,6 +4573,7 @@
           "changed_adapted_elements": 3059,
           "unchanged_nonzero_update_elements": 13,
           "unchanged_nonzero_update_fraction": 0.004231770833333333,
+          "unchanged_reference_energy_fraction": 3.675064339989218e-08,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 0,
           "unadapted_changed_tensors": 0,
@@ -4490,11 +4602,13 @@
             "changed_elements": 1024,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.4534912717259698,
               "observed": 0.4534534154764431,
               "residual": 0.0015427500981703434,
-              "base_cast_drift": 0.0010791519224800483
+              "base_cast_drift": 0.0010791519224800483,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 0.0034019400027230904,
             "observed_to_intended_norm": 0.9999165226501876,
@@ -4536,11 +4650,13 @@
             "changed_elements": 509,
             "unchanged_nonzero_update_elements": 3,
             "unchanged_nonzero_update_fraction": 0.005859375,
+            "unchanged_reference_energy_fraction": 3.721009648687911e-07,
             "norms": {
               "delta": 0.15474380492338127,
               "observed": 0.15471303014183874,
               "residual": 0.0009228478583275604,
-              "base_cast_drift": 0.0007699125243519514
+              "base_cast_drift": 0.0007699125243519514,
+              "unchanged_reference": 9.439384338635375e-05
             },
             "relative_residual": 0.005963714403846361,
             "observed_to_intended_norm": 0.9998011243063477,
@@ -4582,11 +4698,13 @@
             "changed_elements": 1023,
             "unchanged_nonzero_update_elements": 1,
             "unchanged_nonzero_update_fraction": 0.0009765625,
+            "unchanged_reference_energy_fraction": 5.784280419090147e-11,
             "norms": {
               "delta": 0.4518419993531578,
               "observed": 0.4518632163734851,
               "residual": 0.0015900304361356893,
-              "base_cast_drift": 0.0009948487860099667
+              "base_cast_drift": 0.0009948487860099667,
+              "unchanged_reference": 3.4364597879483495e-06
             },
             "relative_residual": 0.003518996548377364,
             "observed_to_intended_norm": 1.0000469567246022,
@@ -4628,11 +4746,13 @@
             "changed_elements": 503,
             "unchanged_nonzero_update_elements": 9,
             "unchanged_nonzero_update_fraction": 0.017578125,
+            "unchanged_reference_energy_fraction": 3.079450355553437e-07,
             "norms": {
               "delta": 0.16087817097130158,
               "observed": 0.16088348026709637,
               "residual": 0.0008487952903652809,
-              "base_cast_drift": 0.0007506186308299535
+              "base_cast_drift": 0.0007506186308299535,
+              "unchanged_reference": 8.927579446688522e-05
             },
             "relative_residual": 0.0052760128067138095,
             "observed_to_intended_norm": 1.0000330019651686,

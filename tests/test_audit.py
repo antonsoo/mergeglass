@@ -60,6 +60,7 @@ def test_dense_hand_calculated_update_and_complete_inventory(tmp_path: Path) -> 
     assert layer["changed_elements"] == 6
     assert layer["reference_merge_mismatches"] == 0
     assert layer["unchanged_nonzero_update_fraction"] == 0
+    assert layer["unchanged_reference_energy_fraction"] == 0
     assert report["summary"]["checked_tensors"] == 2
     assert len(report["inputs"]["adapter"]) == 2
 
@@ -71,6 +72,7 @@ def test_copied_base_is_observed_absence_not_a_rounding_diagnosis(tmp_path: Path
     assert layer["status"] == "no-observed-update"
     assert layer["relative_residual"] == 1
     assert layer["unchanged_nonzero_update_fraction"] == 1
+    assert layer["unchanged_reference_energy_fraction"] == pytest.approx(1)
     assert layer["projection_gain"] == 0
     assert layer["cosine_similarity"] is None
 
@@ -80,6 +82,7 @@ def test_zero_scale_is_a_zero_update_with_undefined_relative_error(tmp_path: Pat
     assert layer["status"] == "zero-update"
     assert layer["relative_residual"] is None
     assert layer["unchanged_nonzero_update_fraction"] is None
+    assert layer["unchanged_reference_energy_fraction"] is None
     assert layer["projection_gain"] is None
     assert layer["cosine_similarity"] is None
 
@@ -197,6 +200,51 @@ def test_known_conv1d_architecture_keeps_its_linear_head_supported(tmp_path: Pat
     # also contains Conv1D modules. The native study checks actual lm_head exports.
     report = audit(base, adapter, merged)
     assert report["layers"][0]["relative_residual"] == 0
+
+
+def test_unchanged_entry_count_and_reference_energy_are_different(tmp_path: Path) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    a = np.array([[2**-20, 0.25]], dtype=np.float32)
+    b = np.ones((2, 1), dtype=np.float32)
+    save_file({"linear.weight": np.ones((2, 2), dtype=np.float32)}, base / "model.safetensors")
+    save_file({"linear.weight": (1 + b @ a).astype(np.float16)}, merged / "model.safetensors")
+    save_file(
+        {
+            "base_model.model.linear.lora_A.weight": a,
+            "base_model.model.linear.lora_B.weight": b,
+        },
+        adapter / "adapter_model.safetensors",
+    )
+    report = audit(base, adapter, merged)
+    layer = report["layers"][0]
+    expected = (2**-20) ** 2 / ((2**-20) ** 2 + 0.25**2)
+    assert layer["unchanged_nonzero_update_fraction"] == 0.5
+    assert layer["unchanged_reference_energy_fraction"] == pytest.approx(expected, rel=1e-13)
+    assert report["summary"]["unchanged_reference_energy_fraction"] == pytest.approx(expected)
+
+
+@pytest.mark.parametrize(
+    "magnitude,multiple,expected", [(1e-200, 2, 0.2), (1e200, 2, 0.2), (1.5e308, 1, 0.5)]
+)
+def test_global_energy_fraction_weights_layers_without_raw_squares(
+    tmp_path: Path, magnitude: float, multiple: float, expected: float
+) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    original = {"missed.weight": np.zeros((1, 1)), "present.weight": np.zeros((1, 1))}
+    after = {
+        "missed.weight": np.zeros((1, 1)),
+        "present.weight": np.array([[magnitude * multiple]]),
+    }
+    factors = {}
+    for name, multiplier in [("missed", 1), ("present", multiple)]:
+        factors[f"base_model.model.{name}.lora_A.weight"] = np.ones((1, 1))
+        factors[f"base_model.model.{name}.lora_B.weight"] = np.array([[magnitude * multiplier]])
+    save_file(original, base / "model.safetensors")
+    save_file(after, merged / "model.safetensors")
+    save_file(factors, adapter / "adapter_model.safetensors")
+    report = audit(base, adapter, merged)
+    assert report["summary"]["unchanged_nonzero_update_fraction"] == 0.5
+    assert report["summary"]["unchanged_reference_energy_fraction"] == pytest.approx(expected)
 
 
 @pytest.mark.parametrize(

@@ -19,15 +19,17 @@ For the unchanged
 [hfm8tr SmolLM2/SmolTalk adapter](https://huggingface.co/hfm8tr/smollm2-135m-smoltalk-lora/tree/fb39c7012c3b125f94d2bb1a093254994053f4ca),
 native PEFT merges of a pinned SmolLM2-135M base produced:
 
-| Saved merge | Nonzero intended update entries | Entries unchanged from base | Share unchanged |
-| --- | ---: | ---: | ---: |
-| FP32 | 13,271,040 | 105 | 0.000791% |
-| BF16 | 13,271,040 | 5,886,980 | 44.36% |
+| Saved merge | Nonzero intended update entries | Entries unchanged from base | Share unchanged | Reference squared norm at unchanged entries |
+| --- | ---: | ---: | ---: | ---: |
+| FP32 | 13,271,040 | 105 | 0.000791% | 1.24e-13% |
+| BF16 | 13,271,040 | 5,886,980 | 44.36% | 15.05% |
 
 All 60 adapted matrices had some observed change. All 212 unadapted tensors
 matched their dtype-cast bases. An independent dense PyTorch oracle agreed with
-the measurements. These are **weight-space counts, not a percentage of lost
-quality or lost update energy**. The adapter's original training revision and
+the measurements. The unchanged BF16 entries contain 15.05% of the reference
+update's squared norm; smaller and larger entries count equally in the 44.36%
+figure. Neither fraction measures lost quality or retained observed energy.
+The adapter's original training revision and
 quality are not independently established. The merges were made locally from
 the exact pinned artifacts; no third-party weights are redistributed here.
 [Inputs, producer, complete measurements and reproduction](studies/community/README.md).
@@ -110,7 +112,8 @@ Base --> cast to merged dtype --> compare to merge --+
 ```
 
 - Per matrix: changed entries, nonzero updates with no observed change, update
-  and residual norms, signed projection gain, cosine similarity, relative
+  and residual norms, squared-reference norm at unchanged positions, signed
+  projection gain, cosine similarity, relative
   residual and the largest residual's row/column.
 - Across the checkpoint: every unadapted tensor checked against its cast base,
   with unrelated changes retained individually. Large integer values stay exact.

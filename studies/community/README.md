@@ -33,12 +33,16 @@ the actual audit inputs. This is not a claim about a third party's deployed merg
 | Nonzero reference update entries | 13,271,040 | 13,271,040 |
 | Entries unchanged from the dtype-cast base | 105 | 5,886,980 |
 | Share of nonzero updates with no observed change | 0.000791% | 44.36% |
+| Reference squared norm at unchanged positions | 1.24e-13% | 15.05% |
 | Unadapted tensors differing from cast base | 0 / 212 | 0 / 212 |
 | Per-layer relative residual range | 0.00000184–0.00001187 | 0.1212–0.5761 |
 
 These are counts and norms over saved weights. Small entries count equally
-with large ones in the unchanged fraction. The BF16 percentage is **not lost
-energy, accuracy loss or a downstream quality result**. No matrix disappears
+with large ones in the 44.36% count fraction. Those unchanged entries contain
+15.05% of the complete reference update's squared norm; this is summed across
+matrices, not averaged from per-layer percentages. Changed positions can still
+undershoot, overshoot or reverse direction, so neither percentage measures
+retained observed energy, accuracy loss or downstream quality. No matrix disappears
 entirely in either merge. The dense reference is numerical binary64, and
 producer matmul/addition precision can differ.
 
@@ -48,6 +52,10 @@ version. The independent dense PyTorch oracle checks the same quantities as the
 [controlled native study](../native-peft/README.md), including all unadapted
 weights and different audit block settings. It uses PEFT's configuration resolver
 for scale, not the auditor's scale parser.
+
+The [separate forward study](../forward/README.md) runs the exact saved merges
+and unmerged adapter on six authored texts. It records actual logit and token
+differences while keeping numerical equivalence separate from task accuracy.
 
 ## Reproduce
 

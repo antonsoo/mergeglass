@@ -22,6 +22,9 @@ CONTRACT = {
     "cosine_similarity": (
         "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero"
     ),
+    "unchanged_reference_energy": (
+        "squared delta norm at unchanged positions / squared delta norm; null if delta is zero"
+    ),
     "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
     "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate",
 }
@@ -90,6 +93,15 @@ def _ratio(numerator: float, denominator: float) -> float | None:
     return value
 
 
+def _energy_fraction(reference: Squares, unchanged: Squares) -> float | None:
+    if reference.scale == 0:
+        return None
+    # Form a norm ratio before squaring. Raw squared norms can overflow or
+    # underflow even when their dimensionless fraction is representable.
+    ratio = (unchanged.scale / reference.scale) * math.sqrt(unchanged.total / reference.total)
+    return min(1.0, ratio) ** 2
+
+
 def _compatible(base: Tensor, merged: Tensor) -> None:
     if base.shape != merged.shape:
         raise AuditError(f"Base/merged shape mismatch: {base.name}")
@@ -110,7 +122,10 @@ def _layer(
     a = pair.a.floats().reshape(pair.a.shape)
     rows, columns = base.shape
     block_rows = max(1, elements // max(columns, pair.rank))
-    norms = {key: Squares() for key in ("delta", "observed", "residual", "base_cast_drift")}
+    norms = {
+        key: Squares()
+        for key in ("delta", "observed", "residual", "base_cast_drift", "unchanged_reference")
+    }
     alignment = Alignment(norms["delta"], norms["observed"])
     changed = 0
     nonzero = 0
@@ -141,9 +156,11 @@ def _layer(
         ):
             norms[key].add(values)
         nz = delta != 0
-        changed += int(np.count_nonzero(after != baseline))
+        unchanged = after == baseline
+        norms["unchanged_reference"].add(np.where(unchanged, delta, 0.0))
+        changed += int(np.count_nonzero(~unchanged))
         nonzero += int(np.count_nonzero(nz))
-        erased += int(np.count_nonzero(nz & (after == baseline)))
+        erased += int(np.count_nonzero(nz & unchanged))
         with np.errstate(over="ignore", invalid="ignore"):
             reference = cast(original + delta, merged.dtype)
         reference_overflows += int(np.count_nonzero(~np.isfinite(reference)))
@@ -194,6 +211,9 @@ def _layer(
         "changed_elements": changed,
         "unchanged_nonzero_update_elements": erased,
         "unchanged_nonzero_update_fraction": _ratio(erased, nonzero),
+        "unchanged_reference_energy_fraction": _energy_fraction(
+            norms["delta"], norms["unchanged_reference"]
+        ),
         "norms": measured,
         "relative_residual": _ratio(measured["residual"], measured["delta"]),
         "observed_to_intended_norm": magnitude_ratio,
@@ -296,6 +316,9 @@ def audit(
     fingerprints = {role: checkpoint.fingerprints() for role, checkpoint in inputs.items()}
     for checkpoint in inputs.values():
         checkpoint.verify_stable()
+    reference, unchanged_reference = Squares(), Squares()
+    reference.add(np.array([layer["norms"]["delta"] for layer in layers]))
+    unchanged_reference.add(np.array([layer["norms"]["unchanged_reference"] for layer in layers]))
     return {
         "schema_version": 1,
         "arithmetic": CONTRACT,
@@ -316,6 +339,7 @@ def audit(
                 sum(layer["unchanged_nonzero_update_elements"] for layer in layers),
                 sum(layer["intended_nonzero_elements"] for layer in layers),
             ),
+            "unchanged_reference_energy_fraction": _energy_fraction(reference, unchanged_reference),
             "zero_update_tensors": sum(layer["status"] == "zero-update" for layer in layers),
             "no_observed_update_tensors": sum(
                 layer["status"] == "no-observed-update" for layer in layers

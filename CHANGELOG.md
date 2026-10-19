@@ -12,5 +12,7 @@ Signed projection gain and cosine similarity distinguish update magnitude from
 direction, checked against repeated, reversed, wrong-adapter and rsLoRA controls.
 Refuses known GPT-2/OpenAI GPT/ImageGPT Conv1D paths when model metadata exposes
 them, including mixed targets hidden by a global `fan_in_fan_out=False` flag.
+Measures the reference squared norm at unchanged positions per layer and across
+the checkpoint, so equal-count and magnitude-weighted fractions stay distinct.
 
 No registry release or hosted service accompanies this version.

@@ -8,6 +8,7 @@ zero                         BF16          0          n/a      n/a        n/a
   zero-update
 
 Of 128 nonzero intended updates, 66 are unchanged (51.56%).
+Those unchanged entries contain 0.001622% of the reference squared norm.
 * Nonzero intended update elements equal to the dtype-cast base.
 Relative error = ||observed change - intended update|| / ||intended update||.
 Gain = projection of the observed change onto the intended update (ideal 1).

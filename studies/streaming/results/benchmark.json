@@ -15,8 +15,8 @@
   "results": [
     {
       "block_mib": 1,
-      "elapsed_seconds": 1.5906034099971293,
-      "peak_rss_kib": 38436,
+      "elapsed_seconds": 1.0274360809999052,
+      "peak_rss_kib": 38840,
       "layer": {
         "module": "linear",
         "weight": "linear.weight",
@@ -39,11 +39,13 @@
         "changed_elements": 33554432,
         "unchanged_nonzero_update_elements": 0,
         "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
         "norms": {
           "delta": 45.254833995939045,
           "observed": 45.254833995939045,
           "residual": 0.0,
-          "base_cast_drift": 0.0
+          "base_cast_drift": 0.0,
+          "unchanged_reference": 0.0
         },
         "relative_residual": 0.0,
         "observed_to_intended_norm": 1.0,
@@ -66,8 +68,8 @@
     },
     {
       "block_mib": 16,
-      "elapsed_seconds": 1.4629785910001374,
-      "peak_rss_kib": 60972,
+      "elapsed_seconds": 1.0277267530036625,
+      "peak_rss_kib": 61772,
       "layer": {
         "module": "linear",
         "weight": "linear.weight",
@@ -90,11 +92,13 @@
         "changed_elements": 33554432,
         "unchanged_nonzero_update_elements": 0,
         "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
         "norms": {
           "delta": 45.254833995939045,
           "observed": 45.254833995939045,
           "residual": 0.0,
-          "base_cast_drift": 0.0
+          "base_cast_drift": 0.0,
+          "unchanged_reference": 0.0
         },
         "relative_residual": 0.0,
         "observed_to_intended_norm": 1.0,
@@ -117,8 +121,8 @@
     },
     {
       "block_mib": 64,
-      "elapsed_seconds": 1.461232255998766,
-      "peak_rss_kib": 132036,
+      "elapsed_seconds": 2.6831982730000163,
+      "peak_rss_kib": 132776,
       "layer": {
         "module": "linear",
         "weight": "linear.weight",
@@ -141,11 +145,13 @@
         "changed_elements": 33554432,
         "unchanged_nonzero_update_elements": 0,
         "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
         "norms": {
           "delta": 45.254833995939045,
           "observed": 45.254833995939045,
           "residual": 0.0,
-          "base_cast_drift": 0.0
+          "base_cast_drift": 0.0,
+          "unchanged_reference": 0.0
         },
         "relative_residual": 0.0,
         "observed_to_intended_norm": 1.0,

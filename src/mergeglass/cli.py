@@ -46,10 +46,14 @@ def render(report: dict[str, Any]) -> str:
         if total
         else "The reference update is zero across all adapted weights."
     )
+    lines.extend(["", aggregate])
+    energy = summary["unchanged_reference_energy_fraction"]
+    if energy is not None:
+        lines.append(
+            f"Those unchanged entries contain {100 * energy:.4g}% of the reference squared norm."
+        )
     lines.extend(
         [
-            "",
-            aggregate,
             "* Nonzero intended update elements equal to the dtype-cast base.",
             "Relative error = ||observed change - intended update|| / ||intended update||.",
             "Gain = projection of the observed change onto the intended update (ideal 1).",

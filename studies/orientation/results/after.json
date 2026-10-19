@@ -321,8 +321,8 @@
     "__init__.py": "10ea91c0beb8fc6c9b2390d0e89c09dc51598c11a2837f8f780f64b5514877a9",
     "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
     "adapter.py": "f2bbacdf04594cd42af8b51e0560f9d2cf1108a21e98564a088c6aacb6e82ade",
-    "audit.py": "51dcbcdc6ec3e3c77d0177bcbfcaf8f93647524c92e211c2654ee9d685f5f3c5",
-    "cli.py": "b01f7eedfe67700d979bded78a50333ffe5c6012fbb02412861785075055822d",
+    "audit.py": "1febdb81a60972c498063310acce6366c1749af495c951c492889666bcc3ef74",
+    "cli.py": "48d863922546e687509d24c68ac885b6cf6da2da30848a9a092a039fb6968278",
     "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
   },
   "results": [
@@ -383,6 +383,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -436,6 +437,7 @@
           "changed_adapted_elements": 512,
           "unchanged_nonzero_update_elements": 0,
           "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 0,
           "unadapted_changed_tensors": 0,
@@ -464,11 +466,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.10013661625583786,
               "observed": 0.10013661582146095,
               "residual": 1.2199948562224629e-08,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 1.2183304188205365e-07,
             "observed_to_intended_norm": 0.9999999956621571,
@@ -558,6 +562,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -611,6 +616,7 @@
           "changed_adapted_elements": 512,
           "unchanged_nonzero_update_elements": 0,
           "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 0,
           "unadapted_changed_tensors": 0,
@@ -639,11 +645,13 @@
             "changed_elements": 512,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.07534655799776745,
               "observed": 0.07534655804219897,
               "residual": 1.045377571025929e-08,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 1.387425781356733e-07,
             "observed_to_intended_norm": 1.0000000005896956,
@@ -733,6 +741,7 @@
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
           "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
           "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -786,6 +795,7 @@
           "changed_adapted_elements": 496,
           "unchanged_nonzero_update_elements": 0,
           "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
           "zero_update_tensors": 0,
           "no_observed_update_tensors": 0,
           "unadapted_changed_tensors": 0,
@@ -814,11 +824,13 @@
             "changed_elements": 496,
             "unchanged_nonzero_update_elements": 0,
             "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
             "norms": {
               "delta": 0.07518480106981709,
               "observed": 0.0751848006913191,
               "residual": 1.0945112154691105e-08,
-              "base_cast_drift": 0.0
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
             },
             "relative_residual": 1.4557612707556946e-07,
             "observed_to_intended_norm": 0.9999999949657644,

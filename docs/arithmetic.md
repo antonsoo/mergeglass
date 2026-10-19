@@ -34,6 +34,8 @@ numbers.
 | `changed_elements` | Entries where the saved merge differs numerically from `cast_base` |
 | `intended_nonzero_elements` | Entries where `delta != 0` |
 | `unchanged_nonzero_update_fraction` | Entries with nonzero `delta` and no observed change, divided by nonzero entries |
+| `norms.unchanged_reference` | Norm of `delta` restricted to entries where merged equals cast base |
+| `unchanged_reference_energy_fraction` | Squared reference norm at unchanged entries, divided by the full squared reference norm |
 | `relative_residual` | `norm(residual) / norm(delta)` |
 | `observed_to_intended_norm` | `norm(observed) / norm(delta)`; may exceed 1 |
 | `projection_gain` | `dot(observed, delta) / dot(delta, delta)`; signed least-squares scale |
@@ -58,6 +60,20 @@ The inner product scales each operand separately before multiplication, avoiding
 raw squared weights that could overflow or underflow. These are geometric
 measurements, not diagnoses: rounding and multiple simultaneous errors can
 also affect them. See the [native controls](../studies/merge-controls/README.md).
+
+Unchanged-entry counts weight every nonzero entry equally. The reference energy
+fraction weights them by squared update magnitude. For the same mask `M` where
+`merged == cast_base`, this is `sum(delta[M]**2) / sum(delta**2)`. The checkpoint
+summary combines squared norms across all adapted matrices; it is not an average
+of per-layer percentages. The implementation uses separately scaled sums rather
+than raw squares, including when a global unnormalized norm would overflow.
+A zero reference produces null. Very small numerical fractions can underflow
+binary64, while the separate raw norms and nonzero counts remain available.
+
+This fraction describes where the reference update's squared norm resides.
+It does not measure retained observed energy: changed entries can undershoot,
+overshoot or reverse direction. It also does not weight entries by a model's
+functional sensitivity or measure generation quality.
 
 | Status | Numeric evidence |
 | --- | --- |
