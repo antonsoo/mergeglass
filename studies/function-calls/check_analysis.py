@@ -16,7 +16,9 @@ def close(actual: float, expected: float) -> None:
     assert math.isclose(actual, expected, rel_tol=1e-12, abs_tol=1e-15), (actual, expected)
 
 
-def check(generations: dict, rows: list[dict], profiles: list[str]) -> dict:
+def check(
+    generations: dict, rows: list[dict], profiles: list[str], report: dict | None = None
+) -> dict:
     db = sqlite3.connect(":memory:")
     db.execute("CREATE TABLE generation(profile TEXT, id TEXT, payload TEXT)")
     db.execute("CREATE TABLE teacher(payload TEXT)")
@@ -26,7 +28,11 @@ def check(generations: dict, rows: list[dict], profiles: list[str]) -> dict:
     )
     db.executemany("INSERT INTO teacher VALUES (?)", [(json.dumps(r),) for r in rows])
     for profile in profiles:
-        observed = analyze.generation(generations[profile])
+        observed = (
+            report["generation"][profile]
+            if report is not None
+            else analyze.generation(generations[profile])
+        )
         n, accepted, rejected, known, tokens = db.execute(
             "SELECT COUNT(*),SUM(CASE WHEN json_extract(payload,'$.grade.score')=1 "
             "THEN 1 ELSE 0 END),"
@@ -56,7 +62,9 @@ def check(generations: dict, rows: list[dict], profiles: list[str]) -> dict:
                 )
             )
             assert observed[column] == expected
-    target_stats = analyze.teacher(rows, profiles)
+    target_stats = (
+        report["teacher_forced"] if report is not None else analyze.teacher(rows, profiles)
+    )
     for profile in profiles:
         prefix = f'$.profiles."{profile}".'
         mean, weighted, tokens, matches = db.execute(
@@ -75,6 +83,7 @@ def check(generations: dict, rows: list[dict], profiles: list[str]) -> dict:
             ),
         ).fetchone()
         observed = target_stats[profile]
+        assert observed["questions"] == len(rows)
         close(observed["mean_question_target_nll_nats"], mean)
         close(observed["token_weighted_target_nll_nats"], weighted)
         assert observed["target_tokens"] == tokens
@@ -85,13 +94,18 @@ def check(generations: dict, rows: list[dict], profiles: list[str]) -> dict:
                 "SELECT SUM(json_array_length(json_extract(payload,'$.target_ids'))) FROM teacher"
             ).fetchone()[0]
         )
-    comparisons = analyze.probability_pairs(rows, profiles)
+    comparisons = (
+        report["probability_pairs"]
+        if report is not None
+        else analyze.probability_pairs(rows, profiles)
+    )
     for reference in ("unmerged-f32", "unmerged-bf16"):
         for profile in profiles:
             if profile == reference:
                 continue
             prefix = f'$.drift."{reference}"."{profile}".'
             observed = comparisons[reference][profile]
+            assert observed["questions"] == len(rows)
             for field in ("kl_nats", "total_variation"):
                 mean, weighted = db.execute(
                     "SELECT AVG(json_extract(payload,?)),SUM(json_extract(payload,?)*"
@@ -141,7 +155,11 @@ def check(generations: dict, rows: list[dict], profiles: list[str]) -> dict:
                 observed["higher_selected_target_nll_questions"],
                 observed["equal_selected_target_nll_questions"],
             ) == difference[3:]
-            paired = analyze.paired_generation(generations[reference], generations[profile])
+            paired = (
+                report["paired_generation"][reference][profile]
+                if report is not None
+                else analyze.paired_generation(generations[reference], generations[profile])
+            )
             expected = dict(
                 db.execute(
                     "SELECT CASE WHEN json_extract(a.payload,'$.grade.score') IS NULL OR "
@@ -160,6 +178,8 @@ def check(generations: dict, rows: list[dict], profiles: list[str]) -> dict:
                 (reference, profile),
             ).fetchone()[0]
             assert paired["identical_token_sequences"] == identical
+            assert paired["questions"] == len(generations[reference])
+            assert paired["different_token_sequences"] == paired["questions"] - identical
     db.close()
     return {
         "sqlite": sqlite3.sqlite_version,
@@ -177,6 +197,9 @@ def main() -> None:
     parser.add_argument("teacher", type=Path)
     parser.add_argument("prompts", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument(
+        "--summary", type=Path, help="Check the actual serialized analysis artifact"
+    )
     args = parser.parse_args()
     prompts = json.loads(args.prompts.read_text())
     gen_receipt, generations = analyze.complete(args.generation, "generate", prompts)
@@ -188,10 +211,35 @@ def main() -> None:
     for root in (args.generation, args.teacher):
         assert not args.output.resolve().is_relative_to(root.resolve()), "Preserve input evidence"
     assert args.output.resolve() != args.prompts.resolve()
-    result = check(generations, teacher_data["all-profiles"], gen_receipt["contract"]["profiles"])
-    result.update(
-        {"script_sha256": sha(Path(__file__)), "analysis_sha256": sha(Path(analyze.__file__))}
+    report = None
+    summary_hash = None
+    if args.summary:
+        assert args.summary.resolve() != args.output.resolve()
+        summary_hash = sha(args.summary)
+        report = json.loads(args.summary.read_text())
+        assert report["analysis_sha256"] == sha(Path(analyze.__file__))
+        assert report["generation_receipt_sha256"] == sha(args.generation / "completed.json")
+        assert report["teacher_receipt_sha256"] == sha(args.teacher / "completed.json")
+        assert report["prompts_sha256"] == sha(args.prompts)
+        assert report["weight_states"] == gen_receipt["weight_states"]
+        assert report["versions"] == gen_receipt["contract"]["versions"]
+    result = check(
+        generations, teacher_data["all-profiles"], gen_receipt["contract"]["profiles"], report
     )
+    result.update(
+        {
+            "script_sha256": sha(Path(__file__)),
+            "analysis_sha256": sha(Path(analyze.__file__)),
+            "complete_parent_receipts": {
+                "generation": sha(args.generation / "completed.json"),
+                "teacher": sha(args.teacher / "completed.json"),
+                "prompts": sha(args.prompts),
+            },
+        }
+    )
+    if args.summary:
+        assert sha(args.summary) == summary_hash
+        result["serialized_summary_sha256"] = summary_hash
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
 
 

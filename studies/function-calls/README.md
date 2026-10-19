@@ -77,6 +77,34 @@ probability references. A two-class closed form independently checks the
 probability arithmetic. Target likelihood and conditional argmax counts are
 not generation success or task accuracy.
 
+### Independent checks on actual vocabulary logits
+
+The [fixed native capture](probability-controls/capture.json) revisits the first
+and last `simple_python` questions, using the first, middle and EOS prediction
+positions. Both reference intervals were already complete; the capture checks
+their source, prompt, target and model-state identities. All full-question
+measurements reproduce the canonical rows before any sampled logits are saved.
+
+[The actual arrays](probability-controls/logits.npz) retain the complete vocabulary
+at those positions across six profiles. Native BF16 values are represented
+exactly in float32. No saved probability is used by the independent oracle:
+[`check_logits.py`](check_logits.py) normalizes those logits again using NumPy
+extended precision, with 63 stored mantissa bits on this Linux host.
+
+All 20 reference/candidate comparisons and selected argmax IDs agree on
+[NumPy 1.24 / Python 3.10](probability-controls/numpy-310.json) and
+[NumPy 2.5.4 / Python 3.15](probability-controls/numpy-315.json). The largest
+absolute scalar difference is 2.54e-14; the receipts retain each comparison and
+the combined absolute/relative tolerance. These are two numerical controls,
+not full-cohort vocabulary coverage or a quality estimate.
+
+The independent check needs NumPy and the retained arrays, without Torch,
+PEFT, model weights or inference:
+
+```sh
+python studies/function-calls/check_logits.py studies/function-calls/probability-controls /tmp/mergeglass-logit-check.json
+```
+
 ## Resumable execution and complete-cohort analysis
 
 `replay.py --prepare-only` produces the full prompt-ID receipt before loading
@@ -99,11 +127,26 @@ coordinator during import; its earlier worker can continue computing. The
 master subsequently validates those copied receipts through its normal resume
 path. No source output is changed or selected by its score.
 
+`run_future.py` can compute a later source-order interval for a running
+single-profile coordinator. It retains the native child's exit status, checks
+the same prompt/source/model identities, briefly stops the verified owning
+coordinator to copy the completed interval, and resumes it. Its current native
+worker remains in a different directory. The coordinator subsequently checks
+the copied interval in its ordinary loop. Linux process ownership is checked
+through `/proc`; existing or competing canonical work is never replaced.
+
 `analyze.py` requires both complete parent receipts, revalidates every chunk,
 checks exact question ordering and common weight identities, and reports
 paired outcomes without filling unknown grades. It keeps per-question and
 token-weighted probability aggregates distinct. Partial outputs are not a
 complete-run result.
+
+`check_analysis.py --summary FILE` checks the actual serialized primary
+aggregates with independent SQLite JSON queries and binds the check to the
+summary and complete parent receipts. It checks both token-weighted and
+question-weighted measurements. The figure and retention programs require
+that checked, complete result. Limited diagnostic cohorts cannot produce a
+full-study figure or archive.
 
 The separate native Python 3.12 environment uses the
 [pinned producer dependencies](../native-peft/requirements.txt), plus
@@ -161,9 +204,40 @@ HF_HUB_OFFLINE=1 /tmp/mergeglass-producer/bin/python studies/function-calls/repl
 HF_HUB_OFFLINE=1 /tmp/mergeglass-producer/bin/python studies/function-calls/run_chunks.py generate /tmp/mergeglass-dora-public /tmp/mergeglass-bfcl /tmp/mergeglass-prompts/prompts.json /tmp/mergeglass-generations --chunk-size 25
 HF_HUB_OFFLINE=1 /tmp/mergeglass-producer/bin/python studies/function-calls/run_chunks.py teacher /tmp/mergeglass-dora-public /tmp/mergeglass-bfcl /tmp/mergeglass-prompts/prompts.json /tmp/mergeglass-probabilities --chunk-size 25
 python studies/function-calls/analyze.py /tmp/mergeglass-generations /tmp/mergeglass-probabilities /tmp/mergeglass-prompts/prompts.json /tmp/mergeglass-function-summary.json
+python studies/function-calls/check_analysis.py /tmp/mergeglass-generations /tmp/mergeglass-probabilities /tmp/mergeglass-prompts/prompts.json /tmp/mergeglass-function-check.json --summary /tmp/mergeglass-function-summary.json
 ```
 
 Re-running a chunk command resumes its verified completed intervals. Do not
 change the protocol or study sources during a run. Byte differences from a
 different producer/kernel require a distinct identified experiment; changing
 expected hashes cannot establish equivalence to the retained inputs.
+
+For a standalone scientific figure, use a separate plotting environment; do
+not change an active producer environment:
+
+```sh
+uv venv --python 3.12 /tmp/mergeglass-plots
+uv pip install --python /tmp/mergeglass-plots/bin/python -r studies/function-calls/requirements-plots.txt
+/tmp/mergeglass-plots/bin/python studies/function-calls/plot.py /tmp/mergeglass-function-summary.json /tmp/mergeglass-function-check.json /tmp/mergeglass-function-figures
+```
+
+The plot compares each native merge with its unmerged execution at the same
+base precision, and the controlled omitted-magnitude FP32 merge with unmerged
+FP32. It keeps teacher-forced prefixes and complete generation cohorts as
+separate denominators. Different greedy token sequences do not imply different
+task grades. No population interval or held-out performance claim is fitted.
+
+Retain the original record and receipt bytes after both cohorts finish:
+
+```sh
+python studies/function-calls/retain.py /tmp/mergeglass-generations /tmp/mergeglass-probabilities /tmp/mergeglass-prompts/prompts.json /tmp/mergeglass-function-summary.json /tmp/mergeglass-function-check.json /tmp/mergeglass-function-retained --bfcl /tmp/mergeglass-bfcl
+```
+
+The deterministic archive contains both canonical trees, prompts, the checked
+summary and any parallel-origin receipt metadata. The four pinned benchmark
+question/answer files and their attribution travel with the archive, so cases
+remain readable without model weights or a tokenizer. Shared imported records occur
+once in the canonical tree. Its separate compressed manifest retains every
+member's size and digest. Native model weights, worker logs and incomplete
+attempts are excluded. Every archived byte is compared with its original and
+read back from the archive before the retention receipt is written.
