@@ -63,6 +63,29 @@ def test_matching_norm_cannot_prove_direction_or_an_update(tmp_path: Path) -> No
     ]
 
 
+@pytest.mark.parametrize("saved", [1e308, 1e-308])
+def test_partial_observations_retain_norms_outside_ordinary_float64_range(
+    tmp_path: Path, saved: float
+) -> None:
+    _, adapter, merged = dora_fixture(
+        tmp_path,
+        np.ones((1, 4)),
+        np.zeros((1, 4)),
+        np.zeros((1, 1)),
+        np.array([1e308]),
+        np.full((1, 4), saved),
+    )
+    report = audit_dora_norms(adapter, merged)
+    rows = report["layers"][0]["dora_rows"]
+    if saved == 1e308:
+        assert rows["row_norm_factor_range"] == [2.0, 2.0]
+        assert rows["largest_nonzero_log2_norm_error"]["saved_row_norm"] is None
+    else:
+        assert rows["row_norm_factor_range"] == [None, None]
+        assert rows["log2_row_norm_factor_range"][0] < -2000
+    json.dumps(report, allow_nan=False)
+
+
 def test_without_a_base_no_direction_is_invented_for_zero_base(tmp_path: Path) -> None:
     base, adapter, merged = dora_fixture(
         tmp_path,

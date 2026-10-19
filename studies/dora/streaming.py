@@ -91,16 +91,21 @@ def main() -> None:
     parser.add_argument("--prepare", action="store_true")
     parser.add_argument("--worker", type=int)
     parser.add_argument("--out", type=Path)
+    parser.add_argument("--dora-norms", action="store_true")
     args = parser.parse_args()
     root = args.directory
     if args.prepare:
         prepare(root)
         return
     if args.worker is not None:
-        from mergeglass import audit
+        from mergeglass import audit, audit_dora_norms
 
         started = time.perf_counter()
-        report = audit(root / "base", root / "adapter", root / "merged", block_mib=args.worker)
+        report = (
+            audit_dora_norms(root / "adapter", root / "merged", block_mib=args.worker)
+            if args.dora_norms
+            else audit(root / "base", root / "adapter", root / "merged", block_mib=args.worker)
+        )
         print(
             json.dumps(
                 {
@@ -122,7 +127,8 @@ def main() -> None:
     env = dict(os.environ, OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1")
     for block in [1, 16, 64]:
         process = subprocess.run(
-            [sys.executable, __file__, str(root), "--worker", str(block)],
+            [sys.executable, __file__, str(root), "--worker", str(block)]
+            + (["--dora-norms"] if args.dora_norms else []),
             env=env,
             capture_output=True,
             text=True,
@@ -130,19 +136,32 @@ def main() -> None:
         )
         result = json.loads(process.stdout)
         layer = result["layer"]
-        assert layer["changed_elements"] == ROWS * COLUMNS
-        assert layer["intended_nonzero_elements"] == ROWS * COLUMNS
-        assert layer["reference_merge_mismatches"] == 0
-        assert layer["norms"]["residual"] == 0
-        assert layer["relative_residual"] == 0
-        assert math.isclose(layer["norms"]["delta"], expected_norm, rel_tol=1e-13)
-        for role in ["base", "adapter", "merged"]:
+        if args.dora_norms:
+            rows = layer["dora_rows"]
+            assert rows["rows"] == ROWS
+            assert rows["row_norm_factor_range"] == [1.0, 1.0]
+            assert rows["zero_magnitude_rows"] == rows["zero_saved_rows"] == ROWS // 4
+            assert rows["negative_magnitude_rows"] == ROWS // 4
+            assert rows["norm_comparable_rows"] == 3 * ROWS // 4
+            assert rows["nonzero_magnitude_zero_saved_rows"] == 0
+            assert rows["zero_magnitude_nonzero_saved_rows"] == 0
+            assert "base" not in result["inputs"] and "direction_cosine_range" not in rows
+        else:
+            assert layer["changed_elements"] == ROWS * COLUMNS
+            assert layer["intended_nonzero_elements"] == ROWS * COLUMNS
+            assert layer["reference_merge_mismatches"] == 0
+            assert layer["norms"]["residual"] == 0
+            assert layer["relative_residual"] == 0
+            assert math.isclose(layer["norms"]["delta"], expected_norm, rel_tol=1e-13)
+        for role in result["inputs"]:
             for item in result["inputs"][role]:
                 source = next(x for x in receipt["files"] if x["file"] == role + "/" + item["file"])
                 assert source["sha256"] == item["sha256"]
                 assert source["bytes"] == item["bytes"]
         results.append(result)
     output = {
+        "mode": "dora-norms" if args.dora_norms else "complete-audit",
+        "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "producer": receipt,
         "machine": {"platform": platform.platform(), "logical_cpus": os.cpu_count(), "threads": 1},
         "full_float64_delta_bytes": ROWS * COLUMNS * 8,
