@@ -20,7 +20,19 @@ def _range(layers: list[dict[str, Any]], field: str) -> str:
 
 
 def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
-    lines = ["Mergeglass | saved LoRA merge audit", ""]
+    variants = Counter(layer.get("adapter_variant", "lora") for layer in report["layers"])
+    kind = "LoRA"
+    if variants.get("dora"):
+        kind = "LoRA/DoRA" if variants.get("lora") else "DoRA"
+    lines = [f"Mergeglass | saved {kind} merge audit", ""]
+    if variants.get("dora"):
+        lines.extend(
+            [
+                "DoRA reference includes learned magnitudes and row-normalized directions.",
+                "Counts, gain and residual use the complete weight update, not B @ A alone.",
+                "",
+            ]
+        )
     summary = report["summary"]
     if summary_only:
         layers = report["layers"]
@@ -108,7 +120,7 @@ def _write(path: Path, text: str) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Inspect a saved LoRA merge, locally and read-only."
+        description="Inspect a saved LoRA or DoRA merge, locally and read-only."
     )
     parser.add_argument("base", type=Path, help="original safetensors file or HF directory")
     parser.add_argument(

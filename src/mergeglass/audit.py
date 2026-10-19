@@ -1,4 +1,4 @@
-"""Observed saved-weight changes, with the LoRA product as a float64 reference."""
+"""Observed saved-weight changes, with a declared float64 adapter reference."""
 
 from __future__ import annotations
 
@@ -13,11 +13,19 @@ from .adapter import Pair, adapter_pairs
 from .storage import FLOAT_DTYPES, AuditError, Checkpoint, FloatArray, Tensor, cast
 
 CONTRACT = {
-    "reference": "delta = (B_float64 @ A_float64) * scale; no dense full-layer delta retained",
+    "reference": (
+        "LoRA: delta = (B_float64 @ A_float64) * scale; "
+        "DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; "
+        "reference_weight = row_normalize(direction) * magnitude_float64; "
+        "delta = reference_weight - base_float64; no dense full-layer delta retained"
+    ),
     "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
     "residual": "observed - delta; reported relative to the Frobenius norm of delta",
     "zero_change": "exact numeric equality to the base rounded to the merged dtype",
-    "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+    "reference_merge": (
+        "LoRA: round_to_merged_dtype(base_float64 + delta); "
+        "DoRA: round_to_merged_dtype(reference_weight); ties to even"
+    ),
     "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
     "cosine_similarity": (
         "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero"
@@ -26,7 +34,7 @@ CONTRACT = {
         "squared delta norm at unchanged positions / squared delta norm; null if delta is zero"
     ),
     "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
-    "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate",
+    "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate",
 }
 
 
@@ -111,6 +119,27 @@ def _compatible(base: Tensor, merged: Tensor) -> None:
         raise AuditError(f"Integer/bool dtype changes are unsupported: {base.name}")
 
 
+def _dora_reference(
+    pair: Pair, original: FloatArray, lora_delta: FloatArray, row: int
+) -> FloatArray:
+    assert pair.magnitude is not None
+    reference = original + lora_delta
+    if not np.isfinite(reference).all():
+        raise AuditError(f"Nonfinite DoRA direction at {pair.module}")
+    maximum = np.max(np.abs(reference), axis=1)
+    zero = np.flatnonzero(maximum == 0)
+    if zero.size:
+        raise AuditError(f"Undefined DoRA direction at {pair.module}, row {row + int(zero[0])}")
+    # Normalize each complete output row. Scaling first avoids overflow from
+    # squares or magnitude/norm and underflow for tiny but nonzero directions.
+    reference /= maximum[:, None]
+    length = np.sqrt(np.sum(reference**2, axis=1))
+    reference /= length[:, None]
+    magnitude = pair.magnitude.floats(row, original.shape[0])
+    reference *= magnitude[:, None]
+    return reference
+
+
 def _layer(
     pair: Pair, base: Tensor, merged: Tensor, elements: int, max_adapter_bytes: int
 ) -> dict[str, Any]:
@@ -146,6 +175,10 @@ def _layer(
         baseline = cast(original, merged.dtype)
         if not np.isfinite(baseline).all():
             raise AuditError(f"Base conversion overflows the merged dtype at {pair.module}")
+        reference_weight = None
+        if pair.magnitude is not None:
+            reference_weight = _dora_reference(pair, original, delta, row)
+            delta = reference_weight - original
         observed = after - baseline
         residual = observed - delta
         drift = baseline - original
@@ -162,7 +195,9 @@ def _layer(
         nonzero += int(np.count_nonzero(nz))
         erased += int(np.count_nonzero(nz & unchanged))
         with np.errstate(over="ignore", invalid="ignore"):
-            reference = cast(original + delta, merged.dtype)
+            reference = cast(
+                original + delta if reference_weight is None else reference_weight, merged.dtype
+            )
         reference_overflows += int(np.count_nonzero(~np.isfinite(reference)))
         mismatches += int(np.count_nonzero(after != reference))
         flat = int(np.argmax(np.abs(residual)))
@@ -198,11 +233,16 @@ def _layer(
     return {
         "module": pair.module,
         "weight": pair.weight,
+        "adapter_variant": "lora" if pair.magnitude is None else "dora",
         "shape": list(base.shape),
         "rank": pair.rank,
         "alpha": pair.alpha,
         "scale": pair.scale,
-        "adapter_dtypes": {"A": pair.a.dtype, "B": pair.b.dtype},
+        "adapter_dtypes": {
+            "A": pair.a.dtype,
+            "B": pair.b.dtype,
+            **({"magnitude": pair.magnitude.dtype} if pair.magnitude is not None else {}),
+        },
         "base_dtype": base.dtype,
         "merged_dtype": merged.dtype,
         "status": status,
@@ -353,6 +393,7 @@ def audit(
             "Supplied base identity and training provenance are not independently established.",
             "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
             "The float64 reference is numerical; it is not a PEFT merge emulator.",
+            "DoRA normalizes rows of the supplied original base plus its directional update.",
             "Tensor shapes and a global adapter flag do not establish every module's type.",
             "Operation order and matmul precision can differ from the producer, notably at ties.",
             "Weight-space changes and residuals do not establish generation or task quality.",

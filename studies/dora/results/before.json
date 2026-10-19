@@ -1,0 +1,78 @@
+{
+  "source_commit": "068b150453e5226c64e8815693c7c8c146898dfb",
+  "producer_receipt_sha256": "99e1fcf3faa41606a30cb9228f608632d863ea10aecdbabe39ad148464e6ba58",
+  "cases": [
+    {
+      "case": "correct-f32-safe-false",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "correct-f32-safe-true",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "as-lora-f32",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "correct-f16-safe-false",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "correct-f16-safe-true",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "as-lora-f16",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "correct-bf16-safe-false",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "correct-bf16-safe-true",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "as-lora-bf16",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "half-magnitudes-f32",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "omitted",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    },
+    {
+      "case": "transformer-merged",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "mergeglass: Unsupported adapter option: use_dora\n"
+    }
+  ]
+}

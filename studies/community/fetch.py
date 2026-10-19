@@ -2,16 +2,20 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
-import sys
 import urllib.request
 from pathlib import Path
 
 
 def main() -> None:
-    root = Path(sys.argv[1])
-    manifest = json.loads(Path(__file__).with_name("sources.json").read_text())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("directory", type=Path)
+    parser.add_argument("--sources", type=Path, default=Path(__file__).with_name("sources.json"))
+    args = parser.parse_args()
+    root = args.directory
+    manifest = json.loads(args.sources.read_text())
     for source in manifest["sources"]:
         folder = root / source["role"]
         folder.mkdir(parents=True, exist_ok=True)

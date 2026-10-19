@@ -1,0 +1,374 @@
+{
+  "synthetic": true,
+  "seed": 71120,
+  "oracle": "80-digit Decimal scalar dot products, row norms, complete updates and metrics",
+  "shape": [
+    9,
+    13
+  ],
+  "rank": 3,
+  "cases": 36,
+  "compared_coordinates": 4212,
+  "results": [
+    {
+      "case": 0,
+      "scale": -2,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 1.2552447266646474e-16,
+      "projection_gain": 1.0000000013139279,
+      "reference_gain": 1.0000000013139279,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 1,
+      "scale": 0,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.97837517450573,
+      "reference_gain": 0.97837517450573,
+      "changed": 112,
+      "nonzero": 112
+    },
+    {
+      "case": 2,
+      "scale": 1,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 116
+    },
+    {
+      "case": 3,
+      "scale": 3,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 1.529436967926949e-16,
+      "projection_gain": 0.999999999591114,
+      "reference_gain": 0.9999999995911139,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 4,
+      "scale": -2,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 1.0480155019272435,
+      "reference_gain": 1.0480155019272437,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 5,
+      "scale": 0,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 113
+    },
+    {
+      "case": 6,
+      "scale": 1,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 1.1504639717624322e-16,
+      "projection_gain": 0.9999999996321111,
+      "reference_gain": 0.9999999996321111,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 7,
+      "scale": 3,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.9125837010054645,
+      "reference_gain": 0.9125837010054643,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 8,
+      "scale": -2,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 0.0,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 117
+    },
+    {
+      "case": 9,
+      "scale": 0,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.9999999987179626,
+      "reference_gain": 0.999999998717963,
+      "changed": 115,
+      "nonzero": 115
+    },
+    {
+      "case": 10,
+      "scale": 1,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 3.552713678800501e-15,
+      "projection_gain": 0.8988059181567336,
+      "reference_gain": 0.8988059181567332,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 11,
+      "scale": 3,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 117
+    },
+    {
+      "case": 12,
+      "scale": -2,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.999999997875677,
+      "reference_gain": 0.9999999978756767,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 13,
+      "scale": 0,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 0.0,
+      "projection_gain": 1.0266081512143899,
+      "reference_gain": 1.0266081512143899,
+      "changed": 114,
+      "nonzero": 114
+    },
+    {
+      "case": 14,
+      "scale": 1,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 0.0,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 117
+    },
+    {
+      "case": 15,
+      "scale": 3,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.9999999980156212,
+      "reference_gain": 0.999999998015621,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 16,
+      "scale": -2,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 4.440892098500626e-16,
+      "projection_gain": 1.0067157720203928,
+      "reference_gain": 1.006715772020393,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 17,
+      "scale": 0,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 3.552713678800501e-15,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 115
+    },
+    {
+      "case": 18,
+      "scale": 1,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 8.621207216272676e-18,
+      "projection_gain": 1.0000000000327025,
+      "reference_gain": 1.0000000000327025,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 19,
+      "scale": 3,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 2.220446049250313e-16,
+      "projection_gain": 1.0253071806139835,
+      "reference_gain": 1.0253071806139835,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 20,
+      "scale": -2,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 0.0,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 117
+    },
+    {
+      "case": 21,
+      "scale": 0,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 1.0000000007558616,
+      "reference_gain": 1.0000000007558614,
+      "changed": 112,
+      "nonzero": 112
+    },
+    {
+      "case": 22,
+      "scale": 1,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.9918139089742074,
+      "reference_gain": 0.9918139089742074,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 23,
+      "scale": 3,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 117
+    },
+    {
+      "case": 24,
+      "scale": -2,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.9999999993048065,
+      "reference_gain": 0.9999999993048063,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 25,
+      "scale": 0,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 3.552713678800501e-15,
+      "projection_gain": 0.9419128412347395,
+      "reference_gain": 0.9419128412347395,
+      "changed": 116,
+      "nonzero": 116
+    },
+    {
+      "case": 26,
+      "scale": 1,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 117
+    },
+    {
+      "case": 27,
+      "scale": 3,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 1.000000001464494,
+      "reference_gain": 1.0000000014644945,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 28,
+      "scale": -2,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 1.0457992889656151,
+      "reference_gain": 1.045799288965615,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 29,
+      "scale": 0,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 0.0,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 113
+    },
+    {
+      "case": 30,
+      "scale": 1,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 3.552713678800501e-15,
+      "projection_gain": 0.9999999984537509,
+      "reference_gain": 0.9999999984537512,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 31,
+      "scale": 3,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 0.0,
+      "projection_gain": 0.9493186046503492,
+      "reference_gain": 0.9493186046503492,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 32,
+      "scale": -2,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 0.0,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 117
+    },
+    {
+      "case": 33,
+      "scale": 0,
+      "saved_control": "rounded intended",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.9999999982942828,
+      "reference_gain": 0.9999999982942825,
+      "changed": 114,
+      "nonzero": 114
+    },
+    {
+      "case": 34,
+      "scale": 1,
+      "saved_control": "halved magnitude",
+      "maximum_norm_absolute_difference": 1.7763568394002505e-15,
+      "projection_gain": 0.9588024955818747,
+      "reference_gain": 0.958802495581875,
+      "changed": 117,
+      "nonzero": 117
+    },
+    {
+      "case": 35,
+      "scale": 3,
+      "saved_control": "base copy",
+      "maximum_norm_absolute_difference": 0.0,
+      "projection_gain": 0.0,
+      "reference_gain": 0.0,
+      "changed": 0,
+      "nonzero": 117
+    }
+  ]
+}

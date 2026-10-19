@@ -1,0 +1,19 @@
+Mergeglass | saved DoRA merge audit
+
+DoRA reference includes learned magnitudes and row-normalized directions.
+Counts, gain and residual use the complete weight update, not B @ A alone.
+
+MODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID
+direction                    F32          96         0.0%   0.9918     0.2302
+magnitude_only               F32           0       100.0%        0          1
+  no-observed-update
+zero_magnitude               F32          32         0.0%    0.803     0.6715
+
+Of 168 nonzero intended updates, 40 are unchanged (23.81%).
+Those unchanged entries contain 2.211% of the reference squared norm.
+* Nonzero intended update elements equal to the dtype-cast base.
+Relative error = ||observed change - intended update|| / ||intended update||.
+Gain = projection of the observed change onto the intended update (ideal 1).
+Checked 4 tensors; 0 unadapted tensor(s) changed.
+Equal weights alone cannot tell rounding from an omitted adapter.
+This measures saved weights, not model quality.

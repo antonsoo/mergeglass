@@ -285,7 +285,6 @@ def test_global_energy_fraction_weights_layers_without_raw_squares(
 @pytest.mark.parametrize(
     "option,value",
     [
-        ("use_dora", True),
         ("fan_in_fan_out", True),
         ("bias", "all"),
         ("modules_to_save", ["lm_head"]),

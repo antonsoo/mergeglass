@@ -1,0 +1,3605 @@
+{
+  "oracle": "dense torch.float64; direct row norms; native PEFT rank/scale resolution",
+  "reference_cast": "independent adjacent-bit-pattern grid; direct F64 ties to even",
+  "script_sha256": "a266943d905011f3a0c4be1f6389aa7ba8e9551396b47a0accc0530ad2f7391b",
+  "tolerance": {
+    "relative": 1e-08,
+    "absolute": 1e-15
+  },
+  "counts_and_reference_casts": "exact",
+  "producer": {
+    "synthetic": true,
+    "script_sha256": "24d37d3e84074db5722759fa23ed96dbf9ef8d51a62b0e0a6ca6aac07300dfc4",
+    "python": "3.12.12",
+    "seed": 71119,
+    "pythonhashseed": "0",
+    "training": {
+      "steps": 16,
+      "optimizer": "AdamW",
+      "lr": 0.01,
+      "losses": [
+        1.3218508958816528,
+        1.3056594133377075,
+        1.2886618375778198,
+        1.2710919380187988,
+        1.252947211265564,
+        1.234334945678711,
+        1.2155112028121948,
+        1.1963757276535034,
+        1.1769349575042725,
+        1.1575793027877808,
+        1.1381384134292603,
+        1.118346095085144,
+        1.097986102104187,
+        1.0780105590820312,
+        1.0621846914291382,
+        1.0516936779022217
+      ]
+    },
+    "data": "seeded random 64x8 inputs and 64x24 regression targets",
+    "post_training_controls": {
+      "magnitude_only": "zero B, retain trained magnitudes",
+      "zero_magnitude": "zero magnitude, retain trained A/B"
+    },
+    "transformer_training": {
+      "steps": 8,
+      "optimizer": "AdamW",
+      "lr": 0.002,
+      "data": "seeded random 4x16 token IDs; next-token objective",
+      "losses": [
+        4.14689826965332,
+        4.146413326263428,
+        4.145918369293213,
+        4.145418167114258,
+        4.144909381866455,
+        4.144388675689697,
+        4.14385461807251,
+        4.143308639526367
+      ]
+    },
+    "cases": {
+      "correct-f32-safe-false": "native DoRA merge; FP32 adapter, specified base dtype",
+      "correct-f32-safe-true": "native DoRA merge; FP32 adapter, specified base dtype",
+      "as-lora-f32": {
+        "control": "native load with use_dora=False; magnitudes omitted from merge",
+        "warnings": []
+      },
+      "correct-f16-safe-false": "native DoRA merge; FP32 adapter, specified base dtype",
+      "correct-f16-safe-true": "native DoRA merge; FP32 adapter, specified base dtype",
+      "as-lora-f16": {
+        "control": "native load with use_dora=False; magnitudes omitted from merge",
+        "warnings": []
+      },
+      "correct-bf16-safe-false": "native DoRA merge; FP32 adapter, specified base dtype",
+      "correct-bf16-safe-true": "native DoRA merge; FP32 adapter, specified base dtype",
+      "as-lora-bf16": {
+        "control": "native load with use_dora=False; magnitudes omitted from merge",
+        "warnings": []
+      },
+      "half-magnitudes-f32": "native DoRA merge after halving every learned magnitude",
+      "omitted": "base copied without any adapter"
+    },
+    "forward_checks": [
+      {
+        "case": "correct-f32-safe-false",
+        "max_absolute_output_difference": 4.805624485015869e-07,
+        "positions": 1536
+      },
+      {
+        "case": "correct-f32-safe-true",
+        "max_absolute_output_difference": 4.805624485015869e-07,
+        "positions": 1536
+      },
+      {
+        "case": "correct-f16-safe-false",
+        "max_absolute_output_difference": 0.001953125,
+        "positions": 1536
+      },
+      {
+        "case": "correct-f16-safe-true",
+        "max_absolute_output_difference": 0.001953125,
+        "positions": 1536
+      },
+      {
+        "case": "correct-bf16-safe-false",
+        "max_absolute_output_difference": 0.0078125,
+        "positions": 1536
+      },
+      {
+        "case": "correct-bf16-safe-true",
+        "max_absolute_output_difference": 0.0078125,
+        "positions": 1536
+      }
+    ],
+    "versions": {
+      "torch": "2.14.1+cpu",
+      "peft": "0.21.0",
+      "transformers": "5.20.1",
+      "safetensors": "0.8.0",
+      "numpy": "2.5.4"
+    },
+    "files": [
+      {
+        "file": "adapter/adapter_config.json",
+        "bytes": 1226,
+        "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+      },
+      {
+        "file": "adapter/adapter_model.safetensors",
+        "bytes": 1676,
+        "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+      },
+      {
+        "file": "as-lora-bf16/model.safetensors",
+        "bytes": 704,
+        "sha256": "41e70f4edf606aa4a647b42b10c2dd991c13d3c1bede8685665fe474da9c603b"
+      },
+      {
+        "file": "as-lora-f16/model.safetensors",
+        "bytes": 696,
+        "sha256": "ff7d113ecbd83736cc317346e6acad8fd9e37acc3694778eecdf818ac2ca625f"
+      },
+      {
+        "file": "as-lora-f32/model.safetensors",
+        "bytes": 1080,
+        "sha256": "a1887ab3b5a7c10b28dd57e8942bd0c8b7662b0906dd3877b02a98d7b45ef43b"
+      },
+      {
+        "file": "base/model.safetensors",
+        "bytes": 1080,
+        "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+      },
+      {
+        "file": "correct-bf16-safe-false/model.safetensors",
+        "bytes": 704,
+        "sha256": "9716cab3493deeee0dcd763f99f41e3596b7a65e7d908075b4c0698cc7332e4f"
+      },
+      {
+        "file": "correct-bf16-safe-true/model.safetensors",
+        "bytes": 704,
+        "sha256": "9716cab3493deeee0dcd763f99f41e3596b7a65e7d908075b4c0698cc7332e4f"
+      },
+      {
+        "file": "correct-f16-safe-false/model.safetensors",
+        "bytes": 696,
+        "sha256": "e4cd9f1c25a43f1669181f66750443027d77fc3cd1c0b9dcfd9aef3bfb7e6849"
+      },
+      {
+        "file": "correct-f16-safe-true/model.safetensors",
+        "bytes": 696,
+        "sha256": "e4cd9f1c25a43f1669181f66750443027d77fc3cd1c0b9dcfd9aef3bfb7e6849"
+      },
+      {
+        "file": "correct-f32-safe-false/model.safetensors",
+        "bytes": 1080,
+        "sha256": "41ab4476855e2336e4073e23c2d9f8e31a508a6e62cbde52ccb3ff1d9c37416b"
+      },
+      {
+        "file": "correct-f32-safe-true/model.safetensors",
+        "bytes": 1080,
+        "sha256": "41ab4476855e2336e4073e23c2d9f8e31a508a6e62cbde52ccb3ff1d9c37416b"
+      },
+      {
+        "file": "half-magnitudes-f32/model.safetensors",
+        "bytes": 1080,
+        "sha256": "79d57abb9cbbf71a793d50ba4d3a8b2161c9830b5bfddb4b549bab798dd45071"
+      },
+      {
+        "file": "omitted/model.safetensors",
+        "bytes": 1080,
+        "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+      },
+      {
+        "file": "transformer-adapter/adapter_config.json",
+        "bytes": 1180,
+        "sha256": "695e3b290e87b96a2d217f38976eea8ea303023dbbf83b4c91f3099e62dc145e"
+      },
+      {
+        "file": "transformer-adapter/adapter_model.safetensors",
+        "bytes": 2608,
+        "sha256": "08752553f4349448954d181423d7088c0c40d1834899268f3baba405ff9508c5"
+      },
+      {
+        "file": "transformer-base/config.json",
+        "bytes": 713,
+        "sha256": "0fc5a7a1bdae83e8fbf6b8294122237a124f9a50e6610db1cc81b7d1c3bd2eff"
+      },
+      {
+        "file": "transformer-base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "transformer-base/model-00001-of-00004.safetensors",
+        "bytes": 7696,
+        "sha256": "96fffcb9469bd6e51b4924b4f3e5c076164ad82bdf546d9685a561f325d54186"
+      },
+      {
+        "file": "transformer-base/model-00002-of-00004.safetensors",
+        "bytes": 8536,
+        "sha256": "c055036da41e67a9f4bf9462c7a56a8f7f4d26024e337fa88091839b79becce8"
+      },
+      {
+        "file": "transformer-base/model-00003-of-00004.safetensors",
+        "bytes": 8672,
+        "sha256": "db1bcf7af62a9ce998fb75545082e708fd25222898528d76ed0df47c16a8ed67"
+      },
+      {
+        "file": "transformer-base/model-00004-of-00004.safetensors",
+        "bytes": 4216,
+        "sha256": "b10dcd6b42bcc1ed3ceb4fc90fccc1a26f7e1610b89183bce394e8241299467e"
+      },
+      {
+        "file": "transformer-base/model.safetensors.index.json",
+        "bytes": 1756,
+        "sha256": "ec64159525972712b1bf85ed7d2ea3bb867534022f0010a0598145b9c5b42094"
+      },
+      {
+        "file": "transformer-merged/config.json",
+        "bytes": 713,
+        "sha256": "0fc5a7a1bdae83e8fbf6b8294122237a124f9a50e6610db1cc81b7d1c3bd2eff"
+      },
+      {
+        "file": "transformer-merged/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "transformer-merged/model-00001-of-00004.safetensors",
+        "bytes": 7696,
+        "sha256": "a99dfca6678510252b118031218528534e8d5551f6e8e99debd38e247b2c1740"
+      },
+      {
+        "file": "transformer-merged/model-00002-of-00004.safetensors",
+        "bytes": 8536,
+        "sha256": "36e5c36f343f93316f7bb9944b1dfc06f7d51a93341384b66c5d7baf9aa7417c"
+      },
+      {
+        "file": "transformer-merged/model-00003-of-00004.safetensors",
+        "bytes": 8672,
+        "sha256": "6a649046b96f248eb742e430e86b246bcd123251dbc536f7482c1f6cc8a1e73a"
+      },
+      {
+        "file": "transformer-merged/model-00004-of-00004.safetensors",
+        "bytes": 4216,
+        "sha256": "b10dcd6b42bcc1ed3ceb4fc90fccc1a26f7e1610b89183bce394e8241299467e"
+      },
+      {
+        "file": "transformer-merged/model.safetensors.index.json",
+        "bytes": 1756,
+        "sha256": "ec64159525972712b1bf85ed7d2ea3bb867534022f0010a0598145b9c5b42094"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case": "correct-f32-safe-false",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 1.8971562921043303,
+            "residual": 1.4017089382715838e-07,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 96,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.3483806784820386,
+            "residual": 3.106076103700052e-08,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 40,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 1.3302898840586965,
+            "residual": 0.0,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 32,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "41ab4476855e2336e4073e23c2d9f8e31a508a6e62cbde52ccb3ff1d9c37416b"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 168,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 96,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 1.8971562921043303,
+              "residual": 1.401708938555129e-07,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 7.388473749021639e-08,
+            "observed_to_intended_norm": 1.000000005454255,
+            "projection_gain": 1.0000000054542522,
+            "cosine_similarity": 0.9999999999999972,
+            "reference_merge_mismatches": 65,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 2,
+              "base": -0.296875,
+              "cast_base": -0.296875,
+              "intended_delta": 0.25425656069887076,
+              "merged": -0.04261837154626846,
+              "observed_delta": 0.25425662845373154,
+              "residual": 6.775486077748027e-08,
+              "reference_merged": -0.042618438601493835
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 40,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.3483806784820386,
+              "residual": 3.1060760983114493e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 8.915753156875152e-08,
+            "observed_to_intended_norm": 1.0000000114804315,
+            "projection_gain": 1.0000000114804275,
+            "cosine_similarity": 0.9999999999999961,
+            "reference_merge_mismatches": 5,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 2,
+              "column": 3,
+              "base": 0.26171875,
+              "cast_base": 0.26171875,
+              "intended_delta": -0.06125929967824936,
+              "merged": 0.20045943558216095,
+              "observed_delta": -0.06125931441783905,
+              "residual": -1.4739589687673416e-08,
+              "reference_merged": 0.20045945048332214
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 32,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 1.3302898840586967,
+              "residual": 0.0,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0,
+            "observed_to_intended_norm": 1.0,
+            "projection_gain": 1.0,
+            "cosine_similarity": 1.0,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 0,
+              "base": -0.064453125,
+              "cast_base": -0.064453125,
+              "intended_delta": 0.064453125,
+              "merged": -0.0,
+              "observed_delta": 0.064453125,
+              "residual": 0.0,
+              "reference_merged": -0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "correct-f32-safe-true",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 1.8971562921043303,
+            "residual": 1.4017089382715838e-07,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 96,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.3483806784820386,
+            "residual": 3.106076103700052e-08,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 40,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 1.3302898840586965,
+            "residual": 0.0,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 32,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "41ab4476855e2336e4073e23c2d9f8e31a508a6e62cbde52ccb3ff1d9c37416b"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 168,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 96,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 1.8971562921043303,
+              "residual": 1.401708938555129e-07,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 7.388473749021639e-08,
+            "observed_to_intended_norm": 1.000000005454255,
+            "projection_gain": 1.0000000054542522,
+            "cosine_similarity": 0.9999999999999972,
+            "reference_merge_mismatches": 65,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 2,
+              "base": -0.296875,
+              "cast_base": -0.296875,
+              "intended_delta": 0.25425656069887076,
+              "merged": -0.04261837154626846,
+              "observed_delta": 0.25425662845373154,
+              "residual": 6.775486077748027e-08,
+              "reference_merged": -0.042618438601493835
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 40,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.3483806784820386,
+              "residual": 3.1060760983114493e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 8.915753156875152e-08,
+            "observed_to_intended_norm": 1.0000000114804315,
+            "projection_gain": 1.0000000114804275,
+            "cosine_similarity": 0.9999999999999961,
+            "reference_merge_mismatches": 5,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 2,
+              "column": 3,
+              "base": 0.26171875,
+              "cast_base": 0.26171875,
+              "intended_delta": -0.06125929967824936,
+              "merged": 0.20045943558216095,
+              "observed_delta": -0.06125931441783905,
+              "residual": -1.4739589687673416e-08,
+              "reference_merged": 0.20045945048332214
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 32,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 1.3302898840586967,
+              "residual": 0.0,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0,
+            "observed_to_intended_norm": 1.0,
+            "projection_gain": 1.0,
+            "cosine_similarity": 1.0,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 0,
+              "base": -0.064453125,
+              "cast_base": -0.064453125,
+              "intended_delta": 0.064453125,
+              "merged": -0.0,
+              "observed_delta": 0.064453125,
+              "residual": 0.0,
+              "reference_merged": -0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "as-lora-f32",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 1.9315409739997997,
+            "residual": 0.43665070485418017,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 96,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.0,
+            "residual": 0.34838067448247806,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.34838067448247806
+          },
+          "changed": 0,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 1.3675849960299817,
+            "residual": 0.8932995530381853,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 32,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "a1887ab3b5a7c10b28dd57e8942bd0c8b7662b0906dd3877b02a98d7b45ef43b"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 128,
+          "unchanged_nonzero_update_elements": 40,
+          "unchanged_nonzero_update_fraction": 0.23809523809523808,
+          "unchanged_reference_energy_fraction": 0.022106327795038707,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 1,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 96,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 1.9315409739997997,
+              "residual": 0.43665070485418017,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.2301606404559587,
+            "observed_to_intended_norm": 1.0181243330207903,
+            "projection_gain": 0.9918016185369661,
+            "cosine_similarity": 0.9741458743003182,
+            "reference_merge_mismatches": 96,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 11,
+              "column": 4,
+              "base": 0.25,
+              "cast_base": 0.25,
+              "intended_delta": 0.04611408271317219,
+              "merged": 0.4605926275253296,
+              "observed_delta": 0.2105926275253296,
+              "residual": 0.1644785448121574,
+              "reference_merged": 0.29611408710479736
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "no-observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 0,
+            "unchanged_nonzero_update_elements": 40,
+            "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.0,
+              "residual": 0.3483806744824781,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.3483806744824781
+            },
+            "relative_residual": 1.0,
+            "observed_to_intended_norm": 0.0,
+            "projection_gain": 0.0,
+            "cosine_similarity": null,
+            "reference_merge_mismatches": 40,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 1,
+              "column": 7,
+              "base": 0.349609375,
+              "cast_base": 0.349609375,
+              "intended_delta": -0.09833997205312484,
+              "merged": 0.349609375,
+              "observed_delta": 0.0,
+              "residual": 0.09833997205312484,
+              "reference_merged": 0.2512694001197815
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 32,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 1.3675849960299817,
+              "residual": 0.8932995530381852,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.6715074388995127,
+            "observed_to_intended_norm": 1.0280353270502953,
+            "projection_gain": 0.8029671965830123,
+            "cosine_similarity": 0.7810696534008584,
+            "reference_merge_mismatches": 32,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 0,
+              "base": -0.064453125,
+              "cast_base": -0.064453125,
+              "intended_delta": 0.064453125,
+              "merged": -0.4874337911605835,
+              "observed_delta": -0.4229806661605835,
+              "residual": -0.4874337911605835,
+              "reference_merged": -0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "correct-f16-safe-false",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 1.8971543589975208,
+            "residual": 0.0002913999772184903,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 96,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.3483748817521494,
+            "residual": 0.0002051334822408224,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 40,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 1.3302898840586965,
+            "residual": 0.0,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 32,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 696,
+              "sha256": "e4cd9f1c25a43f1669181f66750443027d77fc3cd1c0b9dcfd9aef3bfb7e6849"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 168,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F16",
+            "status": "observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 96,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 1.8971543589975206,
+              "residual": 0.0002913999772184582,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.00015359829868555872,
+            "observed_to_intended_norm": 0.9999989865045628,
+            "projection_gain": 0.9999989747088578,
+            "cosine_similarity": 0.999999988204283,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 3,
+              "base": 0.26953125,
+              "cast_base": 0.26953125,
+              "intended_delta": 0.05360418970318592,
+              "merged": 0.3232421875,
+              "observed_delta": 0.0537109375,
+              "residual": 0.00010674779681407731,
+              "reference_merged": 0.3232421875
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F16",
+            "status": "observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 40,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.3483748817521494,
+              "residual": 0.00020513348224076452,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0005888199239107959,
+            "observed_to_intended_norm": 0.9999833724119821,
+            "projection_gain": 0.9999831991957692,
+            "cosine_similarity": 0.9999998267809068,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 3,
+              "column": 7,
+              "base": 0.34765625,
+              "cast_base": 0.34765625,
+              "intended_delta": -0.08409461717482153,
+              "merged": 0.263671875,
+              "observed_delta": -0.083984375,
+              "residual": 0.00011024217482152876,
+              "reference_merged": 0.263671875
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F16",
+            "status": "observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 32,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 1.3302898840586967,
+              "residual": 0.0,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0,
+            "observed_to_intended_norm": 1.0,
+            "projection_gain": 1.0,
+            "cosine_similarity": 1.0,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 0,
+              "base": -0.064453125,
+              "cast_base": -0.064453125,
+              "intended_delta": 0.064453125,
+              "merged": -0.0,
+              "observed_delta": 0.064453125,
+              "residual": 0.0,
+              "reference_merged": -0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "correct-f16-safe-true",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 1.8971543589975208,
+            "residual": 0.0002913999772184903,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 96,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.3483748817521494,
+            "residual": 0.0002051334822408224,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 40,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 1.3302898840586965,
+            "residual": 0.0,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 32,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 696,
+              "sha256": "e4cd9f1c25a43f1669181f66750443027d77fc3cd1c0b9dcfd9aef3bfb7e6849"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 168,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F16",
+            "status": "observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 96,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 1.8971543589975206,
+              "residual": 0.0002913999772184582,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.00015359829868555872,
+            "observed_to_intended_norm": 0.9999989865045628,
+            "projection_gain": 0.9999989747088578,
+            "cosine_similarity": 0.999999988204283,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 3,
+              "base": 0.26953125,
+              "cast_base": 0.26953125,
+              "intended_delta": 0.05360418970318592,
+              "merged": 0.3232421875,
+              "observed_delta": 0.0537109375,
+              "residual": 0.00010674779681407731,
+              "reference_merged": 0.3232421875
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F16",
+            "status": "observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 40,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.3483748817521494,
+              "residual": 0.00020513348224076452,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0005888199239107959,
+            "observed_to_intended_norm": 0.9999833724119821,
+            "projection_gain": 0.9999831991957692,
+            "cosine_similarity": 0.9999998267809068,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 3,
+              "column": 7,
+              "base": 0.34765625,
+              "cast_base": 0.34765625,
+              "intended_delta": -0.08409461717482153,
+              "merged": 0.263671875,
+              "observed_delta": -0.083984375,
+              "residual": 0.00011024217482152876,
+              "reference_merged": 0.263671875
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F16",
+            "status": "observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 32,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 1.3302898840586967,
+              "residual": 0.0,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0,
+            "observed_to_intended_norm": 1.0,
+            "projection_gain": 1.0,
+            "cosine_similarity": 1.0,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 0,
+              "base": -0.064453125,
+              "cast_base": -0.064453125,
+              "intended_delta": 0.064453125,
+              "merged": -0.0,
+              "observed_delta": 0.064453125,
+              "residual": 0.0,
+              "reference_merged": -0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "as-lora-f16",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 1.9315614783092185,
+            "residual": 0.4367155088265863,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 96,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.0,
+            "residual": 0.34838067448247806,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.34838067448247806
+          },
+          "changed": 0,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 1.3675880779676495,
+            "residual": 0.8933426414326682,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 32,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 696,
+              "sha256": "ff7d113ecbd83736cc317346e6acad8fd9e37acc3694778eecdf818ac2ca625f"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 128,
+          "unchanged_nonzero_update_elements": 40,
+          "unchanged_nonzero_update_fraction": 0.23809523809523808,
+          "unchanged_reference_energy_fraction": 0.022106327795038707,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 1,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F16",
+            "status": "observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 96,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 1.9315614783092185,
+              "residual": 0.4367155088265863,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.23019479893464032,
+            "observed_to_intended_norm": 1.0181351409387336,
+            "projection_gain": 0.9918047598788876,
+            "cosine_similarity": 0.9741386187342782,
+            "reference_merge_mismatches": 96,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 11,
+              "column": 4,
+              "base": 0.25,
+              "cast_base": 0.25,
+              "intended_delta": 0.04611408271317219,
+              "merged": 0.460693359375,
+              "observed_delta": 0.210693359375,
+              "residual": 0.1645792766618278,
+              "reference_merged": 0.296142578125
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F16",
+            "status": "no-observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 0,
+            "unchanged_nonzero_update_elements": 40,
+            "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.0,
+              "residual": 0.3483806744824781,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.3483806744824781
+            },
+            "relative_residual": 1.0,
+            "observed_to_intended_norm": 0.0,
+            "projection_gain": 0.0,
+            "cosine_similarity": null,
+            "reference_merge_mismatches": 40,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 1,
+              "column": 7,
+              "base": 0.349609375,
+              "cast_base": 0.349609375,
+              "intended_delta": -0.09833997205312484,
+              "merged": 0.349609375,
+              "observed_delta": 0.0,
+              "residual": 0.09833997205312484,
+              "reference_merged": 0.251220703125
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F16",
+            "status": "observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 32,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 1.3675880779676493,
+              "residual": 0.8933426414326682,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.6715398291288901,
+            "observed_to_intended_norm": 1.0280376437917096,
+            "projection_gain": 0.8029478274731755,
+            "cosine_similarity": 0.7810490523592738,
+            "reference_merge_mismatches": 32,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 0,
+              "base": -0.064453125,
+              "cast_base": -0.064453125,
+              "intended_delta": 0.064453125,
+              "merged": -0.487548828125,
+              "observed_delta": -0.423095703125,
+              "residual": -0.487548828125,
+              "reference_merged": -0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "correct-bf16-safe-false",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 1.8970087777169728,
+            "residual": 0.0026429673635679817,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0001532053223835539
+          },
+          "changed": 95,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.3480830840553656,
+            "residual": 0.0017717335609854301,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 40,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 1.3302898840586965,
+            "residual": 0.0,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 32,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 704,
+              "sha256": "9716cab3493deeee0dcd763f99f41e3596b7a65e7d908075b4c0698cc7332e4f"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 167,
+          "unchanged_nonzero_update_elements": 1,
+          "unchanged_nonzero_update_fraction": 0.005952380952380952,
+          "unchanged_reference_energy_fraction": 4.275197675166855e-09,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 95,
+            "unchanged_nonzero_update_elements": 1,
+            "unchanged_nonzero_update_fraction": 0.010416666666666666,
+            "unchanged_reference_energy_fraction": 6.521409769275802e-09,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 1.8970087777169728,
+              "residual": 0.002642967363568,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.00015320532238354
+            },
+            "relative_residual": 0.0013931205293855006,
+            "observed_to_intended_norm": 0.9999222499267976,
+            "projection_gain": 0.9999212825569296,
+            "cosine_similarity": 0.9999990325549131,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 2,
+              "column": 7,
+              "base": 0.30859375,
+              "cast_base": 0.30859375,
+              "intended_delta": 0.08686038968490817,
+              "merged": 0.39453125,
+              "observed_delta": 0.0859375,
+              "residual": -0.000922889684908168,
+              "reference_merged": 0.39453125
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 40,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.3480830840553656,
+              "residual": 0.0017717335609854425,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0050856252678693065,
+            "observed_to_intended_norm": 0.9991457895086902,
+            "projection_gain": 0.9991332225542893,
+            "cosine_similarity": 0.9999874223015972,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 1,
+              "column": 7,
+              "base": 0.349609375,
+              "cast_base": 0.349609375,
+              "intended_delta": -0.09833997205312484,
+              "merged": 0.251953125,
+              "observed_delta": -0.09765625,
+              "residual": 0.0006837220531248356,
+              "reference_merged": 0.251953125
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 32,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 1.3302898840586967,
+              "residual": 0.0,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0,
+            "observed_to_intended_norm": 1.0,
+            "projection_gain": 1.0,
+            "cosine_similarity": 1.0,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 0,
+              "base": -0.064453125,
+              "cast_base": -0.064453125,
+              "intended_delta": 0.064453125,
+              "merged": -0.0,
+              "observed_delta": 0.064453125,
+              "residual": 0.0,
+              "reference_merged": -0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "correct-bf16-safe-true",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 1.8970087777169728,
+            "residual": 0.0026429673635679817,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0001532053223835539
+          },
+          "changed": 95,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.3480830840553656,
+            "residual": 0.0017717335609854301,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 40,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 1.3302898840586965,
+            "residual": 0.0,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 32,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 704,
+              "sha256": "9716cab3493deeee0dcd763f99f41e3596b7a65e7d908075b4c0698cc7332e4f"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 167,
+          "unchanged_nonzero_update_elements": 1,
+          "unchanged_nonzero_update_fraction": 0.005952380952380952,
+          "unchanged_reference_energy_fraction": 4.275197675166855e-09,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 95,
+            "unchanged_nonzero_update_elements": 1,
+            "unchanged_nonzero_update_fraction": 0.010416666666666666,
+            "unchanged_reference_energy_fraction": 6.521409769275802e-09,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 1.8970087777169728,
+              "residual": 0.002642967363568,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.00015320532238354
+            },
+            "relative_residual": 0.0013931205293855006,
+            "observed_to_intended_norm": 0.9999222499267976,
+            "projection_gain": 0.9999212825569296,
+            "cosine_similarity": 0.9999990325549131,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 2,
+              "column": 7,
+              "base": 0.30859375,
+              "cast_base": 0.30859375,
+              "intended_delta": 0.08686038968490817,
+              "merged": 0.39453125,
+              "observed_delta": 0.0859375,
+              "residual": -0.000922889684908168,
+              "reference_merged": 0.39453125
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 40,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.3480830840553656,
+              "residual": 0.0017717335609854425,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0050856252678693065,
+            "observed_to_intended_norm": 0.9991457895086902,
+            "projection_gain": 0.9991332225542893,
+            "cosine_similarity": 0.9999874223015972,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 1,
+              "column": 7,
+              "base": 0.349609375,
+              "cast_base": 0.349609375,
+              "intended_delta": -0.09833997205312484,
+              "merged": 0.251953125,
+              "observed_delta": -0.09765625,
+              "residual": 0.0006837220531248356,
+              "reference_merged": 0.251953125
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 32,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 1.3302898840586967,
+              "residual": 0.0,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0,
+            "observed_to_intended_norm": 1.0,
+            "projection_gain": 1.0,
+            "cosine_similarity": 1.0,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 0,
+              "base": -0.064453125,
+              "cast_base": -0.064453125,
+              "intended_delta": 0.064453125,
+              "merged": -0.0,
+              "observed_delta": 0.064453125,
+              "residual": 0.0,
+              "reference_merged": -0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "as-lora-bf16",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 1.9313981617880607,
+            "residual": 0.4366669667730883,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 96,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.0,
+            "residual": 0.34838067448247806,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.34838067448247806
+          },
+          "changed": 0,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 1.3679471052377026,
+            "residual": 0.8942631202258714,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 32,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 704,
+              "sha256": "41e70f4edf606aa4a647b42b10c2dd991c13d3c1bede8685665fe474da9c603b"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 128,
+          "unchanged_nonzero_update_elements": 40,
+          "unchanged_nonzero_update_fraction": 0.23809523809523808,
+          "unchanged_reference_energy_fraction": 0.022106327795038707,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 1,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 96,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 1.9313981617880607,
+              "residual": 0.4366669667730883,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.23016921218990835,
+            "observed_to_intended_norm": 1.0180490560322193,
+            "projection_gain": 0.9917230071239848,
+            "cosine_similarity": 0.9741406872760743,
+            "reference_merge_mismatches": 96,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 11,
+              "column": 4,
+              "base": 0.25,
+              "cast_base": 0.25,
+              "intended_delta": 0.04611408271317219,
+              "merged": 0.4609375,
+              "observed_delta": 0.2109375,
+              "residual": 0.1648234172868278,
+              "reference_merged": 0.296875
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "no-observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 0,
+            "unchanged_nonzero_update_elements": 40,
+            "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.0,
+              "residual": 0.3483806744824781,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.3483806744824781
+            },
+            "relative_residual": 1.0,
+            "observed_to_intended_norm": 0.0,
+            "projection_gain": 0.0,
+            "cosine_similarity": null,
+            "reference_merge_mismatches": 40,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 1,
+              "column": 7,
+              "base": 0.349609375,
+              "cast_base": 0.349609375,
+              "intended_delta": -0.09833997205312484,
+              "merged": 0.349609375,
+              "observed_delta": 0.0,
+              "residual": 0.09833997205312484,
+              "reference_merged": 0.251953125
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 32,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 1.3679471052377024,
+              "residual": 0.8942631202258714,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.6722317676335977,
+            "observed_to_intended_norm": 1.0283075302836355,
+            "projection_gain": 0.8027604137111196,
+            "cosine_similarity": 0.7806618059965934,
+            "reference_merge_mismatches": 32,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 0,
+              "base": -0.064453125,
+              "cast_base": -0.064453125,
+              "intended_delta": 0.064453125,
+              "merged": -0.48828125,
+              "observed_delta": -0.423828125,
+              "residual": -0.48828125,
+              "reference_merged": -0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "half-magnitudes-f32",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 1.80955449572609,
+            "residual": 0.7521720003166222,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 96,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.8479837705054799,
+            "residual": 0.5009103861565222,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 40,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 1.3302898840586965,
+            "residual": 0.0,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 32,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "79d57abb9cbbf71a793d50ba4d3a8b2161c9830b5bfddb4b549bab798dd45071"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 168,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 96,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 1.80955449572609,
+              "residual": 0.7521720003166222,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.39647339945031584,
+            "observed_to_intended_norm": 0.9538246865200019,
+            "projection_gain": 0.8762951880716451,
+            "cosine_similarity": 0.9187172448521744,
+            "reference_merge_mismatches": 96,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 7,
+              "base": -0.3125,
+              "cast_base": -0.3125,
+              "intended_delta": -0.11959090950948892,
+              "merged": -0.21604543924331665,
+              "observed_delta": 0.09645456075668335,
+              "residual": 0.21604547026617227,
+              "reference_merged": -0.4320909082889557
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 40,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.8479837705054799,
+              "residual": 0.5009103861565221,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 1.4378248360091381,
+            "observed_to_intended_norm": 2.4340723599699254,
+            "projection_gain": 2.4286839972624286,
+            "cosine_similarity": 0.9977862766957497,
+            "reference_merge_mismatches": 40,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 2,
+              "column": 4,
+              "base": 0.3515625,
+              "cast_base": 0.3515625,
+              "intended_delta": -0.08228861150809619,
+              "merged": 0.13463693857192993,
+              "observed_delta": -0.21692556142807007,
+              "residual": -0.13463694991997388,
+              "reference_merged": 0.26927387714385986
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 32,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 1.3302898840586967,
+              "residual": 0.0,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 0.0,
+            "observed_to_intended_norm": 1.0,
+            "projection_gain": 1.0,
+            "cosine_similarity": 1.0,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 0,
+              "base": -0.064453125,
+              "cast_base": -0.064453125,
+              "intended_delta": 0.064453125,
+              "merged": -0.0,
+              "observed_delta": 0.064453125,
+              "residual": 0.0,
+              "reference_merged": -0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "omitted",
+      "dense_oracle": [
+        {
+          "module": "direction",
+          "norms": {
+            "delta": 1.897156281756756,
+            "observed": 0.0,
+            "residual": 1.897156281756756,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 1.897156281756756
+          },
+          "changed": 0,
+          "nonzero": 96,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "magnitude_only",
+          "norms": {
+            "delta": 0.34838067448247806,
+            "observed": 0.0,
+            "residual": 0.34838067448247806,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.34838067448247806
+          },
+          "changed": 0,
+          "nonzero": 40,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "zero_magnitude",
+          "norms": {
+            "delta": 1.3302898840586965,
+            "observed": 0.0,
+            "residual": 1.3302898840586965,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 1.3302898840586965
+          },
+          "changed": 0,
+          "nonzero": 32,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1226,
+              "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1676,
+              "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 1080,
+              "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 3,
+          "checked_tensors": 4,
+          "adapted_elements": 168,
+          "intended_nonzero_elements": 168,
+          "changed_adapted_elements": 0,
+          "unchanged_nonzero_update_elements": 168,
+          "unchanged_nonzero_update_fraction": 1.0,
+          "unchanged_reference_energy_fraction": 1.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 3,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "direction",
+            "weight": "direction.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              12,
+              8
+            ],
+            "rank": 4,
+            "alpha": 6.0,
+            "scale": 3.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "no-observed-update",
+            "elements": 96,
+            "intended_nonzero_elements": 96,
+            "changed_elements": 0,
+            "unchanged_nonzero_update_elements": 96,
+            "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
+            "norms": {
+              "delta": 1.897156281756756,
+              "observed": 0.0,
+              "residual": 1.897156281756756,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 1.897156281756756
+            },
+            "relative_residual": 1.0,
+            "observed_to_intended_norm": 0.0,
+            "projection_gain": 0.0,
+            "cosine_similarity": null,
+            "reference_merge_mismatches": 96,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 6,
+              "column": 2,
+              "base": -0.2421875,
+              "cast_base": -0.2421875,
+              "intended_delta": 0.5334576018200519,
+              "merged": -0.2421875,
+              "observed_delta": 0.0,
+              "residual": -0.5334576018200519,
+              "reference_merged": 0.29127010703086853
+            }
+          },
+          {
+            "module": "magnitude_only",
+            "weight": "magnitude_only.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              5,
+              8
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "no-observed-update",
+            "elements": 40,
+            "intended_nonzero_elements": 40,
+            "changed_elements": 0,
+            "unchanged_nonzero_update_elements": 40,
+            "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
+            "norms": {
+              "delta": 0.3483806744824781,
+              "observed": 0.0,
+              "residual": 0.3483806744824781,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.3483806744824781
+            },
+            "relative_residual": 1.0,
+            "observed_to_intended_norm": 0.0,
+            "projection_gain": 0.0,
+            "cosine_similarity": null,
+            "reference_merge_mismatches": 40,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 1,
+              "column": 7,
+              "base": 0.349609375,
+              "cast_base": 0.349609375,
+              "intended_delta": -0.09833997205312484,
+              "merged": 0.349609375,
+              "observed_delta": 0.0,
+              "residual": 0.09833997205312484,
+              "reference_merged": 0.2512694001197815
+            }
+          },
+          {
+            "module": "zero_magnitude",
+            "weight": "zero_magnitude.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              4,
+              8
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "no-observed-update",
+            "elements": 32,
+            "intended_nonzero_elements": 32,
+            "changed_elements": 0,
+            "unchanged_nonzero_update_elements": 32,
+            "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
+            "norms": {
+              "delta": 1.3302898840586967,
+              "observed": 0.0,
+              "residual": 1.3302898840586967,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 1.3302898840586967
+            },
+            "relative_residual": 1.0,
+            "observed_to_intended_norm": 0.0,
+            "projection_gain": 0.0,
+            "cosine_similarity": null,
+            "reference_merge_mismatches": 32,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 3,
+              "column": 0,
+              "base": -0.34765625,
+              "cast_base": -0.34765625,
+              "intended_delta": 0.34765625,
+              "merged": -0.34765625,
+              "observed_delta": 0.0,
+              "residual": -0.34765625,
+              "reference_merged": 0.0
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": "transformer-merged",
+      "dense_oracle": [
+        {
+          "module": "model.layers.0.self_attn.q_proj",
+          "norms": {
+            "delta": 0.12851529564925626,
+            "observed": 0.12851529499410444,
+            "residual": 1.4209325826621464e-08,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 256,
+          "nonzero": 256,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "model.layers.0.self_attn.v_proj",
+          "norms": {
+            "delta": 0.08302277119722042,
+            "observed": 0.08302277310839437,
+            "residual": 1.0639892465856885e-08,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 128,
+          "nonzero": 128,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "model.layers.1.self_attn.q_proj",
+          "norms": {
+            "delta": 0.11174253295312737,
+            "observed": 0.11174253119447825,
+            "residual": 2.0378267437554458e-08,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 256,
+          "nonzero": 256,
+          "framework_reference_cast_disagreements": 0
+        },
+        {
+          "module": "model.layers.1.self_attn.v_proj",
+          "norms": {
+            "delta": 0.07727930867432388,
+            "observed": 0.07727930823108925,
+            "residual": 1.7148087581705548e-08,
+            "base_cast_drift": 0.0,
+            "unchanged_reference": 0.0
+          },
+          "changed": 128,
+          "nonzero": 128,
+          "framework_reference_cast_disagreements": 0
+        }
+      ],
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA adapters only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 713,
+              "sha256": "0fc5a7a1bdae83e8fbf6b8294122237a124f9a50e6610db1cc81b7d1c3bd2eff"
+            },
+            {
+              "file": "model-00001-of-00004.safetensors",
+              "bytes": 7696,
+              "sha256": "96fffcb9469bd6e51b4924b4f3e5c076164ad82bdf546d9685a561f325d54186"
+            },
+            {
+              "file": "model-00002-of-00004.safetensors",
+              "bytes": 8536,
+              "sha256": "c055036da41e67a9f4bf9462c7a56a8f7f4d26024e337fa88091839b79becce8"
+            },
+            {
+              "file": "model-00003-of-00004.safetensors",
+              "bytes": 8672,
+              "sha256": "db1bcf7af62a9ce998fb75545082e708fd25222898528d76ed0df47c16a8ed67"
+            },
+            {
+              "file": "model-00004-of-00004.safetensors",
+              "bytes": 4216,
+              "sha256": "b10dcd6b42bcc1ed3ceb4fc90fccc1a26f7e1610b89183bce394e8241299467e"
+            },
+            {
+              "file": "model.safetensors.index.json",
+              "bytes": 1756,
+              "sha256": "ec64159525972712b1bf85ed7d2ea3bb867534022f0010a0598145b9c5b42094"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1180,
+              "sha256": "695e3b290e87b96a2d217f38976eea8ea303023dbbf83b4c91f3099e62dc145e"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 2608,
+              "sha256": "08752553f4349448954d181423d7088c0c40d1834899268f3baba405ff9508c5"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 713,
+              "sha256": "0fc5a7a1bdae83e8fbf6b8294122237a124f9a50e6610db1cc81b7d1c3bd2eff"
+            },
+            {
+              "file": "model-00001-of-00004.safetensors",
+              "bytes": 7696,
+              "sha256": "a99dfca6678510252b118031218528534e8d5551f6e8e99debd38e247b2c1740"
+            },
+            {
+              "file": "model-00002-of-00004.safetensors",
+              "bytes": 8536,
+              "sha256": "36e5c36f343f93316f7bb9944b1dfc06f7d51a93341384b66c5d7baf9aa7417c"
+            },
+            {
+              "file": "model-00003-of-00004.safetensors",
+              "bytes": 8672,
+              "sha256": "6a649046b96f248eb742e430e86b246bcd123251dbc536f7482c1f6cc8a1e73a"
+            },
+            {
+              "file": "model-00004-of-00004.safetensors",
+              "bytes": 4216,
+              "sha256": "b10dcd6b42bcc1ed3ceb4fc90fccc1a26f7e1610b89183bce394e8241299467e"
+            },
+            {
+              "file": "model.safetensors.index.json",
+              "bytes": 1756,
+              "sha256": "ec64159525972712b1bf85ed7d2ea3bb867534022f0010a0598145b9c5b42094"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 4,
+          "checked_tensors": 21,
+          "adapted_elements": 768,
+          "intended_nonzero_elements": 768,
+          "changed_adapted_elements": 768,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "model.layers.0.self_attn.q_proj",
+            "weight": "model.layers.0.self_attn.q_proj.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              16,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 256,
+            "intended_nonzero_elements": 256,
+            "changed_elements": 256,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.12851529564925626,
+              "observed": 0.12851529499410444,
+              "residual": 1.4209325819757182e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 1.1056525021377418e-07,
+            "observed_to_intended_norm": 0.9999999949021491,
+            "projection_gain": 0.9999999949021431,
+            "cosine_similarity": 0.999999999999994,
+            "reference_merge_mismatches": 111,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 14,
+              "column": 1,
+              "base": 0.05372773855924606,
+              "cast_base": 0.05372773855924606,
+              "intended_delta": 0.014909962717570613,
+              "merged": 0.06863770633935928,
+              "observed_delta": 0.01490996778011322,
+              "residual": 5.062542607348064e-09,
+              "reference_merged": 0.06863769888877869
+            }
+          },
+          {
+            "module": "model.layers.0.self_attn.v_proj",
+            "weight": "model.layers.0.self_attn.v_proj.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              8,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 128,
+            "intended_nonzero_elements": 128,
+            "changed_elements": 128,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.0830227711972204,
+              "observed": 0.08302277310839437,
+              "residual": 1.0639892479066992e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 1.2815631573887063e-07,
+            "observed_to_intended_norm": 1.000000023019877,
+            "projection_gain": 1.0000000230198691,
+            "cosine_similarity": 0.9999999999999922,
+            "reference_merge_mismatches": 63,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 0,
+              "column": 4,
+              "base": 0.028749952092766762,
+              "cast_base": 0.028749952092766762,
+              "intended_delta": 0.014294521433595948,
+              "merged": 0.043044477701187134,
+              "observed_delta": 0.014294525608420372,
+              "residual": 4.174824423663903e-09,
+              "reference_merged": 0.043044473975896835
+            }
+          },
+          {
+            "module": "model.layers.1.self_attn.q_proj",
+            "weight": "model.layers.1.self_attn.q_proj.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              16,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 256,
+            "intended_nonzero_elements": 256,
+            "changed_elements": 256,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.11174253295312736,
+              "observed": 0.11174253119447826,
+              "residual": 2.037826744668514e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 1.8236804650949886e-07,
+            "observed_to_intended_norm": 0.9999999842615962,
+            "projection_gain": 0.9999999842615798,
+            "cosine_similarity": 0.9999999999999836,
+            "reference_merge_mismatches": 140,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 1,
+              "column": 8,
+              "base": -0.05525141954421997,
+              "cast_base": -0.05525141954421997,
+              "intended_delta": -0.008785964492305398,
+              "merged": -0.06403739005327225,
+              "observed_delta": -0.008785970509052277,
+              "residual": -6.016746878501067e-09,
+              "reference_merged": -0.06403738260269165
+            }
+          },
+          {
+            "module": "model.layers.1.self_attn.v_proj",
+            "weight": "model.layers.1.self_attn.v_proj.weight",
+            "adapter_variant": "dora",
+            "shape": [
+              8,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 128,
+            "intended_nonzero_elements": 128,
+            "changed_elements": 128,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.07727930867432388,
+              "observed": 0.07727930823108925,
+              "residual": 1.7148087580435766e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 2.2189752825950466e-07,
+            "observed_to_intended_norm": 0.9999999942645109,
+            "projection_gain": 0.9999999942644866,
+            "cosine_similarity": 0.9999999999999757,
+            "reference_merge_mismatches": 82,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 3,
+              "column": 15,
+              "base": -0.037735361605882645,
+              "cast_base": -0.037735361605882645,
+              "intended_delta": -0.004294151571427367,
+              "merged": -0.04202950745820999,
+              "observed_delta": -0.004294145852327347,
+              "residual": 5.719100019951906e-09,
+              "reference_merged": -0.04202951490879059
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    }
+  ]
+}

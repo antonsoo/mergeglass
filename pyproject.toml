@@ -5,12 +5,12 @@ build-backend = "hatchling.build"
 [project]
 name = "mergeglass"
 version = "0.1.0"
-description = "Measure which LoRA weight updates survive in a saved safetensors merge."
+description = "Measure which LoRA and DoRA weight updates survive in a saved safetensors merge."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [{name = "Anton Soloviev", email = "anton@praviel.com"}]
-keywords = ["lora", "peft", "safetensors", "bfloat16", "model-merging"]
+keywords = ["lora", "dora", "peft", "safetensors", "bfloat16", "model-merging"]
 dependencies = ["numpy>=1.24", "safetensors>=0.6.2"]
 
 [project.urls]
@@ -36,4 +36,3 @@ strict = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-

@@ -1,0 +1,264 @@
+{
+  "synthetic": true,
+  "script_sha256": "24d37d3e84074db5722759fa23ed96dbf9ef8d51a62b0e0a6ca6aac07300dfc4",
+  "python": "3.12.12",
+  "seed": 71119,
+  "pythonhashseed": "0",
+  "training": {
+    "steps": 16,
+    "optimizer": "AdamW",
+    "lr": 0.01,
+    "losses": [
+      1.3218508958816528,
+      1.3056594133377075,
+      1.2886618375778198,
+      1.2710919380187988,
+      1.252947211265564,
+      1.234334945678711,
+      1.2155112028121948,
+      1.1963757276535034,
+      1.1769349575042725,
+      1.1575793027877808,
+      1.1381384134292603,
+      1.118346095085144,
+      1.097986102104187,
+      1.0780105590820312,
+      1.0621846914291382,
+      1.0516936779022217
+    ]
+  },
+  "data": "seeded random 64x8 inputs and 64x24 regression targets",
+  "post_training_controls": {
+    "magnitude_only": "zero B, retain trained magnitudes",
+    "zero_magnitude": "zero magnitude, retain trained A/B"
+  },
+  "transformer_training": {
+    "steps": 8,
+    "optimizer": "AdamW",
+    "lr": 0.002,
+    "data": "seeded random 4x16 token IDs; next-token objective",
+    "losses": [
+      4.14689826965332,
+      4.146413326263428,
+      4.145918369293213,
+      4.145418167114258,
+      4.144909381866455,
+      4.144388675689697,
+      4.14385461807251,
+      4.143308639526367
+    ]
+  },
+  "cases": {
+    "correct-f32-safe-false": "native DoRA merge; FP32 adapter, specified base dtype",
+    "correct-f32-safe-true": "native DoRA merge; FP32 adapter, specified base dtype",
+    "as-lora-f32": {
+      "control": "native load with use_dora=False; magnitudes omitted from merge",
+      "warnings": []
+    },
+    "correct-f16-safe-false": "native DoRA merge; FP32 adapter, specified base dtype",
+    "correct-f16-safe-true": "native DoRA merge; FP32 adapter, specified base dtype",
+    "as-lora-f16": {
+      "control": "native load with use_dora=False; magnitudes omitted from merge",
+      "warnings": []
+    },
+    "correct-bf16-safe-false": "native DoRA merge; FP32 adapter, specified base dtype",
+    "correct-bf16-safe-true": "native DoRA merge; FP32 adapter, specified base dtype",
+    "as-lora-bf16": {
+      "control": "native load with use_dora=False; magnitudes omitted from merge",
+      "warnings": []
+    },
+    "half-magnitudes-f32": "native DoRA merge after halving every learned magnitude",
+    "omitted": "base copied without any adapter"
+  },
+  "forward_checks": [
+    {
+      "case": "correct-f32-safe-false",
+      "max_absolute_output_difference": 4.805624485015869e-07,
+      "positions": 1536
+    },
+    {
+      "case": "correct-f32-safe-true",
+      "max_absolute_output_difference": 4.805624485015869e-07,
+      "positions": 1536
+    },
+    {
+      "case": "correct-f16-safe-false",
+      "max_absolute_output_difference": 0.001953125,
+      "positions": 1536
+    },
+    {
+      "case": "correct-f16-safe-true",
+      "max_absolute_output_difference": 0.001953125,
+      "positions": 1536
+    },
+    {
+      "case": "correct-bf16-safe-false",
+      "max_absolute_output_difference": 0.0078125,
+      "positions": 1536
+    },
+    {
+      "case": "correct-bf16-safe-true",
+      "max_absolute_output_difference": 0.0078125,
+      "positions": 1536
+    }
+  ],
+  "versions": {
+    "torch": "2.14.1+cpu",
+    "peft": "0.21.0",
+    "transformers": "5.20.1",
+    "safetensors": "0.8.0",
+    "numpy": "2.5.4"
+  },
+  "files": [
+    {
+      "file": "adapter/adapter_config.json",
+      "bytes": 1226,
+      "sha256": "65c66454888702abaee79bd6d86887fca1b568adba1eb4a684388a14d0958099"
+    },
+    {
+      "file": "adapter/adapter_model.safetensors",
+      "bytes": 1676,
+      "sha256": "d0b0ccd9f87353cf377d083d02470d947b1229f52308abcfa98f57982b8c6189"
+    },
+    {
+      "file": "as-lora-bf16/model.safetensors",
+      "bytes": 704,
+      "sha256": "41e70f4edf606aa4a647b42b10c2dd991c13d3c1bede8685665fe474da9c603b"
+    },
+    {
+      "file": "as-lora-f16/model.safetensors",
+      "bytes": 696,
+      "sha256": "ff7d113ecbd83736cc317346e6acad8fd9e37acc3694778eecdf818ac2ca625f"
+    },
+    {
+      "file": "as-lora-f32/model.safetensors",
+      "bytes": 1080,
+      "sha256": "a1887ab3b5a7c10b28dd57e8942bd0c8b7662b0906dd3877b02a98d7b45ef43b"
+    },
+    {
+      "file": "base/model.safetensors",
+      "bytes": 1080,
+      "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+    },
+    {
+      "file": "correct-bf16-safe-false/model.safetensors",
+      "bytes": 704,
+      "sha256": "9716cab3493deeee0dcd763f99f41e3596b7a65e7d908075b4c0698cc7332e4f"
+    },
+    {
+      "file": "correct-bf16-safe-true/model.safetensors",
+      "bytes": 704,
+      "sha256": "9716cab3493deeee0dcd763f99f41e3596b7a65e7d908075b4c0698cc7332e4f"
+    },
+    {
+      "file": "correct-f16-safe-false/model.safetensors",
+      "bytes": 696,
+      "sha256": "e4cd9f1c25a43f1669181f66750443027d77fc3cd1c0b9dcfd9aef3bfb7e6849"
+    },
+    {
+      "file": "correct-f16-safe-true/model.safetensors",
+      "bytes": 696,
+      "sha256": "e4cd9f1c25a43f1669181f66750443027d77fc3cd1c0b9dcfd9aef3bfb7e6849"
+    },
+    {
+      "file": "correct-f32-safe-false/model.safetensors",
+      "bytes": 1080,
+      "sha256": "41ab4476855e2336e4073e23c2d9f8e31a508a6e62cbde52ccb3ff1d9c37416b"
+    },
+    {
+      "file": "correct-f32-safe-true/model.safetensors",
+      "bytes": 1080,
+      "sha256": "41ab4476855e2336e4073e23c2d9f8e31a508a6e62cbde52ccb3ff1d9c37416b"
+    },
+    {
+      "file": "half-magnitudes-f32/model.safetensors",
+      "bytes": 1080,
+      "sha256": "79d57abb9cbbf71a793d50ba4d3a8b2161c9830b5bfddb4b549bab798dd45071"
+    },
+    {
+      "file": "omitted/model.safetensors",
+      "bytes": 1080,
+      "sha256": "300e9daa39cb4c6f768d09d424de310a1c8c651b8de622d4a7c35f937615ed82"
+    },
+    {
+      "file": "transformer-adapter/adapter_config.json",
+      "bytes": 1180,
+      "sha256": "695e3b290e87b96a2d217f38976eea8ea303023dbbf83b4c91f3099e62dc145e"
+    },
+    {
+      "file": "transformer-adapter/adapter_model.safetensors",
+      "bytes": 2608,
+      "sha256": "08752553f4349448954d181423d7088c0c40d1834899268f3baba405ff9508c5"
+    },
+    {
+      "file": "transformer-base/config.json",
+      "bytes": 713,
+      "sha256": "0fc5a7a1bdae83e8fbf6b8294122237a124f9a50e6610db1cc81b7d1c3bd2eff"
+    },
+    {
+      "file": "transformer-base/generation_config.json",
+      "bytes": 195,
+      "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+    },
+    {
+      "file": "transformer-base/model-00001-of-00004.safetensors",
+      "bytes": 7696,
+      "sha256": "96fffcb9469bd6e51b4924b4f3e5c076164ad82bdf546d9685a561f325d54186"
+    },
+    {
+      "file": "transformer-base/model-00002-of-00004.safetensors",
+      "bytes": 8536,
+      "sha256": "c055036da41e67a9f4bf9462c7a56a8f7f4d26024e337fa88091839b79becce8"
+    },
+    {
+      "file": "transformer-base/model-00003-of-00004.safetensors",
+      "bytes": 8672,
+      "sha256": "db1bcf7af62a9ce998fb75545082e708fd25222898528d76ed0df47c16a8ed67"
+    },
+    {
+      "file": "transformer-base/model-00004-of-00004.safetensors",
+      "bytes": 4216,
+      "sha256": "b10dcd6b42bcc1ed3ceb4fc90fccc1a26f7e1610b89183bce394e8241299467e"
+    },
+    {
+      "file": "transformer-base/model.safetensors.index.json",
+      "bytes": 1756,
+      "sha256": "ec64159525972712b1bf85ed7d2ea3bb867534022f0010a0598145b9c5b42094"
+    },
+    {
+      "file": "transformer-merged/config.json",
+      "bytes": 713,
+      "sha256": "0fc5a7a1bdae83e8fbf6b8294122237a124f9a50e6610db1cc81b7d1c3bd2eff"
+    },
+    {
+      "file": "transformer-merged/generation_config.json",
+      "bytes": 195,
+      "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+    },
+    {
+      "file": "transformer-merged/model-00001-of-00004.safetensors",
+      "bytes": 7696,
+      "sha256": "a99dfca6678510252b118031218528534e8d5551f6e8e99debd38e247b2c1740"
+    },
+    {
+      "file": "transformer-merged/model-00002-of-00004.safetensors",
+      "bytes": 8536,
+      "sha256": "36e5c36f343f93316f7bb9944b1dfc06f7d51a93341384b66c5d7baf9aa7417c"
+    },
+    {
+      "file": "transformer-merged/model-00003-of-00004.safetensors",
+      "bytes": 8672,
+      "sha256": "6a649046b96f248eb742e430e86b246bcd123251dbc536f7482c1f6cc8a1e73a"
+    },
+    {
+      "file": "transformer-merged/model-00004-of-00004.safetensors",
+      "bytes": 4216,
+      "sha256": "b10dcd6b42bcc1ed3ceb4fc90fccc1a26f7e1610b89183bce394e8241299467e"
+    },
+    {
+      "file": "transformer-merged/model.safetensors.index.json",
+      "bytes": 1756,
+      "sha256": "ec64159525972712b1bf85ed7d2ea3bb867534022f0010a0598145b9c5b42094"
+    }
+  ]
+}

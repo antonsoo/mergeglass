@@ -1,6 +1,6 @@
 # What a saved-weight audit establishes
 
-Mergeglass reads three local artifacts: the original base, one saved PEFT LoRA
+Mergeglass reads three local artifacts: the original base, one saved PEFT LoRA/DoRA
 adapter, and the actual merged checkpoint. It never loads a model class or writes
 weights. An audit requires matching complete base/merged tensor inventories and
 an exact A/B pair for every saved adapter module.
@@ -32,6 +32,54 @@ Nonzero counts refer to this declared numerical reference. Very small products
 can underflow or cancel in binary64. This is not a proof about arbitrary real
 numbers.
 
+## Linear DoRA
+
+For `use_dora: true`, every saved A/B pair also needs the native
+`base_model.model.<module>.lora_magnitude_vector` tensor of shape `[out]`.
+Its floating dtype is recorded alongside A and B. Missing, extra, malformed or
+nonfinite magnitude evidence refuses; it is never substituted with a base norm.
+Plain LoRA rejects magnitude payloads rather than silently ignoring them.
+
+DoRA separates the direction and magnitude of each output row. The reference is:
+
+```text
+direction[row]        = base_float64[row] + scale * (B_float64 @ A_float64)[row]
+reference_weight[row] = magnitude_float64[row] * direction[row] / norm(direction[row])
+delta                = reference_weight - base_float64
+reference_merge      = round_to_merged_dtype(reference_weight)
+```
+
+The row convention follows the `[out, in]` storage of ordinary Linear weights;
+it is not normalization over output columns. The implementation first divides
+each row by its largest absolute entry, normalizes the scaled row, then
+multiplies by its magnitude. This avoids overflow from raw squares or
+`magnitude / norm`, and underflow for tiny but nonzero directions. All operations
+remain binary64; arithmetic order can differ from a direct division.
+Finite signed or zero magnitudes retain their saved value. An all-zero direction
+refuses with its original row number, including when the magnitude is zero.
+
+Every existing count, norm, gain and residual uses this **complete** `delta`.
+The low-rank product can be zero while learned magnitudes change the weights;
+a nonzero product can also normalize back to an unchanged weight. Consequently,
+the DoRA update is generally not low rank. Reports identify `adapter_variant`
+as `lora` or `dora`; the latter adds `adapter_dtypes.magnitude`. These are
+additive schema-version-1 fields.
+
+Normalization uses the **supplied original base**, before its storage conversion.
+The observed update still subtracts the dtype-cast base and base-cast drift stays
+separate. A producer that normalizes a differently rounded or already modified
+base can disagree with this reference. Mergeglass does not infer its arithmetic
+sequence from the saved result. It casts `reference_weight` directly for the
+reference-merge comparison, avoiding a subtract/add reconstruction of that weight.
+
+The scope is one ordinary Linear DoRA adapter, optionally with rsLoRA and the
+supported rank/alpha overrides. Embedding/conv/Conv1D DoRA, quantized bases,
+multiple sequential adapters and other variants remain outside this contract.
+The formula follows [PEFT's DoRA implementation](https://github.com/huggingface/peft/blob/v0.21.0/src/peft/tuners/lora/variants.py)
+and [DoRA: Weight-Decomposed Low-Rank Adaptation](https://arxiv.org/abs/2402.09353).
+[Native artifacts and independent calculations](../studies/dora/README.md)
+establish the implemented numerical scope, not task quality.
+
 ## Measurements
 
 | JSON field | Definition |
@@ -46,7 +94,7 @@ numbers.
 | `projection_gain` | `dot(observed, delta) / dot(delta, delta)`; signed least-squares scale |
 | `cosine_similarity` | `dot(observed, delta) / (norm(observed) * norm(delta))`; direction agreement |
 | `norms.base_cast_drift` | Difference caused by base dtype conversion alone |
-| `reference_merge_mismatches` | Entries differing from `round_to_merged_dtype(base + delta)` |
+| `reference_merge_mismatches` | Entries differing from the declared reference merge (direct `reference_weight` cast for DoRA) |
 | `reference_merge_overflows` | Nonfinite entries in that reference cast |
 | `largest_residual` | An original row/column with base, cast base, delta, merged and residual values |
 
@@ -114,7 +162,7 @@ shape-incompatible or unsupported-dtype tensors refuse the entire audit.
 
 ## Coverage and inputs
 
-Saved adapter keys must have exactly this form:
+Saved factor keys must have exactly this form (DoRA also requires the magnitude key above):
 
 ```text
 base_model.model.<module>.lora_A.weight
@@ -124,7 +172,7 @@ base_model.model.<module>.lora_B.weight
 ```
 
 There is no suffix search or architecture import. Embedding/conv/Conv1D LoRA,
-DoRA, quantized checkpoints, extra trained biases, modules-to-save, aLoRA,
+Quantized checkpoints, extra trained biases, modules-to-save, aLoRA,
 base-mutating initializers and other variant payloads refuse. Unknown adapter
 configuration fields also refuse. This version recognizes the saved configuration
 of PEFT 0.21.0; other versions can work only within that explicit field contract.
@@ -163,7 +211,7 @@ filesystem snapshot or authentication scheme.
 
 ## Memory and time
 
-Only A is decoded in full; B, base, merged, delta and residual are row blocks.
+Only A is decoded in full; B, DoRA magnitudes, base, merged, delta and residual are row blocks.
 Unadapted tensors use flat blocks. `--block-mib` is a working-block target, not
 a hard process RSS cap: at least one complete matrix row is needed, and NumPy,
 BLAS, Python, headers and A consume additional memory. The default decoded A

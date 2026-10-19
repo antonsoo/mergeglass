@@ -1,4 +1,4 @@
-"""The deliberately narrow PEFT Linear LoRA contract; no guessed key matching."""
+"""The deliberately narrow PEFT Linear LoRA/DoRA contract; no guessed key matching."""
 
 from __future__ import annotations
 
@@ -12,7 +12,6 @@ from .storage import AuditError, Checkpoint, Tensor
 # These fields select variants, add other trained parameters, change the base,
 # or require architecture information that a checkpoint cannot establish.
 UNSUPPORTED = {
-    "use_dora",
     "use_qalora",
     "use_bdlora",
     "lora_bias",
@@ -53,6 +52,7 @@ KNOWN = UNSUPPORTED | {
     "rank_pattern",
     "alpha_pattern",
     "use_rslora",
+    "use_dora",
     "init_lora_weights",
     "auto_mapping",
     "megatron_core",
@@ -67,6 +67,7 @@ KNOWN = UNSUPPORTED | {
     "mica_config",
 }
 PAIR = re.compile(r"base_model\.model\.(.+)\.lora_([AB])\.weight\Z")
+MAGNITUDE = re.compile(r"base_model\.model\.(.+)\.lora_magnitude_vector\Z")
 LITERAL_PATH = re.compile(r"[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)*\Z")
 CONV1D_PATH = re.compile(
     r"(?:^|\.)h\.[0-9]+\.(?:(?:attn|crossattention)\.(?:c_attn|q_attn|c_proj)"
@@ -124,6 +125,7 @@ class Pair:
     rank: int
     alpha: float
     scale: float
+    magnitude: Tensor | None = None
 
 
 def adapter_pairs(adapter: Checkpoint, base: Checkpoint) -> list[Pair]:
@@ -159,14 +161,21 @@ def adapter_pairs(adapter: Checkpoint, base: Checkpoint) -> list[Pair]:
     rs = config.get("use_rslora", False)
     if not isinstance(rs, bool):
         raise AuditError("use_rslora must be boolean")
+    dora = config.get("use_dora", False)
+    if not isinstance(dora, bool):
+        raise AuditError("use_dora must be boolean")
     ranks = _pattern(config, "rank_pattern")
     alphas = _pattern(config, "alpha_pattern")
     modules: dict[str, dict[str, Tensor]] = {}
     for name, tensor in sorted(adapter.tensors.items()):
         match = PAIR.fullmatch(name)
         if match is None:
-            raise AuditError(f"Unsupported adapter tensor: {name}")
-        path, side = match.groups()
+            magnitude_match = MAGNITUDE.fullmatch(name)
+            if magnitude_match is None or not dora:
+                raise AuditError(f"Unsupported adapter tensor: {name}")
+            path, side = magnitude_match.group(1), "magnitude"
+        else:
+            path, side = match.groups()
         modules.setdefault(path, {})[side] = tensor
     result = []
     for path, sides in modules.items():
@@ -182,8 +191,11 @@ def adapter_pairs(adapter: Checkpoint, base: Checkpoint) -> list[Pair]:
                 f"Unsupported Conv1D target indicated by model metadata: {path}; "
                 "saved fan_in_fan_out is not a per-module orientation map"
             )
-        if sides.keys() != {"A", "B"}:
+        if not {"A", "B"} <= sides.keys():
             raise AuditError(f"Incomplete A/B pair: {path}")
+        magnitude = sides.get("magnitude")
+        if dora and magnitude is None:
+            raise AuditError(f"Missing DoRA magnitude vector: {path}")
         a, b = sides["A"], sides["B"]
         weight = path + ".weight"
         if weight not in base.tensors:
@@ -198,8 +210,10 @@ def adapter_pairs(adapter: Checkpoint, base: Checkpoint) -> list[Pair]:
             or b.shape != (shape[0], rank)
         ):
             raise AuditError(f"Adapter/base/rank shape mismatch at {path}")
+        if magnitude is not None and magnitude.shape != (shape[0],):
+            raise AuditError(f"DoRA magnitude shape must match the output rows at {path}")
         scale = layer_alpha / (math.sqrt(rank) if rs else rank)
-        result.append(Pair(path, weight, a, b, rank, layer_alpha, scale))
+        result.append(Pair(path, weight, a, b, rank, layer_alpha, scale, magnitude))
     if not result:
         raise AuditError("Adapter contains no supported A/B pairs")
     return result

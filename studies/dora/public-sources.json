@@ -1,0 +1,67 @@
+{
+  "retrieved_utc": "2026-10-19",
+  "scope": "Unchanged public artifacts. The adapter names the base but pins no training revision; its relationship to the separately published merged checkpoint is not independently established. No third-party weights are redistributed.",
+  "sources": [
+    {
+      "role": "base",
+      "repository": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "revision": "12fd25f77366fa6b3b4b768ec3050bf629380bac",
+      "files": [
+        {
+          "file": "config.json",
+          "bytes": 861,
+          "sha256": "8eb740e8bbe4cff95ea7b4588d17a2432deb16e8075bc5828ff7ba9be94d982a"
+        },
+        {
+          "file": "generation_config.json",
+          "bytes": 132,
+          "sha256": "87b916edaaab66b3899b9d0dd0752727dff6666686da0504d89ae0a6e055a013"
+        },
+        {
+          "file": "model.safetensors",
+          "bytes": 269060552,
+          "sha256": "5af571cbf074e6d21a03528d2330792e532ca608f24ac70a143f6b369968ab8c"
+        }
+      ]
+    },
+    {
+      "role": "adapter",
+      "repository": "ehyoussef/smollm2-135m-function-dora-adapter",
+      "revision": "8ce55268048940efdc497bf9ea6d2b45d9eb2ab1",
+      "files": [
+        {
+          "file": "adapter_config.json",
+          "bytes": 1065,
+          "sha256": "bcb8721328a273cae7a0794b77bfc15539283e2670f0d50e8d5659bb6de3026a"
+        },
+        {
+          "file": "adapter_model.safetensors",
+          "bytes": 20243776,
+          "sha256": "71e6c33932c73a65af8aa47f3560fa13164323e74e9e7448de4f67999f1840c9"
+        },
+        {
+          "file": "README.md",
+          "bytes": 5174,
+          "sha256": "0336368f8274a5ed09f54cee8d56a851ecee96026d9f391a6735762c16608a60"
+        }
+      ]
+    },
+    {
+      "role": "published",
+      "repository": "ehyoussef/smollm2-135m-function-dora",
+      "revision": "a13a47e9821e45cf23d13911c250e1c2b4d20c03",
+      "files": [
+        {
+          "file": "config.json",
+          "bytes": 936,
+          "sha256": "4158890b779a2e5419456e1325bb719f683949ebde9ef40433ebff907f311579"
+        },
+        {
+          "file": "model.safetensors",
+          "bytes": 538090408,
+          "sha256": "1d2ec0e59a22427a062aae9e2f5b986baeeee3e46f838d8e28fd1b91407e779c"
+        }
+      ]
+    }
+  ]
+}

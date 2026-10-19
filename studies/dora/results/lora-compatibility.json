@@ -1,0 +1,115 @@
+{
+  "baseline_source": "068b150",
+  "comparison": "exact decoded JSON equality for summary, layers (excluding additive adapter_variant), unadapted_changes and input fingerprints",
+  "cases": [
+    {
+      "group": "teaching",
+      "case": "merged-f32",
+      "adapted_tensors": 3,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "teaching",
+      "case": "merged-f16",
+      "adapted_tensors": 3,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "teaching",
+      "case": "merged-bf16",
+      "adapted_tensors": 3,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "teaching",
+      "case": "omitted",
+      "adapted_tensors": 3,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "teaching",
+      "case": "unrelated-edit",
+      "adapted_tensors": 3,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "transformer",
+      "case": "merged-f32",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "transformer",
+      "case": "merged-f16",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "transformer",
+      "case": "merged-bf16",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "public",
+      "case": "merged-f32",
+      "adapted_tensors": 60,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "public",
+      "case": "merged-bf16",
+      "adapted_tensors": 60,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "controls",
+      "case": "correct-f32",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "controls",
+      "case": "omitted",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "controls",
+      "case": "repeated-f32",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "controls",
+      "case": "reversed-f32",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "controls",
+      "case": "rs-as-standard-f32",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "controls",
+      "case": "wrong-adapter-f32",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "controls",
+      "case": "bf16-safe-false",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    },
+    {
+      "group": "controls",
+      "case": "bf16-safe-true",
+      "adapted_tensors": 4,
+      "unchanged_measurements": true
+    }
+  ],
+  "cases_compared": 18
+}

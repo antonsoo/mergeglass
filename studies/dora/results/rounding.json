@@ -1,0 +1,58 @@
+{
+  "oracle": "every adjacent finite bit-pattern midpoint and both F64 neighbors, both signs",
+  "script_sha256": "8353059bbb814f64f3a009bdf5378fb1baa0a1f5cf00ff68c30bab825e2864b0",
+  "torch_version": "2.14.1+cpu",
+  "numpy_version": "2.5.4",
+  "results": [
+    {
+      "dtype": "BF16",
+      "cases": 195840,
+      "auditor_disagreements": 0,
+      "independent_grid_disagreements": 0,
+      "torch_direct_cast_disagreements": 65280,
+      "torch_cast_matches_f32_intermediate_in_every_case": true,
+      "examples": [
+        {
+          "input_hex": "0x1.0000000000001p-134",
+          "expected": 9.183549615799121e-41,
+          "torch_cast": 0.0
+        },
+        {
+          "input_hex": "0x1.7ffffffffffffp-133",
+          "expected": 9.183549615799121e-41,
+          "torch_cast": 1.8367099231598242e-40
+        },
+        {
+          "input_hex": "0x1.4000000000001p-132",
+          "expected": 2.7550648847397363e-40,
+          "torch_cast": 1.8367099231598242e-40
+        }
+      ]
+    },
+    {
+      "dtype": "F16",
+      "cases": 190464,
+      "auditor_disagreements": 0,
+      "independent_grid_disagreements": 0,
+      "torch_direct_cast_disagreements": 63488,
+      "torch_cast_matches_f32_intermediate_in_every_case": true,
+      "examples": [
+        {
+          "input_hex": "0x1.0000000000001p-25",
+          "expected": 5.960464477539063e-08,
+          "torch_cast": 0.0
+        },
+        {
+          "input_hex": "0x1.7ffffffffffffp-24",
+          "expected": 5.960464477539063e-08,
+          "torch_cast": 1.1920928955078125e-07
+        },
+        {
+          "input_hex": "0x1.4000000000001p-23",
+          "expected": 1.7881393432617188e-07,
+          "torch_cast": 1.1920928955078125e-07
+        }
+      ]
+    }
+  ]
+}

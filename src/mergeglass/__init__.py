@@ -1,4 +1,4 @@
-"""Local, read-only comparison of LoRA adapters and saved merged weights."""
+"""Local, read-only comparison of LoRA/DoRA adapters and saved merged weights."""
 
 from .audit import audit
 from .storage import AuditError

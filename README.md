@@ -1,13 +1,13 @@
 # Mergeglass
 
-**Did the LoRA update survive the merge? Inspect the saved weights.**
+**Did the adapter update survive the merge? Inspect the saved weights.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 A nonzero adapter does not guarantee a changed checkpoint. Small updates can
 round away when added to lower-precision base weights; a copied base or a wrong
 adapter can also leave a plausible-looking artifact. Mergeglass compares the
-original base, the saved LoRA factors and the actual merged safetensors. It
+original base, the saved LoRA/DoRA adapter and the actual merged safetensors. It
 reports what changed, what stayed equal, and the residual against the intended
 update, with original tensor coordinates and artifact hashes.
 
@@ -79,6 +79,46 @@ layers have gain 0.5 and the rank-2 layer has gain 0.707107. Two finite BF16
 artifacts differ in 755 saved entries solely from PEFT's `safe_merge` operation
 sequence. [Native controls, complete receipts and reproduction](studies/merge-controls/README.md).
 
+## DoRA magnitudes must survive too
+
+The source checkout now audits ordinary Linear **DoRA** adapters. Their saved
+magnitude vectors are part of the reference; `B @ A` alone is insufficient.
+In a native PEFT control, discarding the magnitudes still changes every weight
+in the `direction` matrix. Another matrix has a zero factor product but a
+nonzero magnitude update, which that incorrect merge loses entirely:
+
+| Saved FP32 merge | Matrix | Changed entries | Relative residual |
+| --- | --- | ---: | ---: |
+| Correct DoRA | `direction` | 96 / 96 | 7.39e-8 |
+| Loaded as ordinary LoRA | `direction` | 96 / 96 | 0.2302 |
+| Correct DoRA | `magnitude_only` | 40 / 40 | 8.92e-8 |
+| Loaded as ordinary LoRA | `magnitude_only` | 0 / 40 | 1 |
+
+![Actual DoRA audit showing the complete update lost when learned magnitudes are omitted](docs/assets/dora.png)
+
+These are labelled synthetic training and explicit post-training controls,
+not measured rates in deployed models. Inspect the incorrect merge locally:
+
+```sh
+uv run --no-dev mergeglass examples/dora/base examples/dora/adapter examples/dora/as-lora-f32
+```
+
+Replace the last directory with `examples/dora/correct-f32-safe-false` to compare.
+The old CLI refused all 12 native DoRA cases. The extension checks FP32/F16/BF16
+merges, both native safe-merge modes, rsLoRA scales, rank/alpha overrides and
+an actual sharded Transformers save. A dense PyTorch oracle and a separate
+80-digit scalar calculation check the reference. Missing magnitudes and
+undefined zero directions refuse. [Artifacts, arithmetic, memory and reproduction](studies/dora/README.md).
+This addition is local and unreleased.
+
+The [public-artifact replay](studies/dora/README.md#unchanged-public-dora-artifacts)
+also checks a pinned SmolLM2 DoRA adapter across 210 adapted matrices and a
+separately published checkpoint. A local BF16 merge leaves 32.48% of its nonzero
+reference entries unchanged, containing 4.58% of the reference squared norm.
+A controlled FP32 merge that drops magnitudes changes nearly every entry but
+has relative residuals of 0.114 to 0.220. These are saved-weight measurements, not
+model-quality scores or proof of the original training base.
+
 ## Use your checkpoints
 
 ```sh
@@ -125,7 +165,7 @@ Base --> cast to merged dtype --> compare to merge --+
   residual and the largest residual's row/column.
 - Across the checkpoint: every unadapted tensor checked against its cast base,
   with unrelated changes retained individually. Large integer values stay exact.
-- Plain Linear LoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
+- Linear LoRA and DoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
   and F64 storage. Finite [signed alpha coefficients](studies/signed-scale/README.md)
   keep their declared sign.
   Unknown variants and incomplete inventories refuse.
@@ -136,6 +176,8 @@ The numerical reference is `(float64(B) @ float64(A)) * scale`. The observed
 change is `merged - cast(base, merged_dtype)`. Comparing against the cast base
 separates conversion noise from the added adapter. Relative residual is
 `norm(observed - intended) / norm(intended)`; zero denominators are null.
+For DoRA, the intended update is the complete row-normalized, magnitude-scaled
+weight minus the original base, rather than the factor product alone.
 
 An unchanged nonzero update is evidence of absence, not a diagnosis of its
 cause. Changing every entry is also insufficient: a wrong scale or sign can
@@ -145,7 +187,7 @@ can differ from the binary64 reference.
 
 ## Memory and verification
 
-Only A is decoded in full. The auditor reads B, base and merged rows in blocks
+Only A is decoded in full. The auditor reads B, DoRA magnitudes, base and merged rows in blocks
 and never allocates a full-layer dense update. NumPy and the Rust safetensors
 validator are its only runtime dependencies; PyTorch and PEFT belong to the
 separate verification environment.
@@ -177,9 +219,13 @@ on 65,280 of those deliberately chosen boundary cases.
   identity, and the auditor does not reconstruct an unseen architecture.
 - Coverage is the saved A/B pairs. If both factors are absent, metadata alone
   cannot establish that the missing pair should have existed.
-- Quantized weights, DoRA, embedding/conv/Conv1D LoRA, extra trained biases,
+- Quantized weights, embedding/conv/Conv1D adapters, extra trained biases,
   modules-to-save and base-mutating initializers are unsupported. Complex
   rank/alpha regexes and unknown configuration fields refuse explicitly.
+- DoRA uses one saved magnitude per output row and the supplied original base.
+  It does not emulate producer-specific intermediate precision or reconstruct
+  a different base used during merging. Zero directions are undefined even
+  with a zero magnitude. Counts describe the declared binary64 reference.
 - A single saved orientation flag can hide mixed Conv1D targets. Known GPT-2,
   OpenAI GPT and ImageGPT Conv1D paths refuse when their model metadata is
   present. Tensor shapes alone cannot certify arbitrary module types.
