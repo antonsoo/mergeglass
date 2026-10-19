@@ -1,0 +1,69 @@
+{
+  "source_commit": "a418fabef253097c6836736a57b63ccd5b4ec193",
+  "status": "local source and installed artifacts verified; registry release not performed",
+  "oracle": "dense torch.float64 vector_norm and cosine_similarity(eps=0)",
+  "tolerance": {
+    "relative": 1e-08,
+    "absolute": 2e-14
+  },
+  "native_cases": 12,
+  "public_cases": 4,
+  "matrices": 877,
+  "rows": 622359,
+  "prior_report_cases_identical": 34,
+  "artifacts": [
+    {
+      "file": "mergeglass-0.1.0-py3-none-any.whl",
+      "bytes": 25962,
+      "sha256": "5c2c1d1453998cfd42a49448628bb0035c19e37f1c392c67076d6a4446c34624"
+    },
+    {
+      "file": "mergeglass-0.1.0.tar.gz",
+      "bytes": 1363383,
+      "sha256": "3f68e78519b353dd03fcb4f8fd81a6d8b3eb38c8d1e2dd34dc9de04183f98371"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "dense-oracle.json.gz",
+      "bytes": 117304,
+      "sha256": "649d09a63f4b8b103c6325aa9cd806e18584060bb7e9d3b1bba4427e7e062b1c",
+      "uncompressed_bytes": 1305055,
+      "uncompressed_sha256": "bcb8daaefb9c146da0c11c26a34c529bfd6131473b0d917195e805809103d62b"
+    },
+    {
+      "file": "compatibility.json.gz",
+      "bytes": 11806,
+      "sha256": "3d910abd6a750832220b5ebedf79a1ddc092b1c94dc95ed7fe2e6a8a7c3db408",
+      "uncompressed_bytes": 114148,
+      "uncompressed_sha256": "2ed5b5018a11b413c9dd10b43bf3fec55dded273073a750dab96364f3f4d9008"
+    },
+    {
+      "file": "streaming.json.gz",
+      "bytes": 1684,
+      "sha256": "de857cff37b314a6681e4b507ea4078af9d1a3dc15fccb57acc933233764e4c5",
+      "uncompressed_bytes": 12258,
+      "uncompressed_sha256": "a54df288f5fa4894c118c0b0401472f6c174977822655e1200aa3f03784f8ecf"
+    }
+  ],
+  "streaming": [
+    {
+      "block_mib": 1,
+      "peak_rss_mib": 38.94140625,
+      "residual": 0.0,
+      "reference_cast_mismatches": 0
+    },
+    {
+      "block_mib": 16,
+      "peak_rss_mib": 62.2109375,
+      "residual": 0.0,
+      "reference_cast_mismatches": 0
+    },
+    {
+      "block_mib": 64,
+      "peak_rss_mib": 135.15625,
+      "residual": 0.0,
+      "reference_cast_mismatches": 0
+    }
+  ]
+}

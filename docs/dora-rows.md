@@ -81,3 +81,40 @@ update entries. Matching norms and printed cosines therefore do not replace
 exact reference-cast counts, full-update residuals or an actual task evaluation.
 Older schema-1 reports without `dora_rows` still render; ordinary LoRA reports
 do not gain DoRA-specific observations. No runtime dependency is added.
+## Installed verification
+
+The [retained receipt](../studies/dora/rows/verification.json) identifies source
+`a418fabef253097c6836736a57b63ccd5b4ec193`, the wheel, and the source archive.
+All seven runtime Python files in the wheel, both isolated installations, and
+the dense-oracle run match that source byte for byte. Python 3.10 with NumPy
+1.24.0 / safetensors 0.6.2 and Python 3.15 with NumPy 2.5.4 / safetensors 0.8.0
+each ran the 89 checks and reproduced the terminal capture. Neither installed
+auditor imports PyTorch or PEFT.
+
+The compressed [dense measurements](../studies/dora/rows/dense-oracle.json.gz)
+retain every matrix, input fingerprint and row witness. The
+[compatibility replay](../studies/dora/rows/compatibility.json.gz) compares
+34 real/native/control cases against source `59b7391`: every earlier JSON field
+and the rendering of earlier reports are identical. Only the documented row
+observations and their arithmetic description are added to DoRA reports.
+
+The [installed streaming run](../studies/dora/rows/streaming.json.gz) checks
+33,554,432 native PEFT weight entries against an independent closed form.
+Peak process RSS was 38.94 / 62.21 / 135.16 MiB for 1 / 16 / 64 MiB block
+targets, with zero residual and zero reference-cast mismatches. Block size is
+a workspace target, not a process memory cap. Concurrent inference makes the
+recorded elapsed times unsuitable for a throughput comparison. These are
+local artifact measurements; they do not establish a registry release.
+
+Re-run the dense oracle with the optional native producer environment from
+[the DoRA study](../studies/dora/README.md), using its generated native directory
+and downloaded public directory:
+
+```sh
+OPENBLAS_NUM_THREADS=1 PYTHONPATH=src python studies/dora/row_diagnostics.py \
+  /tmp/mergeglass-dora/native /tmp/mergeglass-dora/public /tmp/dora-rows.json
+```
+
+The raw JSON is compressed only for repository size; the receipt records both
+compressed and uncompressed hashes. For example, inspect it with
+`gzip -dc studies/dora/rows/dense-oracle.json.gz`.

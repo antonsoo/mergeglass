@@ -1,0 +1,19 @@
+{
+  "python": "3.15.0",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "safetensors": "0.8.0"
+  },
+  "files": {
+    "adapter.py": "0e306a0aecc9f4cbd3e1b7944b891ae2fdc0b568c87ed66062e0a57ee8b7cd8d",
+    "__init__.py": "221fe57ab5e6e32d83d551e75218efe34c792c759b90767cc4b9f0c4e69bb11d",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+    "cli.py": "c294176b325aaedbdf6964e4bbb35098cae2fddec862419f698496a5545f6c38",
+    "dora_rows.py": "d5a9e42c72d6dab55482ccb28416c6939d1985b86f768c1d91dcabaa19e122ff",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "audit.py": "9c73589184123a42ef798807d3769e9c17d98c9e96fd9ea7b330b4005f443bfc"
+  },
+  "all_runtime_files_match_wheel": true,
+  "no_torch_or_peft_required": true,
+  "terminal_capture_bytes_identical": true
+}
