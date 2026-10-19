@@ -81,3 +81,37 @@ or an I/O failure. `--summary` changes only the terminal view. JSON remains
 complete and must be written outside the inputs, including their symlink
 targets. `--max-adapter-mib` belongs to complete audits and is not an option
 here because no whole A matrix is decoded.
+
+## Native and installed replay
+
+The [artifact receipt](../studies/dora/no-base/verification.json) identifies the
+clean source archive and the wheel built from it. All eight runtime Python
+files match source `abcbaf691111b506b95579ad97cd5b539de4e684` and both isolated
+installations. Python 3.10 with the minimum NumPy/safetensors versions and
+Python 3.15 with current pinned versions each pass the source archive's 102
+checks and two additional extreme-range controls. Neither auditor installation
+contains PyTorch or PEFT.
+
+The [installed replay](../studies/dora/no-base/norm-observations.json.gz) matches
+every norm field of the independently checked complete audits: 16 native and
+public cases, 877 matrices, 622,359 rows. It passes only adapter and merged
+paths to the auditor. The shared row refactor also preserves every complete
+row observation exactly; a separate dense PyTorch replay checks that code
+extracted from the wheel against the original weights.
+
+On the native 8192 x 4096, rank-8 control, norm factors are exactly one for
+6,144 nonzero row pairs; the other 2,048 targets and saved rows are zero.
+[Fresh installed processes](../studies/dora/no-base/streaming.json.gz) measured
+38.48 / 40.36 / 53.16 MiB peak RSS at 1 / 16 / 64 MiB block targets. These are
+local process measurements during concurrent inference, not a hard memory
+cap or throughput benchmark. No base file is an input to those observations.
+
+With the native and public inputs from the earlier study, reproduce the
+installed norm comparison using a Python environment with Mergeglass installed:
+
+```sh
+OPENBLAS_NUM_THREADS=1 python studies/dora/norms_without_base.py \
+  /tmp/mergeglass-dora/native /tmp/mergeglass-dora/public /tmp/norm-observations.json
+OPENBLAS_NUM_THREADS=1 python studies/dora/streaming.py \
+  /tmp/mergeglass-dora/streaming --dora-norms --out /tmp/norm-memory.json
+```

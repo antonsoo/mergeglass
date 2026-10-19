@@ -1,0 +1,116 @@
+{
+  "source_commit": "abcbaf691111b506b95579ad97cd5b539de4e684",
+  "artifact_build": "wheel built from unpacked clean source distribution",
+  "artifacts": [
+    {
+      "file": ".gitignore",
+      "bytes": 1,
+      "sha256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1"
+    },
+    {
+      "file": "mergeglass-0.1.0-py3-none-any.whl",
+      "bytes": 28847,
+      "sha256": "b03fba35f40a7a1b07679d9398e3bf76cc81391e14744ab79797af940ca0163b"
+    },
+    {
+      "file": "mergeglass-0.1.0.tar.gz",
+      "bytes": 1518409,
+      "sha256": "86da23b72b1e97c92a45d93b57797bd8fa3a5a4330864270054ec6659d2d6a6f"
+    }
+  ],
+  "runtime_files": 8,
+  "isolated_installs": {
+    "310": {
+      "python": "3.10.21",
+      "versions": {
+        "numpy": "1.24.0",
+        "safetensors": "0.6.2"
+      },
+      "source_archive_tests": 102,
+      "additional_extreme_controls": 2
+    },
+    "315": {
+      "python": "3.15.0",
+      "versions": {
+        "numpy": "2.5.4",
+        "safetensors": "0.8.0"
+      },
+      "source_archive_tests": 102,
+      "additional_extreme_controls": 2
+    }
+  },
+  "norm_observations": {
+    "cases": 16,
+    "matrices": 877,
+    "rows": 622359,
+    "method": "exact equality with norm fields of dense-oracle-verified complete audits",
+    "all_norm_fields_exactly_equal": true
+  },
+  "complete_audit_regression": {
+    "method": "dense torch.float64 norm/cosine verification using eight runtime files extracted from the wheel and pinned optional producer dependencies; all 877 resulting layer observations also exactly equal prior verified baseline",
+    "full_oracle_sha256": "051dc405993d018a1935e6494601bf751a0b154f56206660aa6fa7b134838f70",
+    "auditor_sources": {
+      "adapter.py": "dd0cd2eb2be8da457c4e4c0a2713ec4b8d4776e6443f5b4ec398e26323cb7725",
+      "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+      "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+      "dora_norms.py": "f7ef86ad2438c664042861625f64fae1832f342d6e00f94b4c2e2302462c8ef7",
+      "cli.py": "2026a96f14ad79726c148def9620d2c13f703d1b541cbc22f8d6af059ee612e7",
+      "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+      "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "audit.py": "9c73589184123a42ef798807d3769e9c17d98c9e96fd9ea7b330b4005f443bfc"
+    },
+    "versions": {
+      "torch": "2.14.1+cpu",
+      "peft": "0.21.0",
+      "numpy": "2.5.4",
+      "safetensors": "0.8.0"
+    },
+    "baseline_sha256": "649d09a63f4b8b103c6325aa9cd806e18584060bb7e9d3b1bba4427e7e062b1c"
+  },
+  "streaming": [
+    {
+      "block_mib": 1,
+      "peak_rss_mib": 38.484375,
+      "row_norm_factor_range": [
+        1.0,
+        1.0
+      ],
+      "observed_rows": 8192
+    },
+    {
+      "block_mib": 16,
+      "peak_rss_mib": 40.359375,
+      "row_norm_factor_range": [
+        1.0,
+        1.0
+      ],
+      "observed_rows": 8192
+    },
+    {
+      "block_mib": 64,
+      "peak_rss_mib": 53.15625,
+      "row_norm_factor_range": [
+        1.0,
+        1.0
+      ],
+      "observed_rows": 8192
+    }
+  ],
+  "receipts": [
+    {
+      "file": "norm-observations.json.gz",
+      "bytes": 118202,
+      "sha256": "b717f51d89bdf68704d9641054b322c235c2ebeb2eb6547d19dfed70125172b1",
+      "uncompressed_bytes": 1361227,
+      "uncompressed_sha256": "fb9ece7f5fb19111f5e1bba26fc73b0b4b806dbf68929cc40fe8afde9f731006"
+    },
+    {
+      "file": "streaming.json.gz",
+      "bytes": 1340,
+      "sha256": "410ea3105ff06a7bccd07b925b624c39fb16010e8a11fbcea55dc21ef2b79e34",
+      "uncompressed_bytes": 7468,
+      "uncompressed_sha256": "94428cd6e48b84403734bea4855307713119a9084ee59103b906948c9bb61150"
+    }
+  ],
+  "registry_release": "not performed"
+}
