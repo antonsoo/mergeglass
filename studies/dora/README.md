@@ -171,6 +171,21 @@ from the dense native producer. The target is not a hard RSS cap; interpreter,
 A, metadata and BLAS also consume memory. Measurements describe this shared
 WSL2 host with 14 logical CPUs and one BLAS/OMP thread, not isolated throughput.
 
+The [installed-wheel measurement](results/streaming.json) records:
+
+| Block target | Peak process RSS | Elapsed audit time |
+| --- | ---: | ---: |
+| 1 MiB | 38.22 MiB | 2.319 s |
+| 16 MiB | 61.63 MiB | 1.315 s |
+| 64 MiB | 134.69 MiB | 1.104 s |
+
+Each setting uses a fresh Python 3.15 worker. Timing includes validation,
+arithmetic and hashes, and excludes interpreter startup and input preparation.
+The native producer runs in a separate process so its dense allocations do not
+contaminate the auditor's RSS measurement. These are warm-cache local results.
+[Clean source and two installed Python environments](../../docs/dora-verification.md)
+also verify the wheel's actual module bytes and replay the public artifacts.
+
 ## Reproduce
 
 The light auditor needs only its normal environment. The native producer and

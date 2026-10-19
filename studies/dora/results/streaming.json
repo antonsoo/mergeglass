@@ -1,0 +1,312 @@
+{
+  "producer": {
+    "synthetic": true,
+    "trained": false,
+    "producer": "PEFT save_pretrained and merge_and_unload(safe_merge=False)",
+    "script_sha256": "e5c1bed9d63f1208a98a81509342d942d7363c103988626db889eb97ad6a16a2",
+    "shape": [
+      8192,
+      4096
+    ],
+    "rank": 8,
+    "base": "all ones",
+    "factors": "A and B entries all 1/32, scale=1; BA entries all 1/128",
+    "row_magnitudes_repeating": [
+      0,
+      32,
+      65,
+      -65
+    ],
+    "closed_form_merged_rows": [
+      0,
+      0.5,
+      1.015625,
+      -1.015625
+    ],
+    "versions": {
+      "torch": "2.14.1+cpu",
+      "peft": "0.21.0",
+      "safetensors": "0.8.0"
+    },
+    "files": [
+      {
+        "file": "adapter/adapter_config.json",
+        "bytes": 1123,
+        "sha256": "df12161fe19c370f3737dd2339e18a83964e42c3d1c9a0366787ba6c99e757b1"
+      },
+      {
+        "file": "adapter/adapter_model.safetensors",
+        "bytes": 426344,
+        "sha256": "e1da732f3e7da395d021daff5f22b107f455862dc15a8e03035bf1e5a45f3a46"
+      },
+      {
+        "file": "base/model.safetensors",
+        "bytes": 134217824,
+        "sha256": "ac61436a4235e83748700f77ce5e036ea9dfeca2f860179f93f4c9e158c58104"
+      },
+      {
+        "file": "merged/model.safetensors",
+        "bytes": 134217824,
+        "sha256": "e25ec1d53c9b4953388270245b8dee3251c37c0f98c28fd741cd41e14f0a390b"
+      }
+    ]
+  },
+  "machine": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "logical_cpus": 14,
+    "threads": 1
+  },
+  "full_float64_delta_bytes": 268435456,
+  "closed_form_update_norm": 6675.970041874065,
+  "results": [
+    {
+      "block_mib": 1,
+      "elapsed_seconds": 2.3186631749995286,
+      "peak_rss_kib": 39140,
+      "layer": {
+        "module": "linear",
+        "weight": "linear.weight",
+        "adapter_variant": "dora",
+        "shape": [
+          8192,
+          4096
+        ],
+        "rank": 8,
+        "alpha": 8.0,
+        "scale": 1.0,
+        "adapter_dtypes": {
+          "A": "F32",
+          "B": "F32",
+          "magnitude": "F32"
+        },
+        "base_dtype": "F32",
+        "merged_dtype": "F32",
+        "status": "observed-update",
+        "elements": 33554432,
+        "intended_nonzero_elements": 33554432,
+        "changed_elements": 33554432,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "norms": {
+          "delta": 6675.970041874054,
+          "observed": 6675.970041874054,
+          "residual": 0.0,
+          "base_cast_drift": 0.0,
+          "unchanged_reference": 0.0
+        },
+        "relative_residual": 0.0,
+        "observed_to_intended_norm": 1.0,
+        "projection_gain": 0.9999999999999999,
+        "cosine_similarity": 0.9999999999999999,
+        "reference_merge_mismatches": 0,
+        "reference_merge_overflows": 0,
+        "largest_residual": {
+          "row": 0,
+          "column": 0,
+          "base": 1.0,
+          "cast_base": 1.0,
+          "intended_delta": -1.0,
+          "merged": 0.0,
+          "observed_delta": -1.0,
+          "residual": 0.0,
+          "reference_merged": 0.0
+        }
+      },
+      "inputs": {
+        "base": [
+          {
+            "file": "model.safetensors",
+            "bytes": 134217824,
+            "sha256": "ac61436a4235e83748700f77ce5e036ea9dfeca2f860179f93f4c9e158c58104"
+          }
+        ],
+        "adapter": [
+          {
+            "file": "adapter_config.json",
+            "bytes": 1123,
+            "sha256": "df12161fe19c370f3737dd2339e18a83964e42c3d1c9a0366787ba6c99e757b1"
+          },
+          {
+            "file": "adapter_model.safetensors",
+            "bytes": 426344,
+            "sha256": "e1da732f3e7da395d021daff5f22b107f455862dc15a8e03035bf1e5a45f3a46"
+          }
+        ],
+        "merged": [
+          {
+            "file": "model.safetensors",
+            "bytes": 134217824,
+            "sha256": "e25ec1d53c9b4953388270245b8dee3251c37c0f98c28fd741cd41e14f0a390b"
+          }
+        ]
+      }
+    },
+    {
+      "block_mib": 16,
+      "elapsed_seconds": 1.314598910001223,
+      "peak_rss_kib": 63104,
+      "layer": {
+        "module": "linear",
+        "weight": "linear.weight",
+        "adapter_variant": "dora",
+        "shape": [
+          8192,
+          4096
+        ],
+        "rank": 8,
+        "alpha": 8.0,
+        "scale": 1.0,
+        "adapter_dtypes": {
+          "A": "F32",
+          "B": "F32",
+          "magnitude": "F32"
+        },
+        "base_dtype": "F32",
+        "merged_dtype": "F32",
+        "status": "observed-update",
+        "elements": 33554432,
+        "intended_nonzero_elements": 33554432,
+        "changed_elements": 33554432,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "norms": {
+          "delta": 6675.970041874064,
+          "observed": 6675.970041874064,
+          "residual": 0.0,
+          "base_cast_drift": 0.0,
+          "unchanged_reference": 0.0
+        },
+        "relative_residual": 0.0,
+        "observed_to_intended_norm": 1.0,
+        "projection_gain": 1.0,
+        "cosine_similarity": 1.0,
+        "reference_merge_mismatches": 0,
+        "reference_merge_overflows": 0,
+        "largest_residual": {
+          "row": 0,
+          "column": 0,
+          "base": 1.0,
+          "cast_base": 1.0,
+          "intended_delta": -1.0,
+          "merged": 0.0,
+          "observed_delta": -1.0,
+          "residual": 0.0,
+          "reference_merged": 0.0
+        }
+      },
+      "inputs": {
+        "base": [
+          {
+            "file": "model.safetensors",
+            "bytes": 134217824,
+            "sha256": "ac61436a4235e83748700f77ce5e036ea9dfeca2f860179f93f4c9e158c58104"
+          }
+        ],
+        "adapter": [
+          {
+            "file": "adapter_config.json",
+            "bytes": 1123,
+            "sha256": "df12161fe19c370f3737dd2339e18a83964e42c3d1c9a0366787ba6c99e757b1"
+          },
+          {
+            "file": "adapter_model.safetensors",
+            "bytes": 426344,
+            "sha256": "e1da732f3e7da395d021daff5f22b107f455862dc15a8e03035bf1e5a45f3a46"
+          }
+        ],
+        "merged": [
+          {
+            "file": "model.safetensors",
+            "bytes": 134217824,
+            "sha256": "e25ec1d53c9b4953388270245b8dee3251c37c0f98c28fd741cd41e14f0a390b"
+          }
+        ]
+      }
+    },
+    {
+      "block_mib": 64,
+      "elapsed_seconds": 1.1038200709881494,
+      "peak_rss_kib": 137924,
+      "layer": {
+        "module": "linear",
+        "weight": "linear.weight",
+        "adapter_variant": "dora",
+        "shape": [
+          8192,
+          4096
+        ],
+        "rank": 8,
+        "alpha": 8.0,
+        "scale": 1.0,
+        "adapter_dtypes": {
+          "A": "F32",
+          "B": "F32",
+          "magnitude": "F32"
+        },
+        "base_dtype": "F32",
+        "merged_dtype": "F32",
+        "status": "observed-update",
+        "elements": 33554432,
+        "intended_nonzero_elements": 33554432,
+        "changed_elements": 33554432,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "norms": {
+          "delta": 6675.970041874066,
+          "observed": 6675.970041874066,
+          "residual": 0.0,
+          "base_cast_drift": 0.0,
+          "unchanged_reference": 0.0
+        },
+        "relative_residual": 0.0,
+        "observed_to_intended_norm": 1.0,
+        "projection_gain": 1.0,
+        "cosine_similarity": 1.0,
+        "reference_merge_mismatches": 0,
+        "reference_merge_overflows": 0,
+        "largest_residual": {
+          "row": 0,
+          "column": 0,
+          "base": 1.0,
+          "cast_base": 1.0,
+          "intended_delta": -1.0,
+          "merged": 0.0,
+          "observed_delta": -1.0,
+          "residual": 0.0,
+          "reference_merged": 0.0
+        }
+      },
+      "inputs": {
+        "base": [
+          {
+            "file": "model.safetensors",
+            "bytes": 134217824,
+            "sha256": "ac61436a4235e83748700f77ce5e036ea9dfeca2f860179f93f4c9e158c58104"
+          }
+        ],
+        "adapter": [
+          {
+            "file": "adapter_config.json",
+            "bytes": 1123,
+            "sha256": "df12161fe19c370f3737dd2339e18a83964e42c3d1c9a0366787ba6c99e757b1"
+          },
+          {
+            "file": "adapter_model.safetensors",
+            "bytes": 426344,
+            "sha256": "e1da732f3e7da395d021daff5f22b107f455862dc15a8e03035bf1e5a45f3a46"
+          }
+        ],
+        "merged": [
+          {
+            "file": "model.safetensors",
+            "bytes": 134217824,
+            "sha256": "e25ec1d53c9b4953388270245b8dee3251c37c0f98c28fd741cd41e14f0a390b"
+          }
+        ]
+      }
+    }
+  ]
+}

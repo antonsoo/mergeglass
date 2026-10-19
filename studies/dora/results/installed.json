@@ -1,0 +1,544 @@
+{
+  "verified_source_commit": "59b73911a8a918840d19d12773f52d10623f206b",
+  "source_archive": {
+    "sha256": "27569e29108aec3d4c3bab8d52dea9985cb8b94d9863ecb6aa4ab176e08b6818",
+    "bytes": 4577280
+  },
+  "machine": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "logical_cpus": 14,
+    "blas_threads": 1
+  },
+  "artifacts": [
+    {
+      "file": "mergeglass-0.1.0-py3-none-any.whl",
+      "bytes": 23254,
+      "sha256": "83793acde8235fd3ee14f1ad6803db30c04ccc560f554f3a821bf43d991af339"
+    },
+    {
+      "file": "mergeglass-0.1.0.tar.gz",
+      "bytes": 1109684,
+      "sha256": "02ee44f38a8f0babc5482ca333ab0d3c9351a62ae7f2b8749a89453b5eb12bee"
+    }
+  ],
+  "clean_source_checks": [
+    "locked sync",
+    "ruff lint",
+    "ruff format",
+    "strict mypy",
+    "82 tests",
+    "sdist and wheel build"
+  ],
+  "installed_runtimes": [
+    {
+      "python": "3.10.21",
+      "versions": {
+        "mergeglass": "0.1.0",
+        "numpy": "1.24.0",
+        "safetensors": "0.6.2"
+      },
+      "runtime_location": "installed wheel site-packages",
+      "modules": {
+        "mergeglass/adapter.py": "0e306a0aecc9f4cbd3e1b7944b891ae2fdc0b568c87ed66062e0a57ee8b7cd8d",
+        "mergeglass/__init__.py": "221fe57ab5e6e32d83d551e75218efe34c792c759b90767cc4b9f0c4e69bb11d",
+        "mergeglass/storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+        "mergeglass/cli.py": "6117eaa6e1fd87ddb5a5d9607be4dc401358c5573b7003011294b4f86e463e83",
+        "mergeglass/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "mergeglass/audit.py": "9017cdffb4c3003310ce8f6bd1d89fc656e1dcdbbbbf847c6a71bb0d94635f04"
+      },
+      "native_cases": 4,
+      "decimal_coordinates": 4212,
+      "tests": 82
+    },
+    {
+      "python": "3.15.0",
+      "versions": {
+        "mergeglass": "0.1.0",
+        "numpy": "2.5.4",
+        "safetensors": "0.8.0"
+      },
+      "runtime_location": "installed wheel site-packages",
+      "modules": {
+        "mergeglass/adapter.py": "0e306a0aecc9f4cbd3e1b7944b891ae2fdc0b568c87ed66062e0a57ee8b7cd8d",
+        "mergeglass/__init__.py": "221fe57ab5e6e32d83d551e75218efe34c792c759b90767cc4b9f0c4e69bb11d",
+        "mergeglass/storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+        "mergeglass/cli.py": "6117eaa6e1fd87ddb5a5d9607be4dc401358c5573b7003011294b4f86e463e83",
+        "mergeglass/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "mergeglass/audit.py": "9017cdffb4c3003310ce8f6bd1d89fc656e1dcdbbbbf847c6a71bb0d94635f04"
+      },
+      "native_cases": 4,
+      "decimal_coordinates": 4212,
+      "tests": 82
+    }
+  ],
+  "installed_public_audits": [
+    {
+      "case": "published",
+      "adapted_tensors": 210,
+      "checked_tensors": 272,
+      "matches_independent_receipt": true
+    },
+    {
+      "case": "local-bf16",
+      "adapted_tensors": 210,
+      "checked_tensors": 272,
+      "matches_independent_receipt": true
+    }
+  ],
+  "terminal_capture_matches_installed_cli": true,
+  "steps": [
+    {
+      "step": "sync",
+      "command": [
+        "uv",
+        "sync",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "log_sha256": "9a072f97531d2b7ffe88d393e75bed777e00aba1aaf5b865ece0a75a278c362a",
+      "retained_successful_check": true
+    },
+    {
+      "step": "lint",
+      "command": [
+        "uv",
+        "run",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "retained_successful_check": true
+    },
+    {
+      "step": "format",
+      "command": [
+        "uv",
+        "run",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "log_sha256": "3b2366898213ec462cc2627a223455c7687965818159c9592508d4dab7a0d600",
+      "retained_successful_check": true
+    },
+    {
+      "step": "typecheck",
+      "command": [
+        "uv",
+        "run",
+        "mypy",
+        "src"
+      ],
+      "exit_code": 0,
+      "log_sha256": "ab35ee42183d4d6d3ba483825ab037d18a5a15622d03be01d82220b1564851ff",
+      "retained_successful_check": true
+    },
+    {
+      "step": "tests",
+      "command": [
+        "uv",
+        "run",
+        "pytest",
+        "-q"
+      ],
+      "exit_code": 0,
+      "log_sha256": "9014915f0c3f27f759dc60754a0e0ecae9762458c5397394520837a75022e8e2",
+      "retained_successful_check": true
+    },
+    {
+      "step": "build",
+      "command": [
+        "uv",
+        "build"
+      ],
+      "exit_code": 0,
+      "log_sha256": "25ce5651923dcd1e3da14b2c5c0b6c7bec0ad2f948439f56f1652e0d67235f2e",
+      "retained_successful_check": true
+    },
+    {
+      "step": "venv-310",
+      "command": [
+        "uv",
+        "venv",
+        "$WORK/installed-py310",
+        "--python",
+        "3.10"
+      ],
+      "exit_code": 0,
+      "log_sha256": "9792054baf0b15e3a4a15d5df313d11cc72d4622cae182fe0f05f84936cf2ee2",
+      "retained_successful_check": true
+    },
+    {
+      "step": "install-310",
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "$WORK/installed-py310/bin/python",
+        "numpy==1.24.0",
+        "safetensors==0.6.2",
+        "$WORK/clean/dist/mergeglass-0.1.0-py3-none-any.whl",
+        "pytest"
+      ],
+      "exit_code": 0,
+      "log_sha256": "93b656d516688377dcae09e9193d8aeb629a54fdf4d2eee804d8dac586d333b3",
+      "retained_successful_check": true
+    },
+    {
+      "step": "identity-310",
+      "command": [
+        "$WORK/installed-py310/bin/python",
+        "-c",
+        "import json,hashlib,importlib.metadata,importlib.util,pathlib,sys,mergeglass\nroot=pathlib.Path(mergeglass.__file__).parent\nassert root.is_relative_to(pathlib.Path(sys.prefix))\nassert all(importlib.util.find_spec(name) is None for name in ['torch','peft','transformers'])\nprint(json.dumps({'python':sys.version.split()[0],'versions':{n:importlib.metadata.version(n) for n in ['mergeglass','numpy','safetensors']},'runtime_location':'installed wheel site-packages','modules':{'mergeglass/'+p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in root.glob('*.py')}}))\n"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e607b5065e17de49c49a6572f9bacaba3de5b0b472ee1f0251ce34ed73e0473f",
+      "retained_successful_check": true
+    },
+    {
+      "step": "wheel-tests-310",
+      "command": [
+        "$WORK/installed-py310/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$WORK/clean/tests"
+      ],
+      "exit_code": 0,
+      "log_sha256": "7dcf634bda6f137f2aaa678b7fd487de9db1ba31584ad8dd92f10e3201c74fa4",
+      "retained_successful_check": true
+    },
+    {
+      "step": "dora-310-correct-f32-safe-false",
+      "command": [
+        "$WORK/installed-py310/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/correct-f32-safe-false",
+        "--block-mib",
+        "1",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "8ddb7e1fdb0fc13c4c8bc9b45fef22cb481ac98401a91f848341981b96a6cd1c"
+    },
+    {
+      "step": "dora-310-correct-bf16-safe-false",
+      "command": [
+        "$WORK/installed-py310/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/correct-bf16-safe-false",
+        "--block-mib",
+        "1",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e17943c6a21f3c4cdad914c1219cafabcdb4ca11323cf1c7c1caaa69fdd0f166"
+    },
+    {
+      "step": "dora-310-as-lora-f32",
+      "command": [
+        "$WORK/installed-py310/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/as-lora-f32",
+        "--block-mib",
+        "1",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "f5e53f942413e0a8eac41fd8030d60f25aca53d0398b454311480ca0cebee883"
+    },
+    {
+      "step": "dora-310-omitted",
+      "command": [
+        "$WORK/installed-py310/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/omitted",
+        "--block-mib",
+        "1",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "5ba9be3689b37be1bd162d9af98c676ada93bc821fd65309bac4c9e293d15fcb"
+    },
+    {
+      "step": "decimal-310",
+      "command": [
+        "$WORK/installed-py310/bin/python",
+        "$WORK/clean/studies/dora/decimal_oracle.py",
+        "$WORK/decimal-py310",
+        "$WORK/decimal-py310.json"
+      ],
+      "exit_code": 0,
+      "log_sha256": "bba89aff5be4dfcb924e5c8486a5eabf8fa13c53f09523d9de528ce638642fce"
+    },
+    {
+      "step": "quickstart-310",
+      "command": [
+        "$WORK/installed-py310/bin/mergeglass",
+        "$WORK/clean/examples/rounding/base",
+        "$WORK/clean/examples/rounding/adapter",
+        "$WORK/clean/examples/rounding/merged-bf16",
+        "--json",
+        "$WORK/rounding-310.json"
+      ],
+      "exit_code": 0,
+      "log_sha256": "6e88d33dacfa20230dd0c1622de2d01d1ae689acfd8d78396f36296c91d4922d"
+    },
+    {
+      "step": "summary-310",
+      "command": [
+        "$WORK/installed-py310/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/as-lora-f32",
+        "--summary",
+        "--json",
+        "$WORK/summary-310.json"
+      ],
+      "exit_code": 0,
+      "log_sha256": "ae7f722d6f676eead4e7765cc42afec5f788c9ac25e683685985d5560deff509"
+    },
+    {
+      "step": "block-json-310",
+      "command": [
+        "$WORK/installed-py310/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/as-lora-f32",
+        "--block-mib",
+        "4",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "45076b4531185db081ade0e2548a340073d1a6f0364a595857e0bfa6cc8a2555"
+    },
+    {
+      "step": "venv-315",
+      "command": [
+        "uv",
+        "venv",
+        "$WORK/installed-py315",
+        "--python",
+        "3.15"
+      ],
+      "exit_code": 0,
+      "log_sha256": "6bdecfc46f24f59260a4cc31a6af1ea8d947f7ab8494f442e5650547dac383a5"
+    },
+    {
+      "step": "install-315",
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "$WORK/installed-py315/bin/python",
+        "$WORK/clean/dist/mergeglass-0.1.0-py3-none-any.whl",
+        "pytest"
+      ],
+      "exit_code": 0,
+      "log_sha256": "46aa78a54c232e57d9e4ff55cf42cbcd8cd813c9c4b328901706b51b42aea42d"
+    },
+    {
+      "step": "identity-315",
+      "command": [
+        "$WORK/installed-py315/bin/python",
+        "-c",
+        "import json,hashlib,importlib.metadata,importlib.util,pathlib,sys,mergeglass\nroot=pathlib.Path(mergeglass.__file__).parent\nassert root.is_relative_to(pathlib.Path(sys.prefix))\nassert all(importlib.util.find_spec(name) is None for name in ['torch','peft','transformers'])\nprint(json.dumps({'python':sys.version.split()[0],'versions':{n:importlib.metadata.version(n) for n in ['mergeglass','numpy','safetensors']},'runtime_location':'installed wheel site-packages','modules':{'mergeglass/'+p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in root.glob('*.py')}}))\n"
+      ],
+      "exit_code": 0,
+      "log_sha256": "7bddf9f2a560aa5d83bdb38c777e673d3f4ea2ca469ba21fde1089d9e9b56d04"
+    },
+    {
+      "step": "wheel-tests-315",
+      "command": [
+        "$WORK/installed-py315/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$WORK/clean/tests"
+      ],
+      "exit_code": 0,
+      "log_sha256": "198544d1a93487431533660400c99678d4181cfdbc61b052854458f439edc9f4"
+    },
+    {
+      "step": "dora-315-correct-f32-safe-false",
+      "command": [
+        "$WORK/installed-py315/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/correct-f32-safe-false",
+        "--block-mib",
+        "1",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "8ddb7e1fdb0fc13c4c8bc9b45fef22cb481ac98401a91f848341981b96a6cd1c"
+    },
+    {
+      "step": "dora-315-correct-bf16-safe-false",
+      "command": [
+        "$WORK/installed-py315/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/correct-bf16-safe-false",
+        "--block-mib",
+        "1",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e17943c6a21f3c4cdad914c1219cafabcdb4ca11323cf1c7c1caaa69fdd0f166"
+    },
+    {
+      "step": "dora-315-as-lora-f32",
+      "command": [
+        "$WORK/installed-py315/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/as-lora-f32",
+        "--block-mib",
+        "1",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "f5e53f942413e0a8eac41fd8030d60f25aca53d0398b454311480ca0cebee883"
+    },
+    {
+      "step": "dora-315-omitted",
+      "command": [
+        "$WORK/installed-py315/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/omitted",
+        "--block-mib",
+        "1",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "5ba9be3689b37be1bd162d9af98c676ada93bc821fd65309bac4c9e293d15fcb"
+    },
+    {
+      "step": "decimal-315",
+      "command": [
+        "$WORK/installed-py315/bin/python",
+        "$WORK/clean/studies/dora/decimal_oracle.py",
+        "$WORK/decimal-py315",
+        "$WORK/decimal-py315.json"
+      ],
+      "exit_code": 0,
+      "log_sha256": "bba89aff5be4dfcb924e5c8486a5eabf8fa13c53f09523d9de528ce638642fce"
+    },
+    {
+      "step": "quickstart-315",
+      "command": [
+        "$WORK/installed-py315/bin/mergeglass",
+        "$WORK/clean/examples/rounding/base",
+        "$WORK/clean/examples/rounding/adapter",
+        "$WORK/clean/examples/rounding/merged-bf16",
+        "--json",
+        "$WORK/rounding-315.json"
+      ],
+      "exit_code": 0,
+      "log_sha256": "6e88d33dacfa20230dd0c1622de2d01d1ae689acfd8d78396f36296c91d4922d"
+    },
+    {
+      "step": "summary-315",
+      "command": [
+        "$WORK/installed-py315/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/as-lora-f32",
+        "--summary",
+        "--json",
+        "$WORK/summary-315.json"
+      ],
+      "exit_code": 0,
+      "log_sha256": "ae7f722d6f676eead4e7765cc42afec5f788c9ac25e683685985d5560deff509"
+    },
+    {
+      "step": "block-json-315",
+      "command": [
+        "$WORK/installed-py315/bin/mergeglass",
+        "$WORK/clean/examples/dora/base",
+        "$WORK/clean/examples/dora/adapter",
+        "$WORK/clean/examples/dora/as-lora-f32",
+        "--block-mib",
+        "4",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "45076b4531185db081ade0e2548a340073d1a6f0364a595857e0bfa6cc8a2555"
+    },
+    {
+      "step": "public-wheel-published",
+      "command": [
+        "$WORK/installed-py315/bin/mergeglass",
+        "$WORK/public/base",
+        "$WORK/public/adapter",
+        "$WORK/public/published",
+        "--block-mib",
+        "1",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "9e15dec85ae8f7f7916595af270359d57aa0b79e52ae9a26007f683e3c0ce868"
+    },
+    {
+      "step": "public-wheel-local-bf16",
+      "command": [
+        "$WORK/installed-py315/bin/mergeglass",
+        "$WORK/public/base",
+        "$WORK/public/adapter",
+        "$WORK/public/local-bf16",
+        "--block-mib",
+        "1",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e32779f4b41730db8e88b91d501ef52dbc40b4db212f903865a6e3ee06eb57bf"
+    },
+    {
+      "step": "streaming-wheel",
+      "command": [
+        "$WORK/installed-py315/bin/python",
+        "$WORK/clean/studies/dora/streaming.py",
+        "$WORK/streaming",
+        "--out",
+        "$WORK/streaming-final.json"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e601afd7b60d1876b92023d06661e5686ad581a91f61eacb876ce16296ebd348"
+    },
+    {
+      "step": "terminal-wheel",
+      "command": [
+        "$WORK/installed-py315/bin/mergeglass",
+        "examples/dora/base",
+        "examples/dora/adapter",
+        "examples/dora/as-lora-f32"
+      ],
+      "exit_code": 0,
+      "log_sha256": "0468932a91faa2278a618fd4af4de06148e48fbfa7b36ab4ba78c52101d99792"
+    }
+  ]
+}
