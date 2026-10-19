@@ -1,0 +1,164 @@
+{
+  "synthetic": true,
+  "shape": [
+    4096,
+    8192
+  ],
+  "rank": 8,
+  "machine": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "logical_cpus": 14,
+    "blas_threads": 1
+  },
+  "checkpoint_tensor_bytes_each": 134217728,
+  "full_float64_delta_bytes": 268435456,
+  "results": [
+    {
+      "block_mib": 1,
+      "elapsed_seconds": 0.9425367430012557,
+      "peak_rss_kib": 38536,
+      "layer": {
+        "module": "linear",
+        "weight": "linear.weight",
+        "shape": [
+          4096,
+          8192
+        ],
+        "rank": 8,
+        "alpha": 8.0,
+        "scale": 1.0,
+        "adapter_dtypes": {
+          "A": "F32",
+          "B": "F32"
+        },
+        "base_dtype": "F32",
+        "merged_dtype": "F32",
+        "status": "observed-update",
+        "elements": 33554432,
+        "intended_nonzero_elements": 33554432,
+        "changed_elements": 33554432,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "norms": {
+          "delta": 45.254833995939045,
+          "observed": 45.254833995939045,
+          "residual": 0.0,
+          "base_cast_drift": 0.0
+        },
+        "relative_residual": 0.0,
+        "observed_to_intended_norm": 1.0,
+        "reference_merge_mismatches": 0,
+        "reference_merge_overflows": 0,
+        "largest_residual": {
+          "row": 0,
+          "column": 0,
+          "base": 1.0,
+          "cast_base": 1.0,
+          "intended_delta": 0.0078125,
+          "merged": 1.0078125,
+          "observed_delta": 0.0078125,
+          "residual": 0.0,
+          "reference_merged": 1.0078125
+        }
+      }
+    },
+    {
+      "block_mib": 16,
+      "elapsed_seconds": 0.4887308519973885,
+      "peak_rss_kib": 57904,
+      "layer": {
+        "module": "linear",
+        "weight": "linear.weight",
+        "shape": [
+          4096,
+          8192
+        ],
+        "rank": 8,
+        "alpha": 8.0,
+        "scale": 1.0,
+        "adapter_dtypes": {
+          "A": "F32",
+          "B": "F32"
+        },
+        "base_dtype": "F32",
+        "merged_dtype": "F32",
+        "status": "observed-update",
+        "elements": 33554432,
+        "intended_nonzero_elements": 33554432,
+        "changed_elements": 33554432,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "norms": {
+          "delta": 45.254833995939045,
+          "observed": 45.254833995939045,
+          "residual": 0.0,
+          "base_cast_drift": 0.0
+        },
+        "relative_residual": 0.0,
+        "observed_to_intended_norm": 1.0,
+        "reference_merge_mismatches": 0,
+        "reference_merge_overflows": 0,
+        "largest_residual": {
+          "row": 0,
+          "column": 0,
+          "base": 1.0,
+          "cast_base": 1.0,
+          "intended_delta": 0.0078125,
+          "merged": 1.0078125,
+          "observed_delta": 0.0078125,
+          "residual": 0.0,
+          "reference_merged": 1.0078125
+        }
+      }
+    },
+    {
+      "block_mib": 64,
+      "elapsed_seconds": 0.6270407760021044,
+      "peak_rss_kib": 118032,
+      "layer": {
+        "module": "linear",
+        "weight": "linear.weight",
+        "shape": [
+          4096,
+          8192
+        ],
+        "rank": 8,
+        "alpha": 8.0,
+        "scale": 1.0,
+        "adapter_dtypes": {
+          "A": "F32",
+          "B": "F32"
+        },
+        "base_dtype": "F32",
+        "merged_dtype": "F32",
+        "status": "observed-update",
+        "elements": 33554432,
+        "intended_nonzero_elements": 33554432,
+        "changed_elements": 33554432,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "norms": {
+          "delta": 45.254833995939045,
+          "observed": 45.254833995939045,
+          "residual": 0.0,
+          "base_cast_drift": 0.0
+        },
+        "relative_residual": 0.0,
+        "observed_to_intended_norm": 1.0,
+        "reference_merge_mismatches": 0,
+        "reference_merge_overflows": 0,
+        "largest_residual": {
+          "row": 0,
+          "column": 0,
+          "base": 1.0,
+          "cast_base": 1.0,
+          "intended_delta": 0.0078125,
+          "merged": 1.0078125,
+          "observed_delta": 0.0078125,
+          "residual": 0.0,
+          "reference_merged": 1.0078125
+        }
+      }
+    }
+  ]
+}

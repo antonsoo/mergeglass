@@ -1,0 +1,7 @@
+{
+  "oracle": "all adjacent finite BF16 bit patterns; exact midpoints and F64 neighbors",
+  "cases": 195840,
+  "direct_cast_disagreements": 0,
+  "zero_sign_disagreements": 0,
+  "via_float32_disagreements": 65280
+}

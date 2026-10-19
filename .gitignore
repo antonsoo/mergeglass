@@ -7,4 +7,6 @@ __pycache__/
 dist/
 *.egg-info/
 studies/native-peft/cache/
-
+studies/community/cache/
+studies/streaming/cache/
+/report.json

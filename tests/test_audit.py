@@ -36,7 +36,7 @@ def fixture(tmp_path: Path, *, alpha: float = 1, rs: bool = False) -> tuple[Path
     )
     save_file(
         {
-            "linear.weight": np.full((2, 3), 1.125 * alpha if alpha else 1, dtype=np.float32),
+            "linear.weight": np.full((2, 3), 1 + 0.125 * alpha, dtype=np.float32),
             "control": np.arange(4, dtype=np.int64),
         },
         merged / "model.safetensors",

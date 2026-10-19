@@ -1,0 +1,41 @@
+{
+  "retrieved": "2026-10-19",
+  "sources": [
+    {
+      "role": "base",
+      "repository": "HuggingFaceTB/SmolLM2-135M",
+      "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+      "license": "Apache-2.0",
+      "files": [
+        {
+          "file": "config.json",
+          "bytes": 704,
+          "sha256": "1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843"
+        },
+        {
+          "file": "model.safetensors",
+          "bytes": 269060552,
+          "sha256": "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1"
+        }
+      ]
+    },
+    {
+      "role": "adapter",
+      "repository": "hfm8tr/smollm2-135m-smoltalk-lora",
+      "revision": "fb39c7012c3b125f94d2bb1a093254994053f4ca",
+      "license": "Not declared in retrieved model card; weights are not redistributed here",
+      "files": [
+        {
+          "file": "adapter_config.json",
+          "bytes": 1027,
+          "sha256": "be90cade5d5b4d9d2da5db766f850a8569f202b047ef1e1c135927d8a25642b6"
+        },
+        {
+          "file": "adapter_model.safetensors",
+          "bytes": 1858776,
+          "sha256": "e80ad8bd5a5f3aa35928acb1da87c3b353508b6c83b2bdcb3b13d390bc6c5398"
+        }
+      ]
+    }
+  ]
+}
