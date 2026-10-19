@@ -21,6 +21,11 @@ is letters, digits, underscores and dots. Dots retain PEFT's regular-expression
 meaning; more complex regex patterns refuse the audit. Recorded A/B shapes must
 agree with the resolved rank and exact base tensor shape.
 
+Ranks must be positive integers. Alpha coefficients may be finite positive,
+zero or negative numbers, globally and in supported per-layer overrides. Their
+sign is part of the intended reference. The [native signed-scale cases](../studies/signed-scale/README.md)
+retain valid PEFT exports that the original nonnegative-only check refused.
+
 The reference is binary64 numerical arithmetic, not an exact real product. The
 producer may multiply factors or accumulate updates in another dtype or order.
 Nonzero counts refer to this declared numerical reference. Very small products

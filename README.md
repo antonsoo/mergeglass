@@ -122,7 +122,8 @@ Base --> cast to merged dtype --> compare to merge --+
 - Across the checkpoint: every unadapted tensor checked against its cast base,
   with unrelated changes retained individually. Large integer values stay exact.
 - Plain Linear LoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
-  and F64 storage. Unknown variants and incomplete inventories refuse.
+  and F64 storage. Finite signed alpha coefficients keep their declared sign.
+  Unknown variants and incomplete inventories refuse.
 - JSON with schema version, arithmetic definitions, original file hashes,
   full module identities, concrete measurements and limitations.
 

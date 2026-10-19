@@ -89,8 +89,8 @@ def _number(value: Any, field: str, *, rank: bool = False) -> float:
         raise AuditError(f"{field} exceeds the numeric range") from exc
     if not math.isfinite(number):
         raise AuditError(f"{field} must be a finite number")
-    if value < (1 if rank else 0) or (rank and int(value) != value):
-        raise AuditError(f"{field} must be {'a positive integer' if rank else 'nonnegative'}")
+    if rank and (value < 1 or int(value) != value):
+        raise AuditError(f"{field} must be a positive integer")
     return number
 
 

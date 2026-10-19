@@ -320,7 +320,7 @@
   "auditor_modules": {
     "__init__.py": "10ea91c0beb8fc6c9b2390d0e89c09dc51598c11a2837f8f780f64b5514877a9",
     "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
-    "adapter.py": "f2bbacdf04594cd42af8b51e0560f9d2cf1108a21e98564a088c6aacb6e82ade",
+    "adapter.py": "d2cca2fbc91cbbaff6e21097c21b912cd644b9b7f1fe03b816b1de02da8434cf",
     "audit.py": "1febdb81a60972c498063310acce6366c1749af495c951c492889666bcc3ef74",
     "cli.py": "48d863922546e687509d24c68ac885b6cf6da2da30848a9a092a039fb6968278",
     "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"

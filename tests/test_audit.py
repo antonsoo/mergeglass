@@ -87,6 +87,41 @@ def test_zero_scale_is_a_zero_update_with_undefined_relative_error(tmp_path: Pat
     assert layer["cosine_similarity"] is None
 
 
+@pytest.mark.parametrize("alpha", [-0.5, -1, -2])
+def test_signed_alpha_is_part_of_the_intended_reference(tmp_path: Path, alpha: float) -> None:
+    layer = audit(*fixture(tmp_path, alpha=alpha))["layers"][0]
+    assert layer["alpha"] == alpha
+    assert layer["scale"] == alpha
+    assert layer["changed_elements"] == 6
+    assert layer["relative_residual"] == 0
+    assert layer["projection_gain"] == pytest.approx(1)
+    assert layer["cosine_similarity"] == pytest.approx(1)
+
+
+def test_signed_alpha_pattern_override_is_preserved(tmp_path: Path) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    change_config(adapter, alpha_pattern={"linear": -2})
+    save_file(
+        {
+            "linear.weight": np.full((2, 3), 0.75, dtype=np.float32),
+            "control": np.arange(4, dtype=np.int64),
+        },
+        merged / "model.safetensors",
+    )
+    layer = audit(base, adapter, merged)["layers"][0]
+    assert layer["alpha"] == -2
+    assert layer["relative_residual"] == 0
+    assert layer["projection_gain"] == pytest.approx(1)
+
+
+@pytest.mark.parametrize("updates", [{"r": -1}, {"r": 0.5}, {"rank_pattern": {"linear": -1}}])
+def test_signed_coefficients_keep_rank_validation(tmp_path: Path, updates: dict[str, Any]) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    change_config(adapter, **updates)
+    with pytest.raises(AuditError, match="positive integer"):
+        audit(base, adapter, merged)
+
+
 @pytest.mark.parametrize("gain", [-1, 0.5, 1, 2])
 def test_signed_gain_distinguishes_complete_but_wrong_updates(tmp_path: Path, gain: float) -> None:
     base, adapter, merged = fixture(tmp_path)
