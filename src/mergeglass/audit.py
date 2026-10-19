@@ -137,6 +137,8 @@ def _layer(
     measured = {key: value.norm() for key, value in norms.items()}
     status = (
         "zero-update"
+        if nonzero == 0 and changed == 0
+        else "change-with-zero-reference"
         if nonzero == 0
         else "no-observed-update"
         if changed == 0

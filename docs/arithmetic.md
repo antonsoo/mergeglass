@@ -49,7 +49,8 @@ Nonfinite saved input values always refuse the whole audit.
 
 | Status | Numeric evidence |
 | --- | --- |
-| `zero-update` | The binary64 product has no nonzero entries |
+| `zero-update` | The binary64 product is zero and no merged entries change |
+| `change-with-zero-reference` | The binary64 product is zero but merged entries change |
 | `no-observed-update` | The product is nonzero; no merged entry differs from the cast base |
 | `observed-update` | At least one entry differs from the cast base |
 

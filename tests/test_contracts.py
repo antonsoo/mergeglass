@@ -57,6 +57,23 @@ def test_off_diagonal_cancellation_is_not_a_nonzero_update(tmp_path: Path) -> No
     assert layer["norms"]["delta"] == 0
 
 
+def test_changed_weights_with_a_zero_reference_are_distinct(tmp_path: Path) -> None:
+    base, adapter, merged = fixture(tmp_path, alpha=0)
+    weights = np.ones((2, 3), dtype=np.float32)
+    weights[0, 0] = 1.25
+    save_file(
+        {"linear.weight": weights, "control": np.arange(4, dtype=np.int64)},
+        merged / "model.safetensors",
+    )
+    layer = audit(base, adapter, merged)["layers"][0]
+    assert layer["status"] == "change-with-zero-reference"
+    assert layer["changed_elements"] == 1
+    assert layer["norms"]["residual"] == 0.25
+    assert layer["relative_residual"] is None
+    assert layer["largest_residual"]["row"] == 0
+    assert layer["largest_residual"]["column"] == 0
+
+
 def test_bf16_raw_decoding_uses_native_safetensors_bytes() -> None:
     path = Path(__file__).resolve().parents[1] / "examples/rounding/merged-bf16"
     tensor = Checkpoint(path).tensors["large.weight"]
