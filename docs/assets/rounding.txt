@@ -1,15 +1,16 @@
 Mergeglass | saved LoRA merge audit
 
-MODULE                           DTYPE   CHANGED    UNCHANGED*  REL.RESID
-large                            BF16         62         3.1%    0.01367
-small                            BF16          0       100.0%          1
+MODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID
+large                        BF16         62         3.1%        1    0.01367
+small                        BF16          0       100.0%        0          1
   no-observed-update
-zero                             BF16          0          n/a        n/a
+zero                         BF16          0          n/a      n/a        n/a
   zero-update
 
 Of 128 nonzero intended updates, 66 are unchanged (51.56%).
 * Nonzero intended update elements equal to the dtype-cast base.
 Relative error = ||observed change - intended update|| / ||intended update||.
+Gain = projection of the observed change onto the intended update (ideal 1).
 Checked 4 tensors; 0 unadapted tensor(s) changed.
 Equal weights alone cannot tell rounding from an omitted adapter.
 This measures saved weights, not model quality.

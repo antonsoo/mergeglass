@@ -216,7 +216,7 @@
       }
     ]
   },
-  "oracle_source_sha256": "f38fede0e871ae5c30ec09286f8bb9c1f143197bb39df23e06096d333b11e697",
+  "oracle_source_sha256": "7e2db6bf379833131ea0fed227fd05dd7929d323239e956c98e6eed660127d8d",
   "cases": [
     {
       "name": "merged-f32",
@@ -246,7 +246,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999960805868,
+          "cosine_similarity": 0.9999999999295665
         },
         {
           "module": "model.layers.0.self_attn.v_proj",
@@ -260,7 +262,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000026604818,
+          "cosine_similarity": 0.9999999999983309
         },
         {
           "module": "model.layers.1.self_attn.q_proj",
@@ -274,7 +278,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999986733678,
+          "cosine_similarity": 0.9999999999518748
         },
         {
           "module": "model.layers.1.self_attn.v_proj",
@@ -288,7 +294,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.000000019259997,
+          "cosine_similarity": 0.9999999999852189
         },
         {
           "module": "model.layers.10.self_attn.q_proj",
@@ -302,7 +310,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000017034074,
+          "cosine_similarity": 0.9999999999532905
         },
         {
           "module": "model.layers.10.self_attn.v_proj",
@@ -316,7 +326,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999721629836,
+          "cosine_similarity": 0.9999999999783101
         },
         {
           "module": "model.layers.11.self_attn.q_proj",
@@ -330,7 +342,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.000000001009053,
+          "cosine_similarity": 0.9999999999545985
         },
         {
           "module": "model.layers.11.self_attn.v_proj",
@@ -344,7 +358,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000033055825,
+          "cosine_similarity": 0.9999999999789088
         },
         {
           "module": "model.layers.12.self_attn.q_proj",
@@ -358,7 +374,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.999999981887428,
+          "cosine_similarity": 0.9999999999601625
         },
         {
           "module": "model.layers.12.self_attn.v_proj",
@@ -372,7 +390,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999839085111,
+          "cosine_similarity": 0.9999999999744597
         },
         {
           "module": "model.layers.13.self_attn.q_proj",
@@ -386,7 +406,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999796882881,
+          "cosine_similarity": 0.9999999999554299
         },
         {
           "module": "model.layers.13.self_attn.v_proj",
@@ -400,7 +422,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000068529116,
+          "cosine_similarity": 0.999999999976818
         },
         {
           "module": "model.layers.14.self_attn.q_proj",
@@ -414,7 +438,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999931801343,
+          "cosine_similarity": 0.9999999999697751
         },
         {
           "module": "model.layers.14.self_attn.v_proj",
@@ -428,7 +454,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.999999972281104,
+          "cosine_similarity": 0.9999999999694352
         },
         {
           "module": "model.layers.15.self_attn.q_proj",
@@ -442,7 +470,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000041314714,
+          "cosine_similarity": 0.9999999999615277
         },
         {
           "module": "model.layers.15.self_attn.v_proj",
@@ -456,7 +486,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000174537569,
+          "cosine_similarity": 0.9999999999733473
         },
         {
           "module": "model.layers.16.self_attn.q_proj",
@@ -470,7 +502,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000179886377,
+          "cosine_similarity": 0.9999999999483439
         },
         {
           "module": "model.layers.16.self_attn.v_proj",
@@ -484,7 +518,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999691964397,
+          "cosine_similarity": 0.9999999999694227
         },
         {
           "module": "model.layers.17.self_attn.q_proj",
@@ -498,7 +534,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000169390284,
+          "cosine_similarity": 0.9999999999592593
         },
         {
           "module": "model.layers.17.self_attn.v_proj",
@@ -512,7 +550,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000046760655,
+          "cosine_similarity": 0.9999999999660265
         },
         {
           "module": "model.layers.18.self_attn.q_proj",
@@ -526,7 +566,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999612911439,
+          "cosine_similarity": 0.9999999999667738
         },
         {
           "module": "model.layers.18.self_attn.v_proj",
@@ -540,7 +582,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000103853892,
+          "cosine_similarity": 0.999999999969726
         },
         {
           "module": "model.layers.19.self_attn.q_proj",
@@ -554,7 +598,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999820747327,
+          "cosine_similarity": 0.9999999999659276
         },
         {
           "module": "model.layers.19.self_attn.v_proj",
@@ -568,7 +614,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.999999949251663,
+          "cosine_similarity": 0.9999999999489401
         },
         {
           "module": "model.layers.2.self_attn.q_proj",
@@ -582,7 +630,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.999999994940959,
+          "cosine_similarity": 0.9999999999468387
         },
         {
           "module": "model.layers.2.self_attn.v_proj",
@@ -596,7 +646,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000206553885,
+          "cosine_similarity": 0.9999999999904787
         },
         {
           "module": "model.layers.20.self_attn.q_proj",
@@ -610,7 +662,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000092967434,
+          "cosine_similarity": 0.9999999999630301
         },
         {
           "module": "model.layers.20.self_attn.v_proj",
@@ -624,7 +678,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000406842195,
+          "cosine_similarity": 0.9999999999620965
         },
         {
           "module": "model.layers.21.self_attn.q_proj",
@@ -638,7 +694,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.000000023882023,
+          "cosine_similarity": 0.999999999967645
         },
         {
           "module": "model.layers.21.self_attn.v_proj",
@@ -652,7 +710,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999919320438,
+          "cosine_similarity": 0.9999999999565194
         },
         {
           "module": "model.layers.22.self_attn.q_proj",
@@ -666,7 +726,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999810440624,
+          "cosine_similarity": 0.9999999999553577
         },
         {
           "module": "model.layers.22.self_attn.v_proj",
@@ -680,7 +742,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999659813756,
+          "cosine_similarity": 0.9999999999545458
         },
         {
           "module": "model.layers.23.self_attn.q_proj",
@@ -694,7 +758,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.000000016317696,
+          "cosine_similarity": 0.9999999999611042
         },
         {
           "module": "model.layers.23.self_attn.v_proj",
@@ -708,7 +774,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999879357989,
+          "cosine_similarity": 0.9999999999422843
         },
         {
           "module": "model.layers.24.self_attn.q_proj",
@@ -722,7 +790,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000093267594,
+          "cosine_similarity": 0.9999999999689566
         },
         {
           "module": "model.layers.24.self_attn.v_proj",
@@ -736,7 +806,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999827214934,
+          "cosine_similarity": 0.9999999999382247
         },
         {
           "module": "model.layers.25.self_attn.q_proj",
@@ -750,7 +822,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000149761992,
+          "cosine_similarity": 0.999999999963637
         },
         {
           "module": "model.layers.25.self_attn.v_proj",
@@ -764,7 +838,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999606669613,
+          "cosine_similarity": 0.9999999999440596
         },
         {
           "module": "model.layers.26.self_attn.q_proj",
@@ -778,7 +854,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999937366069,
+          "cosine_similarity": 0.9999999999748895
         },
         {
           "module": "model.layers.26.self_attn.v_proj",
@@ -792,7 +870,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999646359742,
+          "cosine_similarity": 0.9999999999369679
         },
         {
           "module": "model.layers.27.self_attn.q_proj",
@@ -806,7 +886,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000150587582,
+          "cosine_similarity": 0.9999999999720275
         },
         {
           "module": "model.layers.27.self_attn.v_proj",
@@ -820,7 +902,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999849156981,
+          "cosine_similarity": 0.9999999999464144
         },
         {
           "module": "model.layers.28.self_attn.q_proj",
@@ -834,7 +918,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.000000005259448,
+          "cosine_similarity": 0.9999999999804741
         },
         {
           "module": "model.layers.28.self_attn.v_proj",
@@ -848,7 +934,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999705174174,
+          "cosine_similarity": 0.9999999999351417
         },
         {
           "module": "model.layers.29.self_attn.q_proj",
@@ -862,7 +950,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000032210068,
+          "cosine_similarity": 0.9999999999788369
         },
         {
           "module": "model.layers.29.self_attn.v_proj",
@@ -876,7 +966,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999831381071,
+          "cosine_similarity": 0.9999999999323421
         },
         {
           "module": "model.layers.3.self_attn.q_proj",
@@ -890,7 +982,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999942699103,
+          "cosine_similarity": 0.9999999999516839
         },
         {
           "module": "model.layers.3.self_attn.v_proj",
@@ -904,7 +998,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999827210876,
+          "cosine_similarity": 0.9999999999820772
         },
         {
           "module": "model.layers.4.self_attn.q_proj",
@@ -918,7 +1014,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.00000000120529,
+          "cosine_similarity": 0.9999999999567879
         },
         {
           "module": "model.layers.4.self_attn.v_proj",
@@ -932,7 +1030,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000140549765,
+          "cosine_similarity": 0.9999999999785043
         },
         {
           "module": "model.layers.5.self_attn.q_proj",
@@ -946,7 +1046,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000201910413,
+          "cosine_similarity": 0.9999999999559556
         },
         {
           "module": "model.layers.5.self_attn.v_proj",
@@ -960,7 +1062,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000013075787,
+          "cosine_similarity": 0.9999999999754416
         },
         {
           "module": "model.layers.6.self_attn.q_proj",
@@ -974,7 +1078,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999992962803,
+          "cosine_similarity": 0.999999999956493
         },
         {
           "module": "model.layers.6.self_attn.v_proj",
@@ -988,7 +1094,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.0000000023847377,
+          "cosine_similarity": 0.9999999999752482
         },
         {
           "module": "model.layers.7.self_attn.q_proj",
@@ -1002,7 +1110,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.999999994699877,
+          "cosine_similarity": 0.9999999999638769
         },
         {
           "module": "model.layers.7.self_attn.v_proj",
@@ -1016,7 +1126,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999891076259,
+          "cosine_similarity": 0.9999999999762621
         },
         {
           "module": "model.layers.8.self_attn.q_proj",
@@ -1030,7 +1142,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999846445051,
+          "cosine_similarity": 0.999999999964307
         },
         {
           "module": "model.layers.8.self_attn.v_proj",
@@ -1044,7 +1158,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 1.000000021154441,
+          "cosine_similarity": 0.9999999999758876
         },
         {
           "module": "model.layers.9.self_attn.q_proj",
@@ -1058,7 +1174,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999941952785,
+          "cosine_similarity": 0.9999999999589244
         },
         {
           "module": "model.layers.9.self_attn.v_proj",
@@ -1072,7 +1190,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9999999822098883,
+          "cosine_similarity": 0.9999999999825835
         }
       ],
       "unadapted": [],
@@ -1084,6 +1204,8 @@
           "residual": "observed - delta; reported relative to the Frobenius norm of delta",
           "zero_change": "exact numeric equality to the base rounded to the merged dtype",
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -1248,6 +1370,8 @@
             },
             "relative_residual": 1.1870765448073644e-05,
             "observed_to_intended_norm": 0.9999999961510383,
+            "projection_gain": 0.9999999960805812,
+            "cosine_similarity": 0.9999999999295429,
             "reference_merge_mismatches": 3946,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1292,6 +1416,8 @@
             },
             "relative_residual": 1.8392396634799986e-06,
             "observed_to_intended_norm": 1.000000002662173,
+            "projection_gain": 1.0000000026604814,
+            "cosine_similarity": 0.9999999999983085,
             "reference_merge_mismatches": 5280,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1336,6 +1462,8 @@
             },
             "relative_residual": 9.812158056763817e-06,
             "observed_to_intended_norm": 0.999999998721507,
+            "projection_gain": 0.9999999986733682,
+            "cosine_similarity": 0.9999999999518612,
             "reference_merge_mismatches": 2930,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1380,6 +1508,8 @@
             },
             "relative_residual": 5.4384590110886735e-06,
             "observed_to_intended_norm": 1.0000000192747829,
+            "projection_gain": 1.0000000192599945,
+            "cosine_similarity": 0.9999999999852116,
             "reference_merge_mismatches": 1796,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1424,6 +1554,8 @@
             },
             "relative_residual": 9.666365689601132e-06,
             "observed_to_intended_norm": 1.000000001750132,
+            "projection_gain": 1.0000000017034125,
+            "cosine_similarity": 0.9999999999532806,
             "reference_merge_mismatches": 2826,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1468,6 +1600,8 @@
             },
             "relative_residual": 6.587481439671228e-06,
             "observed_to_intended_norm": 0.9999999721846792,
+            "projection_gain": 0.9999999721629821,
+            "cosine_similarity": 0.9999999999783029,
             "reference_merge_mismatches": 1377,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1512,6 +1646,8 @@
             },
             "relative_residual": 9.530293629877132e-06,
             "observed_to_intended_norm": 1.000000001054467,
+            "projection_gain": 1.0000000010090537,
+            "cosine_similarity": 0.9999999999545868,
             "reference_merge_mismatches": 2964,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1556,6 +1692,8 @@
             },
             "relative_residual": 6.496029927016769e-06,
             "observed_to_intended_norm": 1.0000000033266783,
+            "projection_gain": 1.000000003305579,
+            "cosine_similarity": 0.9999999999789008,
             "reference_merge_mismatches": 1360,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1600,6 +1738,8 @@
             },
             "relative_residual": 8.928158700153188e-06,
             "observed_to_intended_norm": 0.9999999819272789,
+            "projection_gain": 0.9999999818874231,
+            "cosine_similarity": 0.9999999999601442,
             "reference_merge_mismatches": 3363,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1644,6 +1784,8 @@
             },
             "relative_residual": 7.147769041101559e-06,
             "observed_to_intended_norm": 0.9999999839340561,
+            "projection_gain": 0.9999999839085109,
+            "cosine_similarity": 0.9999999999744548,
             "reference_merge_mismatches": 1241,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1688,6 +1830,8 @@
             },
             "relative_residual": 9.442742619829712e-06,
             "observed_to_intended_norm": 0.9999999797328687,
+            "projection_gain": 0.9999999796882865,
+            "cosine_similarity": 0.9999999999554178,
             "reference_merge_mismatches": 2965,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1732,6 +1876,8 @@
             },
             "relative_residual": 6.8098287293314075e-06,
             "observed_to_intended_norm": 1.0000000068761006,
+            "projection_gain": 1.0000000068529138,
+            "cosine_similarity": 0.9999999999768132,
             "reference_merge_mismatches": 1239,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1776,6 +1922,8 @@
             },
             "relative_residual": 7.777112049012196e-06,
             "observed_to_intended_norm": 0.9999999932103848,
+            "projection_gain": 0.9999999931801431,
+            "cosine_similarity": 0.9999999999697583,
             "reference_merge_mismatches": 4110,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1820,6 +1968,8 @@
             },
             "relative_residual": 7.819172529739067e-06,
             "observed_to_intended_norm": 0.9999999723116734,
+            "projection_gain": 0.9999999722811038,
+            "cosine_similarity": 0.9999999999694305,
             "reference_merge_mismatches": 1179,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1864,6 +2014,8 @@
             },
             "relative_residual": 8.773381378964458e-06,
             "observed_to_intended_norm": 1.000000004169964,
+            "projection_gain": 1.0000000041314778,
+            "cosine_similarity": 0.999999999961514,
             "reference_merge_mismatches": 3487,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1908,6 +2060,8 @@
             },
             "relative_residual": 7.301688329492892e-06,
             "observed_to_intended_norm": 1.0000000174804173,
+            "projection_gain": 1.00000001745376,
+            "cosine_similarity": 0.9999999999733428,
             "reference_merge_mismatches": 1191,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1952,6 +2106,8 @@
             },
             "relative_residual": 1.0165444424383208e-05,
             "observed_to_intended_norm": 1.0000000180403112,
+            "projection_gain": 1.0000000179886435,
+            "cosine_similarity": 0.9999999999483322,
             "reference_merge_mismatches": 3005,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -1996,6 +2152,8 @@
             },
             "relative_residual": 7.82053155975975e-06,
             "observed_to_intended_norm": 0.9999999692270225,
+            "projection_gain": 0.9999999691964423,
+            "cosine_similarity": 0.9999999999694198,
             "reference_merge_mismatches": 1236,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2040,6 +2198,8 @@
             },
             "relative_residual": 9.029553997114154e-06,
             "observed_to_intended_norm": 1.0000000169797871,
+            "projection_gain": 1.0000000169390209,
+            "cosine_similarity": 0.9999999999592338,
             "reference_merge_mismatches": 4084,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2084,6 +2244,8 @@
             },
             "relative_residual": 8.243561015902908e-06,
             "observed_to_intended_norm": 1.0000000047100421,
+            "projection_gain": 1.0000000046760638,
+            "cosine_similarity": 0.9999999999660216,
             "reference_merge_mismatches": 1164,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2128,6 +2290,8 @@
             },
             "relative_residual": 8.154983752083089e-06,
             "observed_to_intended_norm": 0.999999961324393,
+            "projection_gain": 0.9999999612911421,
+            "cosine_similarity": 0.9999999999667492,
             "reference_merge_mismatches": 4365,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2172,6 +2336,8 @@
             },
             "relative_residual": 7.781864857825247e-06,
             "observed_to_intended_norm": 1.000000010415667,
+            "projection_gain": 1.0000000103853883,
+            "cosine_similarity": 0.9999999999697213,
             "reference_merge_mismatches": 1286,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2216,6 +2382,8 @@
             },
             "relative_residual": 8.25759381195413e-06,
             "observed_to_intended_norm": 0.9999999821088238,
+            "projection_gain": 0.9999999820747303,
+            "cosine_similarity": 0.9999999999659065,
             "reference_merge_mismatches": 4100,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2260,6 +2428,8 @@
             },
             "relative_residual": 1.0105940368923291e-05,
             "observed_to_intended_norm": 0.9999999493027268,
+            "projection_gain": 0.9999999492516634,
+            "cosine_similarity": 0.9999999999489365,
             "reference_merge_mismatches": 972,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2304,6 +2474,8 @@
             },
             "relative_residual": 1.0312258155813355e-05,
             "observed_to_intended_norm": 0.999999994994135,
+            "projection_gain": 0.9999999949409635,
+            "cosine_similarity": 0.9999999999468284,
             "reference_merge_mismatches": 2965,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2348,6 +2520,8 @@
             },
             "relative_residual": 4.365925113196634e-06,
             "observed_to_intended_norm": 1.000000020664918,
+            "projection_gain": 1.0000000206553874,
+            "cosine_similarity": 0.9999999999904695,
             "reference_merge_mismatches": 1865,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2392,6 +2566,8 @@
             },
             "relative_residual": 8.601168769222137e-06,
             "observed_to_intended_norm": 1.0000000093337356,
+            "projection_gain": 1.0000000092967452,
+            "cosine_similarity": 0.9999999999630097,
             "reference_merge_mismatches": 4298,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2436,6 +2612,8 @@
             },
             "relative_residual": 8.707745571979231e-06,
             "observed_to_intended_norm": 1.000000040722127,
+            "projection_gain": 1.0000000406842153,
+            "cosine_similarity": 0.9999999999620883,
             "reference_merge_mismatches": 1187,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2480,6 +2658,8 @@
             },
             "relative_residual": 8.046352783640885e-06,
             "observed_to_intended_norm": 1.0000000239143965,
+            "projection_gain": 1.0000000238820246,
+            "cosine_similarity": 0.9999999999676282,
             "reference_merge_mismatches": 3750,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2524,6 +2704,8 @@
             },
             "relative_residual": 9.325878105373682e-06,
             "observed_to_intended_norm": 0.9999999919755272,
+            "projection_gain": 0.9999999919320413,
+            "cosine_similarity": 0.999999999956514,
             "reference_merge_mismatches": 1028,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2568,6 +2750,8 @@
             },
             "relative_residual": 9.450989015139338e-06,
             "observed_to_intended_norm": 0.9999999810887245,
+            "projection_gain": 0.9999999810440638,
+            "cosine_similarity": 0.9999999999553394,
             "reference_merge_mismatches": 3498,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2612,6 +2796,8 @@
             },
             "relative_residual": 9.534966518955673e-06,
             "observed_to_intended_norm": 0.9999999660268339,
+            "projection_gain": 0.9999999659813766,
+            "cosine_similarity": 0.9999999999545427,
             "reference_merge_mismatches": 1037,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2656,6 +2842,8 @@
             },
             "relative_residual": 8.823191392427994e-06,
             "observed_to_intended_norm": 1.0000000163566212,
+            "projection_gain": 1.0000000163176974,
+            "cosine_similarity": 0.9999999999610764,
             "reference_merge_mismatches": 4494,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2700,6 +2888,8 @@
             },
             "relative_residual": 1.07440136295738e-05,
             "observed_to_intended_norm": 0.9999999879935203,
+            "projection_gain": 0.9999999879358037,
+            "cosine_similarity": 0.9999999999422834,
             "reference_merge_mismatches": 1041,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2744,6 +2934,8 @@
             },
             "relative_residual": 7.881964998820467e-06,
             "observed_to_intended_norm": 1.0000000093578258,
+            "projection_gain": 1.0000000093267631,
+            "cosine_similarity": 0.9999999999689373,
             "reference_merge_mismatches": 4182,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2788,6 +2980,8 @@
             },
             "relative_residual": 1.1115550085823481e-05,
             "observed_to_intended_norm": 0.9999999827832737,
+            "projection_gain": 0.9999999827214962,
+            "cosine_similarity": 0.9999999999382224,
             "reference_merge_mismatches": 936,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2832,6 +3026,8 @@
             },
             "relative_residual": 8.529750676624986e-06,
             "observed_to_intended_norm": 1.000000015012578,
+            "projection_gain": 1.0000000149762003,
+            "cosine_similarity": 0.9999999999636222,
             "reference_merge_mismatches": 3279,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2876,6 +3072,8 @@
             },
             "relative_residual": 1.0577935489908739e-05,
             "observed_to_intended_norm": 0.9999999607229033,
+            "projection_gain": 0.999999960666958,
+            "cosine_similarity": 0.9999999999440546,
             "reference_merge_mismatches": 869,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2920,6 +3118,8 @@
             },
             "relative_residual": 7.089483263276975e-06,
             "observed_to_intended_norm": 0.9999999937617335,
+            "projection_gain": 0.9999999937366032,
+            "cosine_similarity": 0.9999999999748697,
             "reference_merge_mismatches": 4432,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -2964,6 +3164,8 @@
             },
             "relative_residual": 1.1227994328316505e-05,
             "observed_to_intended_norm": 0.9999999646990106,
+            "projection_gain": 0.9999999646359775,
+            "cosine_similarity": 0.9999999999369669,
             "reference_merge_mismatches": 854,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3008,6 +3210,8 @@
             },
             "relative_residual": 7.4821325768091235e-06,
             "observed_to_intended_norm": 1.0000000150867425,
+            "projection_gain": 1.0000000150587511,
+            "cosine_similarity": 0.9999999999720087,
             "reference_merge_mismatches": 3596,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3052,6 +3256,8 @@
             },
             "relative_residual": 1.0352727247659248e-05,
             "observed_to_intended_norm": 0.9999999849692874,
+            "projection_gain": 0.9999999849156981,
+            "cosine_similarity": 0.9999999999464106,
             "reference_merge_mismatches": 850,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3096,6 +3302,8 @@
             },
             "relative_residual": 6.251889825552003e-06,
             "observed_to_intended_norm": 1.0000000052789946,
+            "projection_gain": 1.0000000052594513,
+            "cosine_similarity": 0.9999999999804567,
             "reference_merge_mismatches": 4180,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3140,6 +3348,8 @@
             },
             "relative_residual": 1.1389828729511868e-05,
             "observed_to_intended_norm": 0.9999999705822779,
+            "projection_gain": 0.9999999705174143,
+            "cosine_similarity": 0.9999999999351364,
             "reference_merge_mismatches": 780,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3184,6 +3394,8 @@
             },
             "relative_residual": 6.508873117412886e-06,
             "observed_to_intended_norm": 1.0000000032421956,
+            "projection_gain": 1.0000000032210128,
+            "cosine_similarity": 0.9999999999788172,
             "reference_merge_mismatches": 4376,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3228,6 +3440,8 @@
             },
             "relative_residual": 1.1632829340206954e-05,
             "observed_to_intended_norm": 0.999999983205769,
+            "projection_gain": 0.9999999831381078,
+            "cosine_similarity": 0.9999999999323388,
             "reference_merge_mismatches": 880,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3272,6 +3486,8 @@
             },
             "relative_residual": 9.831764593569205e-06,
             "observed_to_intended_norm": 0.9999999943182455,
+            "projection_gain": 0.9999999942699136,
+            "cosine_similarity": 0.9999999999516681,
             "reference_merge_mismatches": 3471,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3316,6 +3532,8 @@
             },
             "relative_residual": 5.988224945605929e-06,
             "observed_to_intended_norm": 0.9999999827390167,
+            "projection_gain": 0.9999999827210871,
+            "cosine_similarity": 0.9999999999820705,
             "reference_merge_mismatches": 1502,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3360,6 +3578,8 @@
             },
             "relative_residual": 9.297728596353371e-06,
             "observed_to_intended_norm": 1.0000000012485133,
+            "projection_gain": 1.0000000012052894,
+            "cosine_similarity": 0.9999999999567761,
             "reference_merge_mismatches": 3115,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3404,6 +3624,8 @@
             },
             "relative_residual": 6.557501706742589e-06,
             "observed_to_intended_norm": 1.0000000140764806,
+            "projection_gain": 1.0000000140549805,
+            "cosine_similarity": 0.9999999999785,
             "reference_merge_mismatches": 1391,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3448,6 +3670,8 @@
             },
             "relative_residual": 9.387151323870811e-06,
             "observed_to_intended_norm": 1.0000000202350994,
+            "projection_gain": 1.0000000201910402,
+            "cosine_similarity": 0.9999999999559408,
             "reference_merge_mismatches": 3230,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3492,6 +3716,8 @@
             },
             "relative_residual": 7.009364999033547e-06,
             "observed_to_intended_norm": 1.0000000013321402,
+            "projection_gain": 1.0000000013075747,
+            "cosine_similarity": 0.9999999999754345,
             "reference_merge_mismatches": 1431,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3536,6 +3762,8 @@
             },
             "relative_residual": 9.329957383389656e-06,
             "observed_to_intended_norm": 0.9999999993397988,
+            "projection_gain": 0.9999999992962751,
+            "cosine_similarity": 0.9999999999564764,
             "reference_merge_mismatches": 3325,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3580,6 +3808,8 @@
             },
             "relative_residual": 7.036336049046042e-06,
             "observed_to_intended_norm": 1.0000000024094942,
+            "projection_gain": 1.0000000023847389,
+            "cosine_similarity": 0.9999999999752448,
             "reference_merge_mismatches": 1301,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3624,6 +3854,8 @@
             },
             "relative_residual": 8.50223455854572e-06,
             "observed_to_intended_norm": 0.9999999947360201,
+            "projection_gain": 0.9999999946998765,
+            "cosine_similarity": 0.9999999999638565,
             "reference_merge_mismatches": 4242,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3668,6 +3900,8 @@
             },
             "relative_residual": 6.8915089613326356e-06,
             "observed_to_intended_norm": 0.9999999891313727,
+            "projection_gain": 0.9999999891076258,
+            "cosine_similarity": 0.9999999999762531,
             "reference_merge_mismatches": 1380,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3712,6 +3946,8 @@
             },
             "relative_residual": 8.450801711878125e-06,
             "observed_to_intended_norm": 0.99999998468022,
+            "projection_gain": 0.9999999846445122,
+            "cosine_similarity": 0.9999999999642922,
             "reference_merge_mismatches": 3755,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3756,6 +3992,8 @@
             },
             "relative_residual": 6.945097724578444e-06,
             "observed_to_intended_norm": 1.0000000211785598,
+            "projection_gain": 1.0000000211544426,
+            "cosine_similarity": 0.999999999975883,
             "reference_merge_mismatches": 1368,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3800,6 +4038,8 @@
             },
             "relative_residual": 9.065750361201256e-06,
             "observed_to_intended_norm": 0.9999999942363722,
+            "projection_gain": 0.999999994195278,
+            "cosine_similarity": 0.9999999999589058,
             "reference_merge_mismatches": 3376,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3844,6 +4084,8 @@
             },
             "relative_residual": 5.902838888111074e-06,
             "observed_to_intended_norm": 0.999999982227313,
+            "projection_gain": 0.9999999822098914,
+            "cosine_similarity": 0.9999999999825784,
             "reference_merge_mismatches": 1478,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -3906,7 +4148,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8717743516222859,
+          "cosine_similarity": 0.8663783870324042
         },
         {
           "module": "model.layers.0.self_attn.v_proj",
@@ -3920,7 +4164,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9996994391767969,
+          "cosine_similarity": 0.9927333388841365
         },
         {
           "module": "model.layers.1.self_attn.q_proj",
@@ -3934,7 +4180,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8939136745813343,
+          "cosine_similarity": 0.8664969985628941
         },
         {
           "module": "model.layers.1.self_attn.v_proj",
@@ -3948,7 +4196,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9813979548668925,
+          "cosine_similarity": 0.9446414545966144
         },
         {
           "module": "model.layers.10.self_attn.q_proj",
@@ -3962,7 +4212,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8997695821490662,
+          "cosine_similarity": 0.8713569658422284
         },
         {
           "module": "model.layers.10.self_attn.v_proj",
@@ -3976,7 +4228,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9638778224920037,
+          "cosine_similarity": 0.9267482555216586
         },
         {
           "module": "model.layers.11.self_attn.q_proj",
@@ -3990,7 +4244,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9059836271265689,
+          "cosine_similarity": 0.8771844071105785
         },
         {
           "module": "model.layers.11.self_attn.v_proj",
@@ -4004,7 +4260,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9633200187636778,
+          "cosine_similarity": 0.9278304227869477
         },
         {
           "module": "model.layers.12.self_attn.q_proj",
@@ -4018,7 +4276,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9261115594983751,
+          "cosine_similarity": 0.8975396953421121
         },
         {
           "module": "model.layers.12.self_attn.v_proj",
@@ -4032,7 +4292,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9560197166006494,
+          "cosine_similarity": 0.9138712567307179
         },
         {
           "module": "model.layers.13.self_attn.q_proj",
@@ -4046,7 +4308,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9062463447817332,
+          "cosine_similarity": 0.8783259545200088
         },
         {
           "module": "model.layers.13.self_attn.v_proj",
@@ -4060,7 +4324,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9576492507433438,
+          "cosine_similarity": 0.919632128361182
         },
         {
           "module": "model.layers.14.self_attn.q_proj",
@@ -4074,7 +4340,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9448665670833964,
+          "cosine_similarity": 0.9152646554440979
         },
         {
           "module": "model.layers.14.self_attn.v_proj",
@@ -4088,7 +4356,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9382058413007132,
+          "cosine_similarity": 0.9042400513940995
         },
         {
           "module": "model.layers.15.self_attn.q_proj",
@@ -4102,7 +4372,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9259850142475973,
+          "cosine_similarity": 0.8973177074721258
         },
         {
           "module": "model.layers.15.self_attn.v_proj",
@@ -4116,7 +4388,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.955027793114602,
+          "cosine_similarity": 0.9155244257318553
         },
         {
           "module": "model.layers.16.self_attn.q_proj",
@@ -4130,7 +4404,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8879950990077056,
+          "cosine_similarity": 0.8681976408676976
         },
         {
           "module": "model.layers.16.self_attn.v_proj",
@@ -4144,7 +4420,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9392092321411684,
+          "cosine_similarity": 0.9037152098389049
         },
         {
           "module": "model.layers.17.self_attn.q_proj",
@@ -4158,7 +4436,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9224683461027487,
+          "cosine_similarity": 0.9004756462087246
         },
         {
           "module": "model.layers.17.self_attn.v_proj",
@@ -4172,7 +4452,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9310487445323689,
+          "cosine_similarity": 0.8969377271165767
         },
         {
           "module": "model.layers.18.self_attn.q_proj",
@@ -4186,7 +4468,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9355766492827583,
+          "cosine_similarity": 0.909587952067491
         },
         {
           "module": "model.layers.18.self_attn.v_proj",
@@ -4200,7 +4484,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9407323474036157,
+          "cosine_similarity": 0.9069915145942468
         },
         {
           "module": "model.layers.19.self_attn.q_proj",
@@ -4214,7 +4500,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9347292540431283,
+          "cosine_similarity": 0.9073812500459395
         },
         {
           "module": "model.layers.19.self_attn.v_proj",
@@ -4228,7 +4516,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8832791286845559,
+          "cosine_similarity": 0.8617620907009353
         },
         {
           "module": "model.layers.2.self_attn.q_proj",
@@ -4242,7 +4532,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8835359725587733,
+          "cosine_similarity": 0.8664296899476652
         },
         {
           "module": "model.layers.2.self_attn.v_proj",
@@ -4256,7 +4548,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9893837446729061,
+          "cosine_similarity": 0.9629671945949395
         },
         {
           "module": "model.layers.20.self_attn.q_proj",
@@ -4270,7 +4564,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9199254218949459,
+          "cosine_similarity": 0.8990084105368639
         },
         {
           "module": "model.layers.20.self_attn.v_proj",
@@ -4284,7 +4580,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9233735269364309,
+          "cosine_similarity": 0.8939861145350483
         },
         {
           "module": "model.layers.21.self_attn.q_proj",
@@ -4298,7 +4596,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9359047093999026,
+          "cosine_similarity": 0.908096253251689
         },
         {
           "module": "model.layers.21.self_attn.v_proj",
@@ -4312,7 +4612,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9070339815426801,
+          "cosine_similarity": 0.8789957165794627
         },
         {
           "module": "model.layers.22.self_attn.q_proj",
@@ -4326,7 +4628,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9092082737422834,
+          "cosine_similarity": 0.8885553950479691
         },
         {
           "module": "model.layers.22.self_attn.v_proj",
@@ -4340,7 +4644,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.901107422722586,
+          "cosine_similarity": 0.8738973227542003
         },
         {
           "module": "model.layers.23.self_attn.q_proj",
@@ -4354,7 +4660,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9162644225096697,
+          "cosine_similarity": 0.8966844156557072
         },
         {
           "module": "model.layers.23.self_attn.v_proj",
@@ -4368,7 +4676,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8883180867883856,
+          "cosine_similarity": 0.8679045322123222
         },
         {
           "module": "model.layers.24.self_attn.q_proj",
@@ -4382,7 +4692,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9384106693896099,
+          "cosine_similarity": 0.9093722442040004
         },
         {
           "module": "model.layers.24.self_attn.v_proj",
@@ -4396,7 +4708,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.864554085979013,
+          "cosine_similarity": 0.8470971028739053
         },
         {
           "module": "model.layers.25.self_attn.q_proj",
@@ -4410,7 +4724,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9252079566717034,
+          "cosine_similarity": 0.8931582171084439
         },
         {
           "module": "model.layers.25.self_attn.v_proj",
@@ -4424,7 +4740,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8794330453150955,
+          "cosine_similarity": 0.8542474149681515
         },
         {
           "module": "model.layers.26.self_attn.q_proj",
@@ -4438,7 +4756,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9514847378496589,
+          "cosine_similarity": 0.9188405413899451
         },
         {
           "module": "model.layers.26.self_attn.v_proj",
@@ -4452,7 +4772,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8518520976982008,
+          "cosine_similarity": 0.8387854914415969
         },
         {
           "module": "model.layers.27.self_attn.q_proj",
@@ -4466,7 +4788,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9478867754243232,
+          "cosine_similarity": 0.9109672708664329
         },
         {
           "module": "model.layers.27.self_attn.v_proj",
@@ -4480,7 +4804,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.876845344574695,
+          "cosine_similarity": 0.8559327745082808
         },
         {
           "module": "model.layers.28.self_attn.q_proj",
@@ -4494,7 +4820,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9701911519814652,
+          "cosine_similarity": 0.9330634416818547
         },
         {
           "module": "model.layers.28.self_attn.v_proj",
@@ -4508,7 +4836,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8480243215989149,
+          "cosine_similarity": 0.836421402234968
         },
         {
           "module": "model.layers.29.self_attn.q_proj",
@@ -4522,7 +4852,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9651458401357758,
+          "cosine_similarity": 0.9315204562968615
         },
         {
           "module": "model.layers.29.self_attn.v_proj",
@@ -4536,7 +4868,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.8486181998920731,
+          "cosine_similarity": 0.8375166738260257
         },
         {
           "module": "model.layers.3.self_attn.q_proj",
@@ -4550,7 +4884,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9056655332625009,
+          "cosine_similarity": 0.8867127045146714
         },
         {
           "module": "model.layers.3.self_attn.v_proj",
@@ -4564,7 +4900,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9724502156825918,
+          "cosine_similarity": 0.9371645670203692
         },
         {
           "module": "model.layers.4.self_attn.q_proj",
@@ -4578,7 +4916,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9111208513833872,
+          "cosine_similarity": 0.879966287701798
         },
         {
           "module": "model.layers.4.self_attn.v_proj",
@@ -4592,7 +4932,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9667513068441947,
+          "cosine_similarity": 0.9258136425939195
         },
         {
           "module": "model.layers.5.self_attn.q_proj",
@@ -4606,7 +4948,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9062178678410151,
+          "cosine_similarity": 0.8800070359878355
         },
         {
           "module": "model.layers.5.self_attn.v_proj",
@@ -4620,7 +4964,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9535919106451443,
+          "cosine_similarity": 0.917590817958541
         },
         {
           "module": "model.layers.6.self_attn.q_proj",
@@ -4634,7 +4980,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9085896323818443,
+          "cosine_similarity": 0.8805876222989812
         },
         {
           "module": "model.layers.6.self_attn.v_proj",
@@ -4648,7 +4996,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9532312753981211,
+          "cosine_similarity": 0.9164389199021118
         },
         {
           "module": "model.layers.7.self_attn.q_proj",
@@ -4662,7 +5012,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9236874626844912,
+          "cosine_similarity": 0.8968272542401989
         },
         {
           "module": "model.layers.7.self_attn.v_proj",
@@ -4676,7 +5028,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9543204054439025,
+          "cosine_similarity": 0.9213618886349848
         },
         {
           "module": "model.layers.8.self_attn.q_proj",
@@ -4690,7 +5044,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9252244693018078,
+          "cosine_similarity": 0.8980583561776765
         },
         {
           "module": "model.layers.8.self_attn.v_proj",
@@ -4704,7 +5060,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9570166102062094,
+          "cosine_similarity": 0.9202572196146281
         },
         {
           "module": "model.layers.9.self_attn.q_proj",
@@ -4718,7 +5076,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.91608167795507,
+          "cosine_similarity": 0.887794811887177
         },
         {
           "module": "model.layers.9.self_attn.v_proj",
@@ -4732,7 +5092,9 @@
             "base_cast_drift": 0.0
           },
           "scale": 2.0,
-          "rank": 8
+          "rank": 8,
+          "projection_gain": 0.9737333084311065,
+          "cosine_similarity": 0.9363212001515892
         }
       ],
       "unadapted": [],
@@ -4744,6 +5106,8 @@
           "residual": "observed - delta; reported relative to the Frobenius norm of delta",
           "zero_change": "exact numeric equality to the base rounded to the merged dtype",
           "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
           "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
           "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
         },
@@ -4873,6 +5237,8 @@
             },
             "relative_residual": 0.5186004785794608,
             "observed_to_intended_norm": 1.0062281846715522,
+            "projection_gain": 0.8717743516222807,
+            "cosine_similarity": 0.8663783870324013,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -4917,6 +5283,8 @@
             },
             "relative_residual": 0.12117979801010684,
             "observed_to_intended_norm": 1.0070170911158178,
+            "projection_gain": 0.9996994391767965,
+            "cosine_similarity": 0.9927333388841364,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -4961,6 +5329,8 @@
             },
             "relative_residual": 0.5257902941423556,
             "observed_to_intended_norm": 1.0316408205266858,
+            "projection_gain": 0.8939136745813345,
+            "cosine_similarity": 0.8664969985628941,
             "reference_merge_mismatches": 4,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5005,6 +5375,8 @@
             },
             "relative_residual": 0.3413783545527478,
             "observed_to_intended_norm": 1.038910530647814,
+            "projection_gain": 0.9813979548668903,
+            "cosine_similarity": 0.9446414545966133,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5049,6 +5421,8 @@
             },
             "relative_residual": 0.5164675354004968,
             "observed_to_intended_norm": 1.0326073210184044,
+            "projection_gain": 0.8997695821490713,
+            "cosine_similarity": 0.8713569658422309,
             "reference_merge_mismatches": 3,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5093,6 +5467,8 @@
             },
             "relative_residual": 0.39240057119922034,
             "observed_to_intended_norm": 1.0400643505386955,
+            "projection_gain": 0.9638778224920018,
+            "cosine_similarity": 0.9267482555216576,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5137,6 +5513,8 @@
             },
             "relative_residual": 0.5047509407706876,
             "observed_to_intended_norm": 1.0328314317748244,
+            "projection_gain": 0.9059836271265697,
+            "cosine_similarity": 0.8771844071105789,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5181,6 +5559,8 @@
             },
             "relative_residual": 0.38900283954350556,
             "observed_to_intended_norm": 1.0382500887070802,
+            "projection_gain": 0.9633200187636746,
+            "cosine_similarity": 0.9278304227869462,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5225,6 +5605,8 @@
             },
             "relative_residual": 0.4609309400640404,
             "observed_to_intended_norm": 1.031833538176125,
+            "projection_gain": 0.9261115594983704,
+            "cosine_similarity": 0.8975396953421098,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5269,6 +5651,8 @@
             },
             "relative_residual": 0.4270003089972695,
             "observed_to_intended_norm": 1.046120785131938,
+            "projection_gain": 0.9560197166006493,
+            "cosine_similarity": 0.9138712567307177,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5313,6 +5697,8 @@
             },
             "relative_residual": 0.5020898073196783,
             "observed_to_intended_norm": 1.0317881876517945,
+            "projection_gain": 0.9062463447817316,
+            "cosine_similarity": 0.8783259545200081,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5357,6 +5743,8 @@
             },
             "relative_residual": 0.41120485181154676,
             "observed_to_intended_norm": 1.0413394891388916,
+            "projection_gain": 0.9576492507433458,
+            "cosine_similarity": 0.9196321283611829,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5401,6 +5789,8 @@
             },
             "relative_residual": 0.4195209447736969,
             "observed_to_intended_norm": 1.032342461235914,
+            "projection_gain": 0.9448665670834044,
+            "cosine_similarity": 0.9152646554441014,
             "reference_merge_mismatches": 4,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5445,6 +5835,8 @@
             },
             "relative_residual": 0.44735319966793735,
             "observed_to_intended_norm": 1.037562801884574,
+            "projection_gain": 0.9382058413007129,
+            "cosine_similarity": 0.9042400513940995,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5489,6 +5881,8 @@
             },
             "relative_residual": 0.4614609276047093,
             "observed_to_intended_norm": 1.0319477778458583,
+            "projection_gain": 0.9259850142476032,
+            "cosine_similarity": 0.8973177074721287,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5533,6 +5927,8 @@
             },
             "relative_residual": 0.4220223828932336,
             "observed_to_intended_norm": 1.043148348938009,
+            "projection_gain": 0.9550277931146054,
+            "cosine_similarity": 0.915524425731857,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5577,6 +5973,8 @@
             },
             "relative_residual": 0.5197457596821077,
             "observed_to_intended_norm": 1.0228029393401996,
+            "projection_gain": 0.8879950990077109,
+            "cosine_similarity": 0.8681976408677003,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5621,6 +6019,8 @@
             },
             "relative_residual": 0.4490829082128588,
             "observed_to_intended_norm": 1.039275672154054,
+            "projection_gain": 0.9392092321411707,
+            "cosine_similarity": 0.9037152098389057,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5665,6 +6065,8 @@
             },
             "relative_residual": 0.45222412870794815,
             "observed_to_intended_norm": 1.0244234255380662,
+            "projection_gain": 0.9224683461027416,
+            "cosine_similarity": 0.9004756462087209,
             "reference_merge_mismatches": 4,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5709,6 +6111,8 @@
             },
             "relative_residual": 0.46412271307000014,
             "observed_to_intended_norm": 1.03803053030833,
+            "projection_gain": 0.9310487445323672,
+            "cosine_similarity": 0.8969377271165757,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5753,6 +6157,8 @@
             },
             "relative_residual": 0.43221169361792455,
             "observed_to_intended_norm": 1.0285719453035784,
+            "projection_gain": 0.9355766492827563,
+            "cosine_similarity": 0.9095879520674901,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5797,6 +6203,8 @@
             },
             "relative_residual": 0.44081839461093314,
             "observed_to_intended_norm": 1.0372008252188147,
+            "projection_gain": 0.9407323474036146,
+            "cosine_similarity": 0.906991514594246,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5841,6 +6249,8 @@
             },
             "relative_residual": 0.4378685321284577,
             "observed_to_intended_norm": 1.0301394854652361,
+            "projection_gain": 0.934729254043126,
+            "cosine_similarity": 0.9073812500459386,
             "reference_merge_mismatches": 4,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5885,6 +6295,8 @@
             },
             "relative_residual": 0.5329188313153286,
             "observed_to_intended_norm": 1.0249686522716719,
+            "projection_gain": 0.8832791286845559,
+            "cosine_similarity": 0.8617620907009353,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5929,6 +6341,8 @@
             },
             "relative_residual": 0.5223070852085864,
             "observed_to_intended_norm": 1.0197434169322421,
+            "projection_gain": 0.8835359725587774,
+            "cosine_similarity": 0.8664296899476673,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -5973,6 +6387,8 @@
             },
             "relative_residual": 0.27721823781425153,
             "observed_to_intended_norm": 1.0274324506860049,
+            "projection_gain": 0.9893837446729052,
+            "cosine_similarity": 0.9629671945949392,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6017,6 +6433,8 @@
             },
             "relative_residual": 0.45521864500685066,
             "observed_to_intended_norm": 1.0232667582560124,
+            "projection_gain": 0.9199254218949476,
+            "cosine_similarity": 0.8990084105368644,
             "reference_merge_mismatches": 3,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6061,6 +6479,8 @@
             },
             "relative_residual": 0.46912494036859725,
             "observed_to_intended_norm": 1.0328723365201984,
+            "projection_gain": 0.9233735269364272,
+            "cosine_similarity": 0.8939861145350465,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6105,6 +6525,8 @@
             },
             "relative_residual": 0.4363186349017408,
             "observed_to_intended_norm": 1.0306228068320278,
+            "projection_gain": 0.9359047093999043,
+            "cosine_similarity": 0.9080962532516896,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6149,6 +6571,8 @@
             },
             "relative_residual": 0.5007451040636118,
             "observed_to_intended_norm": 1.031898067799835,
+            "projection_gain": 0.9070339815426778,
+            "cosine_similarity": 0.8789957165794615,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6193,6 +6617,8 @@
             },
             "relative_residual": 0.4781319034951254,
             "observed_to_intended_norm": 1.023243208931504,
+            "projection_gain": 0.9092082737422845,
+            "cosine_similarity": 0.8885553950479695,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6237,6 +6663,8 @@
             },
             "relative_residual": 0.5109086285205917,
             "observed_to_intended_norm": 1.0311364953981434,
+            "projection_gain": 0.9011074227225868,
+            "cosine_similarity": 0.8738973227542007,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6281,6 +6709,8 @@
             },
             "relative_residual": 0.4600217162765294,
             "observed_to_intended_norm": 1.0218360066396879,
+            "projection_gain": 0.9162644225096704,
+            "cosine_similarity": 0.8966844156557078,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6325,6 +6755,8 @@
             },
             "relative_residual": 0.5205363143497236,
             "observed_to_intended_norm": 1.0235205069433506,
+            "projection_gain": 0.8883180867883897,
+            "cosine_similarity": 0.8679045322123243,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6369,6 +6801,8 @@
             },
             "relative_residual": 0.433662437546075,
             "observed_to_intended_norm": 1.0319323856327167,
+            "projection_gain": 0.9384106693896138,
+            "cosine_similarity": 0.9093722442040025,
             "reference_merge_mismatches": 5,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6413,6 +6847,8 @@
             },
             "relative_residual": 0.5590460912892758,
             "observed_to_intended_norm": 1.020608007093736,
+            "projection_gain": 0.8645540859790151,
+            "cosine_similarity": 0.8470971028739064,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6457,6 +6893,8 @@
             },
             "relative_residual": 0.4718463060008676,
             "observed_to_intended_norm": 1.0358836082447067,
+            "projection_gain": 0.9252079566717041,
+            "cosine_similarity": 0.893158217108444,
             "reference_merge_mismatches": 3,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6501,6 +6939,8 @@
             },
             "relative_residual": 0.5486062379385532,
             "observed_to_intended_norm": 1.029482828868591,
+            "projection_gain": 0.8794330453150921,
+            "cosine_similarity": 0.8542474149681498,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6545,6 +6985,8 @@
             },
             "relative_residual": 0.4115190499170835,
             "observed_to_intended_norm": 1.0355275969977673,
+            "projection_gain": 0.9514847378496559,
+            "cosine_similarity": 0.9188405413899436,
             "reference_merge_mismatches": 7,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6589,6 +7031,8 @@
             },
             "relative_residual": 0.572446061130919,
             "observed_to_intended_norm": 1.01557800699932,
+            "projection_gain": 0.8518520976982037,
+            "cosine_similarity": 0.8387854914415983,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6633,6 +7077,8 @@
             },
             "relative_residual": 0.4323477345817772,
             "observed_to_intended_norm": 1.0405278057056566,
+            "projection_gain": 0.9478867754243169,
+            "cosine_similarity": 0.9109672708664299,
             "reference_merge_mismatches": 4,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6677,6 +7123,8 @@
             },
             "relative_residual": 0.543848545168036,
             "observed_to_intended_norm": 1.0244324912998315,
+            "projection_gain": 0.8768453445746951,
+            "cosine_similarity": 0.8559327745082809,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6721,6 +7169,8 @@
             },
             "relative_residual": 0.37521117699392736,
             "observed_to_intended_norm": 1.0397911960120194,
+            "projection_gain": 0.9701911519814685,
+            "cosine_similarity": 0.9330634416818564,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6765,6 +7215,8 @@
             },
             "relative_residual": 0.5760972028960923,
             "observed_to_intended_norm": 1.0138720976447302,
+            "projection_gain": 0.8480243215989122,
+            "cosine_similarity": 0.8364214022349665,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6809,6 +7261,8 @@
             },
             "relative_residual": 0.37842563085846287,
             "observed_to_intended_norm": 1.0360973112416558,
+            "projection_gain": 0.965145840135781,
+            "cosine_similarity": 0.9315204562968639,
             "reference_merge_mismatches": 3,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6853,6 +7307,8 @@
             },
             "relative_residual": 0.5739772488013741,
             "observed_to_intended_norm": 1.013255289611528,
+            "projection_gain": 0.8486181998920735,
+            "cosine_similarity": 0.8375166738260258,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6897,6 +7353,8 @@
             },
             "relative_residual": 0.4815332952538869,
             "observed_to_intended_norm": 1.0213742609656242,
+            "projection_gain": 0.9056655332625041,
+            "cosine_similarity": 0.886712704514673,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6941,6 +7399,8 @@
             },
             "relative_residual": 0.36307051294585385,
             "observed_to_intended_norm": 1.037651496763701,
+            "projection_gain": 0.9724502156825915,
+            "cosine_similarity": 0.9371645670203689,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -6985,6 +7445,8 @@
             },
             "relative_residual": 0.49982026641822885,
             "observed_to_intended_norm": 1.0354042695919126,
+            "projection_gain": 0.9111208513833865,
+            "cosine_similarity": 0.8799662877017975,
             "reference_merge_mismatches": 2,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7029,6 +7491,8 @@
             },
             "relative_residual": 0.39609178280035046,
             "observed_to_intended_norm": 1.0442180395350182,
+            "projection_gain": 0.9667513068441987,
+            "cosine_similarity": 0.9258136425939215,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7073,6 +7537,8 @@
             },
             "relative_residual": 0.4980170625807072,
             "observed_to_intended_norm": 1.029784798054207,
+            "projection_gain": 0.9062178678410139,
+            "cosine_similarity": 0.8800070359878349,
             "reference_merge_mismatches": 4,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7117,6 +7583,8 @@
             },
             "relative_residual": 0.4157213528707763,
             "observed_to_intended_norm": 1.0392343645795157,
+            "projection_gain": 0.9535919106451408,
+            "cosine_similarity": 0.9175908179585395,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7161,6 +7629,8 @@
             },
             "relative_residual": 0.4974237533100624,
             "observed_to_intended_norm": 1.0317992319830194,
+            "projection_gain": 0.9085896323818394,
+            "cosine_similarity": 0.8805876222989788,
             "reference_merge_mismatches": 4,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7205,6 +7675,8 @@
             },
             "relative_residual": 0.41885966308109374,
             "observed_to_intended_norm": 1.0401470896717697,
+            "projection_gain": 0.9532312753981227,
+            "cosine_similarity": 0.9164389199021128,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7249,6 +7721,8 @@
             },
             "relative_residual": 0.46197685052287435,
             "observed_to_intended_norm": 1.029950258890212,
+            "projection_gain": 0.9236874626844905,
+            "cosine_similarity": 0.8968272542401985,
             "reference_merge_mismatches": 4,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7293,6 +7767,8 @@
             },
             "relative_residual": 0.4051935763471988,
             "observed_to_intended_norm": 1.0357715217174288,
+            "projection_gain": 0.9543204054439024,
+            "cosine_similarity": 0.9213618886349848,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7337,6 +7813,8 @@
             },
             "relative_residual": 0.45931010744784634,
             "observed_to_intended_norm": 1.030249830578671,
+            "projection_gain": 0.925224469301814,
+            "cosine_similarity": 0.8980583561776795,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7381,6 +7859,8 @@
             },
             "relative_residual": 0.4092086761486591,
             "observed_to_intended_norm": 1.0399446913407273,
+            "projection_gain": 0.9570166102062113,
+            "cosine_similarity": 0.920257219614629,
             "reference_merge_mismatches": 0,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7425,6 +7905,8 @@
             },
             "relative_residual": 0.48226103898840117,
             "observed_to_intended_norm": 1.031861941170577,
+            "projection_gain": 0.9160816779550692,
+            "cosine_similarity": 0.8877948118871766,
             "reference_merge_mismatches": 3,
             "reference_merge_overflows": 0,
             "largest_residual": {
@@ -7469,6 +7951,8 @@
             },
             "relative_residual": 0.36611867387783753,
             "observed_to_intended_norm": 1.0399564895822737,
+            "projection_gain": 0.9737333084311097,
+            "cosine_similarity": 0.9363212001515907,
             "reference_merge_mismatches": 1,
             "reference_merge_overflows": 0,
             "largest_residual": {

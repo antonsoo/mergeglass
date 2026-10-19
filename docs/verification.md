@@ -1,9 +1,10 @@
 # Local source and installed artifact verification
 
-The [machine-readable receipt](verification.json) identifies source commit
+This historical snapshot's [machine-readable receipt](verification.json) identifies source commit
 `ea93d6811eeb141d0ba4e85f976842bb03d5770b`, its git archive, all 47 archived
-file hashes, six runtime module hashes and the built artifacts. Subsequent
-verification material does not change the CLI/library source.
+file hashes, six runtime module hashes and the built artifacts. It predates the
+signed projection measurements and [native merge controls](../studies/merge-controls/README.md).
+Those later changes have their own verification and artifact identities.
 
 ## What was exercised
 
@@ -69,7 +70,7 @@ uses the [captured output](assets/rounding.txt) from the bundled synthetic contr
 
 ## Publication boundary
 
-Local commits, clean installations and native artifacts were verified. No Git
+At this snapshot, local commits, clean installations and native artifacts were verified. No Git
 remote, push, tag, registry release or hosted demo was created. The CI workflow
 is present, but this is a local verification result, not a GitHub Actions claim.
 

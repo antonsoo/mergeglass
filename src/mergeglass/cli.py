@@ -17,21 +17,23 @@ def render(report: dict[str, Any]) -> str:
     lines = [
         "Mergeglass | saved LoRA merge audit",
         "",
-        "MODULE                           DTYPE   CHANGED    UNCHANGED*  REL.RESID",
+        "MODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID",
     ]
     for layer in report["layers"]:
         fraction = layer["unchanged_nonzero_update_fraction"]
         residual = layer["relative_residual"]
+        projection = layer["projection_gain"]
         unchanged = "n/a" if fraction is None else f"{fraction:.1%}"
         error = "n/a" if residual is None else f"{residual:.4g}"
+        gain = "n/a" if projection is None else f"{projection:.4g}"
         # repr prevents control sequences in checkpoint tensor names reaching
         # a terminal. Full names remain available in the structured JSON.
         name = ascii(layer["module"])[1:-1]
-        if len(name) > 31:
-            name = "..." + name[-28:]
+        if len(name) > 27:
+            name = "..." + name[-24:]
         lines.append(
-            f"{name:<32} {layer['merged_dtype']:<6} "
-            f"{layer['changed_elements']:>8,} {unchanged:>12} {error:>10}"
+            f"{name:<28} {layer['merged_dtype']:<6} "
+            f"{layer['changed_elements']:>8,} {unchanged:>12} {gain:>8} {error:>10}"
         )
         if layer["status"] != "observed-update":
             lines.append("  " + layer["status"])
@@ -50,6 +52,7 @@ def render(report: dict[str, Any]) -> str:
             aggregate,
             "* Nonzero intended update elements equal to the dtype-cast base.",
             "Relative error = ||observed change - intended update|| / ||intended update||.",
+            "Gain = projection of the observed change onto the intended update (ideal 1).",
             f"Checked {summary['checked_tensors']} tensors; "
             f"{summary['unadapted_changed_tensors']} unadapted tensor(s) changed.",
             "Equal weights alone cannot tell rounding from an omitted adapter.",

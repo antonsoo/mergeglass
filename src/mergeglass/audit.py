@@ -18,6 +18,10 @@ CONTRACT = {
     "residual": "observed - delta; reported relative to the Frobenius norm of delta",
     "zero_change": "exact numeric equality to the base rounded to the merged dtype",
     "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+    "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+    "cosine_similarity": (
+        "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero"
+    ),
     "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
     "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate",
 }
@@ -50,6 +54,33 @@ class Squares:
         return result
 
 
+@dataclass
+class Alignment:
+    """Signed inner product with separately scaled operands, accumulated in blocks."""
+
+    reference: Squares
+    observed: Squares
+    product: float = 0.0
+
+    def add(self, reference: FloatArray, observed: FloatArray) -> None:
+        old_reference, old_observed = self.reference.scale, self.observed.scale
+        self.reference.add(reference)
+        self.observed.add(observed)
+        if self.reference.scale == 0 or self.observed.scale == 0:
+            return
+        retained = self.product * (old_reference / self.reference.scale)
+        retained *= old_observed / self.observed.scale
+        block = float(np.sum((reference / self.reference.scale) * (observed / self.observed.scale)))
+        self.product = math.fsum((retained, block))
+
+    def cosine(self) -> float | None:
+        if self.reference.scale == 0 or self.observed.scale == 0:
+            return None
+        value = self.product / math.sqrt(self.reference.total) / math.sqrt(self.observed.total)
+        # Summation can move a parallel pair a few ulps outside the mathematical range.
+        return max(-1.0, min(1.0, value))
+
+
 def _ratio(numerator: float, denominator: float) -> float | None:
     if denominator == 0:
         return None
@@ -80,6 +111,7 @@ def _layer(
     rows, columns = base.shape
     block_rows = max(1, elements // max(columns, pair.rank))
     norms = {key: Squares() for key in ("delta", "observed", "residual", "base_cast_drift")}
+    alignment = Alignment(norms["delta"], norms["observed"])
     changed = 0
     nonzero = 0
     erased = 0
@@ -102,9 +134,8 @@ def _layer(
         observed = after - baseline
         residual = observed - delta
         drift = baseline - original
+        alignment.add(delta, observed)
         for key, values in (
-            ("delta", delta),
-            ("observed", observed),
             ("residual", residual),
             ("base_cast_drift", drift),
         ):
@@ -135,6 +166,9 @@ def _layer(
                 "reference_merged": expected if math.isfinite(expected) else None,
             }
     measured = {key: value.norm() for key, value in norms.items()}
+    magnitude_ratio = _ratio(measured["observed"], measured["delta"])
+    cosine = alignment.cosine()
+    gain = None if magnitude_ratio is None else 0.0 if cosine is None else cosine * magnitude_ratio
     status = (
         "zero-update"
         if nonzero == 0 and changed == 0
@@ -162,7 +196,9 @@ def _layer(
         "unchanged_nonzero_update_fraction": _ratio(erased, nonzero),
         "norms": measured,
         "relative_residual": _ratio(measured["residual"], measured["delta"]),
-        "observed_to_intended_norm": _ratio(measured["observed"], measured["delta"]),
+        "observed_to_intended_norm": magnitude_ratio,
+        "projection_gain": gain,
+        "cosine_similarity": cosine,
         "reference_merge_mismatches": mismatches,
         "reference_merge_overflows": reference_overflows,
         "largest_residual": worst,

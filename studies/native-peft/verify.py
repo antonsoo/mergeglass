@@ -96,6 +96,13 @@ def verify(root: Path, name: str) -> dict[str, Any]:
         }
         for key, expected in norm_values.items():
             close(layer["norms"][key], expected)
+        dot = float(torch.sum(observed * delta))
+        close(layer["projection_gain"], dot / denominator**2 if denominator else None)
+        observed_norm = norm_values["observed"]
+        close(
+            layer["cosine_similarity"],
+            dot / denominator / observed_norm if denominator and observed_norm else None,
+        )
         close(
             layer["relative_residual"],
             norm_values["residual"] / denominator if denominator else None,
@@ -123,6 +130,10 @@ def verify(root: Path, name: str) -> dict[str, Any]:
                 "norms": norm_values,
                 "scale": scale,
                 "rank": rank,
+                "projection_gain": dot / denominator**2 if denominator else None,
+                "cosine_similarity": (
+                    dot / denominator / observed_norm if denominator and observed_norm else None
+                ),
             }
         )
     unadapted = []

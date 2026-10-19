@@ -71,6 +71,8 @@ def test_copied_base_is_observed_absence_not_a_rounding_diagnosis(tmp_path: Path
     assert layer["status"] == "no-observed-update"
     assert layer["relative_residual"] == 1
     assert layer["unchanged_nonzero_update_fraction"] == 1
+    assert layer["projection_gain"] == 0
+    assert layer["cosine_similarity"] is None
 
 
 def test_zero_scale_is_a_zero_update_with_undefined_relative_error(tmp_path: Path) -> None:
@@ -78,6 +80,75 @@ def test_zero_scale_is_a_zero_update_with_undefined_relative_error(tmp_path: Pat
     assert layer["status"] == "zero-update"
     assert layer["relative_residual"] is None
     assert layer["unchanged_nonzero_update_fraction"] is None
+    assert layer["projection_gain"] is None
+    assert layer["cosine_similarity"] is None
+
+
+@pytest.mark.parametrize("gain", [-1, 0.5, 1, 2])
+def test_signed_gain_distinguishes_complete_but_wrong_updates(tmp_path: Path, gain: float) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    save_file(
+        {
+            "linear.weight": np.full((2, 3), 1 + gain * 0.125, dtype=np.float32),
+            "control": np.arange(4, dtype=np.int64),
+        },
+        merged / "model.safetensors",
+    )
+    layer = audit(base, adapter, merged)["layers"][0]
+    assert layer["changed_elements"] == 6
+    assert layer["projection_gain"] == pytest.approx(gain)
+    assert layer["cosine_similarity"] == pytest.approx(np.sign(gain))
+    assert layer["relative_residual"] == pytest.approx(abs(1 - gain))
+
+
+@pytest.mark.parametrize("magnitude", [1e-200, 1e200])
+def test_alignment_does_not_square_raw_tiny_or_large_updates(
+    tmp_path: Path, magnitude: float
+) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    save_file({"linear.weight": np.zeros((2, 3))}, base / "model.safetensors")
+    save_file(
+        {
+            "base_model.model.linear.lora_A.weight": np.ones((1, 3)),
+            "base_model.model.linear.lora_B.weight": np.full((2, 1), magnitude),
+        },
+        adapter / "adapter_model.safetensors",
+    )
+    # Opposite rows cancel in the inner product, despite every entry changing.
+    update = np.array([[magnitude] * 3, [-magnitude] * 3])
+    save_file({"linear.weight": update}, merged / "model.safetensors")
+    layer = audit(base, adapter, merged)["layers"][0]
+    assert layer["projection_gain"] == pytest.approx(0, abs=1e-15)
+    assert layer["cosine_similarity"] == pytest.approx(0, abs=1e-15)
+    assert layer["observed_to_intended_norm"] == pytest.approx(1)
+    assert layer["relative_residual"] == pytest.approx(np.sqrt(2))
+
+
+def test_alignment_across_rescaled_blocks_agrees_with_dense_reference(tmp_path: Path) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    rng = np.random.default_rng(782)
+    a = rng.integers(-10, 11, (1, 257)).astype(np.float64) / 16
+    b = rng.integers(-10, 11, (700, 1)).astype(np.float64) / 16
+    b[:200] *= 2**-20
+    b[500:] *= 2**20
+    delta = b @ a
+    observed = 1.5 * delta + rng.integers(-10, 11, delta.shape) / 16
+    save_file({"linear.weight": np.zeros_like(delta)}, base / "model.safetensors")
+    save_file({"linear.weight": observed}, merged / "model.safetensors")
+    save_file(
+        {
+            "base_model.model.linear.lora_A.weight": a,
+            "base_model.model.linear.lora_B.weight": b,
+        },
+        adapter / "adapter_model.safetensors",
+    )
+    product = float(np.sum(observed * delta))
+    expected_gain = product / float(np.sum(delta * delta))
+    expected_cosine = product / float(np.linalg.norm(observed)) / float(np.linalg.norm(delta))
+    for blocks in (1, 16):
+        layer = audit(base, adapter, merged, block_mib=blocks)["layers"][0]
+        assert layer["projection_gain"] == pytest.approx(expected_gain, rel=1e-13)
+        assert layer["cosine_similarity"] == pytest.approx(expected_cosine, rel=1e-13)
 
 
 @pytest.mark.parametrize(

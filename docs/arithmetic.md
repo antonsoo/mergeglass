@@ -36,6 +36,8 @@ numbers.
 | `unchanged_nonzero_update_fraction` | Entries with nonzero `delta` and no observed change, divided by nonzero entries |
 | `relative_residual` | `norm(residual) / norm(delta)` |
 | `observed_to_intended_norm` | `norm(observed) / norm(delta)`; may exceed 1 |
+| `projection_gain` | `dot(observed, delta) / dot(delta, delta)`; signed least-squares scale |
+| `cosine_similarity` | `dot(observed, delta) / (norm(observed) * norm(delta))`; direction agreement |
 | `norms.base_cast_drift` | Difference caused by base dtype conversion alone |
 | `reference_merge_mismatches` | Entries differing from `round_to_merged_dtype(base + delta)` |
 | `reference_merge_overflows` | Nonfinite entries in that reference cast |
@@ -46,6 +48,16 @@ solely by squaring its entries. Ratios with a zero reference norm are JSON null,
 not zero or infinity. Overflow of measured norms/ratios refuses the audit.
 Reference-cast overflow is counted; an overflowing example is null in JSON.
 Nonfinite saved input values always refuse the whole audit.
+
+Gain is 1 for an exact intended update, 2 for an exact doubled update, -1 for a
+reversed update, and 0 for no observed update or an orthogonal change. Cosine
+separates a change in scale from a change in direction: it is 1 for a positive
+multiple and -1 for a negative multiple. A zero reference makes both undefined;
+a zero observed change with a nonzero reference has gain 0 and undefined cosine.
+The inner product scales each operand separately before multiplication, avoiding
+raw squared weights that could overflow or underflow. These are geometric
+measurements, not diagnoses: rounding and multiple simultaneous errors can
+also affect them. See the [native controls](../studies/merge-controls/README.md).
 
 | Status | Numeric evidence |
 | --- | --- |

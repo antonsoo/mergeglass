@@ -121,7 +121,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 0.9999999994702237,
+              "cosine_similarity": 0.9999999999999776
             },
             {
               "module": "small",
@@ -135,7 +137,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 0.9358047939272938,
+              "cosine_similarity": 0.9072305026016253
             },
             {
               "module": "zero",
@@ -149,7 +153,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": null,
+              "cosine_similarity": null
             }
           ],
           "unadapted": [],
@@ -161,6 +167,8 @@
               "residual": "observed - delta; reported relative to the Frobenius norm of delta",
               "zero_change": "exact numeric equality to the base rounded to the merged dtype",
               "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+              "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+              "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
               "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
               "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
             },
@@ -240,6 +248,8 @@
                 },
                 "relative_residual": 2.1127426404525413e-07,
                 "observed_to_intended_norm": 0.9999999994702461,
+                "projection_gain": 0.9999999994702239,
+                "cosine_similarity": 0.9999999999999778,
                 "reference_merge_mismatches": 13,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -284,6 +294,8 @@
                 },
                 "relative_residual": 0.4386054863587476,
                 "observed_to_intended_norm": 1.0314961757168957,
+                "projection_gain": 0.9358047939272937,
+                "cosine_similarity": 0.9072305026016253,
                 "reference_merge_mismatches": 0,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -328,6 +340,8 @@
                 },
                 "relative_residual": null,
                 "observed_to_intended_norm": null,
+                "projection_gain": null,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 0,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -382,7 +396,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 1.0001563034609768,
+              "cosine_similarity": 0.9999982746330733
             },
             {
               "module": "small",
@@ -396,7 +412,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 0.0,
+              "cosine_similarity": null
             },
             {
               "module": "zero",
@@ -410,7 +428,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": null,
+              "cosine_similarity": null
             }
           ],
           "unadapted": [],
@@ -422,6 +442,8 @@
               "residual": "observed - delta; reported relative to the Frobenius norm of delta",
               "zero_change": "exact numeric equality to the base rounded to the merged dtype",
               "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+              "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+              "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
               "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
               "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
             },
@@ -501,6 +523,8 @@
                 },
                 "relative_residual": 0.0018644710687329752,
                 "observed_to_intended_norm": 1.0001580291005616,
+                "projection_gain": 1.0001563034609768,
+                "cosine_similarity": 0.9999982746330733,
                 "reference_merge_mismatches": 0,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -545,6 +569,8 @@
                 },
                 "relative_residual": 1.0,
                 "observed_to_intended_norm": 0.0,
+                "projection_gain": 0.0,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 0,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -589,6 +615,8 @@
                 },
                 "relative_residual": null,
                 "observed_to_intended_norm": null,
+                "projection_gain": null,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 0,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -643,7 +671,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 1.000185437787206,
+              "cosine_similarity": 0.9999065629191572
             },
             {
               "module": "small",
@@ -657,7 +687,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 0.0,
+              "cosine_similarity": null
             },
             {
               "module": "zero",
@@ -671,7 +703,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": null,
+              "cosine_similarity": null
             }
           ],
           "unadapted": [],
@@ -683,6 +717,8 @@
               "residual": "observed - delta; reported relative to the Frobenius norm of delta",
               "zero_change": "exact numeric equality to the base rounded to the merged dtype",
               "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+              "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+              "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
               "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
               "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
             },
@@ -762,6 +798,8 @@
                 },
                 "relative_residual": 0.013674943026926501,
                 "observed_to_intended_norm": 1.0002789009277373,
+                "projection_gain": 1.0001854377872061,
+                "cosine_similarity": 0.9999065629191574,
                 "reference_merge_mismatches": 0,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -806,6 +844,8 @@
                 },
                 "relative_residual": 1.0,
                 "observed_to_intended_norm": 0.0,
+                "projection_gain": 0.0,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 0,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -850,6 +890,8 @@
                 },
                 "relative_residual": null,
                 "observed_to_intended_norm": null,
+                "projection_gain": null,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 0,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -904,7 +946,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 0.0,
+              "cosine_similarity": null
             },
             {
               "module": "small",
@@ -918,7 +962,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 0.0,
+              "cosine_similarity": null
             },
             {
               "module": "zero",
@@ -932,7 +978,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": null,
+              "cosine_similarity": null
             }
           ],
           "unadapted": [],
@@ -944,6 +992,8 @@
               "residual": "observed - delta; reported relative to the Frobenius norm of delta",
               "zero_change": "exact numeric equality to the base rounded to the merged dtype",
               "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+              "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+              "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
               "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
               "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
             },
@@ -1023,6 +1073,8 @@
                 },
                 "relative_residual": 1.0,
                 "observed_to_intended_norm": 0.0,
+                "projection_gain": 0.0,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 64,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -1067,6 +1119,8 @@
                 },
                 "relative_residual": 1.0,
                 "observed_to_intended_norm": 0.0,
+                "projection_gain": 0.0,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 31,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -1111,6 +1165,8 @@
                 },
                 "relative_residual": null,
                 "observed_to_intended_norm": null,
+                "projection_gain": null,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 0,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -1165,7 +1221,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 0.0,
+              "cosine_similarity": null
             },
             {
               "module": "small",
@@ -1179,7 +1237,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 0.0,
+              "cosine_similarity": null
             },
             {
               "module": "zero",
@@ -1193,7 +1253,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 1.0,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": null,
+              "cosine_similarity": null
             }
           ],
           "unadapted": [
@@ -1210,6 +1272,8 @@
               "residual": "observed - delta; reported relative to the Frobenius norm of delta",
               "zero_change": "exact numeric equality to the base rounded to the merged dtype",
               "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+              "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+              "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
               "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
               "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
             },
@@ -1289,6 +1353,8 @@
                 },
                 "relative_residual": 1.0,
                 "observed_to_intended_norm": 0.0,
+                "projection_gain": 0.0,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 64,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -1333,6 +1399,8 @@
                 },
                 "relative_residual": 1.0,
                 "observed_to_intended_norm": 0.0,
+                "projection_gain": 0.0,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 31,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -1377,6 +1445,8 @@
                 },
                 "relative_residual": null,
                 "observed_to_intended_norm": null,
+                "projection_gain": null,
+                "cosine_similarity": null,
                 "reference_merge_mismatches": 0,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -1732,7 +1802,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 4.0,
-              "rank": 4
+              "rank": 4,
+              "projection_gain": 1.0000000036514165,
+              "cosine_similarity": 0.9999999999999988
             },
             {
               "module": "model.layers.0.self_attn.v_proj",
@@ -1746,7 +1818,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 2.0,
-              "rank": 4
+              "rank": 4,
+              "projection_gain": 0.9999999936646351,
+              "cosine_similarity": 0.9999999999999968
             },
             {
               "module": "model.layers.1.self_attn.q_proj",
@@ -1760,7 +1834,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 5.65685424949238,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 0.9999999843637125,
+              "cosine_similarity": 0.9999999999999986
             },
             {
               "module": "model.layers.1.self_attn.v_proj",
@@ -1774,7 +1850,9 @@
                 "base_cast_drift": 0.0
               },
               "scale": 2.0,
-              "rank": 4
+              "rank": 4,
+              "projection_gain": 1.0000000004842269,
+              "cosine_similarity": 0.999999999999996
             }
           ],
           "unadapted": [],
@@ -1786,6 +1864,8 @@
               "residual": "observed - delta; reported relative to the Frobenius norm of delta",
               "zero_change": "exact numeric equality to the base rounded to the merged dtype",
               "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+              "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+              "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
               "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
               "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
             },
@@ -1995,6 +2075,8 @@
                 },
                 "relative_residual": 6.223816176677211e-08,
                 "observed_to_intended_norm": 1.000000003651418,
+                "projection_gain": 1.0000000036514158,
+                "cosine_similarity": 0.9999999999999979,
                 "reference_merge_mismatches": 403,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2039,6 +2121,8 @@
                 },
                 "relative_residual": 8.466237961904906e-08,
                 "observed_to_intended_norm": 0.9999999936646385,
+                "projection_gain": 0.999999993664635,
+                "cosine_similarity": 0.9999999999999964,
                 "reference_merge_mismatches": 135,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2083,6 +2167,8 @@
                 },
                 "relative_residual": 6.405102275205641e-08,
                 "observed_to_intended_norm": 0.9999999843637148,
+                "projection_gain": 0.9999999843637128,
+                "cosine_similarity": 0.999999999999998,
                 "reference_merge_mismatches": 439,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2127,6 +2213,8 @@
                 },
                 "relative_residual": 8.964755918311748e-08,
                 "observed_to_intended_norm": 1.0000000004842307,
+                "projection_gain": 1.0000000004842267,
+                "cosine_similarity": 0.999999999999996,
                 "reference_merge_mismatches": 152,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2181,7 +2269,9 @@
                 "base_cast_drift": 0.0001372707121117391
               },
               "scale": 4.0,
-              "rank": 4
+              "rank": 4,
+              "projection_gain": 1.0000341730387177,
+              "cosine_similarity": 0.9999999309187957
             },
             {
               "module": "model.layers.0.self_attn.v_proj",
@@ -2195,7 +2285,9 @@
                 "base_cast_drift": 9.435105109256787e-05
               },
               "scale": 2.0,
-              "rank": 4
+              "rank": 4,
+              "projection_gain": 1.0000079261200672,
+              "cosine_similarity": 0.9999998107888675
             },
             {
               "module": "model.layers.1.self_attn.q_proj",
@@ -2209,7 +2301,9 @@
                 "base_cast_drift": 0.00013592080007710002
               },
               "scale": 5.65685424949238,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 1.0000127599330935,
+              "cosine_similarity": 0.9999999382743696
             },
             {
               "module": "model.layers.1.self_attn.v_proj",
@@ -2223,7 +2317,9 @@
                 "base_cast_drift": 9.834255974995404e-05
               },
               "scale": 2.0,
-              "rank": 4
+              "rank": 4,
+              "projection_gain": 1.000033436868779,
+              "cosine_similarity": 0.9999998068261122
             }
           ],
           "unadapted": [],
@@ -2235,6 +2331,8 @@
               "residual": "observed - delta; reported relative to the Frobenius norm of delta",
               "zero_change": "exact numeric equality to the base rounded to the merged dtype",
               "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+              "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+              "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
               "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
               "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
             },
@@ -2414,6 +2512,8 @@
                 },
                 "relative_residual": 0.00037328228355091556,
                 "observed_to_intended_norm": 1.0000342421222874,
+                "projection_gain": 1.000034173038717,
+                "cosine_similarity": 0.9999999309187951,
                 "reference_merge_mismatches": 305,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2458,6 +2558,8 @@
                 },
                 "relative_residual": 0.0006152163805707117,
                 "observed_to_intended_norm": 1.0000081153327351,
+                "projection_gain": 1.0000079261200672,
+                "cosine_similarity": 0.9999998107888676,
                 "reference_merge_mismatches": 154,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2502,6 +2604,8 @@
                 },
                 "relative_residual": 0.00035159243195820485,
                 "observed_to_intended_norm": 1.0000128216595152,
+                "projection_gain": 1.0000127599330935,
+                "cosine_similarity": 0.9999999382743696,
                 "reference_merge_mismatches": 287,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2546,6 +2650,8 @@
                 },
                 "relative_residual": 0.0006224883523992223,
                 "observed_to_intended_norm": 1.0000336300491632,
+                "projection_gain": 1.0000334368687787,
+                "cosine_similarity": 0.9999998068261119,
                 "reference_merge_mismatches": 159,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2600,7 +2706,9 @@
                 "base_cast_drift": 0.0010791519224800485
               },
               "scale": 4.0,
-              "rank": 4
+              "rank": 4,
+              "projection_gain": 1.0000760134138047,
+              "cosine_similarity": 0.9999960071632185
             },
             {
               "module": "model.layers.0.self_attn.v_proj",
@@ -2614,7 +2722,9 @@
                 "base_cast_drift": 0.0007699125243519513
               },
               "scale": 2.0,
-              "rank": 4
+              "rank": 4,
+              "projection_gain": 0.9998578253555547,
+              "cosine_similarity": 0.9999858894047294
             },
             {
               "module": "model.layers.1.self_attn.q_proj",
@@ -2628,7 +2738,9 @@
                 "base_cast_drift": 0.0009948487860099667
               },
               "scale": 5.65685424949238,
-              "rank": 2
+              "rank": 2,
+              "projection_gain": 0.9999323478433627,
+              "cosine_similarity": 0.99999597478871
             },
             {
               "module": "model.layers.1.self_attn.v_proj",
@@ -2642,7 +2754,9 @@
                 "base_cast_drift": 0.0007506186308299535
               },
               "scale": 2.0,
-              "rank": 4
+              "rank": 4,
+              "projection_gain": 1.000072436041408,
+              "cosine_similarity": 0.9999888643524651
             }
           ],
           "unadapted": [],
@@ -2654,6 +2768,8 @@
               "residual": "observed - delta; reported relative to the Frobenius norm of delta",
               "zero_change": "exact numeric equality to the base rounded to the merged dtype",
               "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+              "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+              "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
               "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
               "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
             },
@@ -2833,6 +2949,8 @@
                 },
                 "relative_residual": 0.002827138751579183,
                 "observed_to_intended_norm": 1.000080006570039,
+                "projection_gain": 1.0000760134138045,
+                "cosine_similarity": 0.9999960071632186,
                 "reference_merge_mismatches": 312,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2877,6 +2995,8 @@
                 },
                 "relative_residual": 0.005313565397550789,
                 "observed_to_intended_norm": 0.9998719341437399,
+                "projection_gain": 0.9998578253555546,
+                "cosine_similarity": 0.9999858894047292,
                 "reference_merge_mismatches": 149,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2921,6 +3041,8 @@
                 },
                 "relative_residual": 0.0028379497484130297,
                 "observed_to_intended_norm": 0.99993637279854,
+                "projection_gain": 0.999932347843363,
+                "cosine_similarity": 0.9999959747887102,
                 "reference_merge_mismatches": 281,
                 "reference_merge_overflows": 0,
                 "largest_residual": {
@@ -2965,6 +3087,8 @@
                 },
                 "relative_residual": 0.004720184395040464,
                 "observed_to_intended_norm": 1.0000835726195778,
+                "projection_gain": 1.0000724360414075,
+                "cosine_similarity": 0.9999888643524649,
                 "reference_merge_mismatches": 141,
                 "reference_merge_overflows": 0,
                 "largest_residual": {

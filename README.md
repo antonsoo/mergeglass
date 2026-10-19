@@ -34,9 +34,10 @@ the exact pinned artifacts; no third-party weights are redistributed here.
 
 ## Try the recorded example
 
-From this source checkout, with Python 3.10+ and [uv](https://docs.astral.sh/uv/):
+With Python 3.10+ and [uv](https://docs.astral.sh/uv/):
 
 ```sh
+git clone https://github.com/antonsoo/mergeglass && cd mergeglass
 uv sync --locked --no-dev
 uv run --no-dev mergeglass examples/rounding/base examples/rounding/adapter examples/rounding/merged-bf16 --json report.json
 ```
@@ -48,8 +49,22 @@ reference update and undefined relative ratios. Switch the last input to
 `examples/rounding/merged-f32`, `omitted`, or `unrelated-edit` to inspect those
 different artifacts. [Producer and independent replay](studies/native-peft/README.md).
 
-This is a local source version. There is no PyPI release, hosted service or
-model download inside the auditor.
+Install from this source checkout. There is no PyPI release or hosted service;
+the auditor does not download models.
+
+## Changed is not the same as correctly merged
+
+Native PEFT controls on a synthetic two-layer Llama all change **every one of
+3,072 adapted entries**: a correct merge, reloading the adapter onto already
+merged weights, reversing its sign, and loading the wrong trained adapter.
+Signed projection separates these cases: gain about 1, 2, -1, and near 0,
+respectively. JSON also records cosine similarity to distinguish direction from
+magnitude. The report measures those differences without guessing their cause.
+
+Another control loads rsLoRA factors with standard LoRA scaling; the rank-4
+layers have gain 0.5 and the rank-2 layer has gain 0.707107. Two finite BF16
+artifacts differ in 755 saved entries solely from PEFT's `safe_merge` operation
+sequence. [Native controls, complete receipts and reproduction](studies/merge-controls/README.md).
 
 ## Use your checkpoints
 
@@ -88,7 +103,8 @@ Base --> cast to merged dtype --> compare to merge --+
 ```
 
 - Per matrix: changed entries, nonzero updates with no observed change, update
-  and residual norms, relative residual and the largest residual's row/column.
+  and residual norms, signed projection gain, cosine similarity, relative
+  residual and the largest residual's row/column.
 - Across the checkpoint: every unadapted tensor checked against its cast base,
   with unrelated changes retained individually. Large integer values stay exact.
 - Plain Linear LoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
@@ -116,7 +132,7 @@ separate verification environment.
 
 A measured synthetic 4096 x 8192, rank-8 case checks all 33,554,432 weights.
 A single full binary64 delta would occupy 256 MiB. The default 16 MiB block
-setting measured about 57 MiB process peak RSS on this 14-vCPU, 48-GB WSL2 Linux
+setting measured about 60 MiB process peak RSS on this 14-vCPU, 48-GB WSL2 Linux
 machine with one BLAS thread. This is a local measurement; the block setting is
 not a hard RSS cap. A, headers, BLAS and at least one full row also need memory.
 [Benchmark method and complete results](studies/streaming/README.md).
