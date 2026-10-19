@@ -4106,6 +4106,7 @@
           "Supplied base identity and training provenance are not independently established.",
           "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
           "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
           "Operation order and matmul precision can differ from the producer, notably at ties.",
           "Weight-space changes and residuals do not establish generation or task quality.",
           "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
@@ -7973,6 +7974,7 @@
           "Supplied base identity and training provenance are not independently established.",
           "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
           "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
           "Operation order and matmul precision can differ from the producer, notably at ties.",
           "Weight-space changes and residuals do not establish generation or task quality.",
           "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."

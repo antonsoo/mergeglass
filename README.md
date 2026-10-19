@@ -154,6 +154,10 @@ on 65,280 of those deliberately chosen boundary cases.
 - Quantized weights, DoRA, embedding/conv/Conv1D LoRA, extra trained biases,
   modules-to-save and base-mutating initializers are unsupported. Complex
   rank/alpha regexes and unknown configuration fields refuse explicitly.
+- A single saved orientation flag can hide mixed Conv1D targets. Known GPT-2,
+  OpenAI GPT and ImageGPT Conv1D paths refuse when their model metadata is
+  present. Tensor shapes alone cannot certify arbitrary module types.
+  [Native before/after evidence](studies/orientation/README.md).
 - This is a numerical saved-weight inspection. It does not certify inference
   equivalence, generation quality, adapter provenance or deployment readiness.
 - All tensors are read and all artifact files are hashed. Huge checkpoints

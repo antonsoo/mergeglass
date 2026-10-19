@@ -10,5 +10,7 @@ indexed Hugging Face shards. Retains artifact hashes and concrete residual
 coordinates in JSON. Includes native PEFT examples and independent numeric replay.
 Signed projection gain and cosine similarity distinguish update magnitude from
 direction, checked against repeated, reversed, wrong-adapter and rsLoRA controls.
+Refuses known GPT-2/OpenAI GPT/ImageGPT Conv1D paths when model metadata exposes
+them, including mixed targets hidden by a global `fan_in_fan_out=False` flag.
 
 No registry release or hosted service accompanies this version.

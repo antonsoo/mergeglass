@@ -108,6 +108,17 @@ base-mutating initializers and other variant payloads refuse. Unknown adapter
 configuration fields also refuse. This version recognizes the saved configuration
 of PEFT 0.21.0; other versions can work only within that explicit field contract.
 
+A saved `fan_in_fan_out=False` flag does not establish every module's layout.
+PEFT can overwrite this global flag while loading mixed Conv1D and Linear
+targets; square Conv1D matrices still pass a Linear shape check. When base
+`model_type` or adapter `auto_mapping.parent_library` identifies GPT-2,
+OpenAI GPT or ImageGPT, their known attention/MLP Conv1D paths explicitly refuse.
+Ordinary Linear heads on the same architectures remain supported. This is a
+guard against contradictory metadata, not a universal module-type detector.
+Missing metadata, custom models and other architectures cannot be certified
+from tensor shapes. The supported plain-Linear contract remains a prerequisite.
+See the [six native orientation cases](../studies/orientation/README.md).
+
 Coverage is the saved A/B pair inventory. If both factors of a target module
 are absent from the adapter, the file alone does not establish that they were
 supposed to exist. `target_modules` is not used to reconstruct an unseen model

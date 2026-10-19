@@ -68,6 +68,16 @@ KNOWN = UNSUPPORTED | {
 }
 PAIR = re.compile(r"base_model\.model\.(.+)\.lora_([AB])\.weight\Z")
 LITERAL_PATH = re.compile(r"[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)*\Z")
+CONV1D_PATH = re.compile(
+    r"(?:^|\.)h\.[0-9]+\.(?:(?:attn|crossattention)\.(?:c_attn|q_attn|c_proj)"
+    r"|mlp\.(?:c_fc|c_proj))\Z"
+)
+CONV1D_MODELS = ("gpt2", "openai-gpt", "imagegpt")
+CONV1D_LIBRARIES = (
+    "transformers.models.gpt2.modeling_gpt2",
+    "transformers.models.openai.modeling_openai",
+    "transformers.models.imagegpt.modeling_imagegpt",
+)
 
 
 def _number(value: Any, field: str, *, rank: bool = False) -> float:
@@ -160,6 +170,18 @@ def adapter_pairs(adapter: Checkpoint, base: Checkpoint) -> list[Pair]:
         modules.setdefault(path, {})[side] = tensor
     result = []
     for path, sides in modules.items():
+        mapping = config.get("auto_mapping")
+        library = mapping.get("parent_library") if isinstance(mapping, dict) else None
+        if (
+            base.config.get("model_type") in CONV1D_MODELS or library in CONV1D_LIBRARIES
+        ) and CONV1D_PATH.search(path):
+            # PEFT mutates the global config flag as it dispatches each target.
+            # A final Linear head can hide earlier Conv1D targets. Square weights
+            # pass the Linear shape check despite requiring a transposed product.
+            raise AuditError(
+                f"Unsupported Conv1D target indicated by model metadata: {path}; "
+                "saved fan_in_fan_out is not a per-module orientation map"
+            )
         if sides.keys() != {"A", "B"}:
             raise AuditError(f"Incomplete A/B pair: {path}")
         a, b = sides["A"], sides["B"]

@@ -1,0 +1,1365 @@
+{
+  "producer": {
+    "synthetic": true,
+    "training": false,
+    "control": "seeded random nonzero B factors, native PEFT exports and merges",
+    "seed": 7821,
+    "pythonhashseed": "0",
+    "script_sha256": "1d2de42aaac6071f1be7c1d9144bbcfc26bda469b015a2b9aaa2ef17bd29bfd7",
+    "cases": [
+      {
+        "name": "gpt2-mixed",
+        "kind": "mixed",
+        "model_type": "gpt2",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "transformer.h.0.attn.c_proj": true,
+          "lm_head": false
+        }
+      },
+      {
+        "name": "gpt2-linear-head",
+        "kind": "linear-head",
+        "model_type": "gpt2",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "lm_head": false
+        }
+      },
+      {
+        "name": "openai-gpt-mixed",
+        "kind": "mixed",
+        "model_type": "openai-gpt",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "transformer.h.0.attn.c_proj": true,
+          "lm_head": false
+        }
+      },
+      {
+        "name": "openai-gpt-linear-head",
+        "kind": "linear-head",
+        "model_type": "openai-gpt",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "lm_head": false
+        }
+      },
+      {
+        "name": "imagegpt-mixed",
+        "kind": "mixed",
+        "model_type": "imagegpt",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "transformer.h.0.attn.c_proj": true,
+          "lm_head": false
+        }
+      },
+      {
+        "name": "imagegpt-linear-head",
+        "kind": "linear-head",
+        "model_type": "imagegpt",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "lm_head": false
+        }
+      }
+    ],
+    "versions": {
+      "torch": "2.14.1+cpu",
+      "peft": "0.21.0",
+      "transformers": "5.20.1",
+      "numpy": "2.5.4",
+      "safetensors": "0.8.0"
+    },
+    "files": [
+      {
+        "file": "gpt2-linear-head/adapter/adapter_config.json",
+        "bytes": 1165,
+        "sha256": "f970d8046e8252d81f5c4fa76f2a16f432099d664200130064e3c160e644082e"
+      },
+      {
+        "file": "gpt2-linear-head/adapter/adapter_model.safetensors",
+        "bytes": 616,
+        "sha256": "6ff3d7f1e9cbf4bfae4a03e9982426495f1480b113616b27feceb75642fc0531"
+      },
+      {
+        "file": "gpt2-linear-head/base/config.json",
+        "bytes": 817,
+        "sha256": "69e351aacf50b7a574ffa012a5f98d44939f14e45e08257b4cbdea1047c7969b"
+      },
+      {
+        "file": "gpt2-linear-head/base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-linear-head/base/model.safetensors",
+        "bytes": 20928,
+        "sha256": "e57154946d5a7e0df0082bb8487030c0483e422c9118c06ee658c667313f715f"
+      },
+      {
+        "file": "gpt2-linear-head/merged/config.json",
+        "bytes": 817,
+        "sha256": "69e351aacf50b7a574ffa012a5f98d44939f14e45e08257b4cbdea1047c7969b"
+      },
+      {
+        "file": "gpt2-linear-head/merged/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-linear-head/merged/model.safetensors",
+        "bytes": 20928,
+        "sha256": "2faa6321bade418db81a055f8fff21a52af074fbdb3fb36c303791dc6ec554ad"
+      },
+      {
+        "file": "gpt2-mixed/adapter/adapter_config.json",
+        "bytes": 1200,
+        "sha256": "d692a07e594691651e95eb23ef5458e13b7870b32bc0cda846c73caef95a27df"
+      },
+      {
+        "file": "gpt2-mixed/adapter/adapter_model.safetensors",
+        "bytes": 1112,
+        "sha256": "f89c991bdfb27916494e74c286fb627052671f3af5df82156d8c7819bfa834d0"
+      },
+      {
+        "file": "gpt2-mixed/base/config.json",
+        "bytes": 817,
+        "sha256": "69e351aacf50b7a574ffa012a5f98d44939f14e45e08257b4cbdea1047c7969b"
+      },
+      {
+        "file": "gpt2-mixed/base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/base/model.safetensors",
+        "bytes": 20928,
+        "sha256": "e57154946d5a7e0df0082bb8487030c0483e422c9118c06ee658c667313f715f"
+      },
+      {
+        "file": "gpt2-mixed/merged/config.json",
+        "bytes": 817,
+        "sha256": "69e351aacf50b7a574ffa012a5f98d44939f14e45e08257b4cbdea1047c7969b"
+      },
+      {
+        "file": "gpt2-mixed/merged/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/merged/model.safetensors",
+        "bytes": 20928,
+        "sha256": "c11cce22289cc29040909b2bcbb316412dd066773f3f680303be27b7e67213c8"
+      },
+      {
+        "file": "imagegpt-linear-head/adapter/adapter_config.json",
+        "bytes": 1188,
+        "sha256": "92f28c14ac30f5392b41903c5ff0994f40aaa8345dbd6896cca5790169d42374"
+      },
+      {
+        "file": "imagegpt-linear-head/adapter/adapter_model.safetensors",
+        "bytes": 608,
+        "sha256": "63ac78546e075aebc860565b5dd5d6461237ed4ee0926d9dcb8b4ad2876efa0f"
+      },
+      {
+        "file": "imagegpt-linear-head/base/config.json",
+        "bytes": 683,
+        "sha256": "ea939a78ece6fe3d943d013e505cf5614aa10d91d0431b38703b757b9157f14b"
+      },
+      {
+        "file": "imagegpt-linear-head/base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-linear-head/base/model.safetensors",
+        "bytes": 20424,
+        "sha256": "ba7c15114779d1f2f482e0c8feeeaaffea10b22d3ec252e991e8856a77095356"
+      },
+      {
+        "file": "imagegpt-linear-head/merged/config.json",
+        "bytes": 683,
+        "sha256": "ea939a78ece6fe3d943d013e505cf5614aa10d91d0431b38703b757b9157f14b"
+      },
+      {
+        "file": "imagegpt-linear-head/merged/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-linear-head/merged/model.safetensors",
+        "bytes": 20424,
+        "sha256": "ed5758a024f91fbddcfab10dff146bba2e0af99cfbd6a6c6dddf9a18909d93c1"
+      },
+      {
+        "file": "imagegpt-mixed/adapter/adapter_config.json",
+        "bytes": 1223,
+        "sha256": "e7da825a0c545f1561dec80a974532b84185bae1bd689888d1b954266c52eaeb"
+      },
+      {
+        "file": "imagegpt-mixed/adapter/adapter_model.safetensors",
+        "bytes": 1104,
+        "sha256": "914d824b7e448daedd807cb7cfeb7ea7ed9996202d7b4a44af59d698acfe51af"
+      },
+      {
+        "file": "imagegpt-mixed/base/config.json",
+        "bytes": 683,
+        "sha256": "ea939a78ece6fe3d943d013e505cf5614aa10d91d0431b38703b757b9157f14b"
+      },
+      {
+        "file": "imagegpt-mixed/base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/base/model.safetensors",
+        "bytes": 20424,
+        "sha256": "ba7c15114779d1f2f482e0c8feeeaaffea10b22d3ec252e991e8856a77095356"
+      },
+      {
+        "file": "imagegpt-mixed/merged/config.json",
+        "bytes": 683,
+        "sha256": "ea939a78ece6fe3d943d013e505cf5614aa10d91d0431b38703b757b9157f14b"
+      },
+      {
+        "file": "imagegpt-mixed/merged/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/merged/model.safetensors",
+        "bytes": 20424,
+        "sha256": "dd289922f09eb993ce73bf16494dd0e0ac767003cd6f98833ec81b9376c4a96a"
+      },
+      {
+        "file": "openai-gpt-linear-head/adapter/adapter_config.json",
+        "bytes": 1174,
+        "sha256": "500520766e37c5814a9fd3108bf7fa8095a966ace046c6bf98bc7581301cc891"
+      },
+      {
+        "file": "openai-gpt-linear-head/adapter/adapter_model.safetensors",
+        "bytes": 616,
+        "sha256": "7525d5d61aefbd8dd57c98d717ff67cc453741fca250b20bea0290d00c6b7daf"
+      },
+      {
+        "file": "openai-gpt-linear-head/base/config.json",
+        "bytes": 626,
+        "sha256": "45c4f33a94e857d8d6be1e5e2aebb8f6c6664eb7900572def8203aa1621307c8"
+      },
+      {
+        "file": "openai-gpt-linear-head/base/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-linear-head/base/model.safetensors",
+        "bytes": 20656,
+        "sha256": "b3590f9f693c730f4e57a936731b33b3a523e8119f13a6a8378247ee3a28ce8d"
+      },
+      {
+        "file": "openai-gpt-linear-head/merged/config.json",
+        "bytes": 626,
+        "sha256": "45c4f33a94e857d8d6be1e5e2aebb8f6c6664eb7900572def8203aa1621307c8"
+      },
+      {
+        "file": "openai-gpt-linear-head/merged/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-linear-head/merged/model.safetensors",
+        "bytes": 20656,
+        "sha256": "19b9ddac91d3d10a5474f801ac1b5c505eaa1943a0c8c97c0eb660ba8b592414"
+      },
+      {
+        "file": "openai-gpt-mixed/adapter/adapter_config.json",
+        "bytes": 1209,
+        "sha256": "afde0829080714690cc842ae1ef4ddfd177af273246fca197cc9b7da5084763c"
+      },
+      {
+        "file": "openai-gpt-mixed/adapter/adapter_model.safetensors",
+        "bytes": 1112,
+        "sha256": "ed3445df4f5a1cabd1ce0d41e64e1e3129cf72e45c3f1169e5dc091526311a4a"
+      },
+      {
+        "file": "openai-gpt-mixed/base/config.json",
+        "bytes": 626,
+        "sha256": "45c4f33a94e857d8d6be1e5e2aebb8f6c6664eb7900572def8203aa1621307c8"
+      },
+      {
+        "file": "openai-gpt-mixed/base/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/base/model.safetensors",
+        "bytes": 20656,
+        "sha256": "b3590f9f693c730f4e57a936731b33b3a523e8119f13a6a8378247ee3a28ce8d"
+      },
+      {
+        "file": "openai-gpt-mixed/merged/config.json",
+        "bytes": 626,
+        "sha256": "45c4f33a94e857d8d6be1e5e2aebb8f6c6664eb7900572def8203aa1621307c8"
+      },
+      {
+        "file": "openai-gpt-mixed/merged/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/merged/model.safetensors",
+        "bytes": 20656,
+        "sha256": "6fef5b5d1782488371eb7d979b578819cbcaed1181620e33ec537eedbebc5359"
+      }
+    ]
+  },
+  "before": true,
+  "verifier_sha256": "079098744d0476347b23a9f31d1309e43ec4056727266f09491b6fd7ac212322",
+  "auditor_modules": {
+    "__init__.py": "10ea91c0beb8fc6c9b2390d0e89c09dc51598c11a2837f8f780f64b5514877a9",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "5c442f48a5544132f267323888ab5351c1f266e5721b34f54e38911c28bc1e0a",
+    "audit.py": "5b84dd9a08d690ca1cded7393d81a7dd2df9573dbf8fc07b48e43f4ff764edd9",
+    "cli.py": "b01f7eedfe67700d979bded78a50333ffe5c6012fbb02412861785075055822d",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "results": [
+    {
+      "case": {
+        "name": "gpt2-mixed",
+        "kind": "mixed",
+        "model_type": "gpt2",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "transformer.h.0.attn.c_proj": true,
+          "lm_head": false
+        }
+      },
+      "dense_measurements": [
+        {
+          "module": "transformer.h.0.attn.c_proj",
+          "native_transpose": true,
+          "relative_residual_with_native_orientation": 1.0042317123581541e-07,
+          "relative_residual_assuming_linear": 1.3392049363323124
+        },
+        {
+          "module": "lm_head",
+          "native_transpose": false,
+          "relative_residual_with_native_orientation": 1.305744838961216e-07,
+          "relative_residual_assuming_linear": 1.305744838961216e-07
+        }
+      ],
+      "refusal": null,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "delta = (B_float64 @ A_float64) * scale; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 817,
+              "sha256": "69e351aacf50b7a574ffa012a5f98d44939f14e45e08257b4cbdea1047c7969b"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20928,
+              "sha256": "e57154946d5a7e0df0082bb8487030c0483e422c9118c06ee658c667313f715f"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1200,
+              "sha256": "d692a07e594691651e95eb23ef5458e13b7870b32bc0cda846c73caef95a27df"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1112,
+              "sha256": "f89c991bdfb27916494e74c286fb627052671f3af5df82156d8c7819bfa834d0"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 817,
+              "sha256": "69e351aacf50b7a574ffa012a5f98d44939f14e45e08257b4cbdea1047c7969b"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20928,
+              "sha256": "c11cce22289cc29040909b2bcbb316412dd066773f3f680303be27b7e67213c8"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 2,
+          "checked_tensors": 17,
+          "adapted_elements": 768,
+          "intended_nonzero_elements": 768,
+          "changed_adapted_elements": 768,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "lm_head",
+            "weight": "lm_head.weight",
+            "shape": [
+              32,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 512,
+            "intended_nonzero_elements": 512,
+            "changed_elements": 512,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "norms": {
+              "delta": 0.09085664188732849,
+              "observed": 0.09085664265463156,
+              "residual": 1.1863559122972656e-08,
+              "base_cast_drift": 0.0
+            },
+            "relative_residual": 1.3057448389612154e-07,
+            "observed_to_intended_norm": 1.000000008445206,
+            "projection_gain": 1.0000000084451974,
+            "cosine_similarity": 0.9999999999999913,
+            "reference_merge_mismatches": 85,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 25,
+              "column": 5,
+              "base": 0.05809416621923447,
+              "cast_base": 0.05809416621923447,
+              "intended_delta": 0.004706924051219766,
+              "merged": 0.06280109286308289,
+              "observed_delta": 0.004706926643848419,
+              "residual": 2.592628653430573e-09,
+              "reference_merged": 0.06280109286308289
+            }
+          },
+          {
+            "module": "transformer.h.0.attn.c_proj",
+            "weight": "transformer.h.0.attn.c_proj.weight",
+            "shape": [
+              16,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 256,
+            "intended_nonzero_elements": 256,
+            "changed_elements": 256,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "norms": {
+              "delta": 0.07099988492060227,
+              "observed": 0.07099988493981019,
+              "residual": 0.09508339636469668,
+              "base_cast_drift": 0.0
+            },
+            "relative_residual": 1.3392049363323124,
+            "observed_to_intended_norm": 1.0000000002705345,
+            "projection_gain": 0.10326506952211799,
+            "cosine_similarity": 0.10326506949418122,
+            "reference_merge_mismatches": 243,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 10,
+              "column": 2,
+              "base": -0.012178455479443073,
+              "cast_base": -0.012178455479443073,
+              "intended_delta": -0.015013916275949446,
+              "merged": -0.001576942391693592,
+              "observed_delta": 0.010601513087749481,
+              "residual": 0.025615429363698927,
+              "reference_merged": -0.02719237096607685
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": {
+        "name": "gpt2-linear-head",
+        "kind": "linear-head",
+        "model_type": "gpt2",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "lm_head": false
+        }
+      },
+      "dense_measurements": [
+        {
+          "module": "lm_head",
+          "native_transpose": false,
+          "relative_residual_with_native_orientation": 1.218330418820536e-07,
+          "relative_residual_assuming_linear": 1.218330418820536e-07
+        }
+      ],
+      "refusal": null,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "delta = (B_float64 @ A_float64) * scale; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 817,
+              "sha256": "69e351aacf50b7a574ffa012a5f98d44939f14e45e08257b4cbdea1047c7969b"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20928,
+              "sha256": "e57154946d5a7e0df0082bb8487030c0483e422c9118c06ee658c667313f715f"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1165,
+              "sha256": "f970d8046e8252d81f5c4fa76f2a16f432099d664200130064e3c160e644082e"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 616,
+              "sha256": "6ff3d7f1e9cbf4bfae4a03e9982426495f1480b113616b27feceb75642fc0531"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 817,
+              "sha256": "69e351aacf50b7a574ffa012a5f98d44939f14e45e08257b4cbdea1047c7969b"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20928,
+              "sha256": "2faa6321bade418db81a055f8fff21a52af074fbdb3fb36c303791dc6ec554ad"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 1,
+          "checked_tensors": 17,
+          "adapted_elements": 512,
+          "intended_nonzero_elements": 512,
+          "changed_adapted_elements": 512,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "lm_head",
+            "weight": "lm_head.weight",
+            "shape": [
+              32,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 512,
+            "intended_nonzero_elements": 512,
+            "changed_elements": 512,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "norms": {
+              "delta": 0.10013661625583786,
+              "observed": 0.10013661582146095,
+              "residual": 1.2199948562224629e-08,
+              "base_cast_drift": 0.0
+            },
+            "relative_residual": 1.2183304188205365e-07,
+            "observed_to_intended_norm": 0.9999999956621571,
+            "projection_gain": 0.9999999956621497,
+            "cosine_similarity": 0.9999999999999926,
+            "reference_merge_mismatches": 95,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 7,
+              "column": 1,
+              "base": -0.02733738161623478,
+              "cast_base": -0.02733738161623478,
+              "intended_delta": -0.019829675639574162,
+              "merged": -0.04716705530881882,
+              "observed_delta": -0.019829673692584038,
+              "residual": 1.9469901246793597e-09,
+              "reference_merged": -0.047167059034109116
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": {
+        "name": "openai-gpt-mixed",
+        "kind": "mixed",
+        "model_type": "openai-gpt",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "transformer.h.0.attn.c_proj": true,
+          "lm_head": false
+        }
+      },
+      "dense_measurements": [
+        {
+          "module": "transformer.h.0.attn.c_proj",
+          "native_transpose": true,
+          "relative_residual_with_native_orientation": 1.3746025504146958e-07,
+          "relative_residual_assuming_linear": 1.474573976944816
+        },
+        {
+          "module": "lm_head",
+          "native_transpose": false,
+          "relative_residual_with_native_orientation": 1.3889703524937952e-07,
+          "relative_residual_assuming_linear": 1.3889703524937952e-07
+        }
+      ],
+      "refusal": null,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "delta = (B_float64 @ A_float64) * scale; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 626,
+              "sha256": "45c4f33a94e857d8d6be1e5e2aebb8f6c6664eb7900572def8203aa1621307c8"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20656,
+              "sha256": "b3590f9f693c730f4e57a936731b33b3a523e8119f13a6a8378247ee3a28ce8d"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1209,
+              "sha256": "afde0829080714690cc842ae1ef4ddfd177af273246fca197cc9b7da5084763c"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1112,
+              "sha256": "ed3445df4f5a1cabd1ce0d41e64e1e3129cf72e45c3f1169e5dc091526311a4a"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 626,
+              "sha256": "45c4f33a94e857d8d6be1e5e2aebb8f6c6664eb7900572def8203aa1621307c8"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20656,
+              "sha256": "6fef5b5d1782488371eb7d979b578819cbcaed1181620e33ec537eedbebc5359"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 2,
+          "checked_tensors": 15,
+          "adapted_elements": 768,
+          "intended_nonzero_elements": 768,
+          "changed_adapted_elements": 768,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "lm_head",
+            "weight": "lm_head.weight",
+            "shape": [
+              32,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 512,
+            "intended_nonzero_elements": 512,
+            "changed_elements": 512,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "norms": {
+              "delta": 0.08522440125909261,
+              "observed": 0.08522440047531106,
+              "residual": 1.1837416665791454e-08,
+              "base_cast_drift": 0.0
+            },
+            "relative_residual": 1.3889703524937955e-07,
+            "observed_to_intended_norm": 0.9999999908033199,
+            "projection_gain": 0.9999999908033104,
+            "cosine_similarity": 0.9999999999999905,
+            "reference_merge_mismatches": 91,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 24,
+              "column": 7,
+              "base": -0.06290479004383087,
+              "cast_base": -0.06290479004383087,
+              "intended_delta": -0.0016146951887230782,
+              "merged": -0.0645194873213768,
+              "observed_delta": -0.001614697277545929,
+              "residual": -2.0888228507986994e-09,
+              "reference_merged": -0.0645194873213768
+            }
+          },
+          {
+            "module": "transformer.h.0.attn.c_proj",
+            "weight": "transformer.h.0.attn.c_proj.weight",
+            "shape": [
+              16,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 256,
+            "intended_nonzero_elements": 256,
+            "changed_elements": 256,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "norms": {
+              "delta": 0.06233895279331697,
+              "observed": 0.062338952745918046,
+              "residual": 0.09192339753901656,
+              "base_cast_drift": 0.0
+            },
+            "relative_residual": 1.474573976944816,
+            "observed_to_intended_norm": 0.999999999239658,
+            "projection_gain": -0.08718420750176757,
+            "cosine_similarity": -0.08718420756805739,
+            "reference_merge_mismatches": 242,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 15,
+              "column": 2,
+              "base": -0.024970144033432007,
+              "cast_base": -0.024970144033432007,
+              "intended_delta": 0.005881464193642882,
+              "merged": -0.03258276730775833,
+              "observed_delta": -0.0076126232743263245,
+              "residual": -0.013494087467969207,
+              "reference_merged": -0.019088679924607277
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": {
+        "name": "openai-gpt-linear-head",
+        "kind": "linear-head",
+        "model_type": "openai-gpt",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "lm_head": false
+        }
+      },
+      "dense_measurements": [
+        {
+          "module": "lm_head",
+          "native_transpose": false,
+          "relative_residual_with_native_orientation": 1.3874257813567334e-07,
+          "relative_residual_assuming_linear": 1.3874257813567334e-07
+        }
+      ],
+      "refusal": null,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "delta = (B_float64 @ A_float64) * scale; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 626,
+              "sha256": "45c4f33a94e857d8d6be1e5e2aebb8f6c6664eb7900572def8203aa1621307c8"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20656,
+              "sha256": "b3590f9f693c730f4e57a936731b33b3a523e8119f13a6a8378247ee3a28ce8d"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1174,
+              "sha256": "500520766e37c5814a9fd3108bf7fa8095a966ace046c6bf98bc7581301cc891"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 616,
+              "sha256": "7525d5d61aefbd8dd57c98d717ff67cc453741fca250b20bea0290d00c6b7daf"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 626,
+              "sha256": "45c4f33a94e857d8d6be1e5e2aebb8f6c6664eb7900572def8203aa1621307c8"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20656,
+              "sha256": "19b9ddac91d3d10a5474f801ac1b5c505eaa1943a0c8c97c0eb660ba8b592414"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 1,
+          "checked_tensors": 15,
+          "adapted_elements": 512,
+          "intended_nonzero_elements": 512,
+          "changed_adapted_elements": 512,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "lm_head",
+            "weight": "lm_head.weight",
+            "shape": [
+              32,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 512,
+            "intended_nonzero_elements": 512,
+            "changed_elements": 512,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "norms": {
+              "delta": 0.07534655799776745,
+              "observed": 0.07534655804219897,
+              "residual": 1.045377571025929e-08,
+              "base_cast_drift": 0.0
+            },
+            "relative_residual": 1.387425781356733e-07,
+            "observed_to_intended_norm": 1.0000000005896956,
+            "projection_gain": 1.0000000005896859,
+            "cosine_similarity": 0.9999999999999903,
+            "reference_merge_mismatches": 75,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 20,
+              "column": 12,
+              "base": -0.035334449261426926,
+              "cast_base": -0.035334449261426926,
+              "intended_delta": -0.0048798637550334645,
+              "merged": -0.04021431505680084,
+              "observed_delta": -0.004879865795373917,
+              "residual": -2.0403404521474044e-09,
+              "reference_merged": -0.040214311331510544
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": {
+        "name": "imagegpt-mixed",
+        "kind": "mixed",
+        "model_type": "imagegpt",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "transformer.h.0.attn.c_proj": true,
+          "lm_head": false
+        }
+      },
+      "dense_measurements": [
+        {
+          "module": "transformer.h.0.attn.c_proj",
+          "native_transpose": true,
+          "relative_residual_with_native_orientation": 8.423878267328598e-08,
+          "relative_residual_assuming_linear": 1.3558792269348954
+        },
+        {
+          "module": "lm_head",
+          "native_transpose": false,
+          "relative_residual_with_native_orientation": 1.265494735120903e-07,
+          "relative_residual_assuming_linear": 1.265494735120903e-07
+        }
+      ],
+      "refusal": null,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "delta = (B_float64 @ A_float64) * scale; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 683,
+              "sha256": "ea939a78ece6fe3d943d013e505cf5614aa10d91d0431b38703b757b9157f14b"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20424,
+              "sha256": "ba7c15114779d1f2f482e0c8feeeaaffea10b22d3ec252e991e8856a77095356"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1223,
+              "sha256": "e7da825a0c545f1561dec80a974532b84185bae1bd689888d1b954266c52eaeb"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1104,
+              "sha256": "914d824b7e448daedd807cb7cfeb7ea7ed9996202d7b4a44af59d698acfe51af"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 683,
+              "sha256": "ea939a78ece6fe3d943d013e505cf5614aa10d91d0431b38703b757b9157f14b"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20424,
+              "sha256": "dd289922f09eb993ce73bf16494dd0e0ac767003cd6f98833ec81b9376c4a96a"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 2,
+          "checked_tensors": 14,
+          "adapted_elements": 752,
+          "intended_nonzero_elements": 752,
+          "changed_adapted_elements": 752,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "lm_head",
+            "weight": "lm_head.weight",
+            "shape": [
+              31,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 496,
+            "intended_nonzero_elements": 496,
+            "changed_elements": 496,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "norms": {
+              "delta": 0.09260055523691131,
+              "observed": 0.09260055511814194,
+              "residual": 1.1718551512158365e-08,
+              "base_cast_drift": 0.0
+            },
+            "relative_residual": 1.2654947351209034e-07,
+            "observed_to_intended_norm": 0.9999999987174011,
+            "projection_gain": 0.9999999987173932,
+            "cosine_similarity": 0.9999999999999921,
+            "reference_merge_mismatches": 76,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 30,
+              "column": 15,
+              "base": -0.06159847974777222,
+              "cast_base": -0.06159847974777222,
+              "intended_delta": -0.001229558648559101,
+              "merged": -0.06282804161310196,
+              "observed_delta": -0.0012295618653297424,
+              "residual": -3.216770641523148e-09,
+              "reference_merged": -0.06282804161310196
+            }
+          },
+          {
+            "module": "transformer.h.0.attn.c_proj",
+            "weight": "transformer.h.0.attn.c_proj.weight",
+            "shape": [
+              16,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 256,
+            "intended_nonzero_elements": 256,
+            "changed_elements": 256,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "norms": {
+              "delta": 0.07757429731240731,
+              "observed": 0.07757429654483178,
+              "residual": 0.10518137826996457,
+              "base_cast_drift": 0.0
+            },
+            "relative_residual": 1.3558792269348956,
+            "observed_to_intended_norm": 0.9999999901052854,
+            "projection_gain": 0.08079575108850055,
+            "cosine_similarity": 0.08079575188795146,
+            "reference_merge_mismatches": 244,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 13,
+              "column": 6,
+              "base": -0.004062463995069265,
+              "cast_base": -0.004062463995069265,
+              "intended_delta": 0.009806168482561162,
+              "merged": -0.009965295903384686,
+              "observed_delta": -0.00590283190831542,
+              "residual": -0.015709000390876582,
+              "reference_merged": 0.00574370427057147
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    },
+    {
+      "case": {
+        "name": "imagegpt-linear-head",
+        "kind": "linear-head",
+        "model_type": "imagegpt",
+        "saved_fan_in_fan_out": false,
+        "native_module_orientations": {
+          "lm_head": false
+        }
+      },
+      "dense_measurements": [
+        {
+          "module": "lm_head",
+          "native_transpose": false,
+          "relative_residual_with_native_orientation": 1.4557612707556944e-07,
+          "relative_residual_assuming_linear": 1.4557612707556944e-07
+        }
+      ],
+      "refusal": null,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "delta = (B_float64 @ A_float64) * scale; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "round_to_merged_dtype(base_float64 + delta), ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved plain Linear LoRA pairs only; no architecture execution or quality estimate"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 683,
+              "sha256": "ea939a78ece6fe3d943d013e505cf5614aa10d91d0431b38703b757b9157f14b"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20424,
+              "sha256": "ba7c15114779d1f2f482e0c8feeeaaffea10b22d3ec252e991e8856a77095356"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1188,
+              "sha256": "92f28c14ac30f5392b41903c5ff0994f40aaa8345dbd6896cca5790169d42374"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 608,
+              "sha256": "63ac78546e075aebc860565b5dd5d6461237ed4ee0926d9dcb8b4ad2876efa0f"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 683,
+              "sha256": "ea939a78ece6fe3d943d013e505cf5614aa10d91d0431b38703b757b9157f14b"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 20424,
+              "sha256": "ed5758a024f91fbddcfab10dff146bba2e0af99cfbd6a6c6dddf9a18909d93c1"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 1,
+          "checked_tensors": 14,
+          "adapted_elements": 496,
+          "intended_nonzero_elements": 496,
+          "changed_adapted_elements": 496,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "lm_head",
+            "weight": "lm_head.weight",
+            "shape": [
+              31,
+              16
+            ],
+            "rank": 2,
+            "alpha": 4.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 496,
+            "intended_nonzero_elements": 496,
+            "changed_elements": 496,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "norms": {
+              "delta": 0.07518480106981709,
+              "observed": 0.0751848006913191,
+              "residual": 1.0945112154691105e-08,
+              "base_cast_drift": 0.0
+            },
+            "relative_residual": 1.4557612707556946e-07,
+            "observed_to_intended_norm": 0.9999999949657644,
+            "projection_gain": 0.9999999949657538,
+            "cosine_similarity": 0.9999999999999893,
+            "reference_merge_mismatches": 63,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 4,
+              "column": 13,
+              "base": -0.03228766471147537,
+              "cast_base": -0.03228766471147537,
+              "intended_delta": -0.0015852246609036058,
+              "merged": -0.03387288749217987,
+              "observed_delta": -0.0015852227807044983,
+              "residual": 1.8801991075179103e-09,
+              "reference_merged": -0.03387289121747017
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      }
+    }
+  ]
+}

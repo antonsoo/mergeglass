@@ -151,6 +151,54 @@ def test_alignment_across_rescaled_blocks_agrees_with_dense_reference(tmp_path: 
         assert layer["cosine_similarity"] == pytest.approx(expected_cosine, rel=1e-13)
 
 
+@pytest.mark.parametrize("model_type", ["gpt2", "openai-gpt", "imagegpt"])
+@pytest.mark.parametrize("witness", ["base-config", "adapter-mapping"])
+def test_global_linear_flag_cannot_hide_known_square_conv1d(
+    tmp_path: Path, model_type: str, witness: str
+) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    module = "transformer.h.0.attn.c_proj"
+    a = np.array([[1, 2]], dtype=np.float32)
+    b = np.array([[0.125], [0.5]], dtype=np.float32)
+    save_file({module + ".weight": np.ones((2, 2), dtype=np.float32)}, base / "model.safetensors")
+    save_file({module + ".weight": 1 + (b @ a).T.copy()}, merged / "model.safetensors")
+    save_file(
+        {
+            f"base_model.model.{module}.lora_A.weight": a,
+            f"base_model.model.{module}.lora_B.weight": b,
+        },
+        adapter / "adapter_model.safetensors",
+    )
+    change_config(adapter, fan_in_fan_out=False)
+    if witness == "base-config":
+        (base / "config.json").write_text(json.dumps({"model_type": model_type}))
+        base_input = base
+    else:
+        library_name = "openai" if model_type == "openai-gpt" else model_type
+        change_config(
+            adapter,
+            auto_mapping={
+                "parent_library": f"transformers.models.{library_name}.modeling_{library_name}"
+            },
+        )
+        base_input = base / "model.safetensors"
+    with pytest.raises(AuditError, match="Conv1D.*per-module orientation"):
+        audit(base_input, adapter, merged)
+
+
+def test_known_conv1d_architecture_keeps_its_linear_head_supported(tmp_path: Path) -> None:
+    base, adapter, merged = fixture(tmp_path)
+    (base / "config.json").write_text(json.dumps({"model_type": "gpt2"}))
+    change_config(
+        adapter,
+        auto_mapping={"parent_library": "transformers.models.gpt2.modeling_gpt2"},
+    )
+    # Ordinary Linear paths must remain usable even when the same architecture
+    # also contains Conv1D modules. The native study checks actual lm_head exports.
+    report = audit(base, adapter, merged)
+    assert report["layers"][0]["relative_residual"] == 0
+
+
 @pytest.mark.parametrize(
     "option,value",
     [
