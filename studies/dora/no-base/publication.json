@@ -1,0 +1,98 @@
+{
+  "source_commit": "0185bce474256441f8c84fa3bcdc2ee67190e6ef",
+  "method": "immutable public GitHub bytes equal local git blobs",
+  "files_verified": 18,
+  "files": [
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 2771,
+      "sha256": "5555eb98bacc9c056271c87c5c0ac6f79a66e784f9e2cae910fea3c4890f41d0"
+    },
+    {
+      "file": "README.md",
+      "bytes": 14747,
+      "sha256": "114eb1a7d248e9c4b061c13e23df2d8630943ad4a4a02d73a70a067a54a024ba"
+    },
+    {
+      "file": "docs/dora-rows.md",
+      "bytes": 6722,
+      "sha256": "9d8601a573c1c9655e9bf6919f0b0c86f2e0a13b2fdcdc5b0b06e3dc22b5676c"
+    },
+    {
+      "file": "docs/dora-without-base.md",
+      "bytes": 6164,
+      "sha256": "2cfcecfe417563773c0f89a322ea0ef58edcab3f6e60ada1fa18a928648e78e5"
+    },
+    {
+      "file": "src/mergeglass/__init__.py",
+      "bytes": 258,
+      "sha256": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23"
+    },
+    {
+      "file": "src/mergeglass/adapter.py",
+      "bytes": 8033,
+      "sha256": "dd0cd2eb2be8da457c4e4c0a2713ec4b8d4776e6443f5b4ec398e26323cb7725"
+    },
+    {
+      "file": "src/mergeglass/cli.py",
+      "bytes": 12072,
+      "sha256": "2026a96f14ad79726c148def9620d2c13f703d1b541cbc22f8d6af059ee612e7"
+    },
+    {
+      "file": "src/mergeglass/dora_norms.py",
+      "bytes": 4781,
+      "sha256": "f7ef86ad2438c664042861625f64fae1832f342d6e00f94b4c2e2302462c8ef7"
+    },
+    {
+      "file": "src/mergeglass/dora_rows.py",
+      "bytes": 6556,
+      "sha256": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c"
+    },
+    {
+      "file": "studies/dora/no-base/installed-310.json",
+      "bytes": 843,
+      "sha256": "dcffc4b3a0918658597f2377f658ab0cf6d77e2d39d968d1d9bc0d0a6ae6f52b"
+    },
+    {
+      "file": "studies/dora/no-base/installed-315.json",
+      "bytes": 841,
+      "sha256": "6d432fecabb28e4630c3f7d373db0784925c4de5d75265a4835219a0586347ef"
+    },
+    {
+      "file": "studies/dora/no-base/norm-observations.json.gz",
+      "bytes": 118202,
+      "sha256": "b717f51d89bdf68704d9641054b322c235c2ebeb2eb6547d19dfed70125172b1"
+    },
+    {
+      "file": "studies/dora/no-base/streaming.json.gz",
+      "bytes": 1340,
+      "sha256": "410ea3105ff06a7bccd07b925b624c39fb16010e8a11fbcea55dc21ef2b79e34"
+    },
+    {
+      "file": "studies/dora/no-base/verification.json",
+      "bytes": 3793,
+      "sha256": "24aeaabd5016ed5f40f234e471d1e50c148bd0b984c5ceef73977c8e3c9daeb8"
+    },
+    {
+      "file": "studies/dora/norms_without_base.py",
+      "bytes": 3464,
+      "sha256": "3b5023a54438562b773a3e26590e66a8a4034923d32e6210b3b043cffff43cbf"
+    },
+    {
+      "file": "studies/dora/rows/publication.json",
+      "bytes": 4530,
+      "sha256": "c1cd5b05f03cc3b58d921ff083531a9d8ab2a1cbdcd2cd3a31ff051252549232"
+    },
+    {
+      "file": "studies/dora/streaming.py",
+      "bytes": 7190,
+      "sha256": "7956a15f3fcfb3f220ae26757e6c39a36bf59970545028b89a5a301855bc5b48"
+    },
+    {
+      "file": "tests/test_dora_norms.py",
+      "bytes": 7381,
+      "sha256": "8a2c0be5afd6545fee4c5002dd2656c09a437787f783bf4e13b8281a8977065d"
+    }
+  ],
+  "registry_release": "not performed"
+}
