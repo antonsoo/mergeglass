@@ -42,6 +42,8 @@ probability total variation was 0.000001612, 0.00326107 and 0.02337044, respecti
 These short probes
 compare numerical behavior, **not accuracy or free-running generation**.
 [Runtime settings, original token IDs and complete results](studies/forward/README.md).
+With identical named weights, switching the attention path also changes some
+BF16 next-token choices. [Matched eager/SDPA comparison](studies/forward/attention.md).
 
 ## Try the recorded example
 

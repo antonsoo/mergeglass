@@ -30,6 +30,18 @@ def sha(path: Path) -> str:
     return digest.hexdigest()
 
 
+def state_sha(model: torch.nn.Module) -> str:
+    """Hash named in-memory values, not just files the loader was given."""
+    digest = hashlib.sha256()
+    for name, tensor in sorted(model.state_dict().items()):
+        header = [name, str(tensor.dtype), list(tensor.shape)]
+        digest.update(json.dumps(header, separators=(",", ":")).encode() + b"\n")
+        raw = tensor.detach().cpu().contiguous().view(torch.uint8).reshape(-1).numpy()
+        for start in range(0, len(raw), 1024 * 1024):
+            digest.update(raw[start : start + 1024 * 1024].tobytes())
+    return digest.hexdigest()
+
+
 def compare(reference_path: Path, candidate_path: Path) -> dict[str, Any]:
     reference = torch.from_numpy(np.load(reference_path, allow_pickle=False)).double()
     candidate = torch.from_numpy(np.load(candidate_path, allow_pickle=False)).double()
@@ -64,6 +76,7 @@ def main() -> None:
     parser.add_argument("community", type=Path, help="existing pinned community merge artifacts")
     parser.add_argument("directory", type=Path, help="throwaway logits/output directory")
     parser.add_argument("out", type=Path, help="small JSON receipt, not full logits")
+    parser.add_argument("--attention", choices=("eager", "sdpa"), default="eager")
     args = parser.parse_args()
     root, cache = args.community, args.directory
     cache.mkdir(parents=True, exist_ok=True)
@@ -107,13 +120,15 @@ def main() -> None:
                 dtype=dtype,
                 local_files_only=True,
                 trust_remote_code=False,
-                attn_implementation="eager",
+                attn_implementation=args.attention,
             )
             if kind == "wrapped":
                 model = PeftModel.from_pretrained(
                     model, root / "adapter", local_files_only=True, autocast_adapter_dtype=True
                 )
             model.eval()
+            assert model.config._attn_implementation == args.attention
+            fingerprint = state_sha(model)
             profile = f"{kind}-{precision}"
             adapter_dtypes = sorted(
                 {
@@ -144,7 +159,14 @@ def main() -> None:
                             "repeated_forward_identical": True,
                         }
                     )
-            profiles.append({"name": profile, "adapter_dtypes": adapter_dtypes, "outputs": outputs})
+            profiles.append(
+                {
+                    "name": profile,
+                    "adapter_dtypes": adapter_dtypes,
+                    "model_state_sha256": fingerprint,
+                    "outputs": outputs,
+                }
+            )
             del model
             print(f"Captured and repeated {profile}: {len(probes)} probes", flush=True)
     comparisons = []
@@ -193,7 +215,7 @@ def main() -> None:
         "settings": {
             "device": "cpu",
             "threads": 1,
-            "attention": "eager",
+            "attention": args.attention,
             "use_cache": False,
             "eval": True,
             "add_special_tokens": False,

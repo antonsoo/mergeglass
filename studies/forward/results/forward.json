@@ -1,7 +1,7 @@
 {
   "scope": "numerical forward probes on authored text; not a task-quality evaluation",
   "community_merge_receipt_sha256": "14270b205d0b0ad7fc849f13bbcb576a50f598ef403014381ebfeca4aaa64ea9",
-  "script_sha256": "3aa16b2cb7592e88d56c939bc3a1a49eacbcb579d70b01f174327e3f0ab5f60f",
+  "script_sha256": "e56affbd07a533615470d4bfc3002e8871ac47056f7aece409d621cc793bd95f",
   "probes_source_sha256": "c82d38bb9b9e065d8a956a47be2d8b3e78312949aec268b4ff7152053b5057ba",
   "tokenizer": {
     "repository": "HuggingFaceTB/SmolLM2-135M",
@@ -218,6 +218,7 @@
     {
       "name": "base-f32",
       "adapter_dtypes": [],
+      "model_state_sha256": "657f327137b942353a97ef07e9c9a7969e9507f0dbf32e4c7372db5abdff2259",
       "outputs": [
         {
           "probe": "merge-explanation",
@@ -298,6 +299,7 @@
       "adapter_dtypes": [
         "torch.float32"
       ],
+      "model_state_sha256": "50245e0fb693c49b0b5d65cace022501a6e6a79581fcb74f68d7dbe40a05dbe6",
       "outputs": [
         {
           "probe": "merge-explanation",
@@ -376,6 +378,7 @@
     {
       "name": "merged-f32",
       "adapter_dtypes": [],
+      "model_state_sha256": "cee207f9b140bc46b82ba406f5b285ff3431579f9d43825353f63f4039edc40a",
       "outputs": [
         {
           "probe": "merge-explanation",
@@ -454,6 +457,7 @@
     {
       "name": "base-f16",
       "adapter_dtypes": [],
+      "model_state_sha256": "e9400ec0c3999e4ab4f7c78b2e36419751a8ca54730fab171233381f74c05fe2",
       "outputs": [
         {
           "probe": "merge-explanation",
@@ -534,6 +538,7 @@
       "adapter_dtypes": [
         "torch.float32"
       ],
+      "model_state_sha256": "09c690a166e75104e22e435d9bc1749bc014dbac042c9176f76b2dacbd48267c",
       "outputs": [
         {
           "probe": "merge-explanation",
@@ -612,6 +617,7 @@
     {
       "name": "merged-f16",
       "adapter_dtypes": [],
+      "model_state_sha256": "f29c0d2459ddec98877f5ba8a5fa2e34cd94b0ce77aa0f238d245ad4d0dbb842",
       "outputs": [
         {
           "probe": "merge-explanation",
@@ -690,6 +696,7 @@
     {
       "name": "base-bf16",
       "adapter_dtypes": [],
+      "model_state_sha256": "cd41432a9aafb2e509af4584cd7a95944d595efb408e470ca562417d5ef31550",
       "outputs": [
         {
           "probe": "merge-explanation",
@@ -770,6 +777,7 @@
       "adapter_dtypes": [
         "torch.float32"
       ],
+      "model_state_sha256": "914e1be7eb8bce9d0fd9b77254b115321474ef5161f1eea632831d8268afbc1f",
       "outputs": [
         {
           "probe": "merge-explanation",
@@ -848,6 +856,7 @@
     {
       "name": "merged-bf16",
       "adapter_dtypes": [],
+      "model_state_sha256": "c20a6a71c14833e5cd4094823e64bf8de625bfc93f801d863fcbb0a49fb8173a",
       "outputs": [
         {
           "probe": "merge-explanation",

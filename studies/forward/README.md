@@ -40,6 +40,11 @@ separate from the merge comparisons.
 
 ## Input and execution identity
 
+The table above uses eager attention. A separate [matched attention comparison](attention.md)
+runs the same named in-memory weights through SDPA, checks their identities and
+retains the differing outputs. The runtime path needs to remain explicit when
+interpreting a merge comparison.
+
 The [receipt](results/forward.json) retains exact probe text and token IDs,
 the revision/hash of the original tokenizer, all producer versions and settings,
 per-probe measurements, concrete changed top-1 token IDs, and hashes/shapes of
@@ -60,10 +65,10 @@ The wrapped profiles keep FP32 adapter factors. No chat template is inferred
 from the adapter. These choices make the comparison explicit; they do not
 establish instruction quality or behavior under another execution kernel.
 
-Every forward is repeated and must return bit-identical logits. The 36 original
-FP32/BF16 arrays also reproduce across independent processes, including after
-adding FP16 profiles. A separate NumPy calculation checks all 48 per-probe
-comparison measurements. This establishes observed reproducibility on this
+Every forward is repeated and must return bit-identical logits. All 54 eager
+arrays also reproduce across independent processes, including after adding
+in-memory fingerprints. A separate NumPy verifier checks all 48 per-probe
+comparison measurements and their summaries. This establishes observed reproducibility on this
 pinned runtime and host, rather than cross-platform numerical identity.
 
 ## Reproduce

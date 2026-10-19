@@ -1,0 +1,767 @@
+{
+  "eager_receipt_sha256": "0abd7f5f3375ddae9cef986b3dbd5c70036aab85a736d27e0a0fcdbd7ebf671b",
+  "sdpa_receipt_sha256": "6d9d337786ea01cfde5f823ed25dc419406c6b05ecf1469a0290fab9557a187b",
+  "comparison_script_sha256": "3e12ed616aa25765187884502c61915c08741a2e240c0e3c362eee190dc8fb93",
+  "scope": "same IDs, versions, dtypes and named model values; eager versus SDPA on CPU",
+  "independent_backend": "NumPy float64; no Torch/PEFT imports",
+  "numpy": "1.24.0",
+  "checked_logit_arrays": 108,
+  "checked_within_attention_measurements": 96,
+  "cases": [
+    {
+      "profile": "base-f32",
+      "identical_model_state_sha256": "657f327137b942353a97ef07e9c9a7969e9507f0dbf32e4c7372db5abdff2259",
+      "positions": 146,
+      "changed_top1_positions": 0,
+      "mean_probability_total_variation": 1.2950455317925338e-06,
+      "max_abs_logit_difference": 7.43865966796875e-05,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 3.719329833984375e-05,
+          "logit_rmse": 6.547969690716971e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.4623754209670676e-06,
+          "max_probability_total_variation": 2.4533665746486025e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 3.814697265625e-05,
+          "logit_rmse": 7.099411483682637e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.2823134823920572e-06,
+          "max_probability_total_variation": 4.598230797352011e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 7.43865966796875e-05,
+          "logit_rmse": 7.729492848846586e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.3375604430695822e-06,
+          "max_probability_total_variation": 3.596842359869944e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 5.14984130859375e-05,
+          "logit_rmse": 8.016203294029708e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 8.871153164841432e-07,
+          "max_probability_total_variation": 2.4237335263822605e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 4.291534423828125e-05,
+          "logit_rmse": 6.923646111008415e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.3509764735685604e-06,
+          "max_probability_total_variation": 1.9441227405045746e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 3.719329833984375e-05,
+          "logit_rmse": 6.476519109706011e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.558337764346063e-06,
+          "max_probability_total_variation": 2.586004673976157e-06,
+          "first_top1_changes": []
+        }
+      ]
+    },
+    {
+      "profile": "wrapped-f32",
+      "identical_model_state_sha256": "50245e0fb693c49b0b5d65cace022501a6e6a79581fcb74f68d7dbe40a05dbe6",
+      "positions": 146,
+      "changed_top1_positions": 0,
+      "mean_probability_total_variation": 1.3504816362332988e-06,
+      "max_abs_logit_difference": 4.863739013671875e-05,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 4.38690185546875e-05,
+          "logit_rmse": 6.96565964337199e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.3938149977054412e-06,
+          "max_probability_total_variation": 2.3489952386758774e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 4.1961669921875e-05,
+          "logit_rmse": 6.688120593198832e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.2570777889133509e-06,
+          "max_probability_total_variation": 2.3703587060776095e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 4.76837158203125e-05,
+          "logit_rmse": 6.498287394966974e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.4598759488791118e-06,
+          "max_probability_total_variation": 3.1648993255650234e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 4.863739013671875e-05,
+          "logit_rmse": 7.275738551399468e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.0802496674904405e-06,
+          "max_probability_total_variation": 3.2995749098147102e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 3.9577484130859375e-05,
+          "logit_rmse": 6.85588580533706e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.4717312662602898e-06,
+          "max_probability_total_variation": 2.290921762382731e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 3.814697265625e-05,
+          "logit_rmse": 6.662510774329066e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.5391088749721827e-06,
+          "max_probability_total_variation": 2.6786022722022387e-06,
+          "first_top1_changes": []
+        }
+      ]
+    },
+    {
+      "profile": "merged-f32",
+      "identical_model_state_sha256": "cee207f9b140bc46b82ba406f5b285ff3431579f9d43825353f63f4039edc40a",
+      "positions": 146,
+      "changed_top1_positions": 0,
+      "mean_probability_total_variation": 1.33909835421088e-06,
+      "max_abs_logit_difference": 4.673004150390625e-05,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 4.100799560546875e-05,
+          "logit_rmse": 7.238590605919385e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.4658655813428698e-06,
+          "max_probability_total_variation": 2.094847508164133e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 4.38690185546875e-05,
+          "logit_rmse": 6.9505490923540254e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.2320153979181308e-06,
+          "max_probability_total_variation": 3.145690504380682e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 4.673004150390625e-05,
+          "logit_rmse": 6.865109000159732e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.478607251303766e-06,
+          "max_probability_total_variation": 2.7571796029467316e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 4.291534423828125e-05,
+          "logit_rmse": 7.677633111813656e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 9.376987327439187e-07,
+          "max_probability_total_variation": 2.1346286904938045e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 3.62396240234375e-05,
+          "logit_rmse": 6.308555327188784e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.5529471670655833e-06,
+          "max_probability_total_variation": 2.6505054760661273e-06,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 4.00543212890625e-05,
+          "logit_rmse": 6.620045622165451e-06,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 1.514252932539642e-06,
+          "max_probability_total_variation": 2.7052604840244966e-06,
+          "first_top1_changes": []
+        }
+      ]
+    },
+    {
+      "profile": "base-f16",
+      "identical_model_state_sha256": "e9400ec0c3999e4ab4f7c78b2e36419751a8ca54730fab171233381f74c05fe2",
+      "positions": 146,
+      "changed_top1_positions": 0,
+      "mean_probability_total_variation": 0.002401150430372829,
+      "max_abs_logit_difference": 0.09027099609375,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.08984375,
+          "logit_rmse": 0.013789371218120117,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0028319875754448916,
+          "max_probability_total_variation": 0.005755778897431143,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.068359375,
+          "logit_rmse": 0.015210638076610411,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0024374007939952846,
+          "max_probability_total_variation": 0.007032843302659783,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.07421875,
+          "logit_rmse": 0.013630539209235253,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0024810778729824476,
+          "max_probability_total_variation": 0.004833919212497386,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.09027099609375,
+          "logit_rmse": 0.01941478501231412,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0016266711437809937,
+          "max_probability_total_variation": 0.006377236868375962,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.06640625,
+          "logit_rmse": 0.012780083024940023,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0025359082169517906,
+          "max_probability_total_variation": 0.006637431865822202,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.0546875,
+          "logit_rmse": 0.011524765897237735,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0026971350725145497,
+          "max_probability_total_variation": 0.00525960398988208,
+          "first_top1_changes": []
+        }
+      ]
+    },
+    {
+      "profile": "wrapped-f16",
+      "identical_model_state_sha256": "09c690a166e75104e22e435d9bc1749bc014dbac042c9176f76b2dacbd48267c",
+      "positions": 146,
+      "changed_top1_positions": 1,
+      "mean_probability_total_variation": 0.0024337249212606567,
+      "max_abs_logit_difference": 0.15625,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.07421875,
+          "logit_rmse": 0.018829167550955823,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0029208683345186685,
+          "max_probability_total_variation": 0.005243590142133872,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.080078125,
+          "logit_rmse": 0.017189711471476174,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.002673808968020913,
+          "max_probability_total_variation": 0.006717348175807094,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.0625,
+          "logit_rmse": 0.015588446828229458,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.00210400162244547,
+          "max_probability_total_variation": 0.00399740832217488,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.15625,
+          "logit_rmse": 0.02137081392438144,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.001997564073475251,
+          "max_probability_total_variation": 0.007776853298337952,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.078125,
+          "logit_rmse": 0.020289424866758877,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.002763263678178037,
+          "max_probability_total_variation": 0.005617919256670252,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.08984375,
+          "logit_rmse": 0.01887041175211968,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.002249028103289488,
+          "max_probability_total_variation": 0.004421809677910215,
+          "first_top1_changes": [
+            {
+              "position": 17,
+              "reference_token_id": 6850,
+              "candidate_token_id": 282
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": "merged-f16",
+      "identical_model_state_sha256": "f29c0d2459ddec98877f5ba8a5fa2e34cd94b0ce77aa0f238d245ad4d0dbb842",
+      "positions": 146,
+      "changed_top1_positions": 0,
+      "mean_probability_total_variation": 0.0024623146606957413,
+      "max_abs_logit_difference": 0.09765625,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.09765625,
+          "logit_rmse": 0.016820742305933823,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0026709250648784856,
+          "max_probability_total_variation": 0.004586784786021924,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.08984375,
+          "logit_rmse": 0.014780532234696601,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0022326343029248075,
+          "max_probability_total_variation": 0.0074283985711240804,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.0703125,
+          "logit_rmse": 0.01729862683368365,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0025609498430335916,
+          "max_probability_total_variation": 0.004625921149383924,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.083984375,
+          "logit_rmse": 0.01658415453712687,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0019704649827320974,
+          "max_probability_total_variation": 0.010365481676986144,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.081787109375,
+          "logit_rmse": 0.020209925847602634,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0030857743326671264,
+          "max_probability_total_variation": 0.006963150364062234,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.08203125,
+          "logit_rmse": 0.016166631497906397,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.0024891093160188116,
+          "max_probability_total_variation": 0.006500727666639461,
+          "first_top1_changes": []
+        }
+      ]
+    },
+    {
+      "profile": "base-bf16",
+      "identical_model_state_sha256": "cd41432a9aafb2e509af4584cd7a95944d595efb408e470ca562417d5ef31550",
+      "positions": 146,
+      "changed_top1_positions": 4,
+      "mean_probability_total_variation": 0.019021160793591802,
+      "max_abs_logit_difference": 0.8125,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.71875,
+          "logit_rmse": 0.1421091667005302,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.022971236852907174,
+          "max_probability_total_variation": 0.03575757876887761,
+          "first_top1_changes": [
+            {
+              "position": 8,
+              "reference_token_id": 28,
+              "candidate_token_id": 277
+            }
+          ]
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.8125,
+          "logit_rmse": 0.14893116142629406,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.01964727187740729,
+          "max_probability_total_variation": 0.055199995076407375,
+          "first_top1_changes": [
+            {
+              "position": 14,
+              "reference_token_id": 253,
+              "candidate_token_id": 260
+            }
+          ]
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.5625,
+          "logit_rmse": 0.1229840087777902,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.018809361947708696,
+          "max_probability_total_variation": 0.036746823030029026,
+          "first_top1_changes": [
+            {
+              "position": 11,
+              "reference_token_id": 20623,
+              "candidate_token_id": 314
+            }
+          ]
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.5625,
+          "logit_rmse": 0.12910345596099188,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.012322512755375156,
+          "max_probability_total_variation": 0.05467873757183969,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.40625,
+          "logit_rmse": 0.09727609532582893,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.019922762141074725,
+          "max_probability_total_variation": 0.044875227843861845,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.625,
+          "logit_rmse": 0.13849718959140955,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.02207042371975836,
+          "max_probability_total_variation": 0.035399034402296754,
+          "first_top1_changes": [
+            {
+              "position": 1,
+              "reference_token_id": 216,
+              "candidate_token_id": 2067
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": "wrapped-bf16",
+      "identical_model_state_sha256": "914e1be7eb8bce9d0fd9b77254b115321474ef5161f1eea632831d8268afbc1f",
+      "positions": 146,
+      "changed_top1_positions": 2,
+      "mean_probability_total_variation": 0.020257679925761326,
+      "max_abs_logit_difference": 0.78125,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.578125,
+          "logit_rmse": 0.1185797844131044,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.022708056356399817,
+          "max_probability_total_variation": 0.05121443894689812,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.62890625,
+          "logit_rmse": 0.14791764180842412,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.017634700359781798,
+          "max_probability_total_variation": 0.051688049064494465,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.505859375,
+          "logit_rmse": 0.10099257380734886,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.019264807526868183,
+          "max_probability_total_variation": 0.03441690951525017,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.78125,
+          "logit_rmse": 0.12860807331123347,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.014236993079268399,
+          "max_probability_total_variation": 0.03885926788402468,
+          "first_top1_changes": [
+            {
+              "position": 8,
+              "reference_token_id": 33,
+              "candidate_token_id": 34
+            }
+          ]
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.53125,
+          "logit_rmse": 0.1411936688997423,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.023260030317794434,
+          "max_probability_total_variation": 0.04760856277920075,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.576171875,
+          "logit_rmse": 0.11107148472505374,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.026371507788815515,
+          "max_probability_total_variation": 0.06980241115918163,
+          "first_top1_changes": [
+            {
+              "position": 21,
+              "reference_token_id": 2522,
+              "candidate_token_id": 12766
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": "merged-bf16",
+      "identical_model_state_sha256": "c20a6a71c14833e5cd4094823e64bf8de625bfc93f801d863fcbb0a49fb8173a",
+      "positions": 146,
+      "changed_top1_positions": 5,
+      "mean_probability_total_variation": 0.019515328763690665,
+      "max_abs_logit_difference": 0.93359375,
+      "measurements": [
+        {
+          "probe": "merge-explanation",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.5625,
+          "logit_rmse": 0.10504849266510846,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.02061741415696218,
+          "max_probability_total_variation": 0.033869843834989456,
+          "first_top1_changes": []
+        },
+        {
+          "probe": "python-function",
+          "positions": 25,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.93359375,
+          "logit_rmse": 0.1914813347251389,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.016450743841634377,
+          "max_probability_total_variation": 0.03665061797612183,
+          "first_top1_changes": [
+            {
+              "position": 11,
+              "reference_token_id": 253,
+              "candidate_token_id": 260
+            }
+          ]
+        },
+        {
+          "probe": "calendar-reasoning",
+          "positions": 22,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.625,
+          "logit_rmse": 0.09194145969268348,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.020400306949163595,
+          "max_probability_total_variation": 0.033583848388094514,
+          "first_top1_changes": [
+            {
+              "position": 10,
+              "reference_token_id": 8567,
+              "candidate_token_id": 582
+            }
+          ]
+        },
+        {
+          "probe": "table-reading",
+          "positions": 30,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.703125,
+          "logit_rmse": 0.14264646204274642,
+          "changed_top1_positions": 2,
+          "mean_probability_total_variation": 0.016281202393886217,
+          "max_probability_total_variation": 0.06073537736586713,
+          "first_top1_changes": [
+            {
+              "position": 8,
+              "reference_token_id": 34,
+              "candidate_token_id": 33
+            },
+            {
+              "position": 14,
+              "reference_token_id": 34,
+              "candidate_token_id": 33
+            }
+          ]
+        },
+        {
+          "probe": "checkpoint-handling",
+          "positions": 20,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.6875,
+          "logit_rmse": 0.137653098260286,
+          "changed_top1_positions": 1,
+          "mean_probability_total_variation": 0.02584168516948197,
+          "max_probability_total_variation": 0.03466528292055282,
+          "first_top1_changes": [
+            {
+              "position": 10,
+              "reference_token_id": 601,
+              "candidate_token_id": 260
+            }
+          ]
+        },
+        {
+          "probe": "conversation-format",
+          "positions": 24,
+          "vocabulary": 49152,
+          "max_abs_logit_difference": 0.5625,
+          "logit_rmse": 0.11713939177549214,
+          "changed_top1_positions": 0,
+          "mean_probability_total_variation": 0.019519063393587426,
+          "max_probability_total_variation": 0.03398334903343045,
+          "first_top1_changes": []
+        }
+      ]
+    }
+  ]
+}
