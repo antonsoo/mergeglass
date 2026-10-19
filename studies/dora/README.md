@@ -12,6 +12,12 @@ The [baseline CLI replay](results/before.json), run from source commit
 The implementation is now available in public source. [All changed public files](results/publication.json)
 match the verified local commit. No registry release or deployment accompanies it.
 
+The current source also exposes full-row norm factors, signed-reference
+direction cosines and zero-row counts. [Interpretation and closed-form controls](../../docs/dora-rows.md)
+explain why nearly parallel rows can still have the wrong learned norm.
+[`row_diagnostics.py`](row_diagnostics.py) independently checks these observations
+on the retained native and public inputs using dense PyTorch operations.
+
 ## What the native producer establishes
 
 `produce.py` uses the pinned [PEFT study environment](../native-peft/requirements.txt).

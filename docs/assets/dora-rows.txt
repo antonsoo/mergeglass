@@ -1,0 +1,20 @@
+Mergeglass | saved DoRA merge audit
+
+DoRA reference includes learned magnitudes and row-normalized directions.
+Counts, gain and residual use the complete weight update, not B @ A alone.
+
+Adapted matrices: 3 (F32: 3).
+Matrix states: 2 observed; 1 with no observed update.
+Zero-reference matrices: 0 unchanged; 0 changed.
+Gain range: 0..0.9918; relative residual range: 0.2302..1.
+
+Of 168 nonzero intended updates, 40 are unchanged (23.81%).
+Those unchanged entries contain 2.211% of the reference squared norm.
+DoRA full-row norm factor (saved / |m|): 0.58632906..1.5554567; 17 nonzero row pairs.
+Full-row direction cosine: 1..1; 17 nonzero row pairs.
+Nonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 4.
+Relative error = ||observed change - intended update|| / ||intended update||.
+Gain = projection of the observed change onto the intended update (ideal 1).
+Checked 4 tensors; 0 unadapted tensor(s) changed.
+Equal weights alone cannot tell rounding from an omitted adapter.
+This measures saved weights, not model quality.

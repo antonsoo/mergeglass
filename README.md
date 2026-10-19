@@ -121,6 +121,13 @@ A controlled FP32 merge that drops magnitudes changes nearly every entry but
 has relative residuals of 0.114 to 0.220. These are saved-weight measurements, not
 model-quality scores or proof of the original training base.
 
+The current source also separates **full-row norm factors and directions**.
+In the native plain-LoRA control, directions remain nearly parallel to the DoRA
+reference while row norms range from 0.5863 to 1.555 times the learned target;
+four zero targets are saved nonzero. Zero rows stay explicit, and factored
+lengths retain observations beyond float64's ordinary norm range.
+[Closed-form controls and native row measurements](docs/dora-rows.md).
+
 ## Use your checkpoints
 
 ```sh

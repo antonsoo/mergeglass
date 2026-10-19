@@ -10,6 +10,7 @@ from typing import Any
 import numpy as np
 
 from .adapter import Pair, adapter_pairs
+from .dora_rows import DoraRows
 from .storage import FLOAT_DTYPES, AuditError, Checkpoint, FloatArray, Tensor, cast
 
 CONTRACT = {
@@ -161,6 +162,7 @@ def _layer(
     erased = 0
     mismatches = 0
     reference_overflows = 0
+    dora_rows = DoraRows() if pair.magnitude is not None else None
     worst: dict[str, Any] | None = None
     worst_size = -1.0
     for row in range(0, rows, block_rows):
@@ -178,6 +180,8 @@ def _layer(
         reference_weight = None
         if pair.magnitude is not None:
             reference_weight = _dora_reference(pair, original, delta, row)
+            assert dora_rows is not None
+            dora_rows.add(row, pair.magnitude.floats(row, count), reference_weight, after)
             delta = reference_weight - original
         observed = after - baseline
         residual = observed - delta
@@ -262,6 +266,7 @@ def _layer(
         "reference_merge_mismatches": mismatches,
         "reference_merge_overflows": reference_overflows,
         "largest_residual": worst,
+        **({"dora_rows": dora_rows.result()} if dora_rows is not None else {}),
     }
 
 
@@ -361,7 +366,20 @@ def audit(
     unchanged_reference.add(np.array([layer["norms"]["unchanged_reference"] for layer in layers]))
     return {
         "schema_version": 1,
-        "arithmetic": CONTRACT,
+        "arithmetic": {
+            **CONTRACT,
+            **(
+                {
+                    "dora_rows": (
+                        "saved full-row norm / abs(saved magnitude), retained in log2 form; "
+                        "direction cosine compares saved and float64 full-reference rows, "
+                        "including the magnitude sign; zero rows have no norm ratio or direction"
+                    )
+                }
+                if any("dora_rows" in layer for layer in layers)
+                else {}
+            ),
+        },
         "inputs": fingerprints,
         "settings": {"block_mib": block_mib, "max_adapter_mib": max_adapter_mib},
         "summary": {

@@ -220,3 +220,121 @@ def test_ordinary_lora_keeps_its_original_measurements(tmp_path: Path) -> None:
     # Schema-1 reports saved before this extension still render as plain LoRA.
     del explicit["layers"][0]["adapter_variant"]
     assert "saved LoRA merge audit" in render(explicit)
+
+
+def test_full_rows_separate_norm_loss_wrong_sign_and_direction_errors(tmp_path: Path) -> None:
+    # 3-4-5 triangles give independent lengths and direction cosines. The
+    # five saved rows have a half norm, reversed sign, unexpected nonzero,
+    # unexpected zero and rotated direction, respectively.
+    original = np.tile([3.0, 4.0], (5, 1))
+    after = np.array([[3.0, 4], [6, 8], [3, 4], [0, 0], [0, 10]])
+    paths = dora_fixture(
+        tmp_path,
+        original,
+        np.zeros((1, 2)),
+        np.zeros((5, 1)),
+        np.array([10.0, -10, 0, 5, 10]),
+        after,
+    )
+    report = audit(*paths)
+    rows = report["layers"][0]["dora_rows"]
+    assert rows["rows"] == 5
+    assert rows["negative_magnitude_rows"] == 1
+    assert rows["zero_magnitude_rows"] == rows["zero_saved_rows"] == 1
+    assert rows["nonzero_magnitude_zero_saved_rows"] == 1
+    assert rows["zero_magnitude_nonzero_saved_rows"] == 1
+    assert rows["norm_comparable_rows"] == rows["direction_comparable_rows"] == 3
+    assert rows["row_norm_factor_range"] == pytest.approx([0.5, 1])
+    assert rows["log2_row_norm_factor_range"] == pytest.approx([-1, 0], abs=1e-14)
+    assert rows["mean_absolute_log2_row_norm_factor"] == pytest.approx(1 / 3)
+    assert rows["largest_nonzero_log2_norm_error"]["row"] == 0
+    assert rows["direction_cosine_range"] == pytest.approx([-1, 1])
+    assert rows["mean_direction_cosine"] == pytest.approx(0.8 / 3)
+    for summary_only in [False, True]:
+        text = render(report, summary_only=summary_only)
+        assert "norm factor (saved / |m|): 0.5..1; 3 nonzero row pairs" in text
+        assert "direction cosine: -1..1; 3 nonzero row pairs" in text
+        assert "Nonzero magnitudes saved as zero rows: 1" in text
+    json.dumps(report, allow_nan=False)
+
+
+def test_all_zero_targets_keep_missing_ratios_and_directions_explicit(tmp_path: Path) -> None:
+    paths = dora_fixture(
+        tmp_path,
+        np.array([[3.0, 4]]),
+        np.zeros((1, 2)),
+        np.zeros((1, 1)),
+        np.zeros(1),
+        np.zeros((1, 2)),
+    )
+    rows = audit(*paths)["layers"][0]["dora_rows"]
+    assert rows["norm_comparable_rows"] == rows["direction_comparable_rows"] == 0
+    assert rows["row_norm_factor_range"] is None
+    assert rows["direction_cosine_range"] is None
+    assert rows["zero_magnitude_rows"] == rows["zero_saved_rows"] == 1
+    assert rows["zero_magnitude_nonzero_saved_rows"] == 0
+    assert rows["nonzero_magnitude_zero_saved_rows"] == 0
+
+
+def test_factored_norm_survives_an_unrepresentable_saved_row_length(tmp_path: Path) -> None:
+    original = np.full((1, 4), 1e308)
+    paths = dora_fixture(
+        tmp_path, original, np.zeros((1, 4)), np.zeros((1, 1)), np.array([1e308]), original
+    )
+    report = audit(*paths)
+    rows = report["layers"][0]["dora_rows"]
+    assert rows["row_norm_factor_range"] == pytest.approx([2, 2])
+    assert rows["direction_cosine_range"] == pytest.approx([1, 1])
+    worst = rows["largest_nonzero_log2_norm_error"]
+    assert worst["saved_row_norm"] is None
+    assert worst["saved_row_norm_scale"] == 1e308
+    assert worst["saved_row_norm_scaled_length"] == 2
+    json.dumps(report, allow_nan=False)
+
+
+@pytest.mark.parametrize("original,magnitude,sign", [(1.0, 5e-324, 1), (5e-324, 1e308, -1)])
+def test_log_norm_ratio_survives_unrepresentable_factors(
+    tmp_path: Path, original: float, magnitude: float, sign: int
+) -> None:
+    paths = dora_fixture(
+        tmp_path,
+        np.array([[original]]),
+        np.zeros((1, 1)),
+        np.zeros((1, 1)),
+        np.array([magnitude]),
+        np.array([[original]]),
+    )
+    report = audit(*paths)
+    rows = report["layers"][0]["dora_rows"]
+    assert rows["row_norm_factor_range"] == [None, None]
+    assert all(sign * value > 1073 for value in rows["log2_row_norm_factor_range"])
+    assert rows["direction_cosine_range"] == [1, 1]
+    assert "2^(" in render(report)
+    json.dumps(report, allow_nan=False)
+
+
+def test_largest_row_identity_survives_a_block_boundary(tmp_path: Path) -> None:
+    original = np.ones((70, 513))
+    after = original.copy()
+    after[35] *= 2
+    paths = dora_fixture(
+        tmp_path, original, np.zeros((1, 513)), np.zeros((70, 1)), np.full(70, np.sqrt(513)), after
+    )
+    rows = audit(*paths, block_mib=1)["layers"][0]["dora_rows"]
+    assert rows["largest_nonzero_log2_norm_error"]["row"] == 35
+    assert rows["largest_nonzero_log2_norm_error"]["row_norm_factor"] == pytest.approx(2)
+
+
+def test_existing_dora_reports_render_without_optional_row_diagnostics(tmp_path: Path) -> None:
+    paths = dora_fixture(
+        tmp_path,
+        np.array([[3.0, 4]]),
+        np.zeros((1, 2)),
+        np.zeros((1, 1)),
+        np.array([5.0]),
+        np.array([[3.0, 4]]),
+    )
+    report = audit(*paths)
+    del report["layers"][0]["dora_rows"]
+    assert "saved DoRA merge audit" in render(report)
+    assert "DoRA full-row norm factor" not in render(report)

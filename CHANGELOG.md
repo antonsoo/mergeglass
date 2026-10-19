@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+Add full-row DoRA norm factors, signed-reference direction cosines and explicit
+zero-row counts. Preserve logarithmic ratios when ordinary factors cannot fit
+float64, with a concrete original-row witness for the largest nonzero log-ratio
+error. Keep ordinary LoRA measurements and older report rendering compatible.
+Include 3-4-5 triangle, zero/sign, block-boundary and extreme-range controls,
+plus independent dense checks of 622,359 native/public rows.
+
 Audit native ordinary Linear DoRA adapters using their learned output-row
 magnitudes and the complete normalized weight update. Existing residual, gain,
 rounding and unchanged-entry measurements now apply to that full update.

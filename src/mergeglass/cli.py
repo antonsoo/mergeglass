@@ -14,6 +14,49 @@ from .audit import audit
 from .storage import AuditError
 
 
+def _factor_text(log2: float) -> str:
+    try:
+        value = 2.0**log2
+    except OverflowError:
+        return f"2^({log2:.4g})"
+    return f"{value:.8g}" if value else f"2^({log2:.4g})"
+
+
+def _dora_row_lines(layers: list[dict[str, Any]]) -> list[str]:
+    rows = [layer["dora_rows"] for layer in layers if "dora_rows" in layer]
+    if not rows:
+        return []
+    norms = [
+        row["log2_row_norm_factor_range"]
+        for row in rows
+        if row["log2_row_norm_factor_range"] is not None
+    ]
+    directions = [
+        row["direction_cosine_range"] for row in rows if row["direction_cosine_range"] is not None
+    ]
+    factors = (
+        f"{_factor_text(min(pair[0] for pair in norms))}.."
+        f"{_factor_text(max(pair[1] for pair in norms))}"
+        if norms
+        else "n/a"
+    )
+    cosines = (
+        f"{min(pair[0] for pair in directions):.8g}..{max(pair[1] for pair in directions):.8g}"
+        if directions
+        else "n/a"
+    )
+    return [
+        f"DoRA full-row norm factor (saved / |m|): {factors}; "
+        f"{sum(row['norm_comparable_rows'] for row in rows):,} nonzero row pairs.",
+        f"Full-row direction cosine: {cosines}; "
+        f"{sum(row['direction_comparable_rows'] for row in rows):,} nonzero row pairs.",
+        f"Nonzero magnitudes saved as zero rows: "
+        f"{sum(row['nonzero_magnitude_zero_saved_rows'] for row in rows):,}; "
+        f"zero magnitudes saved nonzero: "
+        f"{sum(row['zero_magnitude_nonzero_saved_rows'] for row in rows):,}.",
+    ]
+
+
 def _range(layers: list[dict[str, Any]], field: str) -> str:
     values = [layer[field] for layer in layers if layer[field] is not None]
     return f"{min(values):.4g}..{max(values):.4g}" if values else "n/a"
@@ -86,6 +129,7 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
         lines.append(
             f"Those unchanged entries contain {100 * energy:.4g}% of the reference squared norm."
         )
+    lines.extend(_dora_row_lines(report["layers"]))
     if not summary_only:
         lines.append("* Nonzero intended update elements equal to the dtype-cast base.")
     lines.extend(
