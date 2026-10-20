@@ -206,6 +206,35 @@ would occupy 244 MiB. Embedding B stays decoded while vocabulary-wide A is strea
 This extension is available from this repository's `main` branch. The registry
 package has not been released with this support; build or install the source.
 
+## GPT projections have a different saved layout
+
+The source checkout now audits standard GPT-2, OpenAI GPT and ImageGPT **Conv1D
+LoRA** weights, including mixed Linear heads and token embeddings. Their saved
+update is `(B @ A).T`. PEFT's single `fan_in_fan_out` flag can end up false after
+visiting a Linear head; the report instead records the declared model metadata
+and standard module path used for each transposed layout.
+
+The bundled native GPT-2 control changes all 256 entries in a square projection
+while using the wrong transpose. Its relative residual is 1.481; the correct
+FP32 projection's is below 0.000000071. The other five adapted matrices retain
+their native updates.
+
+```sh
+uv run --no-dev mergeglass examples/conv1d/base examples/conv1d/adapter examples/conv1d/wrong-square-orientation
+```
+
+![Actual audit of a native GPT-2 control: every square-projection weight changes, with the wrong direction and a large residual](docs/assets/conv1d.png)
+
+An unchanged public GPT-2 adapter supplies a larger replay: 48 adapted matrices,
+84,934,656 reference entries, native FP32/F16/BF16 merges and a separate
+wrong-transpose control. Complete dense measurements, scalar checks and the
+original-to-native base serialization are retained. An installed CLI also checks
+a 16,777,216-weight projection at about 37 MiB peak RSS with a 1 MiB block setting;
+its full binary64 update would occupy 128 MiB.
+[Supported layouts and input requirements](docs/conv1d.md),
+[native/public evidence and reproduction](studies/conv1d/README.md).
+This addition is local source work; no registry release accompanies it.
+
 ## Use your checkpoints
 
 ```sh
@@ -255,7 +284,7 @@ Base --> cast to merged dtype --> compare to merge --+
 - Complete modules saved through `modules_to_save`: absolute target mismatches,
   cast drift, error norms and original-base changes where comparable. Full
   module biases and integer/bool buffers are included.
-- Linear LoRA and DoRA, Embedding LoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
+- Linear LoRA and DoRA, standard GPT Conv1D LoRA, Embedding LoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
   and F64 storage. Finite [signed alpha coefficients](studies/signed-scale/README.md)
   keep their declared sign.
   Unknown variants and incomplete inventories refuse.
@@ -277,7 +306,7 @@ can differ from the binary64 reference.
 
 ## Memory and verification
 
-In a full audit, Linear A or Embedding B is decoded in full. The auditor reads
+In a full audit, Linear A or Embedding/Conv1D B is decoded in full. The auditor reads
 the other factor, DoRA magnitudes, optional base snapshots, full saved modules,
 base and merged in blocks
 and never allocates a full-layer dense update. NumPy and the Rust safetensors
@@ -314,17 +343,19 @@ on 65,280 of those deliberately chosen boundary cases.
   factors are absent, metadata alone cannot establish that a pair should have
   existed. Saved-module selectors without an observed tensor prefix are
   reported separately; no architecture or missing alias is inferred.
-- Quantized weights, Embedding DoRA, conv/Conv1D adapters, LoRA `bias`/`lora_bias`
+- Quantized weights, Embedding/Conv1D DoRA, convolutional adapters, LoRA `bias`/`lora_bias`
   options and base-mutating initializers are unsupported. Complex
   rank/alpha regexes and unknown configuration fields refuse explicitly.
 - DoRA uses one saved magnitude per output row and the supplied original base.
   It does not emulate producer-specific intermediate precision or reconstruct
   a different base used during merging. Zero directions are undefined even
   with a zero magnitude. Counts describe the declared binary64 reference.
-- A single saved orientation flag can hide mixed Conv1D targets. Known GPT-2,
-  OpenAI GPT and ImageGPT Conv1D paths refuse when their model metadata is
-  present. Tensor shapes alone cannot certify arbitrary module types.
-  [Native before/after evidence](studies/orientation/README.md).
+- Conv1D support requires declared standard GPT model metadata and exact supported
+  module paths. Missing/conflicting evidence, remote custom-model declarations
+  and unknown transposed layouts refuse. Tensor shapes alone cannot certify
+  arbitrary module types. Base and merged tensor names must still match exactly;
+  historical checkpoint serialization can require a verified native base save.
+  [Layout evidence and limits](docs/conv1d.md).
 - This is a numerical saved-weight inspection. It does not certify inference
   equivalence, generation quality, adapter provenance or deployment readiness.
 - All tensors are read and all artifact files are hashed. Huge checkpoints

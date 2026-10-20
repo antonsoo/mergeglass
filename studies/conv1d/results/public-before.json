@@ -1,0 +1,1088 @@
+{
+  "before": true,
+  "producer": {
+    "sources": [
+      {
+        "repo": "openai-community/gpt2",
+        "revision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
+        "file": "base-source/config.json",
+        "bytes": 665,
+        "sha256": "0daed7749b4f02b8f76240d5444551d7b08712dab4d0adb8239c56ba823bb7b4"
+      },
+      {
+        "repo": "openai-community/gpt2",
+        "revision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
+        "file": "base-source/model.safetensors",
+        "bytes": 548105171,
+        "sha256": "248dfc3911869ec493c76e65bf2fcf7f615828b0254c12b473182f0f81d3a707"
+      },
+      {
+        "repo": "openai-community/gpt2",
+        "revision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
+        "file": "base-source/README.md",
+        "bytes": 8092,
+        "sha256": "0fcd631078093c2aa1d93438b898320b8a1167784e2a1ab37b8016e9de8b3c2e"
+      },
+      {
+        "repo": "palsp/gpt2-lora",
+        "revision": "4235d59235a7269b34119195e63e1424d2a530e1",
+        "file": "adapter/adapter_config.json",
+        "bytes": 640,
+        "sha256": "f4d075dc4e75aee20280aa11ad0757cb6577dadd1980d5c98f49b9ef7ae2f14e"
+      },
+      {
+        "repo": "palsp/gpt2-lora",
+        "revision": "4235d59235a7269b34119195e63e1424d2a530e1",
+        "file": "adapter/adapter_model.safetensors",
+        "bytes": 9449344,
+        "sha256": "813ff47fd3e61ee447c75ce719e49ec2fb0d2635bf8cc3cd7590766ecde6c97b"
+      },
+      {
+        "repo": "palsp/gpt2-lora",
+        "revision": "4235d59235a7269b34119195e63e1424d2a530e1",
+        "file": "adapter/README.md",
+        "bytes": 1514,
+        "sha256": "a94fc2fa152954e19676ac79507b1b4806341412b67edb5d3c67af1c76958428"
+      }
+    ],
+    "native_base_serialization": {
+      "all_retained_values_equal": true,
+      "saved_to_original_names": {
+        "transformer.h.0.attn.c_attn.bias": "h.0.attn.c_attn.bias",
+        "transformer.h.0.attn.c_attn.weight": "h.0.attn.c_attn.weight",
+        "transformer.h.0.attn.c_proj.bias": "h.0.attn.c_proj.bias",
+        "transformer.h.0.attn.c_proj.weight": "h.0.attn.c_proj.weight",
+        "transformer.h.0.ln_1.bias": "h.0.ln_1.bias",
+        "transformer.h.0.ln_1.weight": "h.0.ln_1.weight",
+        "transformer.h.0.ln_2.bias": "h.0.ln_2.bias",
+        "transformer.h.0.ln_2.weight": "h.0.ln_2.weight",
+        "transformer.h.0.mlp.c_fc.bias": "h.0.mlp.c_fc.bias",
+        "transformer.h.0.mlp.c_fc.weight": "h.0.mlp.c_fc.weight",
+        "transformer.h.0.mlp.c_proj.bias": "h.0.mlp.c_proj.bias",
+        "transformer.h.0.mlp.c_proj.weight": "h.0.mlp.c_proj.weight",
+        "transformer.h.1.attn.c_attn.bias": "h.1.attn.c_attn.bias",
+        "transformer.h.1.attn.c_attn.weight": "h.1.attn.c_attn.weight",
+        "transformer.h.1.attn.c_proj.bias": "h.1.attn.c_proj.bias",
+        "transformer.h.1.attn.c_proj.weight": "h.1.attn.c_proj.weight",
+        "transformer.h.1.ln_1.bias": "h.1.ln_1.bias",
+        "transformer.h.1.ln_1.weight": "h.1.ln_1.weight",
+        "transformer.h.1.ln_2.bias": "h.1.ln_2.bias",
+        "transformer.h.1.ln_2.weight": "h.1.ln_2.weight",
+        "transformer.h.1.mlp.c_fc.bias": "h.1.mlp.c_fc.bias",
+        "transformer.h.1.mlp.c_fc.weight": "h.1.mlp.c_fc.weight",
+        "transformer.h.1.mlp.c_proj.bias": "h.1.mlp.c_proj.bias",
+        "transformer.h.1.mlp.c_proj.weight": "h.1.mlp.c_proj.weight",
+        "transformer.h.2.attn.c_attn.bias": "h.2.attn.c_attn.bias",
+        "transformer.h.2.attn.c_attn.weight": "h.2.attn.c_attn.weight",
+        "transformer.h.2.attn.c_proj.bias": "h.2.attn.c_proj.bias",
+        "transformer.h.2.attn.c_proj.weight": "h.2.attn.c_proj.weight",
+        "transformer.h.2.ln_1.bias": "h.2.ln_1.bias",
+        "transformer.h.2.ln_1.weight": "h.2.ln_1.weight",
+        "transformer.h.2.ln_2.bias": "h.2.ln_2.bias",
+        "transformer.h.2.ln_2.weight": "h.2.ln_2.weight",
+        "transformer.h.2.mlp.c_fc.bias": "h.2.mlp.c_fc.bias",
+        "transformer.h.2.mlp.c_fc.weight": "h.2.mlp.c_fc.weight",
+        "transformer.h.2.mlp.c_proj.bias": "h.2.mlp.c_proj.bias",
+        "transformer.h.2.mlp.c_proj.weight": "h.2.mlp.c_proj.weight",
+        "transformer.h.3.attn.c_attn.bias": "h.3.attn.c_attn.bias",
+        "transformer.h.3.attn.c_attn.weight": "h.3.attn.c_attn.weight",
+        "transformer.h.3.attn.c_proj.bias": "h.3.attn.c_proj.bias",
+        "transformer.h.3.attn.c_proj.weight": "h.3.attn.c_proj.weight",
+        "transformer.h.3.ln_1.bias": "h.3.ln_1.bias",
+        "transformer.h.3.ln_1.weight": "h.3.ln_1.weight",
+        "transformer.h.3.ln_2.bias": "h.3.ln_2.bias",
+        "transformer.h.3.ln_2.weight": "h.3.ln_2.weight",
+        "transformer.h.3.mlp.c_fc.bias": "h.3.mlp.c_fc.bias",
+        "transformer.h.3.mlp.c_fc.weight": "h.3.mlp.c_fc.weight",
+        "transformer.h.3.mlp.c_proj.bias": "h.3.mlp.c_proj.bias",
+        "transformer.h.3.mlp.c_proj.weight": "h.3.mlp.c_proj.weight",
+        "transformer.h.4.attn.c_attn.bias": "h.4.attn.c_attn.bias",
+        "transformer.h.4.attn.c_attn.weight": "h.4.attn.c_attn.weight",
+        "transformer.h.4.attn.c_proj.bias": "h.4.attn.c_proj.bias",
+        "transformer.h.4.attn.c_proj.weight": "h.4.attn.c_proj.weight",
+        "transformer.h.4.ln_1.bias": "h.4.ln_1.bias",
+        "transformer.h.4.ln_1.weight": "h.4.ln_1.weight",
+        "transformer.h.4.ln_2.bias": "h.4.ln_2.bias",
+        "transformer.h.4.ln_2.weight": "h.4.ln_2.weight",
+        "transformer.h.4.mlp.c_fc.bias": "h.4.mlp.c_fc.bias",
+        "transformer.h.4.mlp.c_fc.weight": "h.4.mlp.c_fc.weight",
+        "transformer.h.4.mlp.c_proj.bias": "h.4.mlp.c_proj.bias",
+        "transformer.h.4.mlp.c_proj.weight": "h.4.mlp.c_proj.weight",
+        "transformer.h.5.attn.c_attn.bias": "h.5.attn.c_attn.bias",
+        "transformer.h.5.attn.c_attn.weight": "h.5.attn.c_attn.weight",
+        "transformer.h.5.attn.c_proj.bias": "h.5.attn.c_proj.bias",
+        "transformer.h.5.attn.c_proj.weight": "h.5.attn.c_proj.weight",
+        "transformer.h.5.ln_1.bias": "h.5.ln_1.bias",
+        "transformer.h.5.ln_1.weight": "h.5.ln_1.weight",
+        "transformer.h.5.ln_2.bias": "h.5.ln_2.bias",
+        "transformer.h.5.ln_2.weight": "h.5.ln_2.weight",
+        "transformer.h.5.mlp.c_fc.bias": "h.5.mlp.c_fc.bias",
+        "transformer.h.5.mlp.c_fc.weight": "h.5.mlp.c_fc.weight",
+        "transformer.h.5.mlp.c_proj.bias": "h.5.mlp.c_proj.bias",
+        "transformer.h.5.mlp.c_proj.weight": "h.5.mlp.c_proj.weight",
+        "transformer.h.6.attn.c_attn.bias": "h.6.attn.c_attn.bias",
+        "transformer.h.6.attn.c_attn.weight": "h.6.attn.c_attn.weight",
+        "transformer.h.6.attn.c_proj.bias": "h.6.attn.c_proj.bias",
+        "transformer.h.6.attn.c_proj.weight": "h.6.attn.c_proj.weight",
+        "transformer.h.6.ln_1.bias": "h.6.ln_1.bias",
+        "transformer.h.6.ln_1.weight": "h.6.ln_1.weight",
+        "transformer.h.6.ln_2.bias": "h.6.ln_2.bias",
+        "transformer.h.6.ln_2.weight": "h.6.ln_2.weight",
+        "transformer.h.6.mlp.c_fc.bias": "h.6.mlp.c_fc.bias",
+        "transformer.h.6.mlp.c_fc.weight": "h.6.mlp.c_fc.weight",
+        "transformer.h.6.mlp.c_proj.bias": "h.6.mlp.c_proj.bias",
+        "transformer.h.6.mlp.c_proj.weight": "h.6.mlp.c_proj.weight",
+        "transformer.h.7.attn.c_attn.bias": "h.7.attn.c_attn.bias",
+        "transformer.h.7.attn.c_attn.weight": "h.7.attn.c_attn.weight",
+        "transformer.h.7.attn.c_proj.bias": "h.7.attn.c_proj.bias",
+        "transformer.h.7.attn.c_proj.weight": "h.7.attn.c_proj.weight",
+        "transformer.h.7.ln_1.bias": "h.7.ln_1.bias",
+        "transformer.h.7.ln_1.weight": "h.7.ln_1.weight",
+        "transformer.h.7.ln_2.bias": "h.7.ln_2.bias",
+        "transformer.h.7.ln_2.weight": "h.7.ln_2.weight",
+        "transformer.h.7.mlp.c_fc.bias": "h.7.mlp.c_fc.bias",
+        "transformer.h.7.mlp.c_fc.weight": "h.7.mlp.c_fc.weight",
+        "transformer.h.7.mlp.c_proj.bias": "h.7.mlp.c_proj.bias",
+        "transformer.h.7.mlp.c_proj.weight": "h.7.mlp.c_proj.weight",
+        "transformer.h.8.attn.c_attn.bias": "h.8.attn.c_attn.bias",
+        "transformer.h.8.attn.c_attn.weight": "h.8.attn.c_attn.weight",
+        "transformer.h.8.attn.c_proj.bias": "h.8.attn.c_proj.bias",
+        "transformer.h.8.attn.c_proj.weight": "h.8.attn.c_proj.weight",
+        "transformer.h.8.ln_1.bias": "h.8.ln_1.bias",
+        "transformer.h.8.ln_1.weight": "h.8.ln_1.weight",
+        "transformer.h.8.ln_2.bias": "h.8.ln_2.bias",
+        "transformer.h.8.ln_2.weight": "h.8.ln_2.weight",
+        "transformer.h.8.mlp.c_fc.bias": "h.8.mlp.c_fc.bias",
+        "transformer.h.10.attn.c_attn.bias": "h.10.attn.c_attn.bias",
+        "transformer.h.10.attn.c_attn.weight": "h.10.attn.c_attn.weight",
+        "transformer.h.10.attn.c_proj.bias": "h.10.attn.c_proj.bias",
+        "transformer.h.10.attn.c_proj.weight": "h.10.attn.c_proj.weight",
+        "transformer.h.10.ln_1.bias": "h.10.ln_1.bias",
+        "transformer.h.10.ln_1.weight": "h.10.ln_1.weight",
+        "transformer.h.10.ln_2.bias": "h.10.ln_2.bias",
+        "transformer.h.10.ln_2.weight": "h.10.ln_2.weight",
+        "transformer.h.10.mlp.c_fc.bias": "h.10.mlp.c_fc.bias",
+        "transformer.h.8.mlp.c_fc.weight": "h.8.mlp.c_fc.weight",
+        "transformer.h.8.mlp.c_proj.bias": "h.8.mlp.c_proj.bias",
+        "transformer.h.8.mlp.c_proj.weight": "h.8.mlp.c_proj.weight",
+        "transformer.h.9.attn.c_attn.bias": "h.9.attn.c_attn.bias",
+        "transformer.h.9.attn.c_attn.weight": "h.9.attn.c_attn.weight",
+        "transformer.h.9.attn.c_proj.bias": "h.9.attn.c_proj.bias",
+        "transformer.h.9.attn.c_proj.weight": "h.9.attn.c_proj.weight",
+        "transformer.h.9.ln_1.bias": "h.9.ln_1.bias",
+        "transformer.h.9.ln_1.weight": "h.9.ln_1.weight",
+        "transformer.h.9.ln_2.bias": "h.9.ln_2.bias",
+        "transformer.h.9.ln_2.weight": "h.9.ln_2.weight",
+        "transformer.h.9.mlp.c_fc.bias": "h.9.mlp.c_fc.bias",
+        "transformer.h.9.mlp.c_fc.weight": "h.9.mlp.c_fc.weight",
+        "transformer.h.9.mlp.c_proj.bias": "h.9.mlp.c_proj.bias",
+        "transformer.h.9.mlp.c_proj.weight": "h.9.mlp.c_proj.weight",
+        "transformer.wte.weight": "wte.weight",
+        "transformer.h.10.mlp.c_fc.weight": "h.10.mlp.c_fc.weight",
+        "transformer.h.10.mlp.c_proj.bias": "h.10.mlp.c_proj.bias",
+        "transformer.h.10.mlp.c_proj.weight": "h.10.mlp.c_proj.weight",
+        "transformer.h.11.attn.c_attn.bias": "h.11.attn.c_attn.bias",
+        "transformer.h.11.attn.c_attn.weight": "h.11.attn.c_attn.weight",
+        "transformer.h.11.attn.c_proj.bias": "h.11.attn.c_proj.bias",
+        "transformer.h.11.attn.c_proj.weight": "h.11.attn.c_proj.weight",
+        "transformer.h.11.ln_1.bias": "h.11.ln_1.bias",
+        "transformer.h.11.ln_1.weight": "h.11.ln_1.weight",
+        "transformer.h.11.ln_2.bias": "h.11.ln_2.bias",
+        "transformer.h.11.ln_2.weight": "h.11.ln_2.weight",
+        "transformer.h.11.mlp.c_fc.bias": "h.11.mlp.c_fc.bias",
+        "transformer.h.11.mlp.c_fc.weight": "h.11.mlp.c_fc.weight",
+        "transformer.h.11.mlp.c_proj.bias": "h.11.mlp.c_proj.bias",
+        "transformer.h.11.mlp.c_proj.weight": "h.11.mlp.c_proj.weight",
+        "transformer.ln_f.bias": "ln_f.bias",
+        "transformer.ln_f.weight": "ln_f.weight",
+        "transformer.wpe.weight": "wpe.weight"
+      },
+      "omitted_nonpersistent_causal_mask_buffers": [
+        {
+          "tensor": "h.0.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.1.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.10.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.11.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.2.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.3.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.4.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.5.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.6.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.7.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.8.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        },
+        {
+          "tensor": "h.9.attn.bias",
+          "shape": [
+            1,
+            1,
+            1024,
+            1024
+          ]
+        }
+      ],
+      "audited_base": "base",
+      "unchanged_downloaded_base": "base-source"
+    },
+    "training_provenance": "unknown; the public card does not identify the training dataset or base revision",
+    "merging": "locally produced with native PEFT; no claim about the adapter author's merged output",
+    "native_layouts": {
+      "transformer.h.0.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.0.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.0.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.0.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.1.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.1.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.1.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.1.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.2.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.2.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.2.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.2.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.3.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.3.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.3.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.3.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.4.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.4.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.4.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.4.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.5.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.5.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.5.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.5.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.6.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.6.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.6.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.6.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.7.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.7.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.7.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.7.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.8.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.8.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.8.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.8.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.9.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.9.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.9.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.9.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.10.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.10.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.10.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.10.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.11.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.11.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.11.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      },
+      "transformer.h.11.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 1.0,
+        "rank": 16
+      }
+    },
+    "cases": [
+      {
+        "name": "native-f32",
+        "native_merge": true,
+        "forward": {
+          "input_token_ids": [
+            [
+              15496,
+              11,
+              616,
+              1438,
+              318,
+              257,
+              1332,
+              13
+            ],
+            [
+              40,
+              716,
+              1016,
+              284,
+              466,
+              340,
+              0,
+              198
+            ]
+          ],
+          "prediction_positions": 16,
+          "max_logit_difference": 0.00011444091796875,
+          "argmax_changes": 0
+        }
+      },
+      {
+        "name": "wrong-square-orientation",
+        "native_merge": false
+      },
+      {
+        "name": "native-f16",
+        "native_merge": true,
+        "forward": {
+          "input_token_ids": [
+            [
+              15496,
+              11,
+              616,
+              1438,
+              318,
+              257,
+              1332,
+              13
+            ],
+            [
+              40,
+              716,
+              1016,
+              284,
+              466,
+              340,
+              0,
+              198
+            ]
+          ],
+          "prediction_positions": 16,
+          "max_logit_difference": 0.125,
+          "argmax_changes": 0
+        }
+      },
+      {
+        "name": "native-bf16",
+        "native_merge": true,
+        "forward": {
+          "input_token_ids": [
+            [
+              15496,
+              11,
+              616,
+              1438,
+              318,
+              257,
+              1332,
+              13
+            ],
+            [
+              40,
+              716,
+              1016,
+              284,
+              466,
+              340,
+              0,
+              198
+            ]
+          ],
+          "prediction_positions": 16,
+          "max_logit_difference": 1.25,
+          "argmax_changes": 0
+        }
+      }
+    ],
+    "script_sha256": "d1cde8b3caad4db33f19d6f549810e74429d883d9ccceda6c151c49ad28587d2",
+    "versions": {
+      "torch": "2.14.1+cpu",
+      "peft": "0.21.0",
+      "transformers": "5.20.1",
+      "numpy": "2.5.4",
+      "safetensors": "0.8.0"
+    },
+    "files": [
+      {
+        "file": "adapter/README.md",
+        "bytes": 1514,
+        "sha256": "a94fc2fa152954e19676ac79507b1b4806341412b67edb5d3c67af1c76958428"
+      },
+      {
+        "file": "adapter/adapter_config.json",
+        "bytes": 640,
+        "sha256": "f4d075dc4e75aee20280aa11ad0757cb6577dadd1980d5c98f49b9ef7ae2f14e"
+      },
+      {
+        "file": "adapter/adapter_model.safetensors",
+        "bytes": 9449344,
+        "sha256": "813ff47fd3e61ee447c75ce719e49ec2fb0d2635bf8cc3cd7590766ecde6c97b"
+      },
+      {
+        "file": "base/config.json",
+        "bytes": 961,
+        "sha256": "a7eca6e787314db64d5983260a07903b5a5eaabbaec28394aad9e71f640cc59a"
+      },
+      {
+        "file": "base/generation_config.json",
+        "bytes": 119,
+        "sha256": "11dfabafcf04853c5e4af4c976374ed19515813a4cada7ddb0a0ed018028e313"
+      },
+      {
+        "file": "base/model-00001-of-00007.safetensors",
+        "bytes": 63795864,
+        "sha256": "6ed34a446d213baa2426874dd99308c5c986065bf2140156c9e6825d36ed0bae"
+      },
+      {
+        "file": "base/model-00002-of-00007.safetensors",
+        "bytes": 59089848,
+        "sha256": "d609697bf747a600eaa657fc34216e6ac21de4ead0680b4817ff8e2332e90faa"
+      },
+      {
+        "file": "base/model-00003-of-00007.safetensors",
+        "bytes": 56705400,
+        "sha256": "367efdb3a0130e9ee89b3f85517b401f77b10121e1cac0625c3228a1785a9b95"
+      },
+      {
+        "file": "base/model-00004-of-00007.safetensors",
+        "bytes": 56705400,
+        "sha256": "96c622ac967f146c6c9c7b0146fb8eafd50b55d29297452dee1d425358654e40"
+      },
+      {
+        "file": "base/model-00005-of-00007.safetensors",
+        "bytes": 56705392,
+        "sha256": "bf07371d673afa03e062b35af08d2b8322a99435a30017ba694b4d723592effd"
+      },
+      {
+        "file": "base/model-00006-of-00007.safetensors",
+        "bytes": 154389640,
+        "sha256": "6c045b2a6818b38b5f1f690c0d74bcf2df23f225a2665087843bf497aef664d3"
+      },
+      {
+        "file": "base/model-00007-of-00007.safetensors",
+        "bytes": 50382632,
+        "sha256": "fd75e9b8cbbf872eee00bb9dc61d27c8d18d5a71d9c329246fb6fc79ad4bf013"
+      },
+      {
+        "file": "base/model.safetensors.index.json",
+        "bytes": 11053,
+        "sha256": "3d934baf3598bd8e813db4b194ebd9d3fc6cb47e391c3f22560214c032bd9f77"
+      },
+      {
+        "file": "base-source/README.md",
+        "bytes": 8092,
+        "sha256": "0fcd631078093c2aa1d93438b898320b8a1167784e2a1ab37b8016e9de8b3c2e"
+      },
+      {
+        "file": "base-source/config.json",
+        "bytes": 665,
+        "sha256": "0daed7749b4f02b8f76240d5444551d7b08712dab4d0adb8239c56ba823bb7b4"
+      },
+      {
+        "file": "base-source/model.safetensors",
+        "bytes": 548105171,
+        "sha256": "248dfc3911869ec493c76e65bf2fcf7f615828b0254c12b473182f0f81d3a707"
+      },
+      {
+        "file": "native-bf16/config.json",
+        "bytes": 962,
+        "sha256": "b97de25b331cf11a71e91c2d3de37d7408dcde4a212418e284d195bd92bda197"
+      },
+      {
+        "file": "native-bf16/generation_config.json",
+        "bytes": 119,
+        "sha256": "11dfabafcf04853c5e4af4c976374ed19515813a4cada7ddb0a0ed018028e313"
+      },
+      {
+        "file": "native-bf16/model-00001-of-00004.safetensors",
+        "bytes": 61445744,
+        "sha256": "3c9d5b34f54cec284473f5636ea2e7fc700a15565a3c26cd58c0eeb370240468"
+      },
+      {
+        "file": "native-bf16/model-00002-of-00004.safetensors",
+        "bytes": 61428176,
+        "sha256": "b8419d9dfc4e3fa3ad8ff6c603f40174c25ad9fb84d287695c2d34c0fbc8e7de"
+      },
+      {
+        "file": "native-bf16/model-00003-of-00004.safetensors",
+        "bytes": 77194888,
+        "sha256": "ea623f15829824ca373d53418addb4617c14788eff8f1119cb9430158becbb58"
+      },
+      {
+        "file": "native-bf16/model-00004-of-00004.safetensors",
+        "bytes": 48825808,
+        "sha256": "cc6539d40334e6892aced05834a4c58d930897fe0408ae3c1483439ca09df277"
+      },
+      {
+        "file": "native-bf16/model.safetensors.index.json",
+        "bytes": 11053,
+        "sha256": "ab728625bfe93f3db2613368b7378445f6b6ac31caea506a0e928f227632b80d"
+      },
+      {
+        "file": "native-f16/config.json",
+        "bytes": 961,
+        "sha256": "7b6f8928fdf2bd836e01b575c8a407f65e69d9e26248224f3afa170f6dee975a"
+      },
+      {
+        "file": "native-f16/generation_config.json",
+        "bytes": 119,
+        "sha256": "11dfabafcf04853c5e4af4c976374ed19515813a4cada7ddb0a0ed018028e313"
+      },
+      {
+        "file": "native-f16/model-00001-of-00004.safetensors",
+        "bytes": 61445688,
+        "sha256": "490a80e6ac816c1cea96b7a9d0543e1cabd6aa2e9fe8f2ca9b03e0bd9f641337"
+      },
+      {
+        "file": "native-f16/model-00002-of-00004.safetensors",
+        "bytes": 61428120,
+        "sha256": "f2440d953e120d48c633dbfb966638e03752733d87158414c9b5f7bbd871360b"
+      },
+      {
+        "file": "native-f16/model-00003-of-00004.safetensors",
+        "bytes": 77194888,
+        "sha256": "7d5289d0544a4080008059a089b1ab499bc4311be0939f4c455b79637cf59324"
+      },
+      {
+        "file": "native-f16/model-00004-of-00004.safetensors",
+        "bytes": 48825768,
+        "sha256": "03ec71046f59b726cc0e3dd7ace681e72f678a8f43c6d03f4d689037d6bff8f7"
+      },
+      {
+        "file": "native-f16/model.safetensors.index.json",
+        "bytes": 11053,
+        "sha256": "ab728625bfe93f3db2613368b7378445f6b6ac31caea506a0e928f227632b80d"
+      },
+      {
+        "file": "native-f32/config.json",
+        "bytes": 961,
+        "sha256": "a7eca6e787314db64d5983260a07903b5a5eaabbaec28394aad9e71f640cc59a"
+      },
+      {
+        "file": "native-f32/generation_config.json",
+        "bytes": 119,
+        "sha256": "11dfabafcf04853c5e4af4c976374ed19515813a4cada7ddb0a0ed018028e313"
+      },
+      {
+        "file": "native-f32/model-00001-of-00007.safetensors",
+        "bytes": 63795864,
+        "sha256": "4d4ff4a401f04d2d0d32443f83ef6bb77ba50d03a6bb54a4958f44ea89940b8e"
+      },
+      {
+        "file": "native-f32/model-00002-of-00007.safetensors",
+        "bytes": 59089848,
+        "sha256": "196d5d53c5a3a80ea2d31b69826f0dedc12c2d6ed5e1a198c631ee77783dcf46"
+      },
+      {
+        "file": "native-f32/model-00003-of-00007.safetensors",
+        "bytes": 56705400,
+        "sha256": "bc05d9b269da4e44eddb087d6fa208573b1bcc9acf13f5277c0c458402868e81"
+      },
+      {
+        "file": "native-f32/model-00004-of-00007.safetensors",
+        "bytes": 56705400,
+        "sha256": "45d90fcad6d2ba6146beb9dee83e5b5309843de3f0f5e4fb928e6090564d56dd"
+      },
+      {
+        "file": "native-f32/model-00005-of-00007.safetensors",
+        "bytes": 56705392,
+        "sha256": "1f16ad377d36421fb94f06bdf71c90092de7de6ccb169308a8e0dda625d80ac1"
+      },
+      {
+        "file": "native-f32/model-00006-of-00007.safetensors",
+        "bytes": 154389640,
+        "sha256": "6c045b2a6818b38b5f1f690c0d74bcf2df23f225a2665087843bf497aef664d3"
+      },
+      {
+        "file": "native-f32/model-00007-of-00007.safetensors",
+        "bytes": 50382632,
+        "sha256": "b8f0d022fc2d6bacfbb039321e79e217c2b2443cd22c8c17f1efc5a6b3031ba8"
+      },
+      {
+        "file": "native-f32/model.safetensors.index.json",
+        "bytes": 11053,
+        "sha256": "3d934baf3598bd8e813db4b194ebd9d3fc6cb47e391c3f22560214c032bd9f77"
+      },
+      {
+        "file": "wrong-square-orientation/config.json",
+        "bytes": 961,
+        "sha256": "a7eca6e787314db64d5983260a07903b5a5eaabbaec28394aad9e71f640cc59a"
+      },
+      {
+        "file": "wrong-square-orientation/generation_config.json",
+        "bytes": 119,
+        "sha256": "11dfabafcf04853c5e4af4c976374ed19515813a4cada7ddb0a0ed018028e313"
+      },
+      {
+        "file": "wrong-square-orientation/model-00001-of-00007.safetensors",
+        "bytes": 63795864,
+        "sha256": "cb0ab65e6169c71fb775dfcbe9a0008427b66f1fb828e24df2510f42682e2292"
+      },
+      {
+        "file": "wrong-square-orientation/model-00002-of-00007.safetensors",
+        "bytes": 59089848,
+        "sha256": "a29ac69f4cbcbf009efe142840c8de16d64ee6dc47c67b1304939616fdb29007"
+      },
+      {
+        "file": "wrong-square-orientation/model-00003-of-00007.safetensors",
+        "bytes": 56705400,
+        "sha256": "2be64d65fc9137efea6e519362411642e8c4874250145a8257d80ed2376a2ef2"
+      },
+      {
+        "file": "wrong-square-orientation/model-00004-of-00007.safetensors",
+        "bytes": 56705400,
+        "sha256": "1b2c0ee5a51e484576fafacfbc6a98e54c92a5b9a35596bfd838cedd2375a7df"
+      },
+      {
+        "file": "wrong-square-orientation/model-00005-of-00007.safetensors",
+        "bytes": 56705392,
+        "sha256": "df19d60f06f6cc7e51acb3067d00e12596ea0eae35523c05da954229c265b202"
+      },
+      {
+        "file": "wrong-square-orientation/model-00006-of-00007.safetensors",
+        "bytes": 154389640,
+        "sha256": "6c045b2a6818b38b5f1f690c0d74bcf2df23f225a2665087843bf497aef664d3"
+      },
+      {
+        "file": "wrong-square-orientation/model-00007-of-00007.safetensors",
+        "bytes": 50382632,
+        "sha256": "3e28d3bceb6b2896f85ef734d513fd22fffb965f66b5b076c96243f3c0536ce7"
+      },
+      {
+        "file": "wrong-square-orientation/model.safetensors.index.json",
+        "bytes": 11053,
+        "sha256": "3d934baf3598bd8e813db4b194ebd9d3fc6cb47e391c3f22560214c032bd9f77"
+      }
+    ]
+  },
+  "verifier_sha256": "cefc8006cea15735a4348ff9fa851bbd88b0318b0fa16b76c929b169e42e3e35",
+  "rounding_and_metric_verifier_sha256": "7bc785257e669a0a0b91926937439d606e59eea10a32b59ccb15730c88754756",
+  "auditor_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "f400ec4b08df8bd6eaa35d3140d24b7cb6b7e1e5e4d9b31f1fcc14816316f194",
+    "audit.py": "14bb9c1c2549d9ac1242f78970c07914a5f64be3700c44215bc3fc4ecc8479da",
+    "cli.py": "4d86739f825d6409cbe01450bd996be16efd26bc02e5b543bbefeb0b5db8673c",
+    "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "results": [
+    {
+      "case": {
+        "name": "native-f32",
+        "native_merge": true,
+        "forward": {
+          "input_token_ids": [
+            [
+              15496,
+              11,
+              616,
+              1438,
+              318,
+              257,
+              1332,
+              13
+            ],
+            [
+              40,
+              716,
+              1016,
+              284,
+              466,
+              340,
+              0,
+              198
+            ]
+          ],
+          "prediction_positions": 16,
+          "max_logit_difference": 0.00011444091796875,
+          "argmax_changes": 0
+        }
+      },
+      "refusal": "Unsupported adapter option: fan_in_fan_out"
+    },
+    {
+      "case": {
+        "name": "wrong-square-orientation",
+        "native_merge": false
+      },
+      "refusal": "Unsupported adapter option: fan_in_fan_out"
+    },
+    {
+      "case": {
+        "name": "native-f16",
+        "native_merge": true,
+        "forward": {
+          "input_token_ids": [
+            [
+              15496,
+              11,
+              616,
+              1438,
+              318,
+              257,
+              1332,
+              13
+            ],
+            [
+              40,
+              716,
+              1016,
+              284,
+              466,
+              340,
+              0,
+              198
+            ]
+          ],
+          "prediction_positions": 16,
+          "max_logit_difference": 0.125,
+          "argmax_changes": 0
+        }
+      },
+      "refusal": "Unsupported adapter option: fan_in_fan_out"
+    },
+    {
+      "case": {
+        "name": "native-bf16",
+        "native_merge": true,
+        "forward": {
+          "input_token_ids": [
+            [
+              15496,
+              11,
+              616,
+              1438,
+              318,
+              257,
+              1332,
+              13
+            ],
+            [
+              40,
+              716,
+              1016,
+              284,
+              466,
+              340,
+              0,
+              198
+            ]
+          ],
+          "prediction_positions": 16,
+          "max_logit_difference": 1.25,
+          "argmax_changes": 0
+        }
+      },
+      "refusal": "Unsupported adapter option: fan_in_fan_out"
+    }
+  ]
+}

@@ -19,6 +19,7 @@ def main() -> None:
     parser.add_argument("directory", type=Path)
     parser.add_argument("out", type=Path)
     parser.add_argument("--before", action="store_true")
+    parser.add_argument("--refused", action="store_true", help="check the historical refusal guard")
     args = parser.parse_args()
     torch.set_num_threads(1)
     receipt = json.loads((args.directory / "producer.json").read_text())
@@ -58,7 +59,7 @@ def main() -> None:
             report = audit(root / "base", root / "adapter", root / "merged")
         except AuditError as exc:
             refusal = str(exc)
-        should_refuse = case["kind"] == "mixed" and not args.before
+        should_refuse = case["kind"] == "mixed" and args.refused
         assert (refusal is not None) == should_refuse, (case["name"], refusal)
         if should_refuse:
             assert "Conv1D" in refusal
@@ -67,7 +68,14 @@ def main() -> None:
             for point in measurements:
                 layer = next(x for x in report["layers"] if x["module"] == point["module"])
                 assert (
-                    abs(layer["relative_residual"] - point["relative_residual_assuming_linear"])
+                    abs(
+                        layer["relative_residual"]
+                        - point[
+                            "relative_residual_assuming_linear"
+                            if args.before
+                            else "relative_residual_with_native_orientation"
+                        ]
+                    )
                     < 1e-8
                 )
         results.append(
@@ -79,6 +87,7 @@ def main() -> None:
             {
                 "producer": receipt,
                 "before": args.before,
+                "historical_refusal_guard": args.refused,
                 "verifier_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                 "auditor_modules": {
                     p.name: hashlib.sha256(p.read_bytes()).hexdigest()

@@ -1,0 +1,168 @@
+{
+  "synthetic": true,
+  "source_case": "gpt2-mixed",
+  "producer_script": "studies/conv1d/produce.py",
+  "producer_sha256": "79737fabda1a78418fe755a93a94bf8712cb0c07e3209bf434e4a5a3ce04c6fe",
+  "versions": {
+    "torch": "2.14.1+cpu",
+    "peft": "0.21.0",
+    "transformers": "5.20.1",
+    "numpy": "2.5.4",
+    "safetensors": "0.8.0"
+  },
+  "case": {
+    "name": "gpt2-mixed",
+    "losses": [
+      3.76171875,
+      3.6574437618255615,
+      3.60133957862854,
+      3.5322258472442627,
+      3.4380109310150146
+    ],
+    "native_layouts": {
+      "transformer.wte": {
+        "kind": "Embedding",
+        "transpose": false,
+        "scale": 4.0,
+        "rank": 4
+      },
+      "transformer.h.0.attn.c_attn": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 4.0,
+        "rank": 4
+      },
+      "transformer.h.0.attn.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 4.0,
+        "rank": 4
+      },
+      "transformer.h.0.mlp.c_fc": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": 5.65685424949238,
+        "rank": 2
+      },
+      "transformer.h.0.mlp.c_proj": {
+        "kind": "Conv1D",
+        "transpose": true,
+        "scale": -1.0,
+        "rank": 4
+      },
+      "lm_head": {
+        "kind": "Linear",
+        "transpose": false,
+        "scale": 4.0,
+        "rank": 4
+      }
+    },
+    "saved_fan_in_fan_out": false,
+    "square_control_weight": "transformer.h.0.attn.c_proj.weight",
+    "native_square_changed": 256,
+    "merges": [
+      {
+        "name": "correct-f32-safe-false",
+        "purpose": "native merge",
+        "max_forward_difference": 1.7881393432617188e-07,
+        "argmax_changes": 0,
+        "prediction_positions": 48
+      },
+      {
+        "name": "correct-f32-safe-true",
+        "purpose": "native merge",
+        "max_forward_difference": 1.7881393432617188e-07,
+        "argmax_changes": 0,
+        "prediction_positions": 48
+      },
+      {
+        "name": "correct-f16-safe-false",
+        "purpose": "native merge",
+        "max_forward_difference": 0.00048828125,
+        "argmax_changes": 0,
+        "prediction_positions": 48
+      },
+      {
+        "name": "correct-f16-safe-true",
+        "purpose": "native merge",
+        "max_forward_difference": 0.00048828125,
+        "argmax_changes": 0,
+        "prediction_positions": 48
+      },
+      {
+        "name": "correct-bf16-safe-false",
+        "purpose": "native merge",
+        "max_forward_difference": 0.005859375,
+        "argmax_changes": 0,
+        "prediction_positions": 48
+      },
+      {
+        "name": "correct-bf16-safe-true",
+        "purpose": "native merge",
+        "max_forward_difference": 0.0078125,
+        "argmax_changes": 1,
+        "prediction_positions": 48
+      },
+      {
+        "name": "wrong-square-orientation",
+        "purpose": "authored faulty conversion"
+      },
+      {
+        "name": "omitted-square",
+        "purpose": "authored faulty conversion"
+      }
+    ]
+  },
+  "files": [
+    {
+      "file": "adapter/adapter_config.json",
+      "bytes": 1400,
+      "sha256": "de8462d65ba5dbc68f06a31acd1ecd1b21ad006f1588c5cb91201ab975cd3436"
+    },
+    {
+      "file": "adapter/adapter_model.safetensors",
+      "bytes": 6168,
+      "sha256": "fde6aa4b3a39f540c43f0d59fa79d1d75bf9aa84edc105de0c79f0185295c76e"
+    },
+    {
+      "file": "base/config.json",
+      "bytes": 809,
+      "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+    },
+    {
+      "file": "base/model.safetensors",
+      "bytes": 19144,
+      "sha256": "07d02a6af6174c9c1c14c991cf35035dece00faa38bdbfe86beeb7f56845c1b0"
+    },
+    {
+      "file": "correct-f32-safe-false/config.json",
+      "bytes": 809,
+      "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+    },
+    {
+      "file": "correct-f32-safe-false/model.safetensors",
+      "bytes": 19144,
+      "sha256": "7e76dd4c5f0f5947084d1a1787aedd67e6a4f4a95daa1dd5ac529bb7d1690a54"
+    },
+    {
+      "file": "omitted-square/config.json",
+      "bytes": 809,
+      "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+    },
+    {
+      "file": "omitted-square/model.safetensors",
+      "bytes": 19144,
+      "sha256": "6f6c89dba0bdb48e744c9c972fa5a1ba24a247e3bbfaafb914e6970f675567d3"
+    },
+    {
+      "file": "wrong-square-orientation/config.json",
+      "bytes": 809,
+      "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+    },
+    {
+      "file": "wrong-square-orientation/model.safetensors",
+      "bytes": 19144,
+      "sha256": "efbc0c0640645f924e8bba49c1451f0c27bcee49e9d2e83faa0e6627893fd7e2"
+    }
+  ]
+}

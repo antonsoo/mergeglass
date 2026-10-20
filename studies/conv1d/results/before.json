@@ -1,0 +1,2301 @@
+{
+  "before": true,
+  "producer": {
+    "synthetic": true,
+    "training": "5 AdamW steps on seeded random token IDs; no pretrained model or task benchmark",
+    "seed": 20319,
+    "pythonhashseed": "0",
+    "script_sha256": "79737fabda1a78418fe755a93a94bf8712cb0c07e3209bf434e4a5a3ce04c6fe",
+    "versions": {
+      "torch": "2.14.1+cpu",
+      "peft": "0.21.0",
+      "transformers": "5.20.1",
+      "numpy": "2.5.4",
+      "safetensors": "0.8.0"
+    },
+    "cases": [
+      {
+        "name": "gpt2-mixed",
+        "losses": [
+          3.76171875,
+          3.6574437618255615,
+          3.60133957862854,
+          3.5322258472442627,
+          3.4380109310150146
+        ],
+        "native_layouts": {
+          "transformer.wte": {
+            "kind": "Embedding",
+            "transpose": false,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.attn.c_attn": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.attn.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.mlp.c_fc": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 5.65685424949238,
+            "rank": 2
+          },
+          "transformer.h.0.mlp.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": -1.0,
+            "rank": 4
+          },
+          "lm_head": {
+            "kind": "Linear",
+            "transpose": false,
+            "scale": 4.0,
+            "rank": 4
+          }
+        },
+        "saved_fan_in_fan_out": false,
+        "square_control_weight": "transformer.h.0.attn.c_proj.weight",
+        "native_square_changed": 256,
+        "merges": [
+          {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.005859375,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0078125,
+            "argmax_changes": 1,
+            "prediction_positions": 48
+          },
+          {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          }
+        ]
+      },
+      {
+        "name": "openai-gpt-mixed",
+        "losses": [
+          3.7815704345703125,
+          3.7203078269958496,
+          3.6526906490325928,
+          3.5766854286193848,
+          3.4911038875579834
+        ],
+        "native_layouts": {
+          "transformer.h.0.attn.c_attn": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.attn.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.mlp.c_fc": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 5.65685424949238,
+            "rank": 2
+          },
+          "transformer.h.0.mlp.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": -1.0,
+            "rank": 4
+          },
+          "lm_head": {
+            "kind": "Linear",
+            "transpose": false,
+            "scale": 4.0,
+            "rank": 4
+          }
+        },
+        "saved_fan_in_fan_out": false,
+        "square_control_weight": "transformer.h.0.attn.c_proj.weight",
+        "native_square_changed": 256,
+        "merges": [
+          {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00390625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00390625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          }
+        ]
+      },
+      {
+        "name": "imagegpt-mixed",
+        "losses": [
+          3.724013328552246,
+          3.6420235633850098,
+          3.576090097427368,
+          3.5025510787963867,
+          3.4144437313079834
+        ],
+        "native_layouts": {
+          "transformer.wte": {
+            "kind": "Embedding",
+            "transpose": false,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.attn.c_attn": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.attn.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.mlp.c_fc": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 5.65685424949238,
+            "rank": 2
+          },
+          "transformer.h.0.mlp.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": -1.0,
+            "rank": 4
+          },
+          "lm_head": {
+            "kind": "Linear",
+            "transpose": false,
+            "scale": 4.0,
+            "rank": 4
+          }
+        },
+        "saved_fan_in_fan_out": false,
+        "square_control_weight": "transformer.h.0.attn.c_proj.weight",
+        "native_square_changed": 256,
+        "merges": [
+          {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0009765625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0009765625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0078125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0078125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          }
+        ]
+      },
+      {
+        "name": "gpt2-cross",
+        "losses": [
+          3.7622525691986084,
+          3.674665689468384,
+          3.6066582202911377,
+          3.5262389183044434,
+          3.424579620361328
+        ],
+        "native_layouts": {
+          "transformer.wte": {
+            "kind": "Embedding",
+            "transpose": false,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.attn.c_attn": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.attn.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.crossattention.c_attn": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.crossattention.q_attn": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.crossattention.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.mlp.c_fc": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 5.65685424949238,
+            "rank": 2
+          },
+          "transformer.h.0.mlp.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": -1.0,
+            "rank": 4
+          },
+          "lm_head": {
+            "kind": "Linear",
+            "transpose": false,
+            "scale": 4.0,
+            "rank": 4
+          }
+        },
+        "saved_fan_in_fan_out": false,
+        "square_control_weight": "transformer.h.0.attn.c_proj.weight",
+        "native_square_changed": 256,
+        "merges": [
+          {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 2.384185791015625e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 2.384185791015625e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0009765625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.000732421875,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.005859375,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          }
+        ]
+      },
+      {
+        "name": "gpt2-bare",
+        "losses": [
+          0.9841572642326355,
+          0.9798877835273743,
+          0.9736661911010742,
+          0.9707803130149841,
+          0.9611225128173828
+        ],
+        "native_layouts": {
+          "h.0.attn.c_attn": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "h.0.attn.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "h.0.mlp.c_fc": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 5.65685424949238,
+            "rank": 2
+          },
+          "h.0.mlp.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": -1.0,
+            "rank": 4
+          }
+        },
+        "saved_fan_in_fan_out": true,
+        "square_control_weight": "h.0.attn.c_proj.weight",
+        "native_square_changed": 256,
+        "merges": [
+          {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 9.5367431640625e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 9.5367431640625e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.004638671875,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0419921875,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.041015625,
+            "argmax_changes": 1,
+            "prediction_positions": 48
+          },
+          {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          }
+        ]
+      },
+      {
+        "name": "gpt2-saved-head",
+        "losses": [
+          3.767310857772827,
+          3.6536011695861816,
+          3.570925235748291,
+          3.480902910232544,
+          3.3828132152557373
+        ],
+        "native_layouts": {
+          "transformer.wte": {
+            "kind": "Embedding",
+            "transpose": false,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.attn.c_attn": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.attn.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 4.0,
+            "rank": 4
+          },
+          "transformer.h.0.mlp.c_fc": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": 5.65685424949238,
+            "rank": 2
+          },
+          "transformer.h.0.mlp.c_proj": {
+            "kind": "Conv1D",
+            "transpose": true,
+            "scale": -1.0,
+            "rank": 4
+          }
+        },
+        "saved_fan_in_fan_out": true,
+        "square_control_weight": "transformer.h.0.attn.c_proj.weight",
+        "native_square_changed": 256,
+        "merges": [
+          {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 1.1920928955078125e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 1.1920928955078125e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00390625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00390625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          }
+        ]
+      }
+    ],
+    "files": [
+      {
+        "file": "example/adapter/adapter_config.json",
+        "bytes": 1400,
+        "sha256": "de8462d65ba5dbc68f06a31acd1ecd1b21ad006f1588c5cb91201ab975cd3436"
+      },
+      {
+        "file": "example/adapter/adapter_model.safetensors",
+        "bytes": 6168,
+        "sha256": "fde6aa4b3a39f540c43f0d59fa79d1d75bf9aa84edc105de0c79f0185295c76e"
+      },
+      {
+        "file": "example/base/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "example/base/model.safetensors",
+        "bytes": 19144,
+        "sha256": "07d02a6af6174c9c1c14c991cf35035dece00faa38bdbfe86beeb7f56845c1b0"
+      },
+      {
+        "file": "example/correct-f32-safe-false/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "example/correct-f32-safe-false/model.safetensors",
+        "bytes": 19144,
+        "sha256": "7e76dd4c5f0f5947084d1a1787aedd67e6a4f4a95daa1dd5ac529bb7d1690a54"
+      },
+      {
+        "file": "example/omitted-square/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "example/omitted-square/model.safetensors",
+        "bytes": 19144,
+        "sha256": "6f6c89dba0bdb48e744c9c972fa5a1ba24a247e3bbfaafb914e6970f675567d3"
+      },
+      {
+        "file": "example/wrong-square-orientation/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "example/wrong-square-orientation/model.safetensors",
+        "bytes": 19144,
+        "sha256": "efbc0c0640645f924e8bba49c1451f0c27bcee49e9d2e83faa0e6627893fd7e2"
+      },
+      {
+        "file": "gpt2-bare/adapter/adapter_config.json",
+        "bytes": 1283,
+        "sha256": "035858134b68eb352473ee5743e0660c043a618108ef7978f568bd0c6857fffe"
+      },
+      {
+        "file": "gpt2-bare/adapter/adapter_model.safetensors",
+        "bytes": 3768,
+        "sha256": "791512fd8bffeb0285fa5ad7e75d07a6dd48a9f7026ba07aa89a5a320b214013"
+      },
+      {
+        "file": "gpt2-bare/base/config.json",
+        "bytes": 803,
+        "sha256": "f3e51ab85147b7144d19f3f8cee9aae073fd27f2d67a001534ae34529aba33b3"
+      },
+      {
+        "file": "gpt2-bare/base/model-00001-of-00002.safetensors",
+        "bytes": 12848,
+        "sha256": "8961567a4a67963f142367e153383650e984e9a0b398b9dbbc7084390a5246fb"
+      },
+      {
+        "file": "gpt2-bare/base/model-00002-of-00002.safetensors",
+        "bytes": 3320,
+        "sha256": "5015650c5ab4a9df7cde9ff9f0ad31542634616c04520e68fd914a126968aec6"
+      },
+      {
+        "file": "gpt2-bare/base/model.safetensors.index.json",
+        "bytes": 1060,
+        "sha256": "54ac6373461ee0050233f541c1ae40bc2f05086df8c0559ba53f5e5a6ef638d5"
+      },
+      {
+        "file": "gpt2-bare/correct-bf16-safe-false/config.json",
+        "bytes": 804,
+        "sha256": "4921a2dbc86ce31326d1005b34a66f37812aa114faf71284ae13f632c4ab2ef1"
+      },
+      {
+        "file": "gpt2-bare/correct-bf16-safe-false/model.safetensors",
+        "bytes": 8712,
+        "sha256": "199f2d4ab8b16c191b79a9d8c7abc123528d2ebba00bc057befe8d3d05dc8042"
+      },
+      {
+        "file": "gpt2-bare/correct-bf16-safe-true/config.json",
+        "bytes": 804,
+        "sha256": "4921a2dbc86ce31326d1005b34a66f37812aa114faf71284ae13f632c4ab2ef1"
+      },
+      {
+        "file": "gpt2-bare/correct-bf16-safe-true/model.safetensors",
+        "bytes": 8712,
+        "sha256": "5c64b545379e6d30f003130ae56620e5f8ccc3c408c2b205e4153dd1ba52cc77"
+      },
+      {
+        "file": "gpt2-bare/correct-f16-safe-false/config.json",
+        "bytes": 803,
+        "sha256": "d45723df5fa1dee611698f38c32ce0173acef3b170d2f3d957914249ddfa2bf9"
+      },
+      {
+        "file": "gpt2-bare/correct-f16-safe-false/model.safetensors",
+        "bytes": 8696,
+        "sha256": "853bf5276fc376bd93e9694516837c4740c268298763fd42bf01afd5729b09f5"
+      },
+      {
+        "file": "gpt2-bare/correct-f16-safe-true/config.json",
+        "bytes": 803,
+        "sha256": "d45723df5fa1dee611698f38c32ce0173acef3b170d2f3d957914249ddfa2bf9"
+      },
+      {
+        "file": "gpt2-bare/correct-f16-safe-true/model.safetensors",
+        "bytes": 8696,
+        "sha256": "c5e9272fa885d6283726a8f07f56189ad8a61e8d8e39ffa8afaa82726cecd681"
+      },
+      {
+        "file": "gpt2-bare/correct-f32-safe-false/config.json",
+        "bytes": 803,
+        "sha256": "f3e51ab85147b7144d19f3f8cee9aae073fd27f2d67a001534ae34529aba33b3"
+      },
+      {
+        "file": "gpt2-bare/correct-f32-safe-false/model-00001-of-00002.safetensors",
+        "bytes": 12848,
+        "sha256": "a25d4c484d690ec1266a298f2ba4934e6556d3db5dfb1028fea267161e45a0b9"
+      },
+      {
+        "file": "gpt2-bare/correct-f32-safe-false/model-00002-of-00002.safetensors",
+        "bytes": 3320,
+        "sha256": "ee63ba4aaac512e185aab5edeffc2cc34d699d3aaca51aaf3ef982d86aa9685a"
+      },
+      {
+        "file": "gpt2-bare/correct-f32-safe-false/model.safetensors.index.json",
+        "bytes": 1060,
+        "sha256": "54ac6373461ee0050233f541c1ae40bc2f05086df8c0559ba53f5e5a6ef638d5"
+      },
+      {
+        "file": "gpt2-bare/correct-f32-safe-true/config.json",
+        "bytes": 803,
+        "sha256": "f3e51ab85147b7144d19f3f8cee9aae073fd27f2d67a001534ae34529aba33b3"
+      },
+      {
+        "file": "gpt2-bare/correct-f32-safe-true/model-00001-of-00002.safetensors",
+        "bytes": 12848,
+        "sha256": "a25d4c484d690ec1266a298f2ba4934e6556d3db5dfb1028fea267161e45a0b9"
+      },
+      {
+        "file": "gpt2-bare/correct-f32-safe-true/model-00002-of-00002.safetensors",
+        "bytes": 3320,
+        "sha256": "ee63ba4aaac512e185aab5edeffc2cc34d699d3aaca51aaf3ef982d86aa9685a"
+      },
+      {
+        "file": "gpt2-bare/correct-f32-safe-true/model.safetensors.index.json",
+        "bytes": 1060,
+        "sha256": "54ac6373461ee0050233f541c1ae40bc2f05086df8c0559ba53f5e5a6ef638d5"
+      },
+      {
+        "file": "gpt2-bare/omitted-square/config.json",
+        "bytes": 803,
+        "sha256": "f3e51ab85147b7144d19f3f8cee9aae073fd27f2d67a001534ae34529aba33b3"
+      },
+      {
+        "file": "gpt2-bare/omitted-square/model-00001-of-00002.safetensors",
+        "bytes": 11192,
+        "sha256": "2e0d42da9f6c64269c86fe2d213400d506622d6372810a3423cd682486890164"
+      },
+      {
+        "file": "gpt2-bare/omitted-square/model-00002-of-00002.safetensors",
+        "bytes": 4984,
+        "sha256": "d3c4b078455306de2be48653a47833f1ca68fc92841c544b207fa3afa6628306"
+      },
+      {
+        "file": "gpt2-bare/omitted-square/model.safetensors.index.json",
+        "bytes": 1060,
+        "sha256": "87bb55563db1fbdb4aed9d10e1f7842495f1827946af1cf0074e4e10faae1e1b"
+      },
+      {
+        "file": "gpt2-bare/wrong-square-orientation/config.json",
+        "bytes": 803,
+        "sha256": "f3e51ab85147b7144d19f3f8cee9aae073fd27f2d67a001534ae34529aba33b3"
+      },
+      {
+        "file": "gpt2-bare/wrong-square-orientation/model-00001-of-00002.safetensors",
+        "bytes": 11192,
+        "sha256": "11f0769af3b0f24782cd1d9129fae911838e6f5e781d788e1861b663f5f41b5c"
+      },
+      {
+        "file": "gpt2-bare/wrong-square-orientation/model-00002-of-00002.safetensors",
+        "bytes": 4984,
+        "sha256": "d3c4b078455306de2be48653a47833f1ca68fc92841c544b207fa3afa6628306"
+      },
+      {
+        "file": "gpt2-bare/wrong-square-orientation/model.safetensors.index.json",
+        "bytes": 1060,
+        "sha256": "87bb55563db1fbdb4aed9d10e1f7842495f1827946af1cf0074e4e10faae1e1b"
+      },
+      {
+        "file": "gpt2-cross/adapter/adapter_config.json",
+        "bytes": 1535,
+        "sha256": "b4f07ad28c9bee2f24b553c2674dfac98364a219e5d4f4de81a0bd07f4ab5b39"
+      },
+      {
+        "file": "gpt2-cross/adapter/adapter_model.safetensors",
+        "bytes": 8736,
+        "sha256": "026e645ac9c89dc37f0348d6850a5323f5ac33695f722f318180a6fb91bbff5d"
+      },
+      {
+        "file": "gpt2-cross/base/config.json",
+        "bytes": 808,
+        "sha256": "c04a2bc7e94b862ff6a19c0e6c994dbd48160eb9640f5b75ae9665482c1f78c1"
+      },
+      {
+        "file": "gpt2-cross/base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-cross/base/model-00001-of-00002.safetensors",
+        "bytes": 12712,
+        "sha256": "ba198c8b0729121823091039dd15e2e250d85de88628a254534605f9cfbd9d5f"
+      },
+      {
+        "file": "gpt2-cross/base/model-00002-of-00002.safetensors",
+        "bytes": 11776,
+        "sha256": "83fcf858b032ce526b1c399c2f13a823a68d64ada1d4b7d1ca339f36fd500d9e"
+      },
+      {
+        "file": "gpt2-cross/base/model.safetensors.index.json",
+        "bytes": 1990,
+        "sha256": "46c13b9c9d6ca1ce66f16dbe8eee5b1bf05964d0c3b9664a54644a60457d33e1"
+      },
+      {
+        "file": "gpt2-cross/correct-bf16-safe-false/config.json",
+        "bytes": 809,
+        "sha256": "ff3f62a92b5ebbc55eb478070122fcf63a92348d0493549e98c5ad1ea86269a9"
+      },
+      {
+        "file": "gpt2-cross/correct-bf16-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-cross/correct-bf16-safe-false/model.safetensors",
+        "bytes": 13416,
+        "sha256": "971eefa8593b31cdad42f53a8a9f3902ecf4d6e0a21adeaa446df2b8815125ce"
+      },
+      {
+        "file": "gpt2-cross/correct-bf16-safe-true/config.json",
+        "bytes": 809,
+        "sha256": "ff3f62a92b5ebbc55eb478070122fcf63a92348d0493549e98c5ad1ea86269a9"
+      },
+      {
+        "file": "gpt2-cross/correct-bf16-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-cross/correct-bf16-safe-true/model.safetensors",
+        "bytes": 13416,
+        "sha256": "73d2a9221bdce82c6554c9c1b376eb9a3a26aee93d0c1a7837e8ebaabb6b5ad1"
+      },
+      {
+        "file": "gpt2-cross/correct-f16-safe-false/config.json",
+        "bytes": 808,
+        "sha256": "e0b89f179763ad0319b0f131795fd12030bc07c4b1de377a4628e7293dbcd245"
+      },
+      {
+        "file": "gpt2-cross/correct-f16-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-cross/correct-f16-safe-false/model.safetensors",
+        "bytes": 13392,
+        "sha256": "22ba843b69185d4dbf2e63d6d9215f89ed2cabf38cff91ade19c678fa9221337"
+      },
+      {
+        "file": "gpt2-cross/correct-f16-safe-true/config.json",
+        "bytes": 808,
+        "sha256": "e0b89f179763ad0319b0f131795fd12030bc07c4b1de377a4628e7293dbcd245"
+      },
+      {
+        "file": "gpt2-cross/correct-f16-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-cross/correct-f16-safe-true/model.safetensors",
+        "bytes": 13392,
+        "sha256": "9b3e0839fb87c2582374e66a044d55b16d2c995b5a1082cc3e4b6dffe0cb05e5"
+      },
+      {
+        "file": "gpt2-cross/correct-f32-safe-false/config.json",
+        "bytes": 808,
+        "sha256": "c04a2bc7e94b862ff6a19c0e6c994dbd48160eb9640f5b75ae9665482c1f78c1"
+      },
+      {
+        "file": "gpt2-cross/correct-f32-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-cross/correct-f32-safe-false/model-00001-of-00002.safetensors",
+        "bytes": 12712,
+        "sha256": "bb365ecab057085351e7d672ceadb1b286d2f9419a55ea1d0c337f6568776e5c"
+      },
+      {
+        "file": "gpt2-cross/correct-f32-safe-false/model-00002-of-00002.safetensors",
+        "bytes": 11776,
+        "sha256": "8b7dc455be78e8b6cf216a1ece2a13e145044e28fcade0db92d60f89b8a1bb48"
+      },
+      {
+        "file": "gpt2-cross/correct-f32-safe-false/model.safetensors.index.json",
+        "bytes": 1990,
+        "sha256": "46c13b9c9d6ca1ce66f16dbe8eee5b1bf05964d0c3b9664a54644a60457d33e1"
+      },
+      {
+        "file": "gpt2-cross/correct-f32-safe-true/config.json",
+        "bytes": 808,
+        "sha256": "c04a2bc7e94b862ff6a19c0e6c994dbd48160eb9640f5b75ae9665482c1f78c1"
+      },
+      {
+        "file": "gpt2-cross/correct-f32-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-cross/correct-f32-safe-true/model-00001-of-00002.safetensors",
+        "bytes": 12712,
+        "sha256": "bb365ecab057085351e7d672ceadb1b286d2f9419a55ea1d0c337f6568776e5c"
+      },
+      {
+        "file": "gpt2-cross/correct-f32-safe-true/model-00002-of-00002.safetensors",
+        "bytes": 11776,
+        "sha256": "8b7dc455be78e8b6cf216a1ece2a13e145044e28fcade0db92d60f89b8a1bb48"
+      },
+      {
+        "file": "gpt2-cross/correct-f32-safe-true/model.safetensors.index.json",
+        "bytes": 1990,
+        "sha256": "46c13b9c9d6ca1ce66f16dbe8eee5b1bf05964d0c3b9664a54644a60457d33e1"
+      },
+      {
+        "file": "gpt2-cross/omitted-square/config.json",
+        "bytes": 808,
+        "sha256": "c04a2bc7e94b862ff6a19c0e6c994dbd48160eb9640f5b75ae9665482c1f78c1"
+      },
+      {
+        "file": "gpt2-cross/omitted-square/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-cross/omitted-square/model-00001-of-00002.safetensors",
+        "bytes": 13744,
+        "sha256": "d53f74dd600b4211539fda02fefaa588b5fc01100367648a9a081f00fd033032"
+      },
+      {
+        "file": "gpt2-cross/omitted-square/model-00002-of-00002.safetensors",
+        "bytes": 10760,
+        "sha256": "01290bf4204da1d78fe1103966eacf029641bb1fd51b96659f9a93609b06b1b7"
+      },
+      {
+        "file": "gpt2-cross/omitted-square/model.safetensors.index.json",
+        "bytes": 1990,
+        "sha256": "3c34f69830c1b87e78c3a3133a2bd38513b8303e4632c25ef7db72e6e113ef92"
+      },
+      {
+        "file": "gpt2-cross/wrong-square-orientation/config.json",
+        "bytes": 808,
+        "sha256": "c04a2bc7e94b862ff6a19c0e6c994dbd48160eb9640f5b75ae9665482c1f78c1"
+      },
+      {
+        "file": "gpt2-cross/wrong-square-orientation/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-cross/wrong-square-orientation/model-00001-of-00002.safetensors",
+        "bytes": 13744,
+        "sha256": "59f393d498dcfc0731bb35e2e4c6da9cfd6615e5579244ecd438fb64a9875df1"
+      },
+      {
+        "file": "gpt2-cross/wrong-square-orientation/model-00002-of-00002.safetensors",
+        "bytes": 10760,
+        "sha256": "01290bf4204da1d78fe1103966eacf029641bb1fd51b96659f9a93609b06b1b7"
+      },
+      {
+        "file": "gpt2-cross/wrong-square-orientation/model.safetensors.index.json",
+        "bytes": 1990,
+        "sha256": "3c34f69830c1b87e78c3a3133a2bd38513b8303e4632c25ef7db72e6e113ef92"
+      },
+      {
+        "file": "gpt2-mixed/adapter/adapter_config.json",
+        "bytes": 1400,
+        "sha256": "de8462d65ba5dbc68f06a31acd1ecd1b21ad006f1588c5cb91201ab975cd3436"
+      },
+      {
+        "file": "gpt2-mixed/adapter/adapter_model.safetensors",
+        "bytes": 6168,
+        "sha256": "fde6aa4b3a39f540c43f0d59fa79d1d75bf9aa84edc105de0c79f0185295c76e"
+      },
+      {
+        "file": "gpt2-mixed/base/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "gpt2-mixed/base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/base/model-00001-of-00002.safetensors",
+        "bytes": 12984,
+        "sha256": "92cd42915e5053d4c41aa49ced0e6b1ee615075ff009c4632dd579d7c1bb692b"
+      },
+      {
+        "file": "gpt2-mixed/base/model-00002-of-00002.safetensors",
+        "bytes": 6216,
+        "sha256": "70f851ddb736a96ed2c462908846554b8169d4c8933481fe05950a391fa9be97"
+      },
+      {
+        "file": "gpt2-mixed/base/model.safetensors.index.json",
+        "bytes": 1310,
+        "sha256": "8c286d610bd2a1121eb5b55a7f65648f61b35916ffaac633392f96791625578a"
+      },
+      {
+        "file": "gpt2-mixed/correct-bf16-safe-false/config.json",
+        "bytes": 810,
+        "sha256": "8a78fb4e2b2defcbdbc12de52d99a50db0423eb05b127a8a2f4e3baac1922345"
+      },
+      {
+        "file": "gpt2-mixed/correct-bf16-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/correct-bf16-safe-false/model.safetensors",
+        "bytes": 10360,
+        "sha256": "4ccf288d9a0e0ebb4b980042bb50d41081417af7c801c716354c6477dd660534"
+      },
+      {
+        "file": "gpt2-mixed/correct-bf16-safe-true/config.json",
+        "bytes": 810,
+        "sha256": "8a78fb4e2b2defcbdbc12de52d99a50db0423eb05b127a8a2f4e3baac1922345"
+      },
+      {
+        "file": "gpt2-mixed/correct-bf16-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/correct-bf16-safe-true/model.safetensors",
+        "bytes": 10360,
+        "sha256": "e9fad4191962084d6d753bcc4dbe68faba6a183f39480cd10807d9edaf22e622"
+      },
+      {
+        "file": "gpt2-mixed/correct-f16-safe-false/config.json",
+        "bytes": 809,
+        "sha256": "f76f350f405caa5140ab51ffefe491d4d7d316f02c55438b286a8678c69b3442"
+      },
+      {
+        "file": "gpt2-mixed/correct-f16-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/correct-f16-safe-false/model.safetensors",
+        "bytes": 10344,
+        "sha256": "9bc6714fe171d76821858d89095f6834145227c71a9c36239155969316ba08fd"
+      },
+      {
+        "file": "gpt2-mixed/correct-f16-safe-true/config.json",
+        "bytes": 809,
+        "sha256": "f76f350f405caa5140ab51ffefe491d4d7d316f02c55438b286a8678c69b3442"
+      },
+      {
+        "file": "gpt2-mixed/correct-f16-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/correct-f16-safe-true/model.safetensors",
+        "bytes": 10344,
+        "sha256": "25a93dec7b3238fdf4829579680c86eb0b886486af17694d7cad90e9aad2369a"
+      },
+      {
+        "file": "gpt2-mixed/correct-f32-safe-false/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "gpt2-mixed/correct-f32-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/correct-f32-safe-false/model-00001-of-00002.safetensors",
+        "bytes": 12984,
+        "sha256": "41c53ecc750c2fd078727a83d560bd65c7b4130dd9a064e17256b93d63e0a7f5"
+      },
+      {
+        "file": "gpt2-mixed/correct-f32-safe-false/model-00002-of-00002.safetensors",
+        "bytes": 6216,
+        "sha256": "4e5e37c3a5f1cb2fd4f52d34c2b6bc5ab18615cc892a75982e77f4ec206464c9"
+      },
+      {
+        "file": "gpt2-mixed/correct-f32-safe-false/model.safetensors.index.json",
+        "bytes": 1310,
+        "sha256": "8c286d610bd2a1121eb5b55a7f65648f61b35916ffaac633392f96791625578a"
+      },
+      {
+        "file": "gpt2-mixed/correct-f32-safe-true/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "gpt2-mixed/correct-f32-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/correct-f32-safe-true/model-00001-of-00002.safetensors",
+        "bytes": 12984,
+        "sha256": "41c53ecc750c2fd078727a83d560bd65c7b4130dd9a064e17256b93d63e0a7f5"
+      },
+      {
+        "file": "gpt2-mixed/correct-f32-safe-true/model-00002-of-00002.safetensors",
+        "bytes": 6216,
+        "sha256": "4e5e37c3a5f1cb2fd4f52d34c2b6bc5ab18615cc892a75982e77f4ec206464c9"
+      },
+      {
+        "file": "gpt2-mixed/correct-f32-safe-true/model.safetensors.index.json",
+        "bytes": 1310,
+        "sha256": "8c286d610bd2a1121eb5b55a7f65648f61b35916ffaac633392f96791625578a"
+      },
+      {
+        "file": "gpt2-mixed/omitted-square/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "gpt2-mixed/omitted-square/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/omitted-square/model-00001-of-00002.safetensors",
+        "bytes": 11248,
+        "sha256": "e4cc8461e5eb240952a799905ef65e487e69f745dfec7a2b1f573a999b0653fc"
+      },
+      {
+        "file": "gpt2-mixed/omitted-square/model-00002-of-00002.safetensors",
+        "bytes": 7952,
+        "sha256": "1ad8aedd163b5eed43060bbcb0dd9f6ad871d220d933adc2d33a0eedd9c4d386"
+      },
+      {
+        "file": "gpt2-mixed/omitted-square/model.safetensors.index.json",
+        "bytes": 1310,
+        "sha256": "8ad34efd3e457aa7cffddefedb1d3e0b31e5a58f2e584ee296b85bc3c65d621d"
+      },
+      {
+        "file": "gpt2-mixed/wrong-square-orientation/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "gpt2-mixed/wrong-square-orientation/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-mixed/wrong-square-orientation/model-00001-of-00002.safetensors",
+        "bytes": 11248,
+        "sha256": "a6e4b0614bd141e0ce5bb949cab5962b388b11683d04af5eaa626dc69bf97191"
+      },
+      {
+        "file": "gpt2-mixed/wrong-square-orientation/model-00002-of-00002.safetensors",
+        "bytes": 7952,
+        "sha256": "1ad8aedd163b5eed43060bbcb0dd9f6ad871d220d933adc2d33a0eedd9c4d386"
+      },
+      {
+        "file": "gpt2-mixed/wrong-square-orientation/model.safetensors.index.json",
+        "bytes": 1310,
+        "sha256": "8ad34efd3e457aa7cffddefedb1d3e0b31e5a58f2e584ee296b85bc3c65d621d"
+      },
+      {
+        "file": "gpt2-saved-head/adapter/adapter_config.json",
+        "bytes": 1399,
+        "sha256": "9996fd72f49fcf8692a580bf869a0f6f8866cd416dd7c3df5d902b07a67dcd46"
+      },
+      {
+        "file": "gpt2-saved-head/adapter/adapter_model.safetensors",
+        "bytes": 7872,
+        "sha256": "bdeb253759e455312c27a903869117937d34472b4d57ddb02946871ce6f1b4a0"
+      },
+      {
+        "file": "gpt2-saved-head/base/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "gpt2-saved-head/base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-saved-head/base/model-00001-of-00002.safetensors",
+        "bytes": 12984,
+        "sha256": "c78d2edb1ce908f6782e61e6cb46dc34ea5da21024091c512ac4b227d7edec63"
+      },
+      {
+        "file": "gpt2-saved-head/base/model-00002-of-00002.safetensors",
+        "bytes": 6216,
+        "sha256": "75c408ea3c3bcc808830243b000c52839e4d5df97c3b4ba2288338693a62dcd2"
+      },
+      {
+        "file": "gpt2-saved-head/base/model.safetensors.index.json",
+        "bytes": 1310,
+        "sha256": "8c286d610bd2a1121eb5b55a7f65648f61b35916ffaac633392f96791625578a"
+      },
+      {
+        "file": "gpt2-saved-head/correct-bf16-safe-false/config.json",
+        "bytes": 810,
+        "sha256": "8a78fb4e2b2defcbdbc12de52d99a50db0423eb05b127a8a2f4e3baac1922345"
+      },
+      {
+        "file": "gpt2-saved-head/correct-bf16-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-saved-head/correct-bf16-safe-false/model.safetensors",
+        "bytes": 10360,
+        "sha256": "2d848424e19588a3874315b01348a4be4528b5002d196807f5bcdc974daf42f2"
+      },
+      {
+        "file": "gpt2-saved-head/correct-bf16-safe-true/config.json",
+        "bytes": 810,
+        "sha256": "8a78fb4e2b2defcbdbc12de52d99a50db0423eb05b127a8a2f4e3baac1922345"
+      },
+      {
+        "file": "gpt2-saved-head/correct-bf16-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-saved-head/correct-bf16-safe-true/model.safetensors",
+        "bytes": 10360,
+        "sha256": "56e574d0da51e1f8356c8b8f064190353a8bd39651921029511d33c361312d2e"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f16-safe-false/config.json",
+        "bytes": 809,
+        "sha256": "f76f350f405caa5140ab51ffefe491d4d7d316f02c55438b286a8678c69b3442"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f16-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f16-safe-false/model.safetensors",
+        "bytes": 10344,
+        "sha256": "390dae93bcbff6c87c7ddb62f57911dc81f36859e09f8814dc2ad92c81def252"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f16-safe-true/config.json",
+        "bytes": 809,
+        "sha256": "f76f350f405caa5140ab51ffefe491d4d7d316f02c55438b286a8678c69b3442"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f16-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f16-safe-true/model.safetensors",
+        "bytes": 10344,
+        "sha256": "607912acb1a1849e887e8c8ef5041a53d3fb184d10cb96b7b859de517c3b6905"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f32-safe-false/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f32-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f32-safe-false/model-00001-of-00002.safetensors",
+        "bytes": 12984,
+        "sha256": "5d5fdf0a80d8b0064ab1fdcd7d55fb6eb753dc964fa514eb9920d34db6b01bcd"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f32-safe-false/model-00002-of-00002.safetensors",
+        "bytes": 6216,
+        "sha256": "814b0812af59a52bcd266122fda2004979ee9fb36b5423a6e60de00ac2e6907d"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f32-safe-false/model.safetensors.index.json",
+        "bytes": 1310,
+        "sha256": "8c286d610bd2a1121eb5b55a7f65648f61b35916ffaac633392f96791625578a"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f32-safe-true/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f32-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f32-safe-true/model-00001-of-00002.safetensors",
+        "bytes": 12984,
+        "sha256": "5d5fdf0a80d8b0064ab1fdcd7d55fb6eb753dc964fa514eb9920d34db6b01bcd"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f32-safe-true/model-00002-of-00002.safetensors",
+        "bytes": 6216,
+        "sha256": "814b0812af59a52bcd266122fda2004979ee9fb36b5423a6e60de00ac2e6907d"
+      },
+      {
+        "file": "gpt2-saved-head/correct-f32-safe-true/model.safetensors.index.json",
+        "bytes": 1310,
+        "sha256": "8c286d610bd2a1121eb5b55a7f65648f61b35916ffaac633392f96791625578a"
+      },
+      {
+        "file": "gpt2-saved-head/omitted-square/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "gpt2-saved-head/omitted-square/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-saved-head/omitted-square/model-00001-of-00002.safetensors",
+        "bytes": 11248,
+        "sha256": "46b5ba4370331448ad563802597d5842dc02206bbbd7ee7156fbb4213c75afb5"
+      },
+      {
+        "file": "gpt2-saved-head/omitted-square/model-00002-of-00002.safetensors",
+        "bytes": 7952,
+        "sha256": "0be666a9ef00e67bfff93807b01564321c19bd43af711106b3fdea5fa17a3a64"
+      },
+      {
+        "file": "gpt2-saved-head/omitted-square/model.safetensors.index.json",
+        "bytes": 1310,
+        "sha256": "8ad34efd3e457aa7cffddefedb1d3e0b31e5a58f2e584ee296b85bc3c65d621d"
+      },
+      {
+        "file": "gpt2-saved-head/wrong-square-orientation/config.json",
+        "bytes": 809,
+        "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+      },
+      {
+        "file": "gpt2-saved-head/wrong-square-orientation/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "gpt2-saved-head/wrong-square-orientation/model-00001-of-00002.safetensors",
+        "bytes": 11248,
+        "sha256": "7046b7ad9d20914edf10f1f9d0da6713fa524f1d0ced5efcb19f7644fa0e4340"
+      },
+      {
+        "file": "gpt2-saved-head/wrong-square-orientation/model-00002-of-00002.safetensors",
+        "bytes": 7952,
+        "sha256": "0be666a9ef00e67bfff93807b01564321c19bd43af711106b3fdea5fa17a3a64"
+      },
+      {
+        "file": "gpt2-saved-head/wrong-square-orientation/model.safetensors.index.json",
+        "bytes": 1310,
+        "sha256": "8ad34efd3e457aa7cffddefedb1d3e0b31e5a58f2e584ee296b85bc3c65d621d"
+      },
+      {
+        "file": "imagegpt-mixed/adapter/adapter_config.json",
+        "bytes": 1423,
+        "sha256": "6438e6e04d5af0f1787edc6755f0af2339583563724fc5aa5a53c3631ac89b9d"
+      },
+      {
+        "file": "imagegpt-mixed/adapter/adapter_model.safetensors",
+        "bytes": 6152,
+        "sha256": "f41884a5de4866d6c1f4d7feccf950e72c83d9e63dfa36b02008e02ebe77d049"
+      },
+      {
+        "file": "imagegpt-mixed/base/config.json",
+        "bytes": 675,
+        "sha256": "6bb9409c7d446121ad90c09fffcb5983565c248b9cff8751a09562bfc383e479"
+      },
+      {
+        "file": "imagegpt-mixed/base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/base/model-00001-of-00002.safetensors",
+        "bytes": 12936,
+        "sha256": "b7f8ceaf301613542ea03f4b6d99c829ee00d7faf24f356ab8179e3bcb7b24b9"
+      },
+      {
+        "file": "imagegpt-mixed/base/model-00002-of-00002.safetensors",
+        "bytes": 5760,
+        "sha256": "afd47146c244c28de37bd44fef241ce8442c0e17712fc97675c82edd07d168db"
+      },
+      {
+        "file": "imagegpt-mixed/base/model.safetensors.index.json",
+        "bytes": 1107,
+        "sha256": "452ca28b373c386a31bddf100841309172979689d6211e68d3dd4fdeb298eddd"
+      },
+      {
+        "file": "imagegpt-mixed/correct-bf16-safe-false/config.json",
+        "bytes": 676,
+        "sha256": "324df2c3f0b9900780a42653da7cca94d94721cac1ce52eed3b270ea0ac77c51"
+      },
+      {
+        "file": "imagegpt-mixed/correct-bf16-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/correct-bf16-safe-false/model.safetensors",
+        "bytes": 9984,
+        "sha256": "a1facb647c111fac7f0d8f0b7129ec6344db60de5caefa450c1d0bfb3a2cbcc1"
+      },
+      {
+        "file": "imagegpt-mixed/correct-bf16-safe-true/config.json",
+        "bytes": 676,
+        "sha256": "324df2c3f0b9900780a42653da7cca94d94721cac1ce52eed3b270ea0ac77c51"
+      },
+      {
+        "file": "imagegpt-mixed/correct-bf16-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/correct-bf16-safe-true/model.safetensors",
+        "bytes": 9984,
+        "sha256": "fe77175964315fafb5fe690fb3abc657045e46db9123a9c14e421febce2e0e78"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f16-safe-false/config.json",
+        "bytes": 675,
+        "sha256": "942b85ade7f049f9d28bcc49652f51d5c9f67fa698274e99e0c821b2872c84e1"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f16-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f16-safe-false/model.safetensors",
+        "bytes": 9968,
+        "sha256": "9f9e2d47f752b1cccbf1d97189c952b4d6d86d9ed643411520cdb3db6df4d3cd"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f16-safe-true/config.json",
+        "bytes": 675,
+        "sha256": "942b85ade7f049f9d28bcc49652f51d5c9f67fa698274e99e0c821b2872c84e1"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f16-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f16-safe-true/model.safetensors",
+        "bytes": 9968,
+        "sha256": "6298b540cef8fd8527353b7fcf32e5239bd99dca1ba73881ec3adbf670a0aee5"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f32-safe-false/config.json",
+        "bytes": 675,
+        "sha256": "6bb9409c7d446121ad90c09fffcb5983565c248b9cff8751a09562bfc383e479"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f32-safe-false/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f32-safe-false/model-00001-of-00002.safetensors",
+        "bytes": 12936,
+        "sha256": "058a4d2458f79ade046a7b88c2426d0fc411f7eb7a58cb5fdf541480b295eb4a"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f32-safe-false/model-00002-of-00002.safetensors",
+        "bytes": 5760,
+        "sha256": "d7e3af4ef40540c8860fa6a974a08c822f2f8e679a7d2116dfdc1d45f071660f"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f32-safe-false/model.safetensors.index.json",
+        "bytes": 1107,
+        "sha256": "452ca28b373c386a31bddf100841309172979689d6211e68d3dd4fdeb298eddd"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f32-safe-true/config.json",
+        "bytes": 675,
+        "sha256": "6bb9409c7d446121ad90c09fffcb5983565c248b9cff8751a09562bfc383e479"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f32-safe-true/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f32-safe-true/model-00001-of-00002.safetensors",
+        "bytes": 12936,
+        "sha256": "058a4d2458f79ade046a7b88c2426d0fc411f7eb7a58cb5fdf541480b295eb4a"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f32-safe-true/model-00002-of-00002.safetensors",
+        "bytes": 5760,
+        "sha256": "d7e3af4ef40540c8860fa6a974a08c822f2f8e679a7d2116dfdc1d45f071660f"
+      },
+      {
+        "file": "imagegpt-mixed/correct-f32-safe-true/model.safetensors.index.json",
+        "bytes": 1107,
+        "sha256": "452ca28b373c386a31bddf100841309172979689d6211e68d3dd4fdeb298eddd"
+      },
+      {
+        "file": "imagegpt-mixed/omitted-square/config.json",
+        "bytes": 675,
+        "sha256": "6bb9409c7d446121ad90c09fffcb5983565c248b9cff8751a09562bfc383e479"
+      },
+      {
+        "file": "imagegpt-mixed/omitted-square/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/omitted-square/model-00001-of-00002.safetensors",
+        "bytes": 10888,
+        "sha256": "ac6b399c5918ffeab2bb4502aefe0668b205c6cd683ad181424191eaaa61f429"
+      },
+      {
+        "file": "imagegpt-mixed/omitted-square/model-00002-of-00002.safetensors",
+        "bytes": 7808,
+        "sha256": "94d1dfe37feaab754a6ee7965a8a0a20af5095066b1923792ecbec0cd0ebf216"
+      },
+      {
+        "file": "imagegpt-mixed/omitted-square/model.safetensors.index.json",
+        "bytes": 1107,
+        "sha256": "25bb3371bfeb875914a2f0bcab0e9f6566ee575bacd76e898c43266d66a4a6e9"
+      },
+      {
+        "file": "imagegpt-mixed/wrong-square-orientation/config.json",
+        "bytes": 675,
+        "sha256": "6bb9409c7d446121ad90c09fffcb5983565c248b9cff8751a09562bfc383e479"
+      },
+      {
+        "file": "imagegpt-mixed/wrong-square-orientation/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "imagegpt-mixed/wrong-square-orientation/model-00001-of-00002.safetensors",
+        "bytes": 10888,
+        "sha256": "4e302fdf3b2fbe2c0e867bce1523aab8349f06e30114245f30cd7e3adf14a280"
+      },
+      {
+        "file": "imagegpt-mixed/wrong-square-orientation/model-00002-of-00002.safetensors",
+        "bytes": 7808,
+        "sha256": "94d1dfe37feaab754a6ee7965a8a0a20af5095066b1923792ecbec0cd0ebf216"
+      },
+      {
+        "file": "imagegpt-mixed/wrong-square-orientation/model.safetensors.index.json",
+        "bytes": 1107,
+        "sha256": "25bb3371bfeb875914a2f0bcab0e9f6566ee575bacd76e898c43266d66a4a6e9"
+      },
+      {
+        "file": "openai-gpt-mixed/adapter/adapter_config.json",
+        "bytes": 1409,
+        "sha256": "004d51d964fadf4880dae9967fc249309b61ef25672fc3e5cab6041481f1eb1b"
+      },
+      {
+        "file": "openai-gpt-mixed/adapter/adapter_model.safetensors",
+        "bytes": 5576,
+        "sha256": "ba6b74d0d0af7650d92dba694f3625d6c5acb66b983afed7d6941cedea56e587"
+      },
+      {
+        "file": "openai-gpt-mixed/base/config.json",
+        "bytes": 669,
+        "sha256": "95e3d4b6eb9d794ba054b29ccf650d66755b62a99386277606a675ab2dd223e2"
+      },
+      {
+        "file": "openai-gpt-mixed/base/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/base/model-00001-of-00002.safetensors",
+        "bytes": 10048,
+        "sha256": "f57f4ab04545f9c178bf0b8367abf242b14832d64f7915eacca9ba91639a3ebd"
+      },
+      {
+        "file": "openai-gpt-mixed/base/model-00002-of-00002.safetensors",
+        "bytes": 12048,
+        "sha256": "4ee95114aac2df2e7b02a8a864327ecde2f93fc98f0616662e545589c5997c7b"
+      },
+      {
+        "file": "openai-gpt-mixed/base/model.safetensors.index.json",
+        "bytes": 1199,
+        "sha256": "5a35d3e20b68ffa8d5f391c628d287af4a115362df4a389e2a44259775ac6e42"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-bf16-safe-false/config.json",
+        "bytes": 670,
+        "sha256": "2da796ce06da1c89e40a96099e0482ecc72cf595b4ff331b4aa653fb6ec9ef85"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-bf16-safe-false/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-bf16-safe-false/model.safetensors",
+        "bytes": 11736,
+        "sha256": "520a9269969ee2880c3e4b90f735a8b04ce7a53bed8bca0e717fad32feb75c34"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-bf16-safe-true/config.json",
+        "bytes": 670,
+        "sha256": "2da796ce06da1c89e40a96099e0482ecc72cf595b4ff331b4aa653fb6ec9ef85"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-bf16-safe-true/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-bf16-safe-true/model.safetensors",
+        "bytes": 11736,
+        "sha256": "7615b36752b512f35c911c1802d96c834fecab86f83f55b4413688d5ae9b9989"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f16-safe-false/config.json",
+        "bytes": 669,
+        "sha256": "d9ee9502eaa2a6212620981e861986e97a3e9c1cd3008fb37f62162a5b68251a"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f16-safe-false/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f16-safe-false/model.safetensors",
+        "bytes": 11720,
+        "sha256": "c2e86143eb5f99c55db115b0e974bef565d6b5690b079bc245bcc33d44ce2663"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f16-safe-true/config.json",
+        "bytes": 669,
+        "sha256": "d9ee9502eaa2a6212620981e861986e97a3e9c1cd3008fb37f62162a5b68251a"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f16-safe-true/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f16-safe-true/model.safetensors",
+        "bytes": 11720,
+        "sha256": "2314f34fc35e10e3628e6a79720c063aa3c2e95b31992a61c5882cdcc09393a1"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f32-safe-false/config.json",
+        "bytes": 669,
+        "sha256": "95e3d4b6eb9d794ba054b29ccf650d66755b62a99386277606a675ab2dd223e2"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f32-safe-false/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f32-safe-false/model-00001-of-00002.safetensors",
+        "bytes": 10048,
+        "sha256": "dae8f9f4782a29c64a243cfda377f34162819b7cbefd4a734aa05818eab4ed1d"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f32-safe-false/model-00002-of-00002.safetensors",
+        "bytes": 12048,
+        "sha256": "b65c8653f3347c82215fcda7cc4142abebe81746a458d8cb7a4466a4a35b32a7"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f32-safe-false/model.safetensors.index.json",
+        "bytes": 1199,
+        "sha256": "5a35d3e20b68ffa8d5f391c628d287af4a115362df4a389e2a44259775ac6e42"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f32-safe-true/config.json",
+        "bytes": 669,
+        "sha256": "95e3d4b6eb9d794ba054b29ccf650d66755b62a99386277606a675ab2dd223e2"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f32-safe-true/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f32-safe-true/model-00001-of-00002.safetensors",
+        "bytes": 10048,
+        "sha256": "dae8f9f4782a29c64a243cfda377f34162819b7cbefd4a734aa05818eab4ed1d"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f32-safe-true/model-00002-of-00002.safetensors",
+        "bytes": 12048,
+        "sha256": "b65c8653f3347c82215fcda7cc4142abebe81746a458d8cb7a4466a4a35b32a7"
+      },
+      {
+        "file": "openai-gpt-mixed/correct-f32-safe-true/model.safetensors.index.json",
+        "bytes": 1199,
+        "sha256": "5a35d3e20b68ffa8d5f391c628d287af4a115362df4a389e2a44259775ac6e42"
+      },
+      {
+        "file": "openai-gpt-mixed/omitted-square/config.json",
+        "bytes": 669,
+        "sha256": "95e3d4b6eb9d794ba054b29ccf650d66755b62a99386277606a675ab2dd223e2"
+      },
+      {
+        "file": "openai-gpt-mixed/omitted-square/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/omitted-square/model-00001-of-00002.safetensors",
+        "bytes": 12880,
+        "sha256": "90d60d9110649b273f7adcb3a4b2009f99cdefb86fd9c699d3be3ec3f498e0ea"
+      },
+      {
+        "file": "openai-gpt-mixed/omitted-square/model-00002-of-00002.safetensors",
+        "bytes": 9224,
+        "sha256": "e2de03c51a02d120c5c7c5e79416cfbd41b8e6b36b30011d8ef95bffcf6f5c4b"
+      },
+      {
+        "file": "openai-gpt-mixed/omitted-square/model.safetensors.index.json",
+        "bytes": 1199,
+        "sha256": "91a9ce0f17b7586953955cd924a72dd96add5b4dec96d1fe4ad438d3540b2b89"
+      },
+      {
+        "file": "openai-gpt-mixed/wrong-square-orientation/config.json",
+        "bytes": 669,
+        "sha256": "95e3d4b6eb9d794ba054b29ccf650d66755b62a99386277606a675ab2dd223e2"
+      },
+      {
+        "file": "openai-gpt-mixed/wrong-square-orientation/generation_config.json",
+        "bytes": 174,
+        "sha256": "478408e3bc0caed5e68ba8deed23c312e41f09ecacbfe91819c20a5f695d3f2c"
+      },
+      {
+        "file": "openai-gpt-mixed/wrong-square-orientation/model-00001-of-00002.safetensors",
+        "bytes": 12880,
+        "sha256": "676c781ebe63fbd90119eccc1171207ef139af79a77e46c290a6982bb57ae55e"
+      },
+      {
+        "file": "openai-gpt-mixed/wrong-square-orientation/model-00002-of-00002.safetensors",
+        "bytes": 9224,
+        "sha256": "e2de03c51a02d120c5c7c5e79416cfbd41b8e6b36b30011d8ef95bffcf6f5c4b"
+      },
+      {
+        "file": "openai-gpt-mixed/wrong-square-orientation/model.safetensors.index.json",
+        "bytes": 1199,
+        "sha256": "91a9ce0f17b7586953955cd924a72dd96add5b4dec96d1fe4ad438d3540b2b89"
+      }
+    ]
+  },
+  "verifier_sha256": "ed0fa22dd87d3ca04c9a286d44fc31170bf324076ddd823dc39c4f512319d502",
+  "auditor_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "f400ec4b08df8bd6eaa35d3140d24b7cb6b7e1e5e4d9b31f1fcc14816316f194",
+    "audit.py": "14bb9c1c2549d9ac1242f78970c07914a5f64be3700c44215bc3fc4ecc8479da",
+    "cli.py": "4d86739f825d6409cbe01450bd996be16efd26bc02e5b543bbefeb0b5db8673c",
+    "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "cases": [
+    {
+      "case": "gpt2-mixed",
+      "decimal_entries": 0,
+      "results": [
+        {
+          "merge": {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.005859375,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0078125,
+            "argmax_changes": 1,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        }
+      ]
+    },
+    {
+      "case": "openai-gpt-mixed",
+      "decimal_entries": 0,
+      "results": [
+        {
+          "merge": {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00390625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00390625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        }
+      ]
+    },
+    {
+      "case": "imagegpt-mixed",
+      "decimal_entries": 0,
+      "results": [
+        {
+          "merge": {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 1.7881393432617188e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0009765625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0009765625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0078125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0078125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        }
+      ]
+    },
+    {
+      "case": "gpt2-cross",
+      "decimal_entries": 0,
+      "results": [
+        {
+          "merge": {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 2.384185791015625e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 2.384185791015625e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0009765625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.000732421875,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.005859375,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        },
+        {
+          "merge": {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported Conv1D target indicated by model metadata: transformer.h.0.attn.c_attn; saved fan_in_fan_out is not a per-module orientation map"
+        }
+      ]
+    },
+    {
+      "case": "gpt2-bare",
+      "decimal_entries": 0,
+      "results": [
+        {
+          "merge": {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 9.5367431640625e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 9.5367431640625e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.004638671875,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.0419921875,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.041015625,
+            "argmax_changes": 1,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        }
+      ]
+    },
+    {
+      "case": "gpt2-saved-head",
+      "decimal_entries": 0,
+      "results": [
+        {
+          "merge": {
+            "name": "correct-f32-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 1.1920928955078125e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "correct-f32-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 1.1920928955078125e-07,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "correct-f16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00048828125,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-false",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00390625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "correct-bf16-safe-true",
+            "purpose": "native merge",
+            "max_forward_difference": 0.00390625,
+            "argmax_changes": 0,
+            "prediction_positions": 48
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "wrong-square-orientation",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        },
+        {
+          "merge": {
+            "name": "omitted-square",
+            "purpose": "authored faulty conversion"
+          },
+          "refusal": "Unsupported adapter option: fan_in_fan_out"
+        }
+      ]
+    }
+  ]
+}

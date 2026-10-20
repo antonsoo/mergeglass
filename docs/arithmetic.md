@@ -34,6 +34,23 @@ Nonzero counts refer to this declared numerical reference. Very small products
 can underflow or cancel in binary64. This is not a proof about arbitrary real
 numbers.
 
+## Standard GPT Conv1D LoRA
+
+GPT-2, OpenAI GPT and ImageGPT use dense Conv1D projections with saved shape
+`[in, out]`, while A and B retain `[rank, in]` and `[out, rank]`. The reference
+is `(float64(B) @ float64(A)).T * scale`. Rows/columns and largest-residual
+coordinates remain the saved input/output axes. These layers add
+`weight_layout: "conv1d"`, `reference_product: "(B @ A).T"`,
+`coordinate_axes` and `layout_evidence`.
+
+Supported exact standard module paths are resolved from declared base
+`model_type` or adapter `auto_mapping.parent_library`; the global
+`fan_in_fan_out` flag does not select individual layouts. Conflicting or
+unsupported evidence refuses. Known ordinary Linear heads remain Linear.
+A is streamed by columns and B is retained under the decoded-factor limit.
+Conv1D DoRA remains unsupported. The [layout guide](conv1d.md) lists the paths,
+metadata, missing-evidence behavior, serialization requirements and limitations.
+
 ## Token-embedding LoRA
 
 Embedding factors have native parameter keys without a `.weight` suffix:
@@ -275,7 +292,7 @@ base_model.model.<module>.lora_B.weight
 ```
 
 Factor weights are never suffix-searched and no architecture is imported.
-Conv/Conv1D LoRA, quantized checkpoints, extra trained biases outside full saved
+Convolutional/unsupported Conv1D LoRA, quantized checkpoints, extra trained biases outside full saved
 modules, aLoRA,
 base-mutating initializers and other variant payloads refuse. Unknown adapter
 configuration fields also refuse. This version recognizes the saved configuration
@@ -283,14 +300,13 @@ of PEFT 0.21.0; other versions can work only within that explicit field contract
 
 A saved `fan_in_fan_out=False` flag does not establish every module's layout.
 PEFT can overwrite this global flag while loading mixed Conv1D and Linear
-targets; square Conv1D matrices still pass a Linear shape check. When base
-`model_type` or adapter `auto_mapping.parent_library` identifies GPT-2,
-OpenAI GPT or ImageGPT, their known attention/MLP Conv1D paths explicitly refuse.
-Ordinary Linear heads on the same architectures remain supported. This is a
-guard against contradictory metadata, not a universal module-type detector.
-Missing metadata, custom models and other architectures cannot be certified
-from tensor shapes. The supported plain-Linear contract remains a prerequisite.
-See the [six native orientation cases](../studies/orientation/README.md).
+targets; square Conv1D matrices still pass a Linear shape check. The initial
+[refusal guard](../studies/orientation/README.md) has been extended to explicit
+[standard GPT Conv1D support](../studies/conv1d/README.md). Missing metadata,
+custom models and other architectures cannot be certified from tensor shapes.
+The supported plain-Linear contract remains a prerequisite for unrecognized
+ordinary factor modules. No fuzzy checkpoint-name or buffer reconciliation is
+performed; a native base reserialization must be verified separately.
 
 Coverage is the saved A/B pair inventory. If both factors of a target module
 are absent from the adapter, the file alone does not establish that they were

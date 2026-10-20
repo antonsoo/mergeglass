@@ -1,0 +1,4639 @@
+{
+  "identity": {
+    "version": "0.1.0",
+    "python": "3.12.12 (main, Feb 12 2026, 00:42:14) [Clang 21.1.4 ]",
+    "auditor_modules": {
+      "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+      "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "adapter.py": "b4509882564cec7974b7df8f9c8b9b41eea6b333c6f43ec2f733554fc5a848d7",
+      "audit.py": "080aa7923d6dd38d3a16b1687c4f0c44543da35c48ffdfe1051d4819c8b87e45",
+      "cli.py": "a557e3165636989de38127b2552881cca6715d70a1748bb1e640a00cc9209b9c",
+      "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+      "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+      "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+    },
+    "torch_imported": false,
+    "dependencies": [
+      "numpy>=1.24",
+      "safetensors>=0.6.2"
+    ]
+  },
+  "machine": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "logical_cpus": 14,
+    "blas_threads": 1
+  },
+  "rss_method": "Linux /usr/bin/time %M: fresh isolated installed CLI, peak resident KiB; %e elapsed seconds",
+  "examples": [
+    {
+      "case": "correct-f32-safe-false",
+      "peak_rss_kib": 35392,
+      "elapsed_seconds": 0.09,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "Linear LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA, standard GPT Conv1D LoRA, Embedding LoRA and explicit full modules; no architecture execution or quality estimate",
+          "conv1d_reference": "delta = (B_float64 @ A_float64).T * scale; saved weight rows are inputs, columns are outputs; standard GPT module paths resolved from declared model metadata, not a global orientation flag",
+          "embedding_reference": "delta = (B_float64 @ A_float64).T * scale; weight rows are token indices, columns are embedding dimensions; A columns are streamed, B is retained in full"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 809,
+              "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 19144,
+              "sha256": "07d02a6af6174c9c1c14c991cf35035dece00faa38bdbfe86beeb7f56845c1b0"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1400,
+              "sha256": "de8462d65ba5dbc68f06a31acd1ecd1b21ad006f1588c5cb91201ab975cd3436"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 6168,
+              "sha256": "fde6aa4b3a39f540c43f0d59fa79d1d75bf9aa84edc105de0c79f0185295c76e"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 809,
+              "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 19144,
+              "sha256": "7e76dd4c5f0f5947084d1a1787aedd67e6a4f4a95daa1dd5ac529bb7d1690a54"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 6,
+          "checked_tensors": 17,
+          "adapted_elements": 3680,
+          "intended_nonzero_elements": 3456,
+          "changed_adapted_elements": 3456,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "lm_head",
+            "weight": "lm_head.weight",
+            "adapter_variant": "lora",
+            "shape": [
+              43,
+              16
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 688,
+            "intended_nonzero_elements": 688,
+            "changed_elements": 688,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.2748539310722147,
+              "observed": 1.274853931764912,
+              "residual": 5.503043182526051e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.316606827181936e-08,
+            "observed_to_intended_norm": 1.0000000005433543,
+            "projection_gain": 1.0000000005433531,
+            "cosine_similarity": 0.999999999999999,
+            "reference_merge_mismatches": 275,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 25,
+              "column": 15,
+              "base": -0.03271484375,
+              "cast_base": -0.03271484375,
+              "intended_delta": -0.1163248306212144,
+              "merged": -0.14903968572616577,
+              "observed_delta": -0.11632484197616577,
+              "residual": -1.1354951368058863e-08,
+              "reference_merged": -0.14903967082500458
+            }
+          },
+          {
+            "module": "transformer.h.0.attn.c_attn",
+            "weight": "transformer.h.0.attn.c_attn.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              16,
+              48
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 768,
+            "intended_nonzero_elements": 768,
+            "changed_elements": 768,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.1520975692304412,
+              "observed": 1.152097570754083,
+              "residual": 4.898320702751984e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.251654402867877e-08,
+            "observed_to_intended_norm": 1.000000001322494,
+            "projection_gain": 1.000000001322493,
+            "cosine_similarity": 0.9999999999999992,
+            "reference_merge_mismatches": 274,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 15,
+              "column": 4,
+              "base": 0.0086669921875,
+              "cast_base": 0.0086669921875,
+              "intended_delta": 0.11798973085690756,
+              "merged": 0.12665671110153198,
+              "observed_delta": 0.11798971891403198,
+              "residual": -1.194287557737539e-08,
+              "reference_merged": 0.12665672600269318
+            }
+          },
+          {
+            "module": "transformer.h.0.attn.c_proj",
+            "weight": "transformer.h.0.attn.c_proj.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              16,
+              16
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 256,
+            "intended_nonzero_elements": 256,
+            "changed_elements": 256,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.6065639833842624,
+              "observed": 0.6065639862380694,
+              "residual": 2.677593008778465e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.414362016417634e-08,
+            "observed_to_intended_norm": 1.0000000047048738,
+            "projection_gain": 1.000000004704873,
+            "cosine_similarity": 0.9999999999999991,
+            "reference_merge_mismatches": 119,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 8,
+              "column": 0,
+              "base": -0.004669189453125,
+              "cast_base": -0.004669189453125,
+              "intended_delta": 0.10301462571754016,
+              "merged": 0.09834544360637665,
+              "observed_delta": 0.10301463305950165,
+              "residual": 7.341961483220416e-09,
+              "reference_merged": 0.09834543615579605
+            }
+          },
+          {
+            "module": "transformer.h.0.mlp.c_fc",
+            "weight": "transformer.h.0.mlp.c_fc.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              16,
+              40
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 640,
+            "intended_nonzero_elements": 640,
+            "changed_elements": 640,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.1131663096097024,
+              "observed": 1.1131662912949325,
+              "residual": 5.43576715703327e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.883158167928344e-08,
+            "observed_to_intended_norm": 0.9999999835471396,
+            "projection_gain": 0.9999999835471388,
+            "cosine_similarity": 0.9999999999999992,
+            "reference_merge_mismatches": 276,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 12,
+              "column": 23,
+              "base": -0.00872802734375,
+              "cast_base": -0.00872802734375,
+              "intended_delta": 0.09153551257332225,
+              "merged": 0.08280747383832932,
+              "observed_delta": 0.09153550118207932,
+              "residual": -1.1391242935032686e-08,
+              "reference_merged": 0.08280748873949051
+            }
+          },
+          {
+            "module": "transformer.h.0.mlp.c_proj",
+            "weight": "transformer.h.0.mlp.c_proj.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              40,
+              16
+            ],
+            "rank": 4,
+            "alpha": -2.0,
+            "scale": -1.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 640,
+            "intended_nonzero_elements": 640,
+            "changed_elements": 640,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.18596461332014003,
+              "observed": 0.18596461407285464,
+              "residual": 1.3152058832264325e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 7.072344892639827e-08,
+            "observed_to_intended_norm": 1.000000004047623,
+            "projection_gain": 1.0000000040476205,
+            "cosine_similarity": 0.9999999999999976,
+            "reference_merge_mismatches": 193,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 29,
+              "column": 2,
+              "base": 0.015869140625,
+              "cast_base": 0.015869140625,
+              "intended_delta": 0.017492626853206183,
+              "merged": 0.0333617702126503,
+              "observed_delta": 0.0174926295876503,
+              "residual": 2.73444411558188e-09,
+              "reference_merged": 0.03336176648736
+            }
+          },
+          {
+            "module": "transformer.wte",
+            "weight": "transformer.wte.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "embedding",
+            "reference_product": "(B @ A).T",
+            "shape": [
+              43,
+              16
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 688,
+            "intended_nonzero_elements": 464,
+            "changed_elements": 464,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 4.187270427700386,
+              "observed": 4.1872704437928085,
+              "residual": 1.799262547379092e-07,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.296981956255526e-08,
+            "observed_to_intended_norm": 1.0000000038431773,
+            "projection_gain": 1.0000000038431764,
+            "cosine_similarity": 0.9999999999999992,
+            "reference_merge_mismatches": 177,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 40,
+              "column": 12,
+              "base": -0.0030364990234375,
+              "cast_base": -0.0030364990234375,
+              "intended_delta": -0.5752421111110406,
+              "merged": -0.578278660774231,
+              "observed_delta": -0.5752421617507935,
+              "residual": -5.063975283547961e-08,
+              "reference_merged": -0.5782786011695862
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      },
+      "stdout": "Mergeglass | saved LoRA merge audit\n\nConv1D reference: (B @ A).T; saved rows are inputs, columns are outputs.\nLayouts follow standard GPT module paths and declared model metadata (see JSON).\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nMODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID\nlm_head                      F32         688         0.0%        1  4.317e-08\ntransformer.h.0.attn.c_attn  F32         768         0.0%        1  4.252e-08\ntransformer.h.0.attn.c_proj  F32         256         0.0%        1  4.414e-08\ntransformer.h.0.mlp.c_fc     F32         640         0.0%        1  4.883e-08\ntransformer.h.0.mlp.c_proj   F32         640         0.0%        1  7.072e-08\ntransformer.wte              F32         464         0.0%        1  4.297e-08\n\nOf 3,456 nonzero intended updates, 0 are unchanged (0.00%).\nThose unchanged entries contain 0% of the reference squared norm.\n* Nonzero intended update elements equal to the dtype-cast base.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 17 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+      "report_sha256": "04aeb5fe6e868895c042e336e1c5ca8c9236ace58efaf00327f59c2be5d834f2"
+    },
+    {
+      "case": "wrong-square-orientation",
+      "peak_rss_kib": 35216,
+      "elapsed_seconds": 0.1,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "Linear LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA, standard GPT Conv1D LoRA, Embedding LoRA and explicit full modules; no architecture execution or quality estimate",
+          "conv1d_reference": "delta = (B_float64 @ A_float64).T * scale; saved weight rows are inputs, columns are outputs; standard GPT module paths resolved from declared model metadata, not a global orientation flag",
+          "embedding_reference": "delta = (B_float64 @ A_float64).T * scale; weight rows are token indices, columns are embedding dimensions; A columns are streamed, B is retained in full"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 809,
+              "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 19144,
+              "sha256": "07d02a6af6174c9c1c14c991cf35035dece00faa38bdbfe86beeb7f56845c1b0"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1400,
+              "sha256": "de8462d65ba5dbc68f06a31acd1ecd1b21ad006f1588c5cb91201ab975cd3436"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 6168,
+              "sha256": "fde6aa4b3a39f540c43f0d59fa79d1d75bf9aa84edc105de0c79f0185295c76e"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 809,
+              "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 19144,
+              "sha256": "efbc0c0640645f924e8bba49c1451f0c27bcee49e9d2e83faa0e6627893fd7e2"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 6,
+          "checked_tensors": 17,
+          "adapted_elements": 3680,
+          "intended_nonzero_elements": 3456,
+          "changed_adapted_elements": 3456,
+          "unchanged_nonzero_update_elements": 0,
+          "unchanged_nonzero_update_fraction": 0.0,
+          "unchanged_reference_energy_fraction": 0.0,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "lm_head",
+            "weight": "lm_head.weight",
+            "adapter_variant": "lora",
+            "shape": [
+              43,
+              16
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 688,
+            "intended_nonzero_elements": 688,
+            "changed_elements": 688,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.2748539310722147,
+              "observed": 1.274853931764912,
+              "residual": 5.503043182526051e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.316606827181936e-08,
+            "observed_to_intended_norm": 1.0000000005433543,
+            "projection_gain": 1.0000000005433531,
+            "cosine_similarity": 0.999999999999999,
+            "reference_merge_mismatches": 275,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 25,
+              "column": 15,
+              "base": -0.03271484375,
+              "cast_base": -0.03271484375,
+              "intended_delta": -0.1163248306212144,
+              "merged": -0.14903968572616577,
+              "observed_delta": -0.11632484197616577,
+              "residual": -1.1354951368058863e-08,
+              "reference_merged": -0.14903967082500458
+            }
+          },
+          {
+            "module": "transformer.h.0.attn.c_attn",
+            "weight": "transformer.h.0.attn.c_attn.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              16,
+              48
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 768,
+            "intended_nonzero_elements": 768,
+            "changed_elements": 768,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.1520975692304412,
+              "observed": 1.152097570754083,
+              "residual": 4.898320702751984e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.251654402867877e-08,
+            "observed_to_intended_norm": 1.000000001322494,
+            "projection_gain": 1.000000001322493,
+            "cosine_similarity": 0.9999999999999992,
+            "reference_merge_mismatches": 274,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 15,
+              "column": 4,
+              "base": 0.0086669921875,
+              "cast_base": 0.0086669921875,
+              "intended_delta": 0.11798973085690756,
+              "merged": 0.12665671110153198,
+              "observed_delta": 0.11798971891403198,
+              "residual": -1.194287557737539e-08,
+              "reference_merged": 0.12665672600269318
+            }
+          },
+          {
+            "module": "transformer.h.0.attn.c_proj",
+            "weight": "transformer.h.0.attn.c_proj.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              16,
+              16
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 256,
+            "intended_nonzero_elements": 256,
+            "changed_elements": 256,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.6065639833842624,
+              "observed": 0.60656398586402,
+              "residual": 0.8982625709662009,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 1.4809032444597776,
+            "observed_to_intended_norm": 1.0000000040882044,
+            "projection_gain": -0.09653720563754346,
+            "cosine_similarity": -0.09653720524287963,
+            "reference_merge_mismatches": 248,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 6,
+              "column": 0,
+              "base": 0.00390625,
+              "cast_base": 0.00390625,
+              "intended_delta": 0.07921948210307539,
+              "merged": -0.037391625344753265,
+              "observed_delta": -0.041297875344753265,
+              "residual": -0.12051735744782865,
+              "reference_merged": 0.08312573283910751
+            }
+          },
+          {
+            "module": "transformer.h.0.mlp.c_fc",
+            "weight": "transformer.h.0.mlp.c_fc.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              16,
+              40
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 640,
+            "intended_nonzero_elements": 640,
+            "changed_elements": 640,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.1131663096097024,
+              "observed": 1.1131662912949325,
+              "residual": 5.43576715703327e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.883158167928344e-08,
+            "observed_to_intended_norm": 0.9999999835471396,
+            "projection_gain": 0.9999999835471388,
+            "cosine_similarity": 0.9999999999999992,
+            "reference_merge_mismatches": 276,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 12,
+              "column": 23,
+              "base": -0.00872802734375,
+              "cast_base": -0.00872802734375,
+              "intended_delta": 0.09153551257332225,
+              "merged": 0.08280747383832932,
+              "observed_delta": 0.09153550118207932,
+              "residual": -1.1391242935032686e-08,
+              "reference_merged": 0.08280748873949051
+            }
+          },
+          {
+            "module": "transformer.h.0.mlp.c_proj",
+            "weight": "transformer.h.0.mlp.c_proj.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              40,
+              16
+            ],
+            "rank": 4,
+            "alpha": -2.0,
+            "scale": -1.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 640,
+            "intended_nonzero_elements": 640,
+            "changed_elements": 640,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.18596461332014003,
+              "observed": 0.18596461407285464,
+              "residual": 1.3152058832264325e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 7.072344892639827e-08,
+            "observed_to_intended_norm": 1.000000004047623,
+            "projection_gain": 1.0000000040476205,
+            "cosine_similarity": 0.9999999999999976,
+            "reference_merge_mismatches": 193,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 29,
+              "column": 2,
+              "base": 0.015869140625,
+              "cast_base": 0.015869140625,
+              "intended_delta": 0.017492626853206183,
+              "merged": 0.0333617702126503,
+              "observed_delta": 0.0174926295876503,
+              "residual": 2.73444411558188e-09,
+              "reference_merged": 0.03336176648736
+            }
+          },
+          {
+            "module": "transformer.wte",
+            "weight": "transformer.wte.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "embedding",
+            "reference_product": "(B @ A).T",
+            "shape": [
+              43,
+              16
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 688,
+            "intended_nonzero_elements": 464,
+            "changed_elements": 464,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 4.187270427700386,
+              "observed": 4.1872704437928085,
+              "residual": 1.799262547379092e-07,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.296981956255526e-08,
+            "observed_to_intended_norm": 1.0000000038431773,
+            "projection_gain": 1.0000000038431764,
+            "cosine_similarity": 0.9999999999999992,
+            "reference_merge_mismatches": 177,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 40,
+              "column": 12,
+              "base": -0.0030364990234375,
+              "cast_base": -0.0030364990234375,
+              "intended_delta": -0.5752421111110406,
+              "merged": -0.578278660774231,
+              "observed_delta": -0.5752421617507935,
+              "residual": -5.063975283547961e-08,
+              "reference_merged": -0.5782786011695862
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      },
+      "stdout": "Mergeglass | saved LoRA merge audit\n\nConv1D reference: (B @ A).T; saved rows are inputs, columns are outputs.\nLayouts follow standard GPT module paths and declared model metadata (see JSON).\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nMODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID\nlm_head                      F32         688         0.0%        1  4.317e-08\ntransformer.h.0.attn.c_attn  F32         768         0.0%        1  4.252e-08\ntransformer.h.0.attn.c_proj  F32         256         0.0% -0.09654      1.481\ntransformer.h.0.mlp.c_fc     F32         640         0.0%        1  4.883e-08\ntransformer.h.0.mlp.c_proj   F32         640         0.0%        1  7.072e-08\ntransformer.wte              F32         464         0.0%        1  4.297e-08\n\nOf 3,456 nonzero intended updates, 0 are unchanged (0.00%).\nThose unchanged entries contain 0% of the reference squared norm.\n* Nonzero intended update elements equal to the dtype-cast base.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 17 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+      "report_sha256": "dd4b3ab89b54a9a5ffbad5e79f12c3a9b96e93612d4046a961b4875a9833b735"
+    },
+    {
+      "case": "omitted-square",
+      "peak_rss_kib": 35224,
+      "elapsed_seconds": 0.08,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "Linear LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA, standard GPT Conv1D LoRA, Embedding LoRA and explicit full modules; no architecture execution or quality estimate",
+          "conv1d_reference": "delta = (B_float64 @ A_float64).T * scale; saved weight rows are inputs, columns are outputs; standard GPT module paths resolved from declared model metadata, not a global orientation flag",
+          "embedding_reference": "delta = (B_float64 @ A_float64).T * scale; weight rows are token indices, columns are embedding dimensions; A columns are streamed, B is retained in full"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 809,
+              "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 19144,
+              "sha256": "07d02a6af6174c9c1c14c991cf35035dece00faa38bdbfe86beeb7f56845c1b0"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1400,
+              "sha256": "de8462d65ba5dbc68f06a31acd1ecd1b21ad006f1588c5cb91201ab975cd3436"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 6168,
+              "sha256": "fde6aa4b3a39f540c43f0d59fa79d1d75bf9aa84edc105de0c79f0185295c76e"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 809,
+              "sha256": "3af8afd6e543056e16014e6f48bef69d618c1478f08a938ec6a7fcf355424296"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 19144,
+              "sha256": "6f6c89dba0bdb48e744c9c972fa5a1ba24a247e3bbfaafb914e6970f675567d3"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 512
+        },
+        "summary": {
+          "adapted_tensors": 6,
+          "checked_tensors": 17,
+          "adapted_elements": 3680,
+          "intended_nonzero_elements": 3456,
+          "changed_adapted_elements": 3200,
+          "unchanged_nonzero_update_elements": 256,
+          "unchanged_nonzero_update_fraction": 0.07407407407407407,
+          "unchanged_reference_energy_fraction": 0.01662730006335229,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 1,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "lm_head",
+            "weight": "lm_head.weight",
+            "adapter_variant": "lora",
+            "shape": [
+              43,
+              16
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 688,
+            "intended_nonzero_elements": 688,
+            "changed_elements": 688,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.2748539310722147,
+              "observed": 1.274853931764912,
+              "residual": 5.503043182526051e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.316606827181936e-08,
+            "observed_to_intended_norm": 1.0000000005433543,
+            "projection_gain": 1.0000000005433531,
+            "cosine_similarity": 0.999999999999999,
+            "reference_merge_mismatches": 275,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 25,
+              "column": 15,
+              "base": -0.03271484375,
+              "cast_base": -0.03271484375,
+              "intended_delta": -0.1163248306212144,
+              "merged": -0.14903968572616577,
+              "observed_delta": -0.11632484197616577,
+              "residual": -1.1354951368058863e-08,
+              "reference_merged": -0.14903967082500458
+            }
+          },
+          {
+            "module": "transformer.h.0.attn.c_attn",
+            "weight": "transformer.h.0.attn.c_attn.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              16,
+              48
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 768,
+            "intended_nonzero_elements": 768,
+            "changed_elements": 768,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.1520975692304412,
+              "observed": 1.152097570754083,
+              "residual": 4.898320702751984e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.251654402867877e-08,
+            "observed_to_intended_norm": 1.000000001322494,
+            "projection_gain": 1.000000001322493,
+            "cosine_similarity": 0.9999999999999992,
+            "reference_merge_mismatches": 274,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 15,
+              "column": 4,
+              "base": 0.0086669921875,
+              "cast_base": 0.0086669921875,
+              "intended_delta": 0.11798973085690756,
+              "merged": 0.12665671110153198,
+              "observed_delta": 0.11798971891403198,
+              "residual": -1.194287557737539e-08,
+              "reference_merged": 0.12665672600269318
+            }
+          },
+          {
+            "module": "transformer.h.0.attn.c_proj",
+            "weight": "transformer.h.0.attn.c_proj.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              16,
+              16
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "no-observed-update",
+            "elements": 256,
+            "intended_nonzero_elements": 256,
+            "changed_elements": 0,
+            "unchanged_nonzero_update_elements": 256,
+            "unchanged_nonzero_update_fraction": 1.0,
+            "unchanged_reference_energy_fraction": 1.0,
+            "norms": {
+              "delta": 0.6065639833842624,
+              "observed": 0.0,
+              "residual": 0.6065639833842624,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.6065639833842624
+            },
+            "relative_residual": 1.0,
+            "observed_to_intended_norm": 0.0,
+            "projection_gain": 0.0,
+            "cosine_similarity": null,
+            "reference_merge_mismatches": 256,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 3,
+              "column": 0,
+              "base": 0.001617431640625,
+              "cast_base": 0.001617431640625,
+              "intended_delta": -0.12440617229356055,
+              "merged": 0.001617431640625,
+              "observed_delta": 0.0,
+              "residual": 0.12440617229356055,
+              "reference_merged": -0.12278874218463898
+            }
+          },
+          {
+            "module": "transformer.h.0.mlp.c_fc",
+            "weight": "transformer.h.0.mlp.c_fc.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              16,
+              40
+            ],
+            "rank": 2,
+            "alpha": 8.0,
+            "scale": 5.65685424949238,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 640,
+            "intended_nonzero_elements": 640,
+            "changed_elements": 640,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 1.1131663096097024,
+              "observed": 1.1131662912949325,
+              "residual": 5.43576715703327e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.883158167928344e-08,
+            "observed_to_intended_norm": 0.9999999835471396,
+            "projection_gain": 0.9999999835471388,
+            "cosine_similarity": 0.9999999999999992,
+            "reference_merge_mismatches": 276,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 12,
+              "column": 23,
+              "base": -0.00872802734375,
+              "cast_base": -0.00872802734375,
+              "intended_delta": 0.09153551257332225,
+              "merged": 0.08280747383832932,
+              "observed_delta": 0.09153550118207932,
+              "residual": -1.1391242935032686e-08,
+              "reference_merged": 0.08280748873949051
+            }
+          },
+          {
+            "module": "transformer.h.0.mlp.c_proj",
+            "weight": "transformer.h.0.mlp.c_proj.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              40,
+              16
+            ],
+            "rank": 4,
+            "alpha": -2.0,
+            "scale": -1.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 640,
+            "intended_nonzero_elements": 640,
+            "changed_elements": 640,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 0.18596461332014003,
+              "observed": 0.18596461407285464,
+              "residual": 1.3152058832264325e-08,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 7.072344892639827e-08,
+            "observed_to_intended_norm": 1.000000004047623,
+            "projection_gain": 1.0000000040476205,
+            "cosine_similarity": 0.9999999999999976,
+            "reference_merge_mismatches": 193,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 29,
+              "column": 2,
+              "base": 0.015869140625,
+              "cast_base": 0.015869140625,
+              "intended_delta": 0.017492626853206183,
+              "merged": 0.0333617702126503,
+              "observed_delta": 0.0174926295876503,
+              "residual": 2.73444411558188e-09,
+              "reference_merged": 0.03336176648736
+            }
+          },
+          {
+            "module": "transformer.wte",
+            "weight": "transformer.wte.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "embedding",
+            "reference_product": "(B @ A).T",
+            "shape": [
+              43,
+              16
+            ],
+            "rank": 4,
+            "alpha": 8.0,
+            "scale": 4.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 688,
+            "intended_nonzero_elements": 464,
+            "changed_elements": 464,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "norms": {
+              "delta": 4.187270427700386,
+              "observed": 4.1872704437928085,
+              "residual": 1.799262547379092e-07,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 0.0
+            },
+            "relative_residual": 4.296981956255526e-08,
+            "observed_to_intended_norm": 1.0000000038431773,
+            "projection_gain": 1.0000000038431764,
+            "cosine_similarity": 0.9999999999999992,
+            "reference_merge_mismatches": 177,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 40,
+              "column": 12,
+              "base": -0.0030364990234375,
+              "cast_base": -0.0030364990234375,
+              "intended_delta": -0.5752421111110406,
+              "merged": -0.578278660774231,
+              "observed_delta": -0.5752421617507935,
+              "residual": -5.063975283547961e-08,
+              "reference_merged": -0.5782786011695862
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      },
+      "stdout": "Mergeglass | saved LoRA merge audit\n\nConv1D reference: (B @ A).T; saved rows are inputs, columns are outputs.\nLayouts follow standard GPT module paths and declared model metadata (see JSON).\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nMODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID\nlm_head                      F32         688         0.0%        1  4.317e-08\ntransformer.h.0.attn.c_attn  F32         768         0.0%        1  4.252e-08\ntransformer.h.0.attn.c_proj  F32           0       100.0%        0          1\n  no-observed-update\ntransformer.h.0.mlp.c_fc     F32         640         0.0%        1  4.883e-08\ntransformer.h.0.mlp.c_proj   F32         640         0.0%        1  7.072e-08\ntransformer.wte              F32         464         0.0%        1  4.297e-08\n\nOf 3,456 nonzero intended updates, 256 are unchanged (7.41%).\nThose unchanged entries contain 1.663% of the reference squared norm.\n* Nonzero intended update elements equal to the dtype-cast base.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 17 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+      "report_sha256": "76d15c89dd1026b24a8038b60b2e008464ff9e2d6aeeb36d2e0e177cf0975861"
+    }
+  ],
+  "streaming_reference": {
+    "synthetic": true,
+    "training": false,
+    "control": "native seeded nonzero B; native PEFT merge; no trained-task claim",
+    "seed": 819512,
+    "shape": [
+      32768,
+      512
+    ],
+    "decoded_A_bytes": 2097152,
+    "decoded_B_bytes": 32768,
+    "full_float64_delta_bytes": 134217728,
+    "norms": {
+      "delta": 0.07394158030818965,
+      "observed": 0.07394157982230201,
+      "residual": 1.4664217072906366e-06
+    },
+    "relative_residual": 1.9832166166567826e-05,
+    "changed_elements": 16776819,
+    "intended_nonzero_elements": 16777216,
+    "unchanged_nonzero_update_elements": 397,
+    "largest_residual": {
+      "row": 16554,
+      "column": 174,
+      "residual": -3.6839169737399257e-09
+    },
+    "producer_sha256": "ce46e24aff067b2239254666be3fadf4d6c10f3a588edff4033d5515e8af7b96"
+  },
+  "streaming": [
+    {
+      "block_mib": 1,
+      "peak_rss_kib": 37728,
+      "elapsed_seconds": 0.92,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "Linear LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA, standard GPT Conv1D LoRA, Embedding LoRA and explicit full modules; no architecture execution or quality estimate",
+          "conv1d_reference": "delta = (B_float64 @ A_float64).T * scale; saved weight rows are inputs, columns are outputs; standard GPT module paths resolved from declared model metadata, not a global orientation flag"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 827,
+              "sha256": "ee11da674cd069207df9192b8c7a92646513c80f12cc0359ce5ce2f6707f3612"
+            },
+            {
+              "file": "model-00001-of-00003.safetensors",
+              "bytes": 67109008,
+              "sha256": "4331055d50220018950731fa2535587b02a1af70572c2fce765df7e1d9a8e3cb"
+            },
+            {
+              "file": "model-00002-of-00003.safetensors",
+              "bytes": 67109008,
+              "sha256": "d3f5e50ee7cc6dd4c5820ba61237738b9cb4d0a0e75474a6c0d3f6e76fe32953"
+            },
+            {
+              "file": "model-00003-of-00003.safetensors",
+              "bytes": 4591008,
+              "sha256": "a9d34a9d81b920fd7c7738d1fd14fde4e0eecfc75687d26884fa2bfc82eb8893"
+            },
+            {
+              "file": "model.safetensors.index.json",
+              "bytes": 1318,
+              "sha256": "16d309d9279a932f4a8cdcf449fef230d1ec82864aab6f2ad216a07b8de5350a"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1184,
+              "sha256": "baa826253f06a6f8333db8779edd303cbf87020f52407e4fad8aeabfb80edb79"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1065248,
+              "sha256": "da1778d6ac745783c99cea33d96356d5116704d85f3692e651a4037219c3d7b0"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 827,
+              "sha256": "ee11da674cd069207df9192b8c7a92646513c80f12cc0359ce5ce2f6707f3612"
+            },
+            {
+              "file": "model-00001-of-00003.safetensors",
+              "bytes": 67109008,
+              "sha256": "4331055d50220018950731fa2535587b02a1af70572c2fce765df7e1d9a8e3cb"
+            },
+            {
+              "file": "model-00002-of-00003.safetensors",
+              "bytes": 67109008,
+              "sha256": "0d2a94df5e774b5b4cf0d605130cc74cfb7def06206ba36e3d0aa6f87ccfd734"
+            },
+            {
+              "file": "model-00003-of-00003.safetensors",
+              "bytes": 4591008,
+              "sha256": "a9d34a9d81b920fd7c7738d1fd14fde4e0eecfc75687d26884fa2bfc82eb8893"
+            },
+            {
+              "file": "model.safetensors.index.json",
+              "bytes": 1318,
+              "sha256": "16d309d9279a932f4a8cdcf449fef230d1ec82864aab6f2ad216a07b8de5350a"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 1
+        },
+        "summary": {
+          "adapted_tensors": 1,
+          "checked_tensors": 17,
+          "adapted_elements": 16777216,
+          "intended_nonzero_elements": 16777216,
+          "changed_adapted_elements": 16776819,
+          "unchanged_nonzero_update_elements": 397,
+          "unchanged_nonzero_update_fraction": 2.3663043975830078e-05,
+          "unchanged_reference_energy_fraction": 1.8379845794223256e-14,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "transformer.h.0.mlp.c_proj",
+            "weight": "transformer.h.0.mlp.c_proj.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              32768,
+              512
+            ],
+            "rank": 8,
+            "alpha": 16.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 16777216,
+            "intended_nonzero_elements": 16777216,
+            "changed_elements": 16776819,
+            "unchanged_nonzero_update_elements": 397,
+            "unchanged_nonzero_update_fraction": 2.3663043975830078e-05,
+            "unchanged_reference_energy_fraction": 1.8379845794223256e-14,
+            "norms": {
+              "delta": 0.07394158030818952,
+              "observed": 0.07394157982247235,
+              "residual": 1.466421707290658e-06,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 1.0024429362704119e-08
+            },
+            "relative_residual": 1.983216616656815e-05,
+            "observed_to_intended_norm": 0.9999999934310685,
+            "projection_gain": 0.9999999932344087,
+            "cosine_similarity": 0.9999999998033402,
+            "reference_merge_mismatches": 71871,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 16554,
+              "column": 174,
+              "base": -0.0633157417178154,
+              "cast_base": -0.0633157417178154,
+              "intended_delta": 1.9889283530163437e-05,
+              "merged": -0.06329585611820221,
+              "observed_delta": 1.9885599613189697e-05,
+              "residual": -3.6839169737399257e-09,
+              "reference_merged": -0.06329585611820221
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      },
+      "stdout": "Mergeglass | saved LoRA merge audit\n\nConv1D reference: (B @ A).T; saved rows are inputs, columns are outputs.\nLayouts follow standard GPT module paths and declared model metadata (see JSON).\n\nMODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID\ntransformer.h.0.mlp.c_proj   F32    16,776,819         0.0%        1  1.983e-05\n\nOf 16,777,216 nonzero intended updates, 397 are unchanged (0.00%).\nThose unchanged entries contain 1.838e-12% of the reference squared norm.\n* Nonzero intended update elements equal to the dtype-cast base.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 17 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+      "report_sha256": "5250bd5115ad3793fb0251b09ba8dab8a5584c814c26cc9a8d1d3f16aed47076"
+    },
+    {
+      "block_mib": 16,
+      "peak_rss_kib": 57316,
+      "elapsed_seconds": 0.61,
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "Linear LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear LoRA/DoRA, standard GPT Conv1D LoRA, Embedding LoRA and explicit full modules; no architecture execution or quality estimate",
+          "conv1d_reference": "delta = (B_float64 @ A_float64).T * scale; saved weight rows are inputs, columns are outputs; standard GPT module paths resolved from declared model metadata, not a global orientation flag"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "config.json",
+              "bytes": 827,
+              "sha256": "ee11da674cd069207df9192b8c7a92646513c80f12cc0359ce5ce2f6707f3612"
+            },
+            {
+              "file": "model-00001-of-00003.safetensors",
+              "bytes": 67109008,
+              "sha256": "4331055d50220018950731fa2535587b02a1af70572c2fce765df7e1d9a8e3cb"
+            },
+            {
+              "file": "model-00002-of-00003.safetensors",
+              "bytes": 67109008,
+              "sha256": "d3f5e50ee7cc6dd4c5820ba61237738b9cb4d0a0e75474a6c0d3f6e76fe32953"
+            },
+            {
+              "file": "model-00003-of-00003.safetensors",
+              "bytes": 4591008,
+              "sha256": "a9d34a9d81b920fd7c7738d1fd14fde4e0eecfc75687d26884fa2bfc82eb8893"
+            },
+            {
+              "file": "model.safetensors.index.json",
+              "bytes": 1318,
+              "sha256": "16d309d9279a932f4a8cdcf449fef230d1ec82864aab6f2ad216a07b8de5350a"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1184,
+              "sha256": "baa826253f06a6f8333db8779edd303cbf87020f52407e4fad8aeabfb80edb79"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 1065248,
+              "sha256": "da1778d6ac745783c99cea33d96356d5116704d85f3692e651a4037219c3d7b0"
+            }
+          ],
+          "merged": [
+            {
+              "file": "config.json",
+              "bytes": 827,
+              "sha256": "ee11da674cd069207df9192b8c7a92646513c80f12cc0359ce5ce2f6707f3612"
+            },
+            {
+              "file": "model-00001-of-00003.safetensors",
+              "bytes": 67109008,
+              "sha256": "4331055d50220018950731fa2535587b02a1af70572c2fce765df7e1d9a8e3cb"
+            },
+            {
+              "file": "model-00002-of-00003.safetensors",
+              "bytes": 67109008,
+              "sha256": "0d2a94df5e774b5b4cf0d605130cc74cfb7def06206ba36e3d0aa6f87ccfd734"
+            },
+            {
+              "file": "model-00003-of-00003.safetensors",
+              "bytes": 4591008,
+              "sha256": "a9d34a9d81b920fd7c7738d1fd14fde4e0eecfc75687d26884fa2bfc82eb8893"
+            },
+            {
+              "file": "model.safetensors.index.json",
+              "bytes": 1318,
+              "sha256": "16d309d9279a932f4a8cdcf449fef230d1ec82864aab6f2ad216a07b8de5350a"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 1
+        },
+        "summary": {
+          "adapted_tensors": 1,
+          "checked_tensors": 17,
+          "adapted_elements": 16777216,
+          "intended_nonzero_elements": 16777216,
+          "changed_adapted_elements": 16776819,
+          "unchanged_nonzero_update_elements": 397,
+          "unchanged_nonzero_update_fraction": 2.3663043975830078e-05,
+          "unchanged_reference_energy_fraction": 1.8379845794223265e-14,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "transformer.h.0.mlp.c_proj",
+            "weight": "transformer.h.0.mlp.c_proj.weight",
+            "adapter_variant": "lora",
+            "weight_layout": "conv1d",
+            "reference_product": "(B @ A).T",
+            "layout_evidence": [
+              "base/config.json:model_type=gpt2",
+              "adapter_config.json:auto_mapping.parent_library=transformers.models.gpt2.modeling_gpt2"
+            ],
+            "coordinate_axes": {
+              "row": "input",
+              "column": "output"
+            },
+            "shape": [
+              32768,
+              512
+            ],
+            "rank": 8,
+            "alpha": 16.0,
+            "scale": 2.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "F32",
+            "status": "observed-update",
+            "elements": 16777216,
+            "intended_nonzero_elements": 16777216,
+            "changed_elements": 16776819,
+            "unchanged_nonzero_update_elements": 397,
+            "unchanged_nonzero_update_fraction": 2.3663043975830078e-05,
+            "unchanged_reference_energy_fraction": 1.8379845794223265e-14,
+            "norms": {
+              "delta": 0.0739415803081895,
+              "observed": 0.07394157982247232,
+              "residual": 1.4664217072906578e-06,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 1.0024429362704117e-08
+            },
+            "relative_residual": 1.9832166166568155e-05,
+            "observed_to_intended_norm": 0.9999999934310685,
+            "projection_gain": 0.9999999932344117,
+            "cosine_similarity": 0.9999999998033432,
+            "reference_merge_mismatches": 71871,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 16554,
+              "column": 174,
+              "base": -0.0633157417178154,
+              "cast_base": -0.0633157417178154,
+              "intended_delta": 1.9889283530163437e-05,
+              "merged": -0.06329585611820221,
+              "observed_delta": 1.9885599613189697e-05,
+              "residual": -3.6839169737399257e-09,
+              "reference_merged": -0.06329585611820221
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "DoRA normalizes rows of the supplied original base plus its directional update.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      },
+      "stdout": "Mergeglass | saved LoRA merge audit\n\nConv1D reference: (B @ A).T; saved rows are inputs, columns are outputs.\nLayouts follow standard GPT module paths and declared model metadata (see JSON).\n\nMODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID\ntransformer.h.0.mlp.c_proj   F32    16,776,819         0.0%        1  1.983e-05\n\nOf 16,777,216 nonzero intended updates, 397 are unchanged (0.00%).\nThose unchanged entries contain 1.838e-12% of the reference squared norm.\n* Nonzero intended update elements equal to the dtype-cast base.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 17 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+      "report_sha256": "b6b65d45c8acd5f87fa1eed38259f635e906134c0dadaa958907ddc781d98db3"
+    }
+  ],
+  "public_bf16": {
+    "peak_rss_kib": 37692,
+    "elapsed_seconds": 5.91,
+    "report": {
+      "schema_version": 1,
+      "arithmetic": {
+        "reference": "Linear LoRA: delta = (B_float64 @ A_float64) * scale; DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; reference_weight = row_normalize(direction) * magnitude_float64; delta = reference_weight - base_float64; no dense full-layer delta retained",
+        "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+        "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+        "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+        "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+        "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+        "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+        "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+        "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+        "scope": "saved Linear LoRA/DoRA, standard GPT Conv1D LoRA, Embedding LoRA and explicit full modules; no architecture execution or quality estimate",
+        "conv1d_reference": "delta = (B_float64 @ A_float64).T * scale; saved weight rows are inputs, columns are outputs; standard GPT module paths resolved from declared model metadata, not a global orientation flag"
+      },
+      "inputs": {
+        "base": [
+          {
+            "file": "config.json",
+            "bytes": 961,
+            "sha256": "a7eca6e787314db64d5983260a07903b5a5eaabbaec28394aad9e71f640cc59a"
+          },
+          {
+            "file": "model-00001-of-00007.safetensors",
+            "bytes": 63795864,
+            "sha256": "6ed34a446d213baa2426874dd99308c5c986065bf2140156c9e6825d36ed0bae"
+          },
+          {
+            "file": "model-00002-of-00007.safetensors",
+            "bytes": 59089848,
+            "sha256": "d609697bf747a600eaa657fc34216e6ac21de4ead0680b4817ff8e2332e90faa"
+          },
+          {
+            "file": "model-00003-of-00007.safetensors",
+            "bytes": 56705400,
+            "sha256": "367efdb3a0130e9ee89b3f85517b401f77b10121e1cac0625c3228a1785a9b95"
+          },
+          {
+            "file": "model-00004-of-00007.safetensors",
+            "bytes": 56705400,
+            "sha256": "96c622ac967f146c6c9c7b0146fb8eafd50b55d29297452dee1d425358654e40"
+          },
+          {
+            "file": "model-00005-of-00007.safetensors",
+            "bytes": 56705392,
+            "sha256": "bf07371d673afa03e062b35af08d2b8322a99435a30017ba694b4d723592effd"
+          },
+          {
+            "file": "model-00006-of-00007.safetensors",
+            "bytes": 154389640,
+            "sha256": "6c045b2a6818b38b5f1f690c0d74bcf2df23f225a2665087843bf497aef664d3"
+          },
+          {
+            "file": "model-00007-of-00007.safetensors",
+            "bytes": 50382632,
+            "sha256": "fd75e9b8cbbf872eee00bb9dc61d27c8d18d5a71d9c329246fb6fc79ad4bf013"
+          },
+          {
+            "file": "model.safetensors.index.json",
+            "bytes": 11053,
+            "sha256": "3d934baf3598bd8e813db4b194ebd9d3fc6cb47e391c3f22560214c032bd9f77"
+          }
+        ],
+        "adapter": [
+          {
+            "file": "adapter_config.json",
+            "bytes": 640,
+            "sha256": "f4d075dc4e75aee20280aa11ad0757cb6577dadd1980d5c98f49b9ef7ae2f14e"
+          },
+          {
+            "file": "adapter_model.safetensors",
+            "bytes": 9449344,
+            "sha256": "813ff47fd3e61ee447c75ce719e49ec2fb0d2635bf8cc3cd7590766ecde6c97b"
+          }
+        ],
+        "merged": [
+          {
+            "file": "config.json",
+            "bytes": 962,
+            "sha256": "b97de25b331cf11a71e91c2d3de37d7408dcde4a212418e284d195bd92bda197"
+          },
+          {
+            "file": "model-00001-of-00004.safetensors",
+            "bytes": 61445744,
+            "sha256": "3c9d5b34f54cec284473f5636ea2e7fc700a15565a3c26cd58c0eeb370240468"
+          },
+          {
+            "file": "model-00002-of-00004.safetensors",
+            "bytes": 61428176,
+            "sha256": "b8419d9dfc4e3fa3ad8ff6c603f40174c25ad9fb84d287695c2d34c0fbc8e7de"
+          },
+          {
+            "file": "model-00003-of-00004.safetensors",
+            "bytes": 77194888,
+            "sha256": "ea623f15829824ca373d53418addb4617c14788eff8f1119cb9430158becbb58"
+          },
+          {
+            "file": "model-00004-of-00004.safetensors",
+            "bytes": 48825808,
+            "sha256": "cc6539d40334e6892aced05834a4c58d930897fe0408ae3c1483439ca09df277"
+          },
+          {
+            "file": "model.safetensors.index.json",
+            "bytes": 11053,
+            "sha256": "ab728625bfe93f3db2613368b7378445f6b6ac31caea506a0e928f227632b80d"
+          }
+        ]
+      },
+      "settings": {
+        "block_mib": 1,
+        "max_adapter_mib": 512
+      },
+      "summary": {
+        "adapted_tensors": 48,
+        "checked_tensors": 148,
+        "adapted_elements": 84934656,
+        "intended_nonzero_elements": 84934656,
+        "changed_adapted_elements": 78607495,
+        "unchanged_nonzero_update_elements": 6327161,
+        "unchanged_nonzero_update_fraction": 0.07449445606749734,
+        "unchanged_reference_energy_fraction": 0.00037030098202771756,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "transformer.h.0.attn.c_attn",
+          "weight": "transformer.h.0.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1649218,
+          "unchanged_nonzero_update_elements": 120254,
+          "unchanged_nonzero_update_fraction": 0.06796038592303241,
+          "unchanged_reference_energy_fraction": 0.0005782522285296543,
+          "norms": {
+            "delta": 8.191748702965008,
+            "observed": 8.20319335601497,
+            "residual": 0.44021501837609683,
+            "base_cast_drift": 0.4431842783432082,
+            "unchanged_reference": 0.19698596241677488
+          },
+          "relative_residual": 0.053738833347849256,
+          "observed_to_intended_norm": 1.001397095231427,
+          "projection_gain": 0.9999541400641767,
+          "cosine_similarity": 0.9985590579659941,
+          "reference_merge_mismatches": 463406,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 314,
+            "column": 1220,
+            "base": -2.0451266765594482,
+            "cast_base": -2.046875,
+            "intended_delta": 0.008127428152622101,
+            "merged": -2.03125,
+            "observed_delta": 0.015625,
+            "residual": 0.0074975718473778985,
+            "reference_merged": -2.03125
+          }
+        },
+        {
+          "module": "transformer.h.0.attn.c_proj",
+          "weight": "transformer.h.0.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 549697,
+          "unchanged_nonzero_update_elements": 40127,
+          "unchanged_nonzero_update_fraction": 0.06803215874565972,
+          "unchanged_reference_energy_fraction": 0.004312050628411672,
+          "norms": {
+            "delta": 1.76751896560044,
+            "observed": 1.7755346204352216,
+            "residual": 0.18375428669682445,
+            "base_cast_drift": 0.19064697924580074,
+            "unchanged_reference": 0.1160662647459695
+          },
+          "relative_residual": 0.10396170579951977,
+          "observed_to_intended_norm": 1.004534975290666,
+          "projection_gain": 0.9991412401547365,
+          "cosine_similarity": 0.9946306148928574,
+          "reference_merge_mismatches": 157651,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 727,
+            "column": 87,
+            "base": -2.817289113998413,
+            "cast_base": -2.8125,
+            "intended_delta": 0.007610721153050524,
+            "merged": -2.8125,
+            "observed_delta": 0.0,
+            "residual": -0.007610721153050524,
+            "reference_merged": -2.8125
+          }
+        },
+        {
+          "module": "transformer.h.0.mlp.c_fc",
+          "weight": "transformer.h.0.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2194250,
+          "unchanged_nonzero_update_elements": 165046,
+          "unchanged_nonzero_update_fraction": 0.0699556138780382,
+          "unchanged_reference_energy_fraction": 0.0004993374090184534,
+          "norms": {
+            "delta": 6.750110616448687,
+            "observed": 6.760005874827178,
+            "residual": 0.35912779271856377,
+            "base_cast_drift": 0.3642045182305884,
+            "unchanged_reference": 0.15083701924952006
+          },
+          "relative_residual": 0.053203245565108255,
+          "observed_to_intended_norm": 1.0014659401809474,
+          "projection_gain": 1.000051722001924,
+          "cosine_similarity": 0.9985878519455511,
+          "reference_merge_mismatches": 617043,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 512,
+            "column": 2260,
+            "base": 2.636171579360962,
+            "cast_base": 2.640625,
+            "intended_delta": -0.023489343555362863,
+            "merged": 2.609375,
+            "observed_delta": -0.03125,
+            "residual": -0.007760656444637137,
+            "reference_merged": 2.609375
+          }
+        },
+        {
+          "module": "transformer.h.0.mlp.c_proj",
+          "weight": "transformer.h.0.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2123984,
+          "unchanged_nonzero_update_elements": 235312,
+          "unchanged_nonzero_update_fraction": 0.09973822699652778,
+          "unchanged_reference_energy_fraction": 0.0014094688397941685,
+          "norms": {
+            "delta": 2.910275591456709,
+            "observed": 2.9177103106714357,
+            "residual": 0.21548974501287188,
+            "base_cast_drift": 0.2269118448611958,
+            "unchanged_reference": 0.10926016609896219
+          },
+          "relative_residual": 0.0740444463903883,
+          "observed_to_intended_norm": 1.0025546443905697,
+          "projection_gain": 0.999816617473921,
+          "cosine_similarity": 0.9972689499450546,
+          "reference_merge_mismatches": 610284,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 2009,
+            "column": 87,
+            "base": -2.9920036792755127,
+            "cast_base": -2.984375,
+            "intended_delta": -0.007385063436112156,
+            "merged": -2.984375,
+            "observed_delta": 0.0,
+            "residual": 0.007385063436112156,
+            "reference_merged": -3.0
+          }
+        },
+        {
+          "module": "transformer.h.1.attn.c_attn",
+          "weight": "transformer.h.1.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1619647,
+          "unchanged_nonzero_update_elements": 149825,
+          "unchanged_nonzero_update_fraction": 0.0846721507884838,
+          "unchanged_reference_energy_fraction": 0.0008015585826185016,
+          "norms": {
+            "delta": 5.093804356770581,
+            "observed": 5.1033021096641535,
+            "residual": 0.30856455994012977,
+            "base_cast_drift": 0.31127273116652504,
+            "unchanged_reference": 0.1442148208689942
+          },
+          "relative_residual": 0.060576445094518025,
+          "observed_to_intended_norm": 1.0018645696277968,
+          "projection_gain": 1.0000315550876007,
+          "cosine_similarity": 0.9981703968822083,
+          "reference_merge_mismatches": 459512,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 64,
+            "column": 633,
+            "base": 1.082912564277649,
+            "cast_base": 1.0859375,
+            "intended_delta": 0.003820826921281556,
+            "merged": 1.0859375,
+            "observed_delta": 0.0,
+            "residual": -0.003820826921281556,
+            "reference_merged": 1.0859375
+          }
+        },
+        {
+          "module": "transformer.h.1.attn.c_proj",
+          "weight": "transformer.h.1.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 550395,
+          "unchanged_nonzero_update_elements": 39429,
+          "unchanged_nonzero_update_fraction": 0.0668487548828125,
+          "unchanged_reference_energy_fraction": 0.0006296541440646895,
+          "norms": {
+            "delta": 2.449845117255415,
+            "observed": 2.452218705007101,
+            "residual": 0.11989758860186654,
+            "base_cast_drift": 0.12924384065703437,
+            "unchanged_reference": 0.0614737436170858
+          },
+          "relative_residual": 0.048940885183871935,
+          "observed_to_intended_norm": 1.0009688725768693,
+          "projection_gain": 0.999771736812614,
+          "cosine_similarity": 0.9988040229850771,
+          "reference_merge_mismatches": 154349,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 548,
+            "column": 266,
+            "base": 2.079223871231079,
+            "cast_base": 2.078125,
+            "intended_delta": -0.005930462785337066,
+            "merged": 2.078125,
+            "observed_delta": 0.0,
+            "residual": 0.005930462785337066,
+            "reference_merged": 2.078125
+          }
+        },
+        {
+          "module": "transformer.h.1.mlp.c_fc",
+          "weight": "transformer.h.1.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2178525,
+          "unchanged_nonzero_update_elements": 180771,
+          "unchanged_nonzero_update_fraction": 0.07662073771158855,
+          "unchanged_reference_energy_fraction": 0.0006832448804207522,
+          "norms": {
+            "delta": 5.353048257472021,
+            "observed": 5.3628346087974075,
+            "residual": 0.3327087798081907,
+            "base_cast_drift": 0.3376012525482843,
+            "unchanged_reference": 0.13992307849674426
+          },
+          "relative_residual": 0.062153144116304404,
+          "observed_to_intended_norm": 1.0018281829071365,
+          "projection_gain": 0.9998983473717364,
+          "cosine_similarity": 0.9980736861187115,
+          "reference_merge_mismatches": 614073,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 55,
+            "column": 242,
+            "base": 2.2892165184020996,
+            "cast_base": 2.296875,
+            "intended_delta": -0.022222460157133524,
+            "merged": 2.28125,
+            "observed_delta": -0.015625,
+            "residual": 0.006597460157133524,
+            "reference_merged": 2.265625
+          }
+        },
+        {
+          "module": "transformer.h.1.mlp.c_proj",
+          "weight": "transformer.h.1.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2156083,
+          "unchanged_nonzero_update_elements": 203213,
+          "unchanged_nonzero_update_fraction": 0.08613289727105035,
+          "unchanged_reference_energy_fraction": 0.0009107318479821164,
+          "norms": {
+            "delta": 3.3631992491926286,
+            "observed": 3.3699070592493303,
+            "residual": 0.21648715932628876,
+            "base_cast_drift": 0.2247045094509575,
+            "unchanged_reference": 0.10149575052743147
+          },
+          "relative_residual": 0.06436941236183338,
+          "observed_to_intended_norm": 1.001994472988275,
+          "projection_gain": 0.9999247513256215,
+          "cosine_similarity": 0.9979343981244917,
+          "reference_merge_mismatches": 612747,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 1467,
+            "column": 447,
+            "base": 5.047522068023682,
+            "cast_base": 5.0625,
+            "intended_delta": 0.007097692280304168,
+            "merged": 5.0625,
+            "observed_delta": 0.0,
+            "residual": -0.007097692280304168,
+            "reference_merged": 5.0625
+          }
+        },
+        {
+          "module": "transformer.h.10.attn.c_attn",
+          "weight": "transformer.h.10.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1675687,
+          "unchanged_nonzero_update_elements": 93785,
+          "unchanged_nonzero_update_fraction": 0.05300168637876158,
+          "unchanged_reference_energy_fraction": 0.0002150814489879437,
+          "norms": {
+            "delta": 6.622443313892487,
+            "observed": 6.628712254934538,
+            "residual": 0.27995546264498,
+            "base_cast_drift": 0.28463052857189686,
+            "unchanged_reference": 0.09712247170029806
+          },
+          "relative_residual": 0.042273742390167776,
+          "observed_to_intended_norm": 1.0009466205665967,
+          "projection_gain": 1.0000535339640104,
+          "cosine_similarity": 0.99910775801203,
+          "reference_merge_mismatches": 465269,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 87,
+            "column": 1355,
+            "base": 1.1971107721328735,
+            "cast_base": 1.1953125,
+            "intended_delta": -0.0037051509854408183,
+            "merged": 1.1953125,
+            "observed_delta": 0.0,
+            "residual": 0.0037051509854408183,
+            "reference_merged": 1.1953125
+          }
+        },
+        {
+          "module": "transformer.h.10.attn.c_proj",
+          "weight": "transformer.h.10.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 555855,
+          "unchanged_nonzero_update_elements": 33969,
+          "unchanged_nonzero_update_fraction": 0.057591756184895836,
+          "unchanged_reference_energy_fraction": 0.00027595490160106694,
+          "norms": {
+            "delta": 4.293621833733243,
+            "observed": 4.297566624095776,
+            "residual": 0.18601760627334157,
+            "base_cast_drift": 0.1913021530477458,
+            "unchanged_reference": 0.07132517518396579
+          },
+          "relative_residual": 0.04332417093929344,
+          "observed_to_intended_norm": 1.000918755893111,
+          "projection_gain": 0.9999806860555179,
+          "cosine_similarity": 0.9990627912284888,
+          "reference_merge_mismatches": 155428,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 297,
+            "column": 481,
+            "base": 2.0794472694396973,
+            "cast_base": 2.078125,
+            "intended_delta": 0.007560702567033807,
+            "merged": 2.078125,
+            "observed_delta": 0.0,
+            "residual": -0.007560702567033807,
+            "reference_merged": 2.09375
+          }
+        },
+        {
+          "module": "transformer.h.10.mlp.c_fc",
+          "weight": "transformer.h.10.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2265464,
+          "unchanged_nonzero_update_elements": 93832,
+          "unchanged_nonzero_update_fraction": 0.039771185980902776,
+          "unchanged_reference_energy_fraction": 6.798319796636116e-05,
+          "norms": {
+            "delta": 11.660828371231453,
+            "observed": 11.665249873872542,
+            "residual": 0.3261680446632975,
+            "base_cast_drift": 0.33301610216008126,
+            "unchanged_reference": 0.09614577364332841
+          },
+          "relative_residual": 0.02797125849720848,
+          "observed_to_intended_norm": 1.0003791756897817,
+          "projection_gain": 0.999988051925924,
+          "cosine_similarity": 0.999609024484553,
+          "reference_merge_mismatches": 628437,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 481,
+            "column": 1793,
+            "base": -2.553544282913208,
+            "cast_base": -2.546875,
+            "intended_delta": -0.02099765109072054,
+            "merged": -2.5625,
+            "observed_delta": -0.015625,
+            "residual": 0.005372651090720541,
+            "reference_merged": -2.578125
+          }
+        },
+        {
+          "module": "transformer.h.10.mlp.c_proj",
+          "weight": "transformer.h.10.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2140936,
+          "unchanged_nonzero_update_elements": 218360,
+          "unchanged_nonzero_update_fraction": 0.09255303276909722,
+          "unchanged_reference_energy_fraction": 0.0006098390295477115,
+          "norms": {
+            "delta": 8.231748452211601,
+            "observed": 8.243846248459917,
+            "residual": 0.4518625684968349,
+            "base_cast_drift": 0.46025106846925673,
+            "unchanged_reference": 0.2032823621109439
+          },
+          "relative_residual": 0.05489265993975244,
+          "observed_to_intended_norm": 1.0014696508668295,
+          "projection_gain": 0.9999641287460341,
+          "cosine_similarity": 0.9984966872241288,
+          "reference_merge_mismatches": 613486,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 1745,
+            "column": 107,
+            "base": 2.0151803493499756,
+            "cast_base": 2.015625,
+            "intended_delta": -0.007136480295105766,
+            "merged": 2.015625,
+            "observed_delta": 0.0,
+            "residual": 0.007136480295105766,
+            "reference_merged": 2.015625
+          }
+        },
+        {
+          "module": "transformer.h.11.attn.c_attn",
+          "weight": "transformer.h.11.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1667746,
+          "unchanged_nonzero_update_elements": 101726,
+          "unchanged_nonzero_update_fraction": 0.05748946578414352,
+          "unchanged_reference_energy_fraction": 0.00025567449264981385,
+          "norms": {
+            "delta": 6.727642306791385,
+            "observed": 6.733479814069694,
+            "residual": 0.28353984219744893,
+            "base_cast_drift": 0.287486600123444,
+            "unchanged_reference": 0.10757382085916595
+          },
+          "relative_residual": 0.04214549901251775,
+          "observed_to_intended_norm": 1.0008676898996869,
+          "projection_gain": 0.9999799447990609,
+          "cosine_similarity": 0.9991130245190402,
+          "reference_merge_mismatches": 465039,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 138,
+            "column": 2097,
+            "base": -2.2637736797332764,
+            "cast_base": -2.265625,
+            "intended_delta": -0.005155654251854551,
+            "merged": -2.265625,
+            "observed_delta": 0.0,
+            "residual": 0.005155654251854551,
+            "reference_merged": -2.265625
+          }
+        },
+        {
+          "module": "transformer.h.11.attn.c_proj",
+          "weight": "transformer.h.11.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 557220,
+          "unchanged_nonzero_update_elements": 32604,
+          "unchanged_nonzero_update_fraction": 0.055277506510416664,
+          "unchanged_reference_energy_fraction": 0.0002385654320559437,
+          "norms": {
+            "delta": 6.808252471844855,
+            "observed": 6.812952026382139,
+            "residual": 0.23187557884800333,
+            "base_cast_drift": 0.23505842808244126,
+            "unchanged_reference": 0.10515729592715045
+          },
+          "relative_residual": 0.034058017061927674,
+          "observed_to_intended_norm": 1.000690273246581,
+          "projection_gain": 1.000110537222063,
+          "cosine_similarity": 0.9994206638757092,
+          "reference_merge_mismatches": 156143,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 519,
+            "column": 447,
+            "base": -8.477709770202637,
+            "cast_base": -8.5,
+            "intended_delta": 0.029598442320295914,
+            "merged": -8.5,
+            "observed_delta": 0.0,
+            "residual": -0.029598442320295914,
+            "reference_merged": -8.4375
+          }
+        },
+        {
+          "module": "transformer.h.11.mlp.c_fc",
+          "weight": "transformer.h.11.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2260367,
+          "unchanged_nonzero_update_elements": 98929,
+          "unchanged_nonzero_update_fraction": 0.04193157619900174,
+          "unchanged_reference_energy_fraction": 8.655648579016603e-05,
+          "norms": {
+            "delta": 10.959989331650998,
+            "observed": 10.964499321157838,
+            "residual": 0.3318667287251828,
+            "base_cast_drift": 0.33948345224447085,
+            "unchanged_reference": 0.10196706979338706
+          },
+          "relative_residual": 0.03027984048915044,
+          "observed_to_intended_norm": 1.0004114957935055,
+          "projection_gain": 0.9999531460878767,
+          "cosine_similarity": 0.9995418388257671,
+          "reference_merge_mismatches": 628761,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 288,
+            "column": 3029,
+            "base": -1.4909403324127197,
+            "cast_base": -1.4921875,
+            "intended_delta": -0.003906963994914679,
+            "merged": -1.5,
+            "observed_delta": -0.0078125,
+            "residual": -0.0039055360050853213,
+            "reference_merged": -1.4921875
+          }
+        },
+        {
+          "module": "transformer.h.11.mlp.c_proj",
+          "weight": "transformer.h.11.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2164948,
+          "unchanged_nonzero_update_elements": 194348,
+          "unchanged_nonzero_update_fraction": 0.08237542046440972,
+          "unchanged_reference_energy_fraction": 0.0005160442652607619,
+          "norms": {
+            "delta": 9.794293098374695,
+            "observed": 9.807330901094042,
+            "residual": 0.5002290184329286,
+            "base_cast_drift": 0.5142793656902742,
+            "unchanged_reference": 0.22249311398550628
+          },
+          "relative_residual": 0.051073519386094196,
+          "observed_to_intended_norm": 1.001331163218049,
+          "projection_gain": 1.000027797024565,
+          "cosine_similarity": 0.9986983664931637,
+          "reference_merge_mismatches": 617704,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 2600,
+            "column": 430,
+            "base": 4.6163859367370605,
+            "cast_base": 4.625,
+            "intended_delta": -0.013225921846880255,
+            "merged": 4.625,
+            "observed_delta": 0.0,
+            "residual": 0.013225921846880255,
+            "reference_merged": 4.59375
+          }
+        },
+        {
+          "module": "transformer.h.2.attn.c_attn",
+          "weight": "transformer.h.2.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1589485,
+          "unchanged_nonzero_update_elements": 179987,
+          "unchanged_nonzero_update_fraction": 0.10171791359230324,
+          "unchanged_reference_energy_fraction": 0.0012013491541293046,
+          "norms": {
+            "delta": 4.930484027933566,
+            "observed": 4.94161697253971,
+            "residual": 0.33621615383314973,
+            "base_cast_drift": 0.3407900975243904,
+            "unchanged_reference": 0.17089296297689355
+          },
+          "relative_residual": 0.06819130777593504,
+          "observed_to_intended_norm": 1.00225798208514,
+          "projection_gain": 0.9999355040985922,
+          "cosine_similarity": 0.9976827543127009,
+          "reference_merge_mismatches": 459217,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 464,
+            "column": 909,
+            "base": 1.1794770956039429,
+            "cast_base": 1.1796875,
+            "intended_delta": -0.003895379786625656,
+            "merged": 1.1796875,
+            "observed_delta": 0.0,
+            "residual": 0.003895379786625656,
+            "reference_merged": 1.171875
+          }
+        },
+        {
+          "module": "transformer.h.2.attn.c_proj",
+          "weight": "transformer.h.2.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 564113,
+          "unchanged_nonzero_update_elements": 25711,
+          "unchanged_nonzero_update_fraction": 0.04359096950954861,
+          "unchanged_reference_energy_fraction": 0.00017330626608080032,
+          "norms": {
+            "delta": 2.9230722115634507,
+            "observed": 2.9248351927222846,
+            "residual": 0.10325935755829148,
+            "base_cast_drift": 0.1045810195045736,
+            "unchanged_reference": 0.03848102902191443
+          },
+          "relative_residual": 0.03532562663002486,
+          "observed_to_intended_norm": 1.0006031261054242,
+          "projection_gain": 0.9999793580375718,
+          "cosine_similarity": 0.9993766079161872,
+          "reference_merge_mismatches": 156127,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 707,
+            "column": 420,
+            "base": 1.1555784940719604,
+            "cast_base": 1.15625,
+            "intended_delta": 0.003912983459159299,
+            "merged": 1.1640625,
+            "observed_delta": 0.0078125,
+            "residual": 0.003899516540840701,
+            "reference_merged": 1.15625
+          }
+        },
+        {
+          "module": "transformer.h.2.mlp.c_fc",
+          "weight": "transformer.h.2.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2209172,
+          "unchanged_nonzero_update_elements": 150124,
+          "unchanged_nonzero_update_fraction": 0.06363084581163195,
+          "unchanged_reference_energy_fraction": 0.00035208042861189517,
+          "norms": {
+            "delta": 6.883177455980076,
+            "observed": 6.8916321811134,
+            "residual": 0.3397799746475234,
+            "base_cast_drift": 0.3459244229543242,
+            "unchanged_reference": 0.1291546088331442
+          },
+          "relative_residual": 0.04936382605570106,
+          "observed_to_intended_norm": 1.0012283171816208,
+          "projection_gain": 1.0000106779017417,
+          "cosine_similarity": 0.9987838545324941,
+          "reference_merge_mismatches": 617137,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 55,
+            "column": 3034,
+            "base": 5.1859331130981445,
+            "cast_base": 5.1875,
+            "intended_delta": -0.00927807778653717,
+            "merged": 5.1875,
+            "observed_delta": 0.0,
+            "residual": 0.00927807778653717,
+            "reference_merged": 5.1875
+          }
+        },
+        {
+          "module": "transformer.h.2.mlp.c_proj",
+          "weight": "transformer.h.2.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2124567,
+          "unchanged_nonzero_update_elements": 234729,
+          "unchanged_nonzero_update_fraction": 0.09949111938476562,
+          "unchanged_reference_energy_fraction": 0.0011714557429488616,
+          "norms": {
+            "delta": 3.2977018619658995,
+            "observed": 3.305579380486051,
+            "residual": 0.23162827230151517,
+            "base_cast_drift": 0.23873378022030384,
+            "unchanged_reference": 0.11286891035841876
+          },
+          "relative_residual": 0.07023930057868596,
+          "observed_to_intended_norm": 1.002388790390971,
+          "projection_gain": 0.9999248638778455,
+          "cosine_similarity": 0.9975419452644074,
+          "reference_merge_mismatches": 610679,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 2548,
+            "column": 447,
+            "base": 2.4587979316711426,
+            "cast_base": 2.453125,
+            "intended_delta": 0.00714782008430066,
+            "merged": 2.453125,
+            "observed_delta": 0.0,
+            "residual": -0.00714782008430066,
+            "reference_merged": 2.46875
+          }
+        },
+        {
+          "module": "transformer.h.3.attn.c_attn",
+          "weight": "transformer.h.3.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1592111,
+          "unchanged_nonzero_update_elements": 177361,
+          "unchanged_nonzero_update_fraction": 0.1002338550708912,
+          "unchanged_reference_energy_fraction": 0.0013700314534096896,
+          "norms": {
+            "delta": 4.0388932318298245,
+            "observed": 4.0510035776066164,
+            "residual": 0.3120613962355776,
+            "base_cast_drift": 0.3175294566032712,
+            "unchanged_reference": 0.14949533533176734
+          },
+          "relative_residual": 0.07726408655130453,
+          "observed_to_intended_norm": 1.0029984317687213,
+          "projection_gain": 1.0000180575299535,
+          "cosine_similarity": 0.9970285354948043,
+          "reference_merge_mismatches": 458451,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 64,
+            "column": 908,
+            "base": -1.3432366847991943,
+            "cast_base": -1.34375,
+            "intended_delta": 0.00278369653898435,
+            "merged": -1.34375,
+            "observed_delta": 0.0,
+            "residual": -0.00278369653898435,
+            "reference_merged": -1.34375
+          }
+        },
+        {
+          "module": "transformer.h.3.attn.c_proj",
+          "weight": "transformer.h.3.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 565429,
+          "unchanged_nonzero_update_elements": 24395,
+          "unchanged_nonzero_update_fraction": 0.041359795464409724,
+          "unchanged_reference_energy_fraction": 0.00011525733404311744,
+          "norms": {
+            "delta": 3.2799552776429395,
+            "observed": 3.2816299093742343,
+            "residual": 0.10764931650181234,
+            "base_cast_drift": 0.10915895636133689,
+            "unchanged_reference": 0.03521293354376366
+          },
+          "relative_residual": 0.03282036106881674,
+          "observed_to_intended_norm": 1.0005105654161535,
+          "projection_gain": 0.9999721077043314,
+          "cosine_similarity": 0.9994618170657718,
+          "reference_merge_mismatches": 156067,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 674,
+            "column": 447,
+            "base": -2.093752145767212,
+            "cast_base": -2.09375,
+            "intended_delta": 0.010395517956348911,
+            "merged": -2.078125,
+            "observed_delta": 0.015625,
+            "residual": 0.0052294820436510885,
+            "reference_merged": -2.078125
+          }
+        },
+        {
+          "module": "transformer.h.3.mlp.c_fc",
+          "weight": "transformer.h.3.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2228252,
+          "unchanged_nonzero_update_elements": 131044,
+          "unchanged_nonzero_update_fraction": 0.05554368760850695,
+          "unchanged_reference_energy_fraction": 0.00019145049363551567,
+          "norms": {
+            "delta": 8.345241845345157,
+            "observed": 8.351629557208176,
+            "residual": 0.3309474061543508,
+            "base_cast_drift": 0.3363810722127275,
+            "unchanged_reference": 0.1154694699662582
+          },
+          "relative_residual": 0.03965701800948381,
+          "observed_to_intended_norm": 1.0007654316053862,
+          "projection_gain": 0.9999793850094562,
+          "cosine_similarity": 0.9992145546087967,
+          "reference_merge_mismatches": 619842,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 480,
+            "column": 2003,
+            "base": 2.2842397689819336,
+            "cast_base": 2.28125,
+            "intended_delta": 0.0037948221386913173,
+            "merged": 2.28125,
+            "observed_delta": 0.0,
+            "residual": -0.0037948221386913173,
+            "reference_merged": 2.28125
+          }
+        },
+        {
+          "module": "transformer.h.3.mlp.c_proj",
+          "weight": "transformer.h.3.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2101430,
+          "unchanged_nonzero_update_elements": 257866,
+          "unchanged_nonzero_update_fraction": 0.10929785834418403,
+          "unchanged_reference_energy_fraction": 0.0014754549532255876,
+          "norms": {
+            "delta": 2.936761667771321,
+            "observed": 2.9451747466866474,
+            "residual": 0.22587741507120593,
+            "base_cast_drift": 0.23633794611026757,
+            "unchanged_reference": 0.11280586504314617
+          },
+          "relative_residual": 0.07691377122973075,
+          "observed_to_intended_norm": 1.0028647469107397,
+          "projection_gain": 0.9999109861957814,
+          "cosine_similarity": 0.9970546768903213,
+          "reference_merge_mismatches": 609371,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 1821,
+            "column": 447,
+            "base": 1.0475916862487793,
+            "cast_base": 1.046875,
+            "intended_delta": -0.003933946247852579,
+            "merged": 1.0390625,
+            "observed_delta": -0.0078125,
+            "residual": -0.0038785537521474206,
+            "reference_merged": 1.046875
+          }
+        },
+        {
+          "module": "transformer.h.4.attn.c_attn",
+          "weight": "transformer.h.4.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1622521,
+          "unchanged_nonzero_update_elements": 146951,
+          "unchanged_nonzero_update_fraction": 0.08304793746383102,
+          "unchanged_reference_energy_fraction": 0.0008562773846059821,
+          "norms": {
+            "delta": 5.010307218537724,
+            "observed": 5.020289207422207,
+            "residual": 0.32155305298148795,
+            "base_cast_drift": 0.3276694289936733,
+            "unchanged_reference": 0.14661270056278347
+          },
+          "relative_residual": 0.06417831062170562,
+          "observed_to_intended_norm": 1.0019922907816015,
+          "projection_gain": 0.999934847615753,
+          "cosine_similarity": 0.9979466477089923,
+          "reference_merge_mismatches": 460013,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 195,
+            "column": 1520,
+            "base": -1.2022984027862549,
+            "cast_base": -1.203125,
+            "intended_delta": -0.003857240338473466,
+            "merged": -1.203125,
+            "observed_delta": 0.0,
+            "residual": 0.003857240338473466,
+            "reference_merged": -1.203125
+          }
+        },
+        {
+          "module": "transformer.h.4.attn.c_proj",
+          "weight": "transformer.h.4.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 564371,
+          "unchanged_nonzero_update_elements": 25453,
+          "unchanged_nonzero_update_fraction": 0.04315355088975695,
+          "unchanged_reference_energy_fraction": 0.00014586744445752045,
+          "norms": {
+            "delta": 3.4570373983587075,
+            "observed": 3.458986569706348,
+            "residual": 0.1185729773273149,
+            "base_cast_drift": 0.12012075941901142,
+            "unchanged_reference": 0.04175257501287018
+          },
+          "relative_residual": 0.03429901492636719,
+          "observed_to_intended_norm": 1.0005638270932695,
+          "projection_gain": 0.9999757748313051,
+          "cosine_similarity": 0.9994122791109961,
+          "reference_merge_mismatches": 157093,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 642,
+            "column": 447,
+            "base": 1.0063095092773438,
+            "cast_base": 1.0078125,
+            "intended_delta": -0.004062249271383203,
+            "merged": 1.0,
+            "observed_delta": -0.0078125,
+            "residual": -0.003750250728616797,
+            "reference_merged": 1.0
+          }
+        },
+        {
+          "module": "transformer.h.4.mlp.c_fc",
+          "weight": "transformer.h.4.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2193835,
+          "unchanged_nonzero_update_elements": 165461,
+          "unchanged_nonzero_update_fraction": 0.07013151380750868,
+          "unchanged_reference_energy_fraction": 0.0003713152878916256,
+          "norms": {
+            "delta": 6.7050861612580634,
+            "observed": 6.7130895550747995,
+            "residual": 0.3310737880196159,
+            "base_cast_drift": 0.3374270928220645,
+            "unchanged_reference": 0.12920394618358175
+          },
+          "relative_residual": 0.04937651508977733,
+          "observed_to_intended_norm": 1.001193630271745,
+          "projection_gain": 0.9999753225271525,
+          "cosine_similarity": 0.9987831447306933,
+          "reference_merge_mismatches": 616250,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 87,
+            "column": 2619,
+            "base": -2.161364793777466,
+            "cast_base": -2.15625,
+            "intended_delta": -0.005324219126605538,
+            "merged": -2.15625,
+            "observed_delta": 0.0,
+            "residual": 0.005324219126605538,
+            "reference_merged": -2.171875
+          }
+        },
+        {
+          "module": "transformer.h.4.mlp.c_proj",
+          "weight": "transformer.h.4.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2102044,
+          "unchanged_nonzero_update_elements": 257252,
+          "unchanged_nonzero_update_fraction": 0.10903761121961805,
+          "unchanged_reference_energy_fraction": 0.0015936388332062257,
+          "norms": {
+            "delta": 2.8856831526386717,
+            "observed": 2.894583348730236,
+            "residual": 0.22948871723395742,
+            "base_cast_drift": 0.23528977499431666,
+            "unchanged_reference": 0.11519764369131921
+          },
+          "relative_residual": 0.07952665108922741,
+          "observed_to_intended_norm": 1.0030842596434837,
+          "projection_gain": 0.9999267718555237,
+          "cosine_similarity": 0.9968522207804534,
+          "reference_merge_mismatches": 609197,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 1307,
+            "column": 447,
+            "base": -2.039689064025879,
+            "cast_base": -2.046875,
+            "intended_delta": 0.005897115213897608,
+            "merged": -2.046875,
+            "observed_delta": 0.0,
+            "residual": -0.005897115213897608,
+            "reference_merged": -2.03125
+          }
+        },
+        {
+          "module": "transformer.h.5.attn.c_attn",
+          "weight": "transformer.h.5.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1630128,
+          "unchanged_nonzero_update_elements": 139344,
+          "unchanged_nonzero_update_fraction": 0.07874891493055555,
+          "unchanged_reference_energy_fraction": 0.0006325399333045566,
+          "norms": {
+            "delta": 4.737160708192236,
+            "observed": 4.7456871365254365,
+            "residual": 0.2825474147281144,
+            "base_cast_drift": 0.2876377827054533,
+            "unchanged_reference": 0.11914123363601145
+          },
+          "relative_residual": 0.059644886912848326,
+          "observed_to_intended_norm": 1.0017999026966629,
+          "projection_gain": 1.0000227662540984,
+          "cosine_similarity": 0.9982260564831551,
+          "reference_merge_mismatches": 461854,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 87,
+            "column": 975,
+            "base": 1.1193913221359253,
+            "cast_base": 1.1171875,
+            "intended_delta": -0.00434787632801684,
+            "merged": 1.109375,
+            "observed_delta": -0.0078125,
+            "residual": -0.00346462367198316,
+            "reference_merged": 1.1171875
+          }
+        },
+        {
+          "module": "transformer.h.5.attn.c_proj",
+          "weight": "transformer.h.5.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 562822,
+          "unchanged_nonzero_update_elements": 27002,
+          "unchanged_nonzero_update_fraction": 0.04577975802951389,
+          "unchanged_reference_energy_fraction": 0.00015523247187301432,
+          "norms": {
+            "delta": 3.185702410488921,
+            "observed": 3.187973837729804,
+            "residual": 0.119246671370501,
+            "base_cast_drift": 0.1213712189497745,
+            "unchanged_reference": 0.039691406673643896
+          },
+          "relative_residual": 0.03743183009746343,
+          "observed_to_intended_norm": 1.0007130067244838,
+          "projection_gain": 1.000012689961556,
+          "cosine_similarity": 0.999300182211861,
+          "reference_merge_mismatches": 155505,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 595,
+            "column": 447,
+            "base": 1.4035409688949585,
+            "cast_base": 1.40625,
+            "intended_delta": -0.003932309446829905,
+            "merged": 1.3984375,
+            "observed_delta": -0.0078125,
+            "residual": -0.003880190553170095,
+            "reference_merged": 1.3984375
+          }
+        },
+        {
+          "module": "transformer.h.5.mlp.c_fc",
+          "weight": "transformer.h.5.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2238667,
+          "unchanged_nonzero_update_elements": 120629,
+          "unchanged_nonzero_update_fraction": 0.05112923516167535,
+          "unchanged_reference_energy_fraction": 0.00015388620242111646,
+          "norms": {
+            "delta": 8.69739865703457,
+            "observed": 8.703213305461897,
+            "residual": 0.32338904444448147,
+            "base_cast_drift": 0.32978454985483535,
+            "unchanged_reference": 0.10789199365500408
+          },
+          "relative_residual": 0.03718227221686799,
+          "observed_to_intended_norm": 1.000668550293785,
+          "projection_gain": 0.9999775130899275,
+          "cosine_similarity": 0.9993094244806088,
+          "reference_merge_mismatches": 622090,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 480,
+            "column": 1825,
+            "base": 1.761718988418579,
+            "cast_base": 1.765625,
+            "intended_delta": -0.002466544503097721,
+            "merged": 1.765625,
+            "observed_delta": 0.0,
+            "residual": 0.002466544503097721,
+            "reference_merged": 1.7578125
+          }
+        },
+        {
+          "module": "transformer.h.5.mlp.c_proj",
+          "weight": "transformer.h.5.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2128148,
+          "unchanged_nonzero_update_elements": 231148,
+          "unchanged_nonzero_update_fraction": 0.0979732937282986,
+          "unchanged_reference_energy_fraction": 0.0011459882319395708,
+          "norms": {
+            "delta": 3.445400849438832,
+            "observed": 3.454116113638295,
+            "residual": 0.24704422874119658,
+            "base_cast_drift": 0.25146574494624324,
+            "unchanged_reference": 0.11663525290888138
+          },
+          "relative_residual": 0.07170260864753482,
+          "observed_to_intended_norm": 1.0025295356274389,
+          "projection_gain": 0.9999621028592537,
+          "cosine_similarity": 0.9974390452580748,
+          "reference_merge_mismatches": 610889,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 177,
+            "column": 447,
+            "base": 2.0036816596984863,
+            "cast_base": 2.0,
+            "intended_delta": 0.004415498171977305,
+            "merged": 2.0,
+            "observed_delta": 0.0,
+            "residual": -0.004415498171977305,
+            "reference_merged": 2.015625
+          }
+        },
+        {
+          "module": "transformer.h.6.attn.c_attn",
+          "weight": "transformer.h.6.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1653922,
+          "unchanged_nonzero_update_elements": 115550,
+          "unchanged_nonzero_update_fraction": 0.06530196578414352,
+          "unchanged_reference_energy_fraction": 0.00030399346439897545,
+          "norms": {
+            "delta": 6.1049303384377245,
+            "observed": 6.111524647584441,
+            "residual": 0.28003840216874304,
+            "base_cast_drift": 0.2845772472017048,
+            "unchanged_reference": 0.10644195341082237
+          },
+          "relative_residual": 0.045870859558473843,
+          "observed_to_intended_norm": 1.0010801612436424,
+          "projection_gain": 1.0000286767394813,
+          "cosine_similarity": 0.9989496500431544,
+          "reference_merge_mismatches": 464531,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 64,
+            "column": 1503,
+            "base": 1.1614488363265991,
+            "cast_base": 1.1640625,
+            "intended_delta": -0.002492680432383184,
+            "merged": 1.1640625,
+            "observed_delta": 0.0,
+            "residual": 0.002492680432383184,
+            "reference_merged": 1.15625
+          }
+        },
+        {
+          "module": "transformer.h.6.attn.c_proj",
+          "weight": "transformer.h.6.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 563215,
+          "unchanged_nonzero_update_elements": 26609,
+          "unchanged_nonzero_update_fraction": 0.045113457573784724,
+          "unchanged_reference_energy_fraction": 0.00012927175674134442,
+          "norms": {
+            "delta": 4.208480981258957,
+            "observed": 4.21081642779956,
+            "residual": 0.14492377143944746,
+            "base_cast_drift": 0.14755452057646168,
+            "unchanged_reference": 0.04784947688701431
+          },
+          "relative_residual": 0.03443612364765727,
+          "observed_to_intended_norm": 1.0005549381239935,
+          "projection_gain": 0.9999621687962155,
+          "cosine_similarity": 0.9994075594400749,
+          "reference_merge_mismatches": 156439,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 181,
+            "column": 373,
+            "base": 1.0092551708221436,
+            "cast_base": 1.0078125,
+            "intended_delta": 0.003828347361794211,
+            "merged": 1.0078125,
+            "observed_delta": 0.0,
+            "residual": -0.003828347361794211,
+            "reference_merged": 1.015625
+          }
+        },
+        {
+          "module": "transformer.h.6.mlp.c_fc",
+          "weight": "transformer.h.6.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2249126,
+          "unchanged_nonzero_update_elements": 110170,
+          "unchanged_nonzero_update_fraction": 0.04669613308376736,
+          "unchanged_reference_energy_fraction": 0.00012724544198402306,
+          "norms": {
+            "delta": 9.099756130146089,
+            "observed": 9.106081005235948,
+            "residual": 0.3225650375761275,
+            "base_cast_drift": 0.3290385278604414,
+            "unchanged_reference": 0.10264808954923042
+          },
+          "relative_residual": 0.03544765738364342,
+          "observed_to_intended_norm": 1.0006950598454947,
+          "projection_gain": 1.0000670331925943,
+          "cosine_similarity": 0.9993724095600139,
+          "reference_merge_mismatches": 624520,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 480,
+            "column": 1286,
+            "base": 2.13280987739563,
+            "cast_base": 2.125,
+            "intended_delta": 0.010479608568702486,
+            "merged": 2.140625,
+            "observed_delta": 0.015625,
+            "residual": 0.005145391431297514,
+            "reference_merged": 2.140625
+          }
+        },
+        {
+          "module": "transformer.h.6.mlp.c_proj",
+          "weight": "transformer.h.6.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2108884,
+          "unchanged_nonzero_update_elements": 250412,
+          "unchanged_nonzero_update_fraction": 0.10613844129774305,
+          "unchanged_reference_energy_fraction": 0.0012991002934903443,
+          "norms": {
+            "delta": 3.7003745649491395,
+            "observed": 3.7103160640103297,
+            "residual": 0.27245204895932285,
+            "base_cast_drift": 0.2777405511145704,
+            "unchanged_reference": 0.13337272592688065
+          },
+          "relative_residual": 0.07362823524409011,
+          "observed_to_intended_norm": 1.0026866196615225,
+          "projection_gain": 0.999979670111547,
+          "cosine_similarity": 0.9973003035077008,
+          "reference_merge_mismatches": 610415,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 3059,
+            "column": 447,
+            "base": -2.114743232727051,
+            "cast_base": -2.109375,
+            "intended_delta": 0.00548242921539681,
+            "merged": -2.109375,
+            "observed_delta": 0.0,
+            "residual": -0.00548242921539681,
+            "reference_merged": -2.109375
+          }
+        },
+        {
+          "module": "transformer.h.7.attn.c_attn",
+          "weight": "transformer.h.7.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1650742,
+          "unchanged_nonzero_update_elements": 118730,
+          "unchanged_nonzero_update_fraction": 0.06709911205150464,
+          "unchanged_reference_energy_fraction": 0.0004067596391241572,
+          "norms": {
+            "delta": 5.4479609416777075,
+            "observed": 5.455801029474679,
+            "residual": 0.28465153969372314,
+            "base_cast_drift": 0.28994766379818443,
+            "unchanged_reference": 0.10987601803876897
+          },
+          "relative_residual": 0.05224918877741886,
+          "observed_to_intended_norm": 1.0014390866382674,
+          "projection_gain": 1.0000751332594946,
+          "cosine_similarity": 0.9986380066476619,
+          "reference_merge_mismatches": 462030,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 87,
+            "column": 1355,
+            "base": -1.47265625,
+            "cast_base": -1.46875,
+            "intended_delta": -0.0030847976819348734,
+            "merged": -1.46875,
+            "observed_delta": 0.0,
+            "residual": 0.0030847976819348734,
+            "reference_merged": -1.4765625
+          }
+        },
+        {
+          "module": "transformer.h.7.attn.c_proj",
+          "weight": "transformer.h.7.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 565611,
+          "unchanged_nonzero_update_elements": 24213,
+          "unchanged_nonzero_update_fraction": 0.041051228841145836,
+          "unchanged_reference_energy_fraction": 0.00012204084050375182,
+          "norms": {
+            "delta": 4.2813656876812125,
+            "observed": 4.283631399463297,
+            "residual": 0.14566074791695252,
+            "base_cast_drift": 0.1476395587930935,
+            "unchanged_reference": 0.047297144234076986
+          },
+          "relative_residual": 0.034022029077325176,
+          "observed_to_intended_norm": 1.0005292030504667,
+          "projection_gain": 0.9999505938471321,
+          "cosine_similarity": 0.9994216968364638,
+          "reference_merge_mismatches": 156609,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 417,
+            "column": 481,
+            "base": -2.2343900203704834,
+            "cast_base": -2.234375,
+            "intended_delta": -0.007570687936185625,
+            "merged": -2.234375,
+            "observed_delta": 0.0,
+            "residual": 0.007570687936185625,
+            "reference_merged": -2.234375
+          }
+        },
+        {
+          "module": "transformer.h.7.mlp.c_fc",
+          "weight": "transformer.h.7.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2256735,
+          "unchanged_nonzero_update_elements": 102561,
+          "unchanged_nonzero_update_fraction": 0.04347101847330729,
+          "unchanged_reference_energy_fraction": 9.631260896647204e-05,
+          "norms": {
+            "delta": 10.108594324940947,
+            "observed": 10.113963927926235,
+            "residual": 0.3231012335139101,
+            "base_cast_drift": 0.3298347854892771,
+            "unchanged_reference": 0.09920472135977774
+          },
+          "relative_residual": 0.031963023060161994,
+          "observed_to_intended_norm": 1.0005311918564226,
+          "projection_gain": 1.0000205155172444,
+          "cosine_similarity": 0.999489594783916,
+          "reference_merge_mismatches": 626312,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 481,
+            "column": 2742,
+            "base": 1.2321834564208984,
+            "cast_base": 1.234375,
+            "intended_delta": 0.0025313582954082895,
+            "merged": 1.234375,
+            "observed_delta": 0.0,
+            "residual": -0.0025313582954082895,
+            "reference_merged": 1.234375
+          }
+        },
+        {
+          "module": "transformer.h.7.mlp.c_proj",
+          "weight": "transformer.h.7.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2106630,
+          "unchanged_nonzero_update_elements": 252666,
+          "unchanged_nonzero_update_fraction": 0.10709381103515625,
+          "unchanged_reference_energy_fraction": 0.0012548984655127214,
+          "norms": {
+            "delta": 4.141977542311076,
+            "observed": 4.152643436508901,
+            "residual": 0.30207078644188445,
+            "base_cast_drift": 0.3067592701370993,
+            "unchanged_reference": 0.14672767434141604
+          },
+          "relative_residual": 0.07292912222632181,
+          "observed_to_intended_norm": 1.0025750729183998,
+          "projection_gain": 0.9999190599843162,
+          "cosine_similarity": 0.9973508089261065,
+          "reference_merge_mismatches": 610873,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 2742,
+            "column": 481,
+            "base": -4.532768249511719,
+            "cast_base": -4.53125,
+            "intended_delta": -0.015336688458367363,
+            "merged": -4.53125,
+            "observed_delta": 0.0,
+            "residual": 0.015336688458367363,
+            "reference_merged": -4.5625
+          }
+        },
+        {
+          "module": "transformer.h.8.attn.c_attn",
+          "weight": "transformer.h.8.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1658910,
+          "unchanged_nonzero_update_elements": 110562,
+          "unchanged_nonzero_update_fraction": 0.06248304578993055,
+          "unchanged_reference_energy_fraction": 0.00030658430788998655,
+          "norms": {
+            "delta": 5.951866319797817,
+            "observed": 5.958593935994821,
+            "residual": 0.2805451041495893,
+            "base_cast_drift": 0.2853498520365665,
+            "unchanged_reference": 0.10421449525800182
+          },
+          "relative_residual": 0.047135652764311295,
+          "observed_to_intended_norm": 1.001130337248104,
+          "projection_gain": 1.0000200911984924,
+          "cosine_similarity": 0.9988910074859351,
+          "reference_merge_mismatches": 462824,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 480,
+            "column": 1069,
+            "base": 1.0907809734344482,
+            "cast_base": 1.09375,
+            "intended_delta": 0.0030179616752993186,
+            "merged": 1.09375,
+            "observed_delta": 0.0,
+            "residual": -0.0030179616752993186,
+            "reference_merged": 1.09375
+          }
+        },
+        {
+          "module": "transformer.h.8.attn.c_proj",
+          "weight": "transformer.h.8.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 553986,
+          "unchanged_nonzero_update_elements": 35838,
+          "unchanged_nonzero_update_fraction": 0.060760498046875,
+          "unchanged_reference_energy_fraction": 0.00030130157638508665,
+          "norms": {
+            "delta": 3.4335124406668007,
+            "observed": 3.4365799030567645,
+            "residual": 0.1560442229412849,
+            "base_cast_drift": 0.1591548564765326,
+            "unchanged_reference": 0.059599048633885744
+          },
+          "relative_residual": 0.045447402809171276,
+          "observed_to_intended_norm": 1.0008933890419713,
+          "projection_gain": 0.9998610549029121,
+          "cosine_similarity": 0.9989685873137324,
+          "reference_merge_mismatches": 154968,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 37,
+            "column": 481,
+            "base": 2.7183287143707275,
+            "cast_base": 2.71875,
+            "intended_delta": 0.008193107526501786,
+            "merged": 2.734375,
+            "observed_delta": 0.015625,
+            "residual": 0.007431892473498214,
+            "reference_merged": 2.71875
+          }
+        },
+        {
+          "module": "transformer.h.8.mlp.c_fc",
+          "weight": "transformer.h.8.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2261839,
+          "unchanged_nonzero_update_elements": 97457,
+          "unchanged_nonzero_update_fraction": 0.04130766126844618,
+          "unchanged_reference_energy_fraction": 8.719499465774052e-05,
+          "norms": {
+            "delta": 10.458653947597943,
+            "observed": 10.463340483520382,
+            "residual": 0.32511239913232165,
+            "base_cast_drift": 0.33191061089997276,
+            "unchanged_reference": 0.09766109089770673
+          },
+          "relative_residual": 0.031085491571024852,
+          "observed_to_intended_norm": 1.0004481012514537,
+          "projection_gain": 0.999965047755713,
+          "cosine_similarity": 0.9995171628641841,
+          "reference_merge_mismatches": 626775,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 481,
+            "column": 1640,
+            "base": 1.157867670059204,
+            "cast_base": 1.15625,
+            "intended_delta": -0.0036656692466889,
+            "merged": 1.15625,
+            "observed_delta": 0.0,
+            "residual": 0.0036656692466889,
+            "reference_merged": 1.15625
+          }
+        },
+        {
+          "module": "transformer.h.8.mlp.c_proj",
+          "weight": "transformer.h.8.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2061135,
+          "unchanged_nonzero_update_elements": 298161,
+          "unchanged_nonzero_update_fraction": 0.12637710571289062,
+          "unchanged_reference_energy_fraction": 0.0017077456170566676,
+          "norms": {
+            "delta": 4.310642414231353,
+            "observed": 4.323993191072499,
+            "residual": 0.3430244104097449,
+            "base_cast_drift": 0.3512891999951128,
+            "unchanged_reference": 0.17813677579922726
+          },
+          "relative_residual": 0.07957616926824372,
+          "observed_to_intended_norm": 1.003097166398463,
+          "projection_gain": 0.9999357792606084,
+          "cosine_similarity": 0.9968483739723788,
+          "reference_merge_mismatches": 607920,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 38,
+            "column": 481,
+            "base": 1.8157578706741333,
+            "cast_base": 1.8125,
+            "intended_delta": 0.0038695469347030075,
+            "merged": 1.8125,
+            "observed_delta": 0.0,
+            "residual": -0.0038695469347030075,
+            "reference_merged": 1.8203125
+          }
+        },
+        {
+          "module": "transformer.h.9.attn.c_attn",
+          "weight": "transformer.h.9.attn.c_attn.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            2304
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 1769472,
+          "intended_nonzero_elements": 1769472,
+          "changed_elements": 1658754,
+          "unchanged_nonzero_update_elements": 110718,
+          "unchanged_nonzero_update_fraction": 0.06257120768229167,
+          "unchanged_reference_energy_fraction": 0.00030474748330570125,
+          "norms": {
+            "delta": 5.936756861011717,
+            "observed": 5.943349366949727,
+            "residual": 0.278948356492129,
+            "base_cast_drift": 0.28338346621669586,
+            "unchanged_reference": 0.10363807237960898
+          },
+          "relative_residual": 0.046986656691982466,
+          "observed_to_intended_norm": 1.0011104557744828,
+          "projection_gain": 1.0000071993769508,
+          "cosine_similarity": 0.9988979673609758,
+          "reference_merge_mismatches": 463935,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 480,
+            "column": 965,
+            "base": -1.7890630960464478,
+            "cast_base": -1.7890625,
+            "intended_delta": 0.004282340769766582,
+            "merged": -1.78125,
+            "observed_delta": 0.0078125,
+            "residual": 0.003530159230233418,
+            "reference_merged": -1.78125
+          }
+        },
+        {
+          "module": "transformer.h.9.attn.c_proj",
+          "weight": "transformer.h.9.attn.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 589824,
+          "intended_nonzero_elements": 589824,
+          "changed_elements": 554188,
+          "unchanged_nonzero_update_elements": 35636,
+          "unchanged_nonzero_update_fraction": 0.060418023003472224,
+          "unchanged_reference_energy_fraction": 0.00034604923419244963,
+          "norms": {
+            "delta": 3.658106107983404,
+            "observed": 3.6622249972040004,
+            "residual": 0.17445035888420576,
+            "base_cast_drift": 0.17819686563161777,
+            "unchanged_reference": 0.06804954799284832
+          },
+          "relative_residual": 0.047688709330625356,
+          "observed_to_intended_norm": 1.0011259622053081,
+          "projection_gain": 0.9999894896019413,
+          "cosine_similarity": 0.9988648055826428,
+          "reference_merge_mismatches": 154762,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 706,
+            "column": 481,
+            "base": 1.2016184329986572,
+            "cast_base": 1.203125,
+            "intended_delta": 0.003847718194301089,
+            "merged": 1.203125,
+            "observed_delta": 0.0,
+            "residual": -0.003847718194301089,
+            "reference_merged": 1.203125
+          }
+        },
+        {
+          "module": "transformer.h.9.mlp.c_fc",
+          "weight": "transformer.h.9.mlp.c_fc.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            768,
+            3072
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2271226,
+          "unchanged_nonzero_update_elements": 88070,
+          "unchanged_nonzero_update_fraction": 0.0373289320203993,
+          "unchanged_reference_energy_fraction": 6.523323676292005e-05,
+          "norms": {
+            "delta": 11.530042949169045,
+            "observed": 11.535064497745719,
+            "residual": 0.3261829207193413,
+            "base_cast_drift": 0.3328922564117534,
+            "unchanged_reference": 0.09312480771955993
+          },
+          "relative_residual": 0.028289827033371878,
+          "observed_to_intended_norm": 1.0004355186358638,
+          "projection_gain": 1.000035456317316,
+          "cosine_similarity": 0.9996001118401979,
+          "reference_merge_mismatches": 629450,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 362,
+            "column": 2969,
+            "base": -1.3622918128967285,
+            "cast_base": -1.359375,
+            "intended_delta": 0.011243949629793172,
+            "merged": -1.3515625,
+            "observed_delta": 0.0078125,
+            "residual": -0.003431449629793172,
+            "reference_merged": -1.3515625
+          }
+        },
+        {
+          "module": "transformer.h.9.mlp.c_proj",
+          "weight": "transformer.h.9.mlp.c_proj.weight",
+          "adapter_variant": "lora",
+          "weight_layout": "conv1d",
+          "reference_product": "(B @ A).T",
+          "layout_evidence": [
+            "base/config.json:model_type=gpt2"
+          ],
+          "coordinate_axes": {
+            "row": "input",
+            "column": "output"
+          },
+          "shape": [
+            3072,
+            768
+          ],
+          "rank": 16,
+          "alpha": 16.0,
+          "scale": 1.0,
+          "adapter_dtypes": {
+            "A": "F32",
+            "B": "F32"
+          },
+          "base_dtype": "F32",
+          "merged_dtype": "BF16",
+          "status": "observed-update",
+          "elements": 2359296,
+          "intended_nonzero_elements": 2359296,
+          "changed_elements": 2105475,
+          "unchanged_nonzero_update_elements": 253821,
+          "unchanged_nonzero_update_fraction": 0.10758336385091145,
+          "unchanged_reference_energy_fraction": 0.0012010525202619587,
+          "norms": {
+            "delta": 5.546908879137478,
+            "observed": 5.5608911472342895,
+            "residual": 0.39630088115876366,
+            "base_cast_drift": 0.4037768262745865,
+            "unchanged_reference": 0.1922348092518194
+          },
+          "relative_residual": 0.07144535628650653,
+          "observed_to_intended_norm": 1.0025207315284015,
+          "projection_gain": 0.9999716891046677,
+          "cosine_similarity": 0.9974573668717578,
+          "reference_merge_mismatches": 610831,
+          "reference_merge_overflows": 0,
+          "largest_residual": {
+            "row": 1911,
+            "column": 36,
+            "base": 2.952333927154541,
+            "cast_base": 2.953125,
+            "intended_delta": -0.008211067640807429,
+            "merged": 2.9375,
+            "observed_delta": -0.015625,
+            "residual": -0.007413932359192571,
+            "reference_merged": 2.9375
+          }
+        }
+      ],
+      "unadapted_changes": [],
+      "limitations": [
+        "Supplied base identity and training provenance are not independently established.",
+        "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+        "The float64 reference is numerical; it is not a PEFT merge emulator.",
+        "DoRA normalizes rows of the supplied original base plus its directional update.",
+        "Tensor shapes and a global adapter flag do not establish every module's type.",
+        "Operation order and matmul precision can differ from the producer, notably at ties.",
+        "Weight-space changes and residuals do not establish generation or task quality.",
+        "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+      ]
+    },
+    "stdout": "Mergeglass | saved LoRA merge audit\n\nConv1D reference: (B @ A).T; saved rows are inputs, columns are outputs.\nLayouts follow standard GPT module paths and declared model metadata (see JSON).\n\nAdapted matrices: 48 (BF16: 48).\nMatrix states: 48 observed; 0 with no observed update.\nZero-reference matrices: 0 unchanged; 0 changed.\nGain range: 0.9991..1; relative residual range: 0.02797..0.104.\n\nOf 84,934,656 nonzero intended updates, 6,327,161 are unchanged (7.45%).\nThose unchanged entries contain 0.03703% of the reference squared norm.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 148 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+    "report_sha256": "39405172ed3a1fa5678c718ae47702c312cd28386c6c12867c65ff3ccc43cf34"
+  },
+  "verifier_sha256": "e5407433c4d72c569da3eac0d0b4103794279aa51b83a8d35a493eb07cd75b98"
+}

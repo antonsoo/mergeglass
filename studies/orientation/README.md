@@ -1,5 +1,10 @@
 # A global orientation flag can hide a transposed target
 
+This is the retained study of the original error and its initial refusal guard.
+The current source now [audits these standard Conv1D layouts](../conv1d/README.md)
+with explicit metadata evidence, including mixed targets. The historical
+measurements below describe the earlier versions; they are not current refusals.
+
 A native PEFT adapter can contain both a Transformers `Conv1D` target and an
 ordinary `Linear` head while saving `fan_in_fan_out=False`. The flag is global;
 each constructed module retains its own orientation. For a square Conv1D weight,
@@ -39,7 +44,7 @@ The relevant upstream definitions are
 [GPT-2](https://github.com/huggingface/transformers/blob/v5.20.1/src/transformers/models/gpt2/modeling_gpt2.py),
 [OpenAI GPT](https://github.com/huggingface/transformers/blob/v5.20.1/src/transformers/models/openai/modeling_openai.py)
 and [ImageGPT](https://github.com/huggingface/transformers/blob/v5.20.1/src/transformers/models/imagegpt/modeling_imagegpt.py).
-The source guard covers their known attention and MLP Conv1D paths, including
+The historical source guard covered their known attention and MLP Conv1D paths, including
 cross-attention paths. It does not infer a tensor's implementation from a name
 without the corresponding model metadata.
 
@@ -53,9 +58,11 @@ PYTHONHASHSEED=0 HF_HUB_OFFLINE=1 /tmp/mergeglass-producer/bin/python studies/or
 OPENBLAS_NUM_THREADS=1 /tmp/mergeglass-producer/bin/python studies/orientation/verify.py /tmp/mergeglass-orientation /tmp/mergeglass-orientation-verification.json
 ```
 
-The verifier checks all producer file hashes, computes complete float64 PyTorch
-products using the per-module orientations retained from native PEFT modules,
-requires the three mixed-target refusals and checks the three accepted controls.
+The verifier checks all producer file hashes and computes complete float64 PyTorch
+products using the per-module orientations retained from native PEFT modules.
+By default it now checks six supported native audits. Use `--refused` with the
+historical guard revision to require the three mixed-target refusals and three
+accepted controls.
 To reproduce the old behavior, install source revision
 `a28007649836d644be50cb2946079f1f837c4eb5` in a separate environment and run the
 current verifier with `--before`. No third-party weights or model code are

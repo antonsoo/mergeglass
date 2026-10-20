@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+Audit standard GPT-2, OpenAI GPT and ImageGPT Conv1D LoRA with `(B @ A).T`,
+resolving each supported module from declared model metadata rather than PEFT's
+global orientation flag. Retain saved input/output coordinates and layout
+evidence. Mix Linear heads, embeddings and full saved modules; stream A columns
+and retain B under its decoded-factor limit. Refuse missing/conflicting layout
+evidence, remote custom-model declarations, unsupported paths and Conv1D DoRA.
+Include 48 native precision/control cases, a pinned public 48-matrix adapter,
+dense and scalar references, explicit base-serialization equality, an installed
+16.8-million-weight memory replay and a runnable native wrong-transpose example.
+
 Audit PEFT `modules_to_save` as complete absolute replacement state beside
 LoRA/DoRA factors. Check every floating, integer and bool value in blocks,
 including nested module biases and scalar buffers above `2**53`. Accept only
