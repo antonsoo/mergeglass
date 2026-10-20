@@ -1,0 +1,448 @@
+{
+  "source_commit": "9bd344fb1dd473f67ad97d3e017ea4bcf2ee0521",
+  "source_archive_sha256": "db36bd79f6c5abaceb1c946d9eafff4f8f3d8353ecac9662fa14543104e75364",
+  "publication": "local review only; no push, tag or registry publication",
+  "artifacts": [
+    {
+      "file": ".gitignore",
+      "bytes": 1,
+      "sha256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1"
+    },
+    {
+      "file": "mergeglass-0.1.0-py3-none-any.whl",
+      "bytes": 30714,
+      "sha256": "6582dca6923b919fcb2207455f28f81da2ab11a75668c2453b3275715596e866"
+    },
+    {
+      "file": "mergeglass-0.1.0.tar.gz",
+      "bytes": 10947687,
+      "sha256": "d663c2c97ddc6beb48cd9430d9a2baddd28c6b4d06916e197292b06d7fb8fe94"
+    }
+  ],
+  "clean_source_checks": {
+    "commands": [
+      "uv sync --locked",
+      "uv run ruff check .",
+      "uv run ruff format --check .",
+      "uv run mypy src",
+      "uv run pytest",
+      "uv build"
+    ],
+    "all_exit_zero": true,
+    "tests_passed": 120
+  },
+  "environments": [
+    {
+      "python": "3.10.21",
+      "libraries": {
+        "mergeglass": "0.1.0",
+        "numpy": "1.24.0",
+        "safetensors": "0.6.2",
+        "pytest": "9.1.1"
+      },
+      "auditor_modules": {
+        "adapter.py": "9f32ae16cd7cf96a4ee119395c8efe57e23f13f9c4053fd40c915427dcf26294",
+        "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+        "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+        "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+        "cli.py": "d479ab8d5c0d9e597befb60a10467d3f7dec2a446c076707f6c2f93b98f58915",
+        "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+        "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "audit.py": "0b4e8135227a76f61c75ca745401338933bcebbda292f30acf3776658fde70c1"
+      },
+      "installed_modules_equal_archived_source": true,
+      "isolated_python": true,
+      "torch_imported": false,
+      "input_overwrite_refused": true,
+      "input_bytes_preserved": true,
+      "embedding_cli_cases": [
+        {
+          "case": "correct-f32-safe-false",
+          "summary": {
+            "adapted_tensors": 3,
+            "checked_tensors": 4,
+            "adapted_elements": 605,
+            "intended_nonzero_elements": 605,
+            "changed_adapted_elements": 605,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          },
+          "layers": [
+            {
+              "module": "projection",
+              "status": "observed-update",
+              "changed_elements": 77,
+              "projection_gain": 1.0000000065821435,
+              "relative_residual": 6.661119686714156e-08
+            },
+            {
+              "module": "square",
+              "status": "observed-update",
+              "changed_elements": 121,
+              "projection_gain": 1.0000000248913907,
+              "relative_residual": 6.724810376678511e-08
+            },
+            {
+              "module": "tokens",
+              "status": "observed-update",
+              "changed_elements": 407,
+              "projection_gain": 0.9999999956929387,
+              "relative_residual": 4.8082111075091376e-08
+            }
+          ]
+        },
+        {
+          "case": "correct-bf16-safe-false",
+          "summary": {
+            "adapted_tensors": 3,
+            "checked_tensors": 4,
+            "adapted_elements": 605,
+            "intended_nonzero_elements": 605,
+            "changed_adapted_elements": 604,
+            "unchanged_nonzero_update_elements": 1,
+            "unchanged_nonzero_update_fraction": 0.001652892561983471,
+            "unchanged_reference_energy_fraction": 1.2698617788679384e-11,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          },
+          "layers": [
+            {
+              "module": "projection",
+              "status": "observed-update",
+              "changed_elements": 76,
+              "projection_gain": 1.0004525841002732,
+              "relative_residual": 0.003790827217977207
+            },
+            {
+              "module": "square",
+              "status": "observed-update",
+              "changed_elements": 121,
+              "projection_gain": 0.9992919271089551,
+              "relative_residual": 0.0035260916368599596
+            },
+            {
+              "module": "tokens",
+              "status": "observed-update",
+              "changed_elements": 407,
+              "projection_gain": 0.9997108198810243,
+              "relative_residual": 0.00256481705497402
+            }
+          ]
+        },
+        {
+          "case": "omit-embeddings-bf16",
+          "summary": {
+            "adapted_tensors": 3,
+            "checked_tensors": 4,
+            "adapted_elements": 605,
+            "intended_nonzero_elements": 605,
+            "changed_adapted_elements": 76,
+            "unchanged_nonzero_update_elements": 529,
+            "unchanged_nonzero_update_fraction": 0.8743801652892562,
+            "unchanged_reference_energy_fraction": 0.998911436871138,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 2,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          },
+          "layers": [
+            {
+              "module": "projection",
+              "status": "observed-update",
+              "changed_elements": 76,
+              "projection_gain": 1.0004525841002732,
+              "relative_residual": 0.003790827217977207
+            },
+            {
+              "module": "square",
+              "status": "no-observed-update",
+              "changed_elements": 0,
+              "projection_gain": 0.0,
+              "relative_residual": 1.0
+            },
+            {
+              "module": "tokens",
+              "status": "no-observed-update",
+              "changed_elements": 0,
+              "projection_gain": 0.0,
+              "relative_residual": 1.0
+            }
+          ]
+        },
+        {
+          "case": "wrong-orientation-f32",
+          "summary": {
+            "adapted_tensors": 3,
+            "checked_tensors": 4,
+            "adapted_elements": 605,
+            "intended_nonzero_elements": 605,
+            "changed_adapted_elements": 605,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          },
+          "layers": [
+            {
+              "module": "projection",
+              "status": "observed-update",
+              "changed_elements": 77,
+              "projection_gain": 1.0000000065821435,
+              "relative_residual": 6.661119686714156e-08
+            },
+            {
+              "module": "square",
+              "status": "observed-update",
+              "changed_elements": 121,
+              "projection_gain": 0.11819936035178452,
+              "relative_residual": 1.3280065216863262
+            },
+            {
+              "module": "tokens",
+              "status": "observed-update",
+              "changed_elements": 407,
+              "projection_gain": 0.9999999956929387,
+              "relative_residual": 4.8082111075091376e-08
+            }
+          ]
+        }
+      ],
+      "legacy_readme_commands": [
+        {
+          "group": "rounding",
+          "case": "merged-bf16",
+          "stdout_sha256": "973b0e1efa8e9a84a13780d479986a52743b9795c961c810bd512c4b78ee21a9"
+        },
+        {
+          "group": "dora",
+          "case": "as-lora-f32",
+          "stdout_sha256": "d601d2ff6ab5c14f7633ccbe79faec7c93c36d8509f875da41ec3839e7930e8d"
+        }
+      ],
+      "tests": {
+        "command": "python -I -m pytest ARCHIVE/tests -q",
+        "passed": 120,
+        "exit_code": 0
+      }
+    },
+    {
+      "python": "3.15.0",
+      "libraries": {
+        "mergeglass": "0.1.0",
+        "numpy": "2.5.4",
+        "safetensors": "0.8.0",
+        "pytest": "9.1.1"
+      },
+      "auditor_modules": {
+        "adapter.py": "9f32ae16cd7cf96a4ee119395c8efe57e23f13f9c4053fd40c915427dcf26294",
+        "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+        "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+        "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+        "cli.py": "d479ab8d5c0d9e597befb60a10467d3f7dec2a446c076707f6c2f93b98f58915",
+        "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+        "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "audit.py": "0b4e8135227a76f61c75ca745401338933bcebbda292f30acf3776658fde70c1"
+      },
+      "installed_modules_equal_archived_source": true,
+      "isolated_python": true,
+      "torch_imported": false,
+      "input_overwrite_refused": true,
+      "input_bytes_preserved": true,
+      "embedding_cli_cases": [
+        {
+          "case": "correct-f32-safe-false",
+          "summary": {
+            "adapted_tensors": 3,
+            "checked_tensors": 4,
+            "adapted_elements": 605,
+            "intended_nonzero_elements": 605,
+            "changed_adapted_elements": 605,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          },
+          "layers": [
+            {
+              "module": "projection",
+              "status": "observed-update",
+              "changed_elements": 77,
+              "projection_gain": 1.0000000065821435,
+              "relative_residual": 6.661119686714156e-08
+            },
+            {
+              "module": "square",
+              "status": "observed-update",
+              "changed_elements": 121,
+              "projection_gain": 1.0000000248913907,
+              "relative_residual": 6.724810376678511e-08
+            },
+            {
+              "module": "tokens",
+              "status": "observed-update",
+              "changed_elements": 407,
+              "projection_gain": 0.9999999956929387,
+              "relative_residual": 4.8082111075091376e-08
+            }
+          ]
+        },
+        {
+          "case": "correct-bf16-safe-false",
+          "summary": {
+            "adapted_tensors": 3,
+            "checked_tensors": 4,
+            "adapted_elements": 605,
+            "intended_nonzero_elements": 605,
+            "changed_adapted_elements": 604,
+            "unchanged_nonzero_update_elements": 1,
+            "unchanged_nonzero_update_fraction": 0.001652892561983471,
+            "unchanged_reference_energy_fraction": 1.2698617788679384e-11,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          },
+          "layers": [
+            {
+              "module": "projection",
+              "status": "observed-update",
+              "changed_elements": 76,
+              "projection_gain": 1.0004525841002732,
+              "relative_residual": 0.003790827217977207
+            },
+            {
+              "module": "square",
+              "status": "observed-update",
+              "changed_elements": 121,
+              "projection_gain": 0.9992919271089551,
+              "relative_residual": 0.0035260916368599596
+            },
+            {
+              "module": "tokens",
+              "status": "observed-update",
+              "changed_elements": 407,
+              "projection_gain": 0.9997108198810243,
+              "relative_residual": 0.00256481705497402
+            }
+          ]
+        },
+        {
+          "case": "omit-embeddings-bf16",
+          "summary": {
+            "adapted_tensors": 3,
+            "checked_tensors": 4,
+            "adapted_elements": 605,
+            "intended_nonzero_elements": 605,
+            "changed_adapted_elements": 76,
+            "unchanged_nonzero_update_elements": 529,
+            "unchanged_nonzero_update_fraction": 0.8743801652892562,
+            "unchanged_reference_energy_fraction": 0.998911436871138,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 2,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          },
+          "layers": [
+            {
+              "module": "projection",
+              "status": "observed-update",
+              "changed_elements": 76,
+              "projection_gain": 1.0004525841002732,
+              "relative_residual": 0.003790827217977207
+            },
+            {
+              "module": "square",
+              "status": "no-observed-update",
+              "changed_elements": 0,
+              "projection_gain": 0.0,
+              "relative_residual": 1.0
+            },
+            {
+              "module": "tokens",
+              "status": "no-observed-update",
+              "changed_elements": 0,
+              "projection_gain": 0.0,
+              "relative_residual": 1.0
+            }
+          ]
+        },
+        {
+          "case": "wrong-orientation-f32",
+          "summary": {
+            "adapted_tensors": 3,
+            "checked_tensors": 4,
+            "adapted_elements": 605,
+            "intended_nonzero_elements": 605,
+            "changed_adapted_elements": 605,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          },
+          "layers": [
+            {
+              "module": "projection",
+              "status": "observed-update",
+              "changed_elements": 77,
+              "projection_gain": 1.0000000065821435,
+              "relative_residual": 6.661119686714156e-08
+            },
+            {
+              "module": "square",
+              "status": "observed-update",
+              "changed_elements": 121,
+              "projection_gain": 0.11819936035178452,
+              "relative_residual": 1.3280065216863262
+            },
+            {
+              "module": "tokens",
+              "status": "observed-update",
+              "changed_elements": 407,
+              "projection_gain": 0.9999999956929387,
+              "relative_residual": 4.8082111075091376e-08
+            }
+          ]
+        }
+      ],
+      "legacy_readme_commands": [
+        {
+          "group": "rounding",
+          "case": "merged-bf16",
+          "stdout_sha256": "973b0e1efa8e9a84a13780d479986a52743b9795c961c810bd512c4b78ee21a9"
+        },
+        {
+          "group": "dora",
+          "case": "as-lora-f32",
+          "stdout_sha256": "d601d2ff6ab5c14f7633ccbe79faec7c93c36d8509f875da41ec3839e7930e8d"
+        }
+      ],
+      "tests": {
+        "command": "python -I -m pytest ARCHIVE/tests -q",
+        "passed": 120,
+        "exit_code": 0
+      }
+    }
+  ],
+  "clean_source_readme_commands": [
+    "uv run --no-dev mergeglass examples/rounding/base examples/rounding/adapter examples/rounding/merged-bf16 --json report.json",
+    "uv run --no-dev mergeglass examples/embeddings/base examples/embeddings/adapter examples/embeddings/wrong-orientation-f32",
+    "uv run --no-dev mergeglass examples/dora/base examples/dora/adapter examples/dora/as-lora-f32"
+  ],
+  "clean_source_readme_commands_exit_zero": true
+}
