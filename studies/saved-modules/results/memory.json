@@ -1,0 +1,110 @@
+{
+  "schema": "mergeglass.saved-modules-memory.v1",
+  "method": "Fresh installed CLI process measured by GNU time; full BF16 public audit and input hashes, summary view, one OpenBLAS/OMP thread, block_mib=1. Elapsed time includes interpreter startup and file hashes. Shared WSL2 host and warm filesystem cache; not an isolated throughput benchmark or a hard RSS cap.",
+  "peak_rss_kib": 40904,
+  "elapsed_seconds": 9.9,
+  "input_file_bytes": 840855823,
+  "settings": {
+    "block_mib": 1,
+    "max_adapter_mib": 512
+  },
+  "inputs": {
+    "base": [
+      {
+        "file": "config.json",
+        "bytes": 704,
+        "sha256": "1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843"
+      },
+      {
+        "file": "model.safetensors",
+        "bytes": 269060552,
+        "sha256": "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1"
+      }
+    ],
+    "adapter": [
+      {
+        "file": "adapter_config.json",
+        "bytes": 835,
+        "sha256": "8fd6c37b2ade8d0f45c57d73e76c413f330ab7f383bc91c026139024be7bc902"
+      },
+      {
+        "file": "adapter_model.safetensors",
+        "bytes": 246087008,
+        "sha256": "ea29b8d3134c55f85021c07c2c7fb79a75493a67483415f4a4f6b16c6642419e"
+      }
+    ],
+    "merged": [
+      {
+        "file": "config.json",
+        "bytes": 795,
+        "sha256": "41ab623c27a530dc3cef05e0de7a1f38827581855f30cb15b3a8d165ec5ea268"
+      },
+      {
+        "file": "model-00001-of-00009.safetensors",
+        "bytes": 56623232,
+        "sha256": "c5a339f6f4309e9edf21a1525d7c7409b43f96a088ba9ee44fc1162647af48e6"
+      },
+      {
+        "file": "model-00002-of-00009.safetensors",
+        "bytes": 56623240,
+        "sha256": "10982d4d03faddc2f2edcd24e159a218d7a33f437d6eb865d54e1108a101241f"
+      },
+      {
+        "file": "model-00003-of-00009.safetensors",
+        "bytes": 31865160,
+        "sha256": "565846524eecd5560ac3a1c7445fe029705a1931505baf4b967d0e4269caf5f4"
+      },
+      {
+        "file": "model-00004-of-00009.safetensors",
+        "bytes": 31866760,
+        "sha256": "a704e17f6bb70a403f16b0a8ee14d3d8c473ccaba767c9a304ff232ef7e401f2"
+      },
+      {
+        "file": "model-00005-of-00009.safetensors",
+        "bytes": 31863928,
+        "sha256": "a0495ce3af49729459fbd140c548a5d0307cf2b13fa882b74ecf2ab81a5ed9c5"
+      },
+      {
+        "file": "model-00006-of-00009.safetensors",
+        "bytes": 31866800,
+        "sha256": "40f6425b022f98bf3b5375ebb5aa0473f65f7588d62ff739268040e1b045d115"
+      },
+      {
+        "file": "model-00007-of-00009.safetensors",
+        "bytes": 31863944,
+        "sha256": "e8aa48491f54f7b3ae47ba57c49975580bec02b7c73cf26f3af847f985a75c21"
+      },
+      {
+        "file": "model-00008-of-00009.safetensors",
+        "bytes": 31866800,
+        "sha256": "ef3b9b87ce402574a1340f49d575a4d0075a7b8ac9e1d0f43119dd386e0be2ab"
+      },
+      {
+        "file": "model-00009-of-00009.safetensors",
+        "bytes": 21243568,
+        "sha256": "000742efb426c68fdbd8b26b9dc95bfbabc480f8b02a2fc401ae9bfe27d12591"
+      },
+      {
+        "file": "model.safetensors.index.json",
+        "bytes": 22497,
+        "sha256": "2532ef8407a02af463f6ab66ef05e1cec70b349906b8faf9a1a1e7192197e0ae"
+      }
+    ]
+  },
+  "runtime_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "f400ec4b08df8bd6eaa35d3140d24b7cb6b7e1e5e4d9b31f1fcc14816316f194",
+    "audit.py": "14bb9c1c2549d9ac1242f78970c07914a5f64be3700c44215bc3fc4ecc8479da",
+    "cli.py": "4d86739f825d6409cbe01450bd996be16efd26bc02e5b543bbefeb0b5db8673c",
+    "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "report_sha256": "ff4cff1d6954514197f3de06f23f79ba19d91d1416a7d467b335cca87fe86716",
+  "python": "3.15.0",
+  "numpy": "2.5.4",
+  "safetensors": "0.8.0",
+  "torch_peft_transformers_absent": true,
+  "logical_cpus": 14
+}

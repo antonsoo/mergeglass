@@ -1,0 +1,212 @@
+{
+  "method": "isolated installed API equality with complete source reports; real CLI JSON and text; input protection and prior-report preservation",
+  "python": "3.10.21",
+  "versions": {
+    "mergeglass": "0.1.0",
+    "numpy": "1.24.0",
+    "safetensors": "0.6.2"
+  },
+  "torch_peft_transformers_absent": true,
+  "auditor_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "f400ec4b08df8bd6eaa35d3140d24b7cb6b7e1e5e4d9b31f1fcc14816316f194",
+    "audit.py": "14bb9c1c2549d9ac1242f78970c07914a5f64be3700c44215bc3fc4ecc8479da",
+    "cli.py": "4d86739f825d6409cbe01450bd996be16efd26bc02e5b543bbefeb0b5db8673c",
+    "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "script_sha256": "1ff870f9a3d31f3aba6072b59220b2e40d76f13e07a09b66a40386a3bd208ca1",
+  "checks": [
+    {
+      "group": "native",
+      "case": "correct-f32",
+      "report_sha256": "7d3aebef41715e1d3e4080963ccd6fb3b41bcd673ae455ab190c097a4b110914",
+      "source_report_sha256": "7d3aebef41715e1d3e4080963ccd6fb3b41bcd673ae455ab190c097a4b110914",
+      "exact_source_report_match": true,
+      "floating_fields_differing": 0,
+      "largest_float_difference": null,
+      "cli_checked": false
+    },
+    {
+      "group": "native",
+      "case": "omit-head-f32",
+      "report_sha256": "a29f51d27f595243cb12884327b3577aba9a27e50d58379ae82a66033f9ad361",
+      "source_report_sha256": "a29f51d27f595243cb12884327b3577aba9a27e50d58379ae82a66033f9ad361",
+      "exact_source_report_match": true,
+      "floating_fields_differing": 0,
+      "largest_float_difference": null,
+      "cli_checked": true
+    },
+    {
+      "group": "native",
+      "case": "wrong-counter-f32",
+      "report_sha256": "8c6176bceaa4ee62860185638ee638359773a8ce80e815810e149712a59738f7",
+      "source_report_sha256": "8c6176bceaa4ee62860185638ee638359773a8ce80e815810e149712a59738f7",
+      "exact_source_report_match": true,
+      "floating_fields_differing": 0,
+      "largest_float_difference": null,
+      "cli_checked": true
+    },
+    {
+      "group": "native",
+      "case": "correct-f16",
+      "report_sha256": "25b393235d2c1cd7e60d6b33948166ecb039e7e6ddc793e9bdcf9c5b40a24504",
+      "source_report_sha256": "25b393235d2c1cd7e60d6b33948166ecb039e7e6ddc793e9bdcf9c5b40a24504",
+      "exact_source_report_match": true,
+      "floating_fields_differing": 0,
+      "largest_float_difference": null,
+      "cli_checked": false
+    },
+    {
+      "group": "native",
+      "case": "correct-bf16",
+      "report_sha256": "c824d7a99e089f33a8c2121f2a556eeadc744fb04a190818e99e753581dd3db7",
+      "source_report_sha256": "c824d7a99e089f33a8c2121f2a556eeadc744fb04a190818e99e753581dd3db7",
+      "exact_source_report_match": true,
+      "floating_fields_differing": 0,
+      "largest_float_difference": null,
+      "cli_checked": true
+    },
+    {
+      "group": "native",
+      "case": "bert-merged",
+      "report_sha256": "e6c0219ac0481b65718bac209fdb192c4087111fe549615fbeebfc2a45cba872",
+      "source_report_sha256": "e6c0219ac0481b65718bac209fdb192c4087111fe549615fbeebfc2a45cba872",
+      "exact_source_report_match": true,
+      "floating_fields_differing": 0,
+      "largest_float_difference": null,
+      "cli_checked": false
+    },
+    {
+      "group": "native",
+      "case": "llama-37-merged",
+      "report_sha256": "744af194b6adf848b333c22a7d6840fdff0502d3511d0759fa4941acdd7ec9a6",
+      "source_report_sha256": "744af194b6adf848b333c22a7d6840fdff0502d3511d0759fa4941acdd7ec9a6",
+      "exact_source_report_match": true,
+      "floating_fields_differing": 0,
+      "largest_float_difference": null,
+      "cli_checked": false
+    },
+    {
+      "group": "native",
+      "case": "llama-41-merged",
+      "report_sha256": "f00ed285903d9ae6f233bb1f12ee15779e17cdbcca7c98933220841aeb988956",
+      "source_report_sha256": "f00ed285903d9ae6f233bb1f12ee15779e17cdbcca7c98933220841aeb988956",
+      "exact_source_report_match": true,
+      "floating_fields_differing": 0,
+      "largest_float_difference": null,
+      "cli_checked": true
+    },
+    {
+      "group": "native",
+      "case": "dora-correct-f32",
+      "report_sha256": "02aba91668dffd91a490904603a005f39ede0565c7a9b8045ecb59a58a7fcdd9",
+      "source_report_sha256": "a3499e6287e00076d33a7557c3716f8a388ffd817ebbff458ca7be33009d4162",
+      "exact_source_report_match": false,
+      "floating_fields_differing": 3,
+      "largest_float_difference": [
+        "report.layers[0].dora_rows.log2_row_norm_factor_range[1]",
+        2.6469779601696886e-23
+      ],
+      "cli_checked": false
+    },
+    {
+      "group": "native",
+      "case": "dora-correct-f16",
+      "report_sha256": "0280a38ccc251c3dbdb7b4fb220f72c9559213d7c35c68e80d89f57f6a1fb516",
+      "source_report_sha256": "cb3b292bb5088af6242c7b9c33fbf1e2bc842092ac8909194bbc3bd8c4e50168",
+      "exact_source_report_match": false,
+      "floating_fields_differing": 3,
+      "largest_float_difference": [
+        "report.layers[0].dora_rows.log2_row_norm_factor_range[1]",
+        2.710505431213761e-20
+      ],
+      "cli_checked": false
+    },
+    {
+      "group": "native",
+      "case": "dora-correct-bf16",
+      "report_sha256": "be5042ca44671a0c1ab50288271899e5c321b52312fd9bf04066f155d72aaf9f",
+      "source_report_sha256": "6eb3020acfb8ff49338b3ef5ca19e6c8c063c67fee32bb77917d207b1c92f6b7",
+      "exact_source_report_match": false,
+      "floating_fields_differing": 1,
+      "largest_float_difference": [
+        "report.layers[0].dora_rows.log2_row_norm_factor_range[1]",
+        4.336808689942018e-19
+      ],
+      "cli_checked": false
+    },
+    {
+      "group": "native",
+      "case": "incomplete-adapter",
+      "result": "expected refusal"
+    },
+    {
+      "group": "public",
+      "case": "correct-f32",
+      "report_sha256": "e2d271290757fc6ac8962362bef6ffbfdbaeeabb4b850b01f230ae1d34d7cb3d",
+      "source_report_sha256": "feb216da12982553b3b251be41d2a4680f22bf38d1c5b837ce90996c0e84cfac",
+      "exact_source_report_match": false,
+      "floating_fields_differing": 357,
+      "largest_float_difference": [
+        "report.layers[43].norms.observed",
+        8.881784197001252e-16
+      ],
+      "cli_checked": false
+    },
+    {
+      "group": "public",
+      "case": "omit-full-modules-f32",
+      "report_sha256": "67463346e7d81b44f5bb8903677696795847d01830a3bf3a08654bd13e10d043",
+      "source_report_sha256": "8dabab1a0eeea94c0e0f80c6f5f62fab4ad70049ab8d14dd3042cd6d5eaac65e",
+      "exact_source_report_match": false,
+      "floating_fields_differing": 357,
+      "largest_float_difference": [
+        "report.layers[43].norms.observed",
+        8.881784197001252e-16
+      ],
+      "cli_checked": true
+    },
+    {
+      "group": "public",
+      "case": "correct-f16",
+      "report_sha256": "6f38fd4f20c9acb13ba762627f8fd570f4dbf3ac95eedf17f722fd17834a36e2",
+      "source_report_sha256": "23ebd4a6b76be887b52b0870d93c17ed734aca3a57f068902d61960b73d04eac",
+      "exact_source_report_match": false,
+      "floating_fields_differing": 434,
+      "largest_float_difference": [
+        "report.layers[56].norms.observed",
+        8.881784197001252e-16
+      ],
+      "cli_checked": false
+    },
+    {
+      "group": "public",
+      "case": "correct-bf16",
+      "report_sha256": "eec6778836b43c7d8eb6baf067041afb8351c69a3e54e78e57cb4c22bed69a63",
+      "source_report_sha256": "ff4cff1d6954514197f3de06f23f79ba19d91d1416a7d467b335cca87fe86716",
+      "exact_source_report_match": false,
+      "floating_fields_differing": 389,
+      "largest_float_difference": [
+        "report.layers[44].norms.observed",
+        8.881784197001252e-16
+      ],
+      "cli_checked": true
+    }
+  ],
+  "identical_factor_measurements_in_full_module_controls": true,
+  "protected_input_roles": [
+    "base",
+    "adapter config",
+    "adapter weights",
+    "merged"
+  ],
+  "prior_report_preserved_on_refusal": true,
+  "discrete_fields_exact": true,
+  "floating_comparison_tolerance": {
+    "relative": 2e-11,
+    "absolute": 2e-14
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "method": "Four separate native/saved reload comparisons, all pinned input/output file hashes checked against the original producer manifest.",
+  "cases": [
+    {
+      "case": "correct-f32",
+      "method": "Fresh native PEFT merge compared with AutoModelForCausalLM.from_pretrained of the actual saved checkpoint, local files and built-in model code only",
+      "producer_manifest_sha256": "d816ad737c3b03345874a62ba17cfb52e7d6cae023e6f7cb52531ff2047e3cc9",
+      "script_sha256": "1df1be43e58c64c648beca938fa46bd9ac72f42ebad82aee8391eedc5d0e7403",
+      "versions": {
+        "torch": "2.14.1+cpu",
+        "peft": "0.21.0",
+        "transformers": "5.20.1",
+        "numpy": "2.5.4",
+        "safetensors": "0.8.0"
+      },
+      "matching_state_tensors": 273,
+      "matching_state_elements": 162826560,
+      "dtype": "torch.float32",
+      "attention_implementation": "sdpa",
+      "input_and_output_weights_tied": false,
+      "native_vs_saved_max_logit_difference": 0.0,
+      "native_vs_saved_argmax_changes": 0,
+      "logit_elements": 589824,
+      "matching_float32_logit_sha256": "b000ea901cba56baa5218a503a75f42224df9efb30265b6f1b627de7ed150fbb"
+    },
+    {
+      "case": "correct-f16",
+      "method": "Fresh native PEFT merge compared with AutoModelForCausalLM.from_pretrained of the actual saved checkpoint, local files and built-in model code only",
+      "producer_manifest_sha256": "d816ad737c3b03345874a62ba17cfb52e7d6cae023e6f7cb52531ff2047e3cc9",
+      "script_sha256": "1df1be43e58c64c648beca938fa46bd9ac72f42ebad82aee8391eedc5d0e7403",
+      "versions": {
+        "torch": "2.14.1+cpu",
+        "peft": "0.21.0",
+        "transformers": "5.20.1",
+        "numpy": "2.5.4",
+        "safetensors": "0.8.0"
+      },
+      "matching_state_tensors": 273,
+      "matching_state_elements": 162826560,
+      "dtype": "torch.float16",
+      "attention_implementation": "sdpa",
+      "input_and_output_weights_tied": false,
+      "native_vs_saved_max_logit_difference": 0.0,
+      "native_vs_saved_argmax_changes": 0,
+      "logit_elements": 589824,
+      "matching_float32_logit_sha256": "17a428ef9f3d471a1b1fc83fc129e6989b99efaaa6521d52a29ee5e6100e4306"
+    },
+    {
+      "case": "correct-bf16",
+      "method": "Fresh native PEFT merge compared with AutoModelForCausalLM.from_pretrained of the actual saved checkpoint, local files and built-in model code only",
+      "producer_manifest_sha256": "d816ad737c3b03345874a62ba17cfb52e7d6cae023e6f7cb52531ff2047e3cc9",
+      "script_sha256": "1df1be43e58c64c648beca938fa46bd9ac72f42ebad82aee8391eedc5d0e7403",
+      "versions": {
+        "torch": "2.14.1+cpu",
+        "peft": "0.21.0",
+        "transformers": "5.20.1",
+        "numpy": "2.5.4",
+        "safetensors": "0.8.0"
+      },
+      "matching_state_tensors": 273,
+      "matching_state_elements": 162826560,
+      "dtype": "torch.bfloat16",
+      "attention_implementation": "sdpa",
+      "input_and_output_weights_tied": false,
+      "native_vs_saved_max_logit_difference": 0.0,
+      "native_vs_saved_argmax_changes": 0,
+      "logit_elements": 589824,
+      "matching_float32_logit_sha256": "1b21f6c39cf9c54ab93cc5efdf5babbf27cfae86e76f2b36d9dfcb285b09060d"
+    },
+    {
+      "case": "omit-full-modules-f32",
+      "method": "Fresh native PEFT merge compared with AutoModelForCausalLM.from_pretrained of the actual saved checkpoint, local files and built-in model code only",
+      "producer_manifest_sha256": "d816ad737c3b03345874a62ba17cfb52e7d6cae023e6f7cb52531ff2047e3cc9",
+      "script_sha256": "1df1be43e58c64c648beca938fa46bd9ac72f42ebad82aee8391eedc5d0e7403",
+      "versions": {
+        "torch": "2.14.1+cpu",
+        "peft": "0.21.0",
+        "transformers": "5.20.1",
+        "numpy": "2.5.4",
+        "safetensors": "0.8.0"
+      },
+      "matching_state_tensors": 273,
+      "matching_state_elements": 162826560,
+      "dtype": "torch.float32",
+      "attention_implementation": "sdpa",
+      "input_and_output_weights_tied": false,
+      "native_vs_saved_max_logit_difference": 0.0,
+      "native_vs_saved_argmax_changes": 0,
+      "logit_elements": 589824,
+      "matching_float32_logit_sha256": "082766315f0a9553ac6e124801dcb5a647e219b6670b01a3066709ac336fd498"
+    }
+  ]
+}

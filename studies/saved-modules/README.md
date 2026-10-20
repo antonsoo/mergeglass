@@ -52,6 +52,14 @@ and forward observations are retained in [public evidence](results/public.json).
 [Before-source refusals](results/public-before.json) retain the original behavior.
 Third-party weights are not redistributed.
 
+The actual saved checkpoints are then reloaded through built-in Transformers
+code and compared with fresh native PEFT merges. All four cases match in all
+273 state tensors (162,826,560 elements), retain untied input/output weights,
+and produce identical logits at all 589,824 compared coordinates with the same
+SDPA attention path. This separately checks serialization and reload behavior;
+it does not infer it from weight-space norms. [Reload receipts](results/reloaded.json)
+retain exact producer, script and logit hashes.
+
 ## Native classifiers, counters and vocabulary changes
 
 `produce.py` trains a small nested classifier from scratch on labelled synthetic
@@ -97,6 +105,35 @@ CPython's independent half conversion. Across the public factor reference,
 This preserves the declared direct-rounding contract; it does not make the
 auditor a native PEFT arithmetic emulator.
 
+## Installed artifacts and bounded memory
+
+The wheel is built from a source distribution made from clean archived source
+`06b47e7`, then installed in isolated Python 3.10.21/NumPy 1.24.0/safetensors
+0.6.2 and Python 3.15.0/NumPy 2.5.4/safetensors 0.8.0 environments. Neither has
+Torch, PEFT or Transformers. Both replay all 16 native/public cases, including
+the expected incomplete-module refusal, and pass all 141 packaged-source tests.
+CLI JSON and API reports agree exactly within each environment; real terminal
+output, input protection and preservation of an earlier report are checked too.
+[Artifact identities](results/installed.json), [Python 3.10](results/installed-310.json),
+[Python 3.15](results/installed-315.json).
+
+Python 3.15 reproduces the complete source reports exactly. With NumPy 1.24,
+every discrete field remains exact; 1,544 floating report fields differ by at
+most `8.881784197001252e-16`. The driver checks every field against the
+hash-verified complete source report, with relative tolerance `2e-11` and
+absolute tolerance `2e-14` for floating values only. It records actual drift
+separately. This is library arithmetic variation, not a saved-weight mismatch.
+The dropped-head controls' complete factor measurements remain byte-identical
+to their respective correct merges within both environments.
+
+A fresh installed Python 3.15 CLI checks all 273 public BF16 tensors, including
+56,623,104 full-state values, across 840,855,823 input-file bytes with **39.95 MiB
+peak process RSS** at a 1 MiB block setting. GNU time measures 40,904 KiB and
+9.90 seconds including interpreter startup and input hashes. This is one
+warm-cache observation on the shared 14-vCPU WSL2 host, with one OpenBLAS/OMP
+thread; it is not a hard memory cap or isolated throughput benchmark.
+[Complete method, input identities and report match](results/memory.json).
+
 ## Reproduction
 
 The optional native producer environment is pinned in the retained receipts:
@@ -123,6 +160,15 @@ PYTHONPATH=src OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python studies/saved-mod
 Set `PYTHONPATH` to the unchanged prior checkout's `src` and add `--before` to
 retain baseline refusals. Python's hash seed stabilizes PEFT configuration list
 ordering. No network is used by either producer after the pinned files exist.
+
+Public verification can be resumed with `--case correct-f16`, for example.
+The retained public receipt combines four such runs only after checking their
+producer, verifier and source-module identities and complete case coverage.
+`reload.py ROOT CASE OUT` independently checks a saved model against a fresh
+native merge. `legacy.py --help` describes the 26 unchanged old-input comparisons.
+Run `installed.py --help` with an isolated installed Python for package replay;
+the optional reference cache preserves complete source reports and their
+retained hashes when comparing different NumPy versions.
 
 ## Boundaries
 

@@ -10,6 +10,7 @@ import hashlib
 import importlib.metadata
 import importlib.util
 import json
+import math
 import platform
 import subprocess
 import sys
@@ -32,12 +33,36 @@ def command(arguments: list[str]) -> subprocess.CompletedProcess[str]:
     )
 
 
+def compare(actual: Any, expected: Any, path: str = "report") -> list[tuple[str, float]]:
+    """Keep every discrete field exact; allow stated binary64 library differences."""
+    assert type(actual) is type(expected), path
+    differences = []
+    if isinstance(actual, dict):
+        assert actual.keys() == expected.keys(), path
+        for key in actual:
+            differences.extend(compare(actual[key], expected[key], path + "." + key))
+    elif isinstance(actual, list):
+        assert len(actual) == len(expected), path
+        for index, (a, b) in enumerate(zip(actual, expected, strict=True)):
+            differences.extend(compare(a, b, path + f"[{index}]"))
+    elif isinstance(actual, float):
+        assert math.isclose(actual, expected, rel_tol=2e-11, abs_tol=2e-14), path
+        if actual != expected:
+            differences.append((path, abs(actual - expected)))
+    else:
+        assert actual == expected, path
+    return differences
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("native", type=Path)
     parser.add_argument("public", type=Path)
     parser.add_argument("evidence", type=Path)
     parser.add_argument("out", type=Path)
+    cache = parser.add_mutually_exclusive_group()
+    cache.add_argument("--write-reference-reports", type=Path)
+    cache.add_argument("--reference-reports", type=Path)
     args = parser.parse_args()
     source = {
         name: json.loads((args.evidence / f"{name}.json").read_text())
@@ -78,7 +103,21 @@ def main() -> None:
                 continue
             report = audit(*paths, block_mib=1)
             report_hash = digest(report)
-            assert report_hash == expected[label]["complete_report_sha256"], (group, label)
+            expected_hash = expected[label]["complete_report_sha256"]
+            differences = []
+            if report_hash != expected_hash:
+                assert args.reference_reports is not None, (group, label)
+                reference = json.loads(
+                    (args.reference_reports / f"{group}-{label}.json").read_text()
+                )
+                assert digest(reference) == expected_hash
+                differences = compare(report, reference)
+            if args.write_reference_reports is not None:
+                assert report_hash == expected_hash
+                args.write_reference_reports.mkdir(parents=True, exist_ok=True)
+                (args.write_reference_reports / f"{group}-{label}.json").write_text(
+                    json.dumps(report, allow_nan=False) + "\n"
+                )
             factor_hashes[label] = digest({"layers": report["layers"]})
             cli_checked = label in (
                 "omit-head-f32",
@@ -99,6 +138,12 @@ def main() -> None:
                     "group": group,
                     "case": label,
                     "report_sha256": report_hash,
+                    "source_report_sha256": expected_hash,
+                    "exact_source_report_match": report_hash == expected_hash,
+                    "floating_fields_differing": len(differences),
+                    "largest_float_difference": max(differences, key=lambda row: row[1])
+                    if differences
+                    else None,
                     "cli_checked": cli_checked,
                 }
             )
@@ -146,6 +191,8 @@ def main() -> None:
         "identical_factor_measurements_in_full_module_controls": True,
         "protected_input_roles": protected,
         "prior_report_preserved_on_refusal": True,
+        "discrete_fields_exact": True,
+        "floating_comparison_tolerance": {"relative": 2e-11, "absolute": 2e-14},
     }
     args.out.write_text(json.dumps(receipt, indent=2, allow_nan=False) + "\n")
     print(

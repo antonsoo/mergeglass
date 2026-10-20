@@ -1,0 +1,38 @@
+{
+  "schema": "mergeglass.saved-modules-artifact-verification.v1",
+  "package_source_commit": "06b47e7d09ad4025b93245f76fd2c852d141ce1c",
+  "source_archive_sha256": "ea4d59dc36ae3bbec72664403539d3c0e943296eff9837f8d5e8c9f8abe744ec",
+  "package_build": "Clean git archive; locked sync, all Ruff checks/format, mypy and 141 tests; wheel built from the source distribution.",
+  "artifacts": [
+    {
+      "file": "mergeglass-0.1.0-py3-none-any.whl",
+      "bytes": 33973,
+      "sha256": "f53f972543cd690817cd2fb649365bb597ce0e2876df2b296c878f61095a21e8"
+    },
+    {
+      "file": "mergeglass-0.1.0.tar.gz",
+      "bytes": 11259560,
+      "sha256": "3e95cec67da67cb30df8a5544536eeeae100bfa3abe1a57ba0498faa43e8f3df"
+    }
+  ],
+  "isolated_python_environments": [
+    "installed-310.json",
+    "installed-315.json"
+  ],
+  "installed_tests": {
+    "3.10.21": 141,
+    "3.15.0": 141
+  },
+  "runtime_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "f400ec4b08df8bd6eaa35d3140d24b7cb6b7e1e5e4d9b31f1fcc14816316f194",
+    "audit.py": "14bb9c1c2549d9ac1242f78970c07914a5f64be3700c44215bc3fc4ecc8479da",
+    "cli.py": "4d86739f825d6409cbe01450bd996be16efd26bc02e5b543bbefeb0b5db8673c",
+    "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "registry_release": false,
+  "hosted_application": false
+}
