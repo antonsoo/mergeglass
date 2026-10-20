@@ -148,6 +148,14 @@ question-weighted measurements. The figure and retention programs require
 that checked, complete result. Limited diagnostic cohorts cannot produce a
 full-study figure or archive.
 
+`check_generations.py` reconstructs every saved text directly from its token
+IDs, using the pinned tokenizer without Transformers. It checks token bounds,
+first-EOS termination and the 160-token cap, then regrades every output against
+a fresh pinned BFCL checkout. Every grade dictionary must match exactly,
+including unknown outcomes. It also compares each imported upstream module
+with its Git object and the original chunk receipts. This checks decoding and
+grading again; it does not rerun inference or establish model quality.
+
 The separate native Python 3.12 environment uses the
 [pinned producer dependencies](../native-peft/requirements.txt), plus
 `tree-sitter==0.21.3`, `tree-sitter-java==0.21.0`,
@@ -212,6 +220,16 @@ change the protocol or study sources during a run. Byte differences from a
 different producer/kernel require a distinct identified experiment; changing
 expected hashes cannot establish equivalence to the retained inputs.
 
+The complete generation check uses a separate environment without Torch,
+Transformers or PEFT. Its tokenizer directory contains the four pinned files
+prepared above; no model weights are loaded:
+
+```sh
+uv venv --python 3.12 /tmp/mergeglass-generation-check
+uv pip install --python /tmp/mergeglass-generation-check/bin/python -r studies/function-calls/requirements-check-generations.txt
+/tmp/mergeglass-generation-check/bin/python studies/function-calls/check_generations.py /tmp/mergeglass-generations /tmp/mergeglass-prompts/prompts.json /tmp/mergeglass-bfcl /tmp/mergeglass-dora-public/adapter /tmp/mergeglass-regrade-work /tmp/mergeglass-regraded.json
+```
+
 For a standalone scientific figure, use a separate plotting environment; do
 not change an active producer environment:
 
@@ -230,11 +248,12 @@ task grades. No population interval or held-out performance claim is fitted.
 Retain the original record and receipt bytes after both cohorts finish:
 
 ```sh
-python studies/function-calls/retain.py /tmp/mergeglass-generations /tmp/mergeglass-probabilities /tmp/mergeglass-prompts/prompts.json /tmp/mergeglass-function-summary.json /tmp/mergeglass-function-check.json /tmp/mergeglass-function-retained --bfcl /tmp/mergeglass-bfcl
+python studies/function-calls/retain.py /tmp/mergeglass-generations /tmp/mergeglass-probabilities /tmp/mergeglass-prompts/prompts.json /tmp/mergeglass-function-summary.json /tmp/mergeglass-function-check.json /tmp/mergeglass-function-retained --bfcl /tmp/mergeglass-bfcl --generation-check /tmp/mergeglass-regraded.json
 ```
 
 The deterministic archive contains both canonical trees, prompts, the checked
-summary and any parallel-origin receipt metadata. The four pinned benchmark
+summary, the independent decoding/regrading receipt and any parallel-origin
+receipt metadata. The four pinned benchmark
 question/answer files and their attribution travel with the archive, so cases
 remain readable without model weights or a tokenizer. Shared imported records occur
 once in the canonical tree. Its separate compressed manifest retains every

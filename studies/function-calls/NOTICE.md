@@ -8,8 +8,11 @@ The upstream repository's [Apache 2.0 license](BFCL-LICENSE.txt) is retained.
 
 Any retained reference-call strings derive from those benchmark answers.
 Model continuations and numerical measurements are produced locally for this
-study. No pretrained model, adapter weights or full question corpus is bundled.
-The benchmark and model authors have not endorsed this study.
+study. The archive writer retains the four pinned question/reference files for
+these two categories, with this notice and the upstream license. Those files
+remain under Apache 2.0; they do not cover the full benchmark. No pretrained model
+or adapter weights are bundled. The benchmark and model authors have not
+endorsed this study.
 
 The local wrapper leaves the pinned prompt, decoder and checker unchanged.
 It supplies one inert model-registry entry to avoid importing API providers.

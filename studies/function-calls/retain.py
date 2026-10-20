@@ -19,6 +19,7 @@ def main() -> None:
     for name in ("generation", "teacher", "prompts", "summary", "independent_check", "output"):
         parser.add_argument(name, type=Path)
     parser.add_argument("--bfcl", type=Path, required=True, help="Pinned benchmark source checkout")
+    parser.add_argument("--generation-check", type=Path, required=True)
     args = parser.parse_args()
     for root in (args.generation, args.teacher):
         assert not args.output.resolve().is_relative_to(root.resolve())
@@ -34,6 +35,23 @@ def main() -> None:
     assert report["generation_receipt_sha256"] == sha(args.generation / "completed.json")
     assert report["teacher_receipt_sha256"] == sha(args.teacher / "completed.json")
     assert report["prompts_sha256"] == sha(args.prompts)
+    regraded = json.loads(args.generation_check.read_text())
+    assert regraded["script_sha256"] == sha(Path(__file__).with_name("check_generations.py"))
+    assert regraded["generation_receipt_sha256"] == report["generation_receipt_sha256"]
+    assert regraded["prompts_sha256"] == report["prompts_sha256"]
+    assert regraded["grader_wrapper_sha256"] == gen["contract"]["source_hashes"]["bfcl.py"]
+    assert regraded["model_runtimes_imported"] == []
+    assert set(regraded["profiles"]) == set(gen["contract"]["profiles"])
+    for profile in regraded["profiles"].values():
+        assert profile["records_decoded_and_regraded"] == 658
+        assert all(
+            profile[key] is True
+            for key in (
+                "all_decoded_texts_match",
+                "all_original_grade_dicts_match",
+                "all_stops_and_token_bounds_match",
+            )
+        )
     blobs, originals = {}, {}
 
     def add(path: Path, name: str) -> None:
@@ -47,6 +65,7 @@ def main() -> None:
     add(args.prompts, "prompts.json")
     add(args.summary, "summary.json")
     add(args.independent_check, "independent-check.json")
+    add(args.generation_check, "generation-check.json")
     benchmark = args.bfcl / "berkeley-function-call-leaderboard"
     grader = json.loads((args.generation / "grader.json").read_text())
     for entry in grader["data_files"]:
@@ -143,6 +162,7 @@ def main() -> None:
                 "manifest": {"file": manifest_path.name, "sha256": sha(manifest_path)},
                 "summary_sha256": sha(args.summary),
                 "independent_check_sha256": sha(args.independent_check),
+                "generation_check_sha256": sha(args.generation_check),
             },
             indent=2,
             allow_nan=False,
