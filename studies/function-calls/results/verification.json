@@ -1,0 +1,64 @@
+{
+  "scope": "Complete fixed local CPU cohorts; unknown training prompt, training overlap and original training-base revision; observed behavior and arithmetic, not a held-out quality estimate",
+  "native_sources": {
+    "replay.py": "ab07f4b5273040aafdbab07aed155effdd246e7fd50c4daab7ec7d4e81f94b1b",
+    "teacher_forced.py": "c250b99a7fa23e0c8d40d6e1b572cd4c65d2a9e674a55d360d20bc4885aff660",
+    "bfcl.py": "5b22fec2246e7f5ebd1217807c4082fb7fd3a527a845056309b9466ebfc482cb",
+    "verify_grader.py": "c01122263c8e2fe41b59d6e207516e119d1afc0bb0064e06388efb3d08b2b75e",
+    "protocol.json": "88ed3f171f23ecffa4ceafbd02b516b53249db5cd876b73aad9b4aedfd8acc5f",
+    "teacher-forced-protocol.json": "2d973b3dce717a7bbd10dce6e03537185462b5322fa7bfea9586cc0b457f5c20",
+    "run_chunks.py": "e5be7fcc392e321e69f287fb1e98d69cd0748f3f9cf0274dfcffbd9795956946",
+    "../dora/public-sources.json": "04e1401ac7cac207214ae36df267f80e310fff4a7ff760b4e73a841c8b594301",
+    "../dora/results/public.json": "98cf729ffbbc5feb1f458446f93e3e00030034d8ebee868aaecd6f23158da693"
+  },
+  "producer_versions": {
+    "torch": "2.14.1+cpu",
+    "peft": "0.21.0",
+    "transformers": "5.20.1",
+    "tokenizers": "0.23.3",
+    "numpy": "2.5.4",
+    "safetensors": "0.8.0"
+  },
+  "complete_parent_receipts": {
+    "generation": "372a54f68df59637fd23b38af1614b132581f4301777505e29e8aada77c21a23",
+    "teacher": "bedf4f33e49ed4a6b8747b5d02cf05febfbe12902833cc25a9b04cc6646745f2",
+    "prompts": "931dcb2e2793c230096f8c439e5617fc90781ef59a563205bdd18950bd6b9c99"
+  },
+  "native_counts": {
+    "generation_questions_per_profile": 658,
+    "generation_profiles": 6,
+    "generation_rows": 3948,
+    "generation_chunks": 162,
+    "teacher_questions": 656,
+    "teacher_chunks": 27,
+    "selected_target_positions_including_eos": 18453
+  },
+  "evidence": {
+    "primary_aggregates": "summary.json",
+    "independent_overall_category_and_budget_queries": "independent-check.json",
+    "fresh_pinned_token_decode_and_grade_replay": "generation-check.json",
+    "native_archive_and_member_manifest": "archive.json",
+    "extracted_archive_replays_without_model_runtimes": "archive-replay.json",
+    "runtime_bytes_vs_clean_installed_wheels": "core-runtime-identity.json",
+    "fresh_native_merges_tokenizer_and_prompts": "input-recreation.json",
+    "upstream_loaded_modules_vs_git_blobs": "bfcl-source-proof.json",
+    "category_budget_mutation_controls": [
+      "category-check-before.json",
+      "category-check-after.json"
+    ],
+    "decoding_mutation_controls": [
+      "decoder-control-bf16.json",
+      "decoder-control-verification.json"
+    ],
+    "raw_vocabulary_controls": "../probability-controls/capture.json",
+    "reviewed_standalone_figure": "../figures/figure.json"
+  },
+  "archive": {
+    "members": 649,
+    "bytes": 3650324,
+    "sha256": "bde338eaa7185fd36f5d71418d8df58d0770fd58c75063b92edbaaa590350ef3"
+  },
+  "all_accepted_native_chunks_preserve_named_parameters_and_persistent_buffers": true,
+  "all_original_output_texts_grades_stops_and_token_bounds_match_fresh_replay": true,
+  "registry_release": null
+}

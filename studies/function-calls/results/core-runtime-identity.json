@@ -1,0 +1,56 @@
+{
+  "scope": "Current package runtime bytes compared with the previously verified clean wheel installs; research source scripts and distribution metadata are outside this identity comparison",
+  "source_commit": "5a2c21e0e0a099d2223f2fc872f99acf2dfb8d06",
+  "last_runtime_change_commit": "abcbaf691111b506b95579ad97cd5b539de4e684",
+  "runtime_files": {
+    "adapter.py": "dd0cd2eb2be8da457c4e4c0a2713ec4b8d4776e6443f5b4ec398e26323cb7725",
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+    "dora_norms.py": "f7ef86ad2438c664042861625f64fae1832f342d6e00f94b4c2e2302462c8ef7",
+    "cli.py": "2026a96f14ad79726c148def9620d2c13f703d1b541cbc22f8d6af059ee612e7",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "audit.py": "9c73589184123a42ef798807d3769e9c17d98c9e96fd9ea7b330b4005f443bfc"
+  },
+  "all_eight_runtime_files_match_both_installs": true,
+  "installs": {
+    "installed-310": {
+      "python": "3.10.21",
+      "versions": {
+        "numpy": "1.24.0",
+        "safetensors": "0.6.2",
+        "mergeglass": "0.1.0"
+      },
+      "sources": {
+        "adapter.py": "dd0cd2eb2be8da457c4e4c0a2713ec4b8d4776e6443f5b4ec398e26323cb7725",
+        "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+        "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+        "dora_norms.py": "f7ef86ad2438c664042861625f64fae1832f342d6e00f94b4c2e2302462c8ef7",
+        "cli.py": "2026a96f14ad79726c148def9620d2c13f703d1b541cbc22f8d6af059ee612e7",
+        "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+        "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "audit.py": "9c73589184123a42ef798807d3769e9c17d98c9e96fd9ea7b330b4005f443bfc"
+      },
+      "no_torch_or_peft_installed": true
+    },
+    "installed-315": {
+      "python": "3.15.0",
+      "versions": {
+        "numpy": "2.5.4",
+        "safetensors": "0.8.0",
+        "mergeglass": "0.1.0"
+      },
+      "sources": {
+        "adapter.py": "dd0cd2eb2be8da457c4e4c0a2713ec4b8d4776e6443f5b4ec398e26323cb7725",
+        "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+        "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+        "dora_norms.py": "f7ef86ad2438c664042861625f64fae1832f342d6e00f94b4c2e2302462c8ef7",
+        "cli.py": "2026a96f14ad79726c148def9620d2c13f703d1b541cbc22f8d6af059ee612e7",
+        "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+        "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "audit.py": "9c73589184123a42ef798807d3769e9c17d98c9e96fd9ea7b330b4005f443bfc"
+      },
+      "no_torch_or_peft_installed": true
+    }
+  }
+}

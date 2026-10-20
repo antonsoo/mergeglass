@@ -1,0 +1,51 @@
+{
+  "scope": "Rechecker diagnostic on one completed native 658-question profile, not the six-profile result",
+  "script_sha256": "e88b9c5b4cde88dbb6e13c02b6458cdb48abf7f2c7c95a5ca92133c08d171a13",
+  "positive_receipt_sha256": "bce9f80b3b5290298d5fd22cafb76a8d1892797322fc24c2049391b79a574362",
+  "negative_controls": [
+    {
+      "case": "wrong_saved_text",
+      "rejected": true
+    },
+    {
+      "case": "invented_accepted_grade",
+      "rejected": true
+    },
+    {
+      "case": "wrong_stop",
+      "rejected": true
+    },
+    {
+      "case": "invalid_token_id",
+      "rejected": true
+    }
+  ],
+  "model_runtimes_installed": {
+    "torch": false,
+    "transformers": false,
+    "peft": false
+  },
+  "distributions": {
+    "PyYAML": "6.0.3",
+    "anyio": "4.15.1",
+    "click": "8.5.0",
+    "filelock": "3.32.3",
+    "fsspec": "2026.9.0",
+    "h11": "0.16.0",
+    "hf-xet": "1.7.0",
+    "httpcore2": "2.15.1",
+    "httpx2": "2.15.1",
+    "huggingface_hub": "2.2.0",
+    "idna": "3.20",
+    "packaging": "26.3",
+    "python-dotenv": "1.2.2",
+    "tenacity": "9.1.4",
+    "tokenizers": "0.23.3",
+    "tqdm": "4.70.1",
+    "tree-sitter": "0.21.3",
+    "tree-sitter-java": "0.21.0",
+    "tree-sitter-javascript": "0.21.4",
+    "truststore": "0.10.5",
+    "typing_extensions": "4.16.0"
+  }
+}

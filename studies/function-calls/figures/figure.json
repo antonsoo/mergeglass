@@ -1,0 +1,31 @@
+{
+  "summary_sha256": "44382b733a02b78e56224335b95ef9a1535280e5c25ad50acd2bf9812eaa6912",
+  "independent_check_sha256": "72e7de16d2affb0c272b1656214a2d074ea5246b8726d6a9865a64157fc0c955",
+  "script_sha256": "7e4af06a258bcc623d8c9b672ab68577649cad51bf695216beccdafc5928b080",
+  "matplotlib": "3.11.2",
+  "python": "3.12.12",
+  "comparison_references": [
+    [
+      "unmerged-f32",
+      "merged-f32",
+      "FP32 native merge\nvs FP32 unmerged",
+      "#2b6cb0"
+    ],
+    [
+      "unmerged-bf16",
+      "merged-bf16",
+      "BF16 native merge\nvs BF16 unmerged",
+      "#ac6800"
+    ],
+    [
+      "unmerged-f32",
+      "as-lora-f32",
+      "FP32 control: omit DoRA m\nvs FP32 unmerged",
+      "#9d4440"
+    ]
+  ],
+  "files": {
+    "merge-effects.svg": "3b247966a2496f30cce56b9b8be6e4597c57075c5f386272d505606cac95c708",
+    "merge-effects.png": "b15f1067e0f3831408e74a97583777f09cfada90905ea2253b399cba726a0ae4"
+  }
+}

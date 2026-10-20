@@ -1,0 +1,21 @@
+{
+  "scope": "Complete canonical native outputs and original receipts; no model weights, worker logs or incomplete attempts. Parallel origins retain their metadata; their identical record bytes are present once in the canonical generation tree.",
+  "script_sha256": "8ae867166f226ff8f6656feadd933c84a5db00d7e69862551adb8b96c4cfe3d2",
+  "files": 649,
+  "generation_questions_per_profile": 658,
+  "generation_profiles": 6,
+  "teacher_questions": 656,
+  "all_member_bytes_match_originals": true,
+  "archive": {
+    "file": "native-cohorts.tar.gz",
+    "bytes": 3650324,
+    "sha256": "bde338eaa7185fd36f5d71418d8df58d0770fd58c75063b92edbaaa590350ef3"
+  },
+  "manifest": {
+    "file": "native-cohorts-files.json.gz",
+    "sha256": "d2857aa5bd246b5d74f32ce396e6837e10a2cfd5571f155f94a109ade5a6079f"
+  },
+  "summary_sha256": "44382b733a02b78e56224335b95ef9a1535280e5c25ad50acd2bf9812eaa6912",
+  "independent_check_sha256": "72e7de16d2affb0c272b1656214a2d074ea5246b8726d6a9865a64157fc0c955",
+  "generation_check_sha256": "f246c9164be978b0447b6db445e2d7d31af12adfed11cf769b7401534243c8e4"
+}

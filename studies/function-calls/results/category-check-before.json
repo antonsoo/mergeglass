@@ -1,0 +1,16 @@
+{
+  "scope": "Diagnostic only: 150 generation rows plus the complete 656-question probability cohort; not the full generation study",
+  "checker_sha256": "4844b75396683fa5e9a5d7b1978b28ab46796a8cbd22fe08e419ac2f95c5c688",
+  "generation_rows": 150,
+  "teacher_questions": 656,
+  "observed_coverage_gaps": [
+    {
+      "case": "incorrect_category_accepted_count",
+      "rejected": false
+    },
+    {
+      "case": "incorrect_maximum_prompt_length",
+      "rejected": false
+    }
+  ]
+}

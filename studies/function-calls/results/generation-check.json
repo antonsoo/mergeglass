@@ -1,0 +1,536 @@
+{
+  "scope": "Complete fixed generation cohort; fresh pinned upstream source and tokenizer; no model inference or generated function execution",
+  "script_sha256": "e88b9c5b4cde88dbb6e13c02b6458cdb48abf7f2c7c95a5ca92133c08d171a13",
+  "grader_wrapper_sha256": "5b22fec2246e7f5ebd1217807c4082fb7fd3a527a845056309b9466ebfc482cb",
+  "generation_receipt_sha256": "372a54f68df59637fd23b38af1614b132581f4301777505e29e8aada77c21a23",
+  "prompts_sha256": "931dcb2e2793c230096f8c439e5617fc90781ef59a563205bdd18950bd6b9c99",
+  "bfcl_revision": "f7cf7359b7ac615a0b294831c5ba2bc95ee4a000",
+  "tokenizer_files": {
+    "chat_template.jinja": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788",
+    "tokenizer.json": "7d27c493c729a66ecefc837280b05d948b1ed50d130eebdbf911b1b36cf38ed7",
+    "tokenizer_config.json": "9dbdbc7ab7cceb06ae50460dc323f4400bd5bda608cbbecb9db8c3cfb08cf208",
+    "special_tokens_map.json": "2b7379f3ae813529281a5c602bc5a11c1d4e0a99107aaa597fe936c1e813ca52"
+  },
+  "loaded_sources": [
+    {
+      "module": "bfcl_eval",
+      "file": "bfcl_eval/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "bfcl_eval.constants",
+      "file": "bfcl_eval/constants/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "bfcl_eval.constants.category_mapping",
+      "file": "bfcl_eval/constants/category_mapping.py",
+      "sha256": "ef31291f17c1ac0504b246345bd56e6bac44fec4239741e158f9fcf2c819cb35"
+    },
+    {
+      "module": "bfcl_eval.constants.default_prompts",
+      "file": "bfcl_eval/constants/default_prompts.py",
+      "sha256": "4cc033be99ae2b10bbde30e7751ddcac5468cb45841b6dc7b3a97b92adf38205"
+    },
+    {
+      "module": "bfcl_eval.constants.enums",
+      "file": "bfcl_eval/constants/enums.py",
+      "sha256": "2182becfa2a1d071ee1db30db593b4758c6bf866aa12d2d4b8daf09175ea518a"
+    },
+    {
+      "module": "bfcl_eval.constants.eval_config",
+      "file": "bfcl_eval/constants/eval_config.py",
+      "sha256": "9048643628b150d53d59424365f8ca869b8aa39b503efe7a2d26b7ec93b4cb50"
+    },
+    {
+      "module": "bfcl_eval.constants.executable_backend_config",
+      "file": "bfcl_eval/constants/executable_backend_config.py",
+      "sha256": "1214b960de5d86840e379007c70bc9570203e0b5a926ea740ff00c605a531e57"
+    },
+    {
+      "module": "bfcl_eval.constants.type_mappings",
+      "file": "bfcl_eval/constants/type_mappings.py",
+      "sha256": "1702fb67afbe2c492608e58e2b7d02e46381f50166b47f3c952f76e34c7cd3bd"
+    },
+    {
+      "module": "bfcl_eval.eval_checker",
+      "file": "bfcl_eval/eval_checker/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "bfcl_eval.eval_checker.ast_eval",
+      "file": "bfcl_eval/eval_checker/ast_eval/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "bfcl_eval.eval_checker.ast_eval.ast_checker",
+      "file": "bfcl_eval/eval_checker/ast_eval/ast_checker.py",
+      "sha256": "2aae7a68461a8f76c0be3894c8901b66b56967a1989d3ab066051e3fb97f1538"
+    },
+    {
+      "module": "bfcl_eval.eval_checker.ast_eval.type_convertor",
+      "file": "bfcl_eval/eval_checker/ast_eval/type_convertor/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "bfcl_eval.eval_checker.ast_eval.type_convertor.java_type_converter",
+      "file": "bfcl_eval/eval_checker/ast_eval/type_convertor/java_type_converter.py",
+      "sha256": "2fd4f4b0443b3dd974a1723bb4e45c086d7b352631062da7807ad1ad40706604"
+    },
+    {
+      "module": "bfcl_eval.eval_checker.ast_eval.type_convertor.js_type_converter",
+      "file": "bfcl_eval/eval_checker/ast_eval/type_convertor/js_type_converter.py",
+      "sha256": "a114e9ff75c025cb52787ac33d6c2fbaa390905c6125a2b3c6afebab232bb5e4"
+    },
+    {
+      "module": "bfcl_eval.model_handler",
+      "file": "bfcl_eval/model_handler/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "bfcl_eval.model_handler.parser",
+      "file": "bfcl_eval/model_handler/parser/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "module": "bfcl_eval.model_handler.parser.java_parser",
+      "file": "bfcl_eval/model_handler/parser/java_parser.py",
+      "sha256": "78aa38dcfae655b5e3a982d0aaadf72aad0bb64a62cc4db4d7b7aa2185e666f5"
+    },
+    {
+      "module": "bfcl_eval.model_handler.parser.js_parser",
+      "file": "bfcl_eval/model_handler/parser/js_parser.py",
+      "sha256": "65eea903e538cc2afa5f37e15cccfc303462f750ca45556ee654f6722f4b1e52"
+    },
+    {
+      "module": "bfcl_eval.model_handler.parser.json_parser",
+      "file": "bfcl_eval/model_handler/parser/json_parser.py",
+      "sha256": "b36f1cc561b247cf0b1adfc9190bbf2e081ad39c133205732e26605c75add81e"
+    },
+    {
+      "module": "bfcl_eval.model_handler.parser.xml_parser",
+      "file": "bfcl_eval/model_handler/parser/xml_parser.py",
+      "sha256": "ca4181de9d29fc136283e8fb2dc18f4739ab5fc340e514ae3afa0fc55ab7d167"
+    },
+    {
+      "module": "bfcl_eval.model_handler.utils",
+      "file": "bfcl_eval/model_handler/utils.py",
+      "sha256": "f78fd3edce603b333dc9a88ee2c041dc547d51f71aa449ffebc044c4b1e353f3"
+    },
+    {
+      "module": "bfcl_eval.utils",
+      "file": "bfcl_eval/utils.py",
+      "sha256": "3703b9bb63f83581c60b8e0b82aac74c360c9ca781e99e7d4eb28b0cce2285dd"
+    }
+  ],
+  "data_files": [
+    {
+      "file": "bfcl_eval/data/BFCL_v4_simple_python.json",
+      "bytes": 283274,
+      "sha256": "82dd63ba502eb2520c6b5d1d9a5c4b590e03ff261565175561f6228a367d1991"
+    },
+    {
+      "file": "bfcl_eval/data/possible_answer/BFCL_v4_simple_python.json",
+      "bytes": 63627,
+      "sha256": "90cd5bc653690ee8e459b5b3f3fc9458606f7f3fcbf795bb51b7dc581f8c86dc"
+    },
+    {
+      "file": "bfcl_eval/data/BFCL_v4_live_simple.json",
+      "bytes": 260140,
+      "sha256": "1af2ac87dca47556db7b7e37e51e28b459a38b594e3c7b3c792b4903598ca0c4"
+    },
+    {
+      "file": "bfcl_eval/data/possible_answer/BFCL_v4_live_simple.json",
+      "bytes": 46972,
+      "sha256": "fec9cfa9744a936f9126981e85a2023da1e63e273eafebc81923a1162fad70ce"
+    }
+  ],
+  "python": "3.12.12",
+  "dependencies": {
+    "tokenizers": "0.23.3",
+    "tree-sitter": "0.21.3",
+    "tree-sitter-java": "0.21.0",
+    "tree-sitter-javascript": "0.21.4",
+    "python-dotenv": "1.2.2",
+    "tenacity": "9.1.4",
+    "filelock": "3.32.3"
+  },
+  "model_runtimes_imported": [],
+  "profiles": {
+    "base-f32": {
+      "records_decoded_and_regraded": 658,
+      "all_decoded_texts_match": true,
+      "all_original_grade_dicts_match": true,
+      "all_stops_and_token_bounds_match": true,
+      "statuses": {
+        "decode_error": 655,
+        "valid": 1,
+        "incomplete_reference": 2
+      },
+      "stops": {
+        "eos": 139,
+        "token_limit": 519
+      },
+      "accepted_ids": [
+        "simple_python_297"
+      ],
+      "ungraded": [
+        {
+          "id": "live_simple_106-63-0",
+          "status": "incomplete_reference"
+        },
+        {
+          "id": "live_simple_112-68-0",
+          "status": "incomplete_reference"
+        }
+      ]
+    },
+    "unmerged-f32": {
+      "records_decoded_and_regraded": 658,
+      "all_decoded_texts_match": true,
+      "all_original_grade_dicts_match": true,
+      "all_stops_and_token_bounds_match": true,
+      "statuses": {
+        "decode_error": 589,
+        "unevaluated_expression": 8,
+        "simple_function_checker:missing_required": 37,
+        "simple_function_checker:wrong_func_name": 9,
+        "simple_function_checker:unexpected_param": 1,
+        "value_error:string": 8,
+        "valid": 3,
+        "incomplete_reference": 2,
+        "type_error:simple": 1
+      },
+      "stops": {
+        "eos": 503,
+        "token_limit": 155
+      },
+      "accepted_ids": [
+        "simple_python_326",
+        "simple_python_377",
+        "live_simple_94-55-0"
+      ],
+      "ungraded": [
+        {
+          "id": "simple_python_4",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_16",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_105",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_121",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_192",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_393",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_47-20-0",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_106-63-0",
+          "status": "incomplete_reference"
+        },
+        {
+          "id": "live_simple_112-68-0",
+          "status": "incomplete_reference"
+        },
+        {
+          "id": "live_simple_250-132-0",
+          "status": "unevaluated_expression"
+        }
+      ]
+    },
+    "merged-f32": {
+      "records_decoded_and_regraded": 658,
+      "all_decoded_texts_match": true,
+      "all_original_grade_dicts_match": true,
+      "all_stops_and_token_bounds_match": true,
+      "statuses": {
+        "decode_error": 589,
+        "unevaluated_expression": 8,
+        "simple_function_checker:missing_required": 37,
+        "simple_function_checker:wrong_func_name": 9,
+        "simple_function_checker:unexpected_param": 1,
+        "value_error:string": 8,
+        "valid": 3,
+        "incomplete_reference": 2,
+        "type_error:simple": 1
+      },
+      "stops": {
+        "eos": 503,
+        "token_limit": 155
+      },
+      "accepted_ids": [
+        "simple_python_326",
+        "simple_python_377",
+        "live_simple_94-55-0"
+      ],
+      "ungraded": [
+        {
+          "id": "simple_python_4",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_16",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_105",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_121",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_192",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_393",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_47-20-0",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_106-63-0",
+          "status": "incomplete_reference"
+        },
+        {
+          "id": "live_simple_112-68-0",
+          "status": "incomplete_reference"
+        },
+        {
+          "id": "live_simple_250-132-0",
+          "status": "unevaluated_expression"
+        }
+      ]
+    },
+    "unmerged-bf16": {
+      "records_decoded_and_regraded": 658,
+      "all_decoded_texts_match": true,
+      "all_original_grade_dicts_match": true,
+      "all_stops_and_token_bounds_match": true,
+      "statuses": {
+        "decode_error": 590,
+        "unevaluated_expression": 9,
+        "simple_function_checker:missing_required": 38,
+        "simple_function_checker:wrong_func_name": 8,
+        "simple_function_checker:unexpected_param": 1,
+        "valid": 3,
+        "type_error:simple": 1,
+        "value_error:string": 6,
+        "incomplete_reference": 2
+      },
+      "stops": {
+        "eos": 508,
+        "token_limit": 150
+      },
+      "accepted_ids": [
+        "simple_python_256",
+        "simple_python_326",
+        "simple_python_377"
+      ],
+      "ungraded": [
+        {
+          "id": "simple_python_4",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_16",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_105",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_121",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_192",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_393",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_47-20-0",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_106-63-0",
+          "status": "incomplete_reference"
+        },
+        {
+          "id": "live_simple_112-68-0",
+          "status": "incomplete_reference"
+        },
+        {
+          "id": "live_simple_143-95-0",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_250-132-0",
+          "status": "unevaluated_expression"
+        }
+      ]
+    },
+    "merged-bf16": {
+      "records_decoded_and_regraded": 658,
+      "all_decoded_texts_match": true,
+      "all_original_grade_dicts_match": true,
+      "all_stops_and_token_bounds_match": true,
+      "statuses": {
+        "decode_error": 592,
+        "unevaluated_expression": 10,
+        "simple_function_checker:missing_required": 35,
+        "value_error:string": 5,
+        "simple_function_checker:wrong_func_name": 10,
+        "simple_function_checker:unexpected_param": 1,
+        "type_error:simple": 1,
+        "valid": 2,
+        "incomplete_reference": 2
+      },
+      "stops": {
+        "eos": 506,
+        "token_limit": 152
+      },
+      "accepted_ids": [
+        "simple_python_326",
+        "simple_python_377"
+      ],
+      "ungraded": [
+        {
+          "id": "simple_python_4",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_16",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_105",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_121",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_154",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_192",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_350",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_393",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_47-20-0",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_106-63-0",
+          "status": "incomplete_reference"
+        },
+        {
+          "id": "live_simple_112-68-0",
+          "status": "incomplete_reference"
+        },
+        {
+          "id": "live_simple_250-132-0",
+          "status": "unevaluated_expression"
+        }
+      ]
+    },
+    "as-lora-f32": {
+      "records_decoded_and_regraded": 658,
+      "all_decoded_texts_match": true,
+      "all_original_grade_dicts_match": true,
+      "all_stops_and_token_bounds_match": true,
+      "statuses": {
+        "decode_error": 592,
+        "unevaluated_expression": 7,
+        "simple_function_checker:missing_required": 37,
+        "simple_function_checker:wrong_func_name": 7,
+        "simple_function_checker:unexpected_param": 1,
+        "value_error:string": 8,
+        "type_error:simple": 1,
+        "valid": 3,
+        "incomplete_reference": 2
+      },
+      "stops": {
+        "eos": 500,
+        "token_limit": 158
+      },
+      "accepted_ids": [
+        "simple_python_326",
+        "simple_python_377",
+        "live_simple_94-55-0"
+      ],
+      "ungraded": [
+        {
+          "id": "simple_python_4",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_16",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_105",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_121",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_192",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "simple_python_393",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_47-20-0",
+          "status": "unevaluated_expression"
+        },
+        {
+          "id": "live_simple_106-63-0",
+          "status": "incomplete_reference"
+        },
+        {
+          "id": "live_simple_112-68-0",
+          "status": "incomplete_reference"
+        }
+      ]
+    }
+  }
+}

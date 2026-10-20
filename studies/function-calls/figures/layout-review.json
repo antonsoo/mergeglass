@@ -1,0 +1,17 @@
+{
+  "issue": "The first footer line overlaps the left x-axis label in the actual complete-study PNG",
+  "original_plot_source_sha256": "3b4251d7526e3c6ecf89e19dda31f0ec303e3d0a552057eb26cbd05228877b53",
+  "original_png_sha256": "19ece6f53ae081eb5e5a21fe394af6984144a0a622ccefb31048b9497b78730b",
+  "data_summary_sha256": "44382b733a02b78e56224335b95ef9a1535280e5c25ad50acd2bf9812eaa6912",
+  "corrected_plot_source_sha256": "7e4af06a258bcc623d8c9b672ab68577649cad51bf695216beccdafc5928b080",
+  "corrected_files": {
+    "merge-effects.svg": "3b247966a2496f30cce56b9b8be6e4597c57075c5f386272d505606cac95c708",
+    "merge-effects.png": "b15f1067e0f3831408e74a97583777f09cfada90905ea2253b399cba726a0ae4"
+  },
+  "correction": "Reserve a separate footer area and anchor its first line from the top; clarify that token differences and AST grades are separate measurements",
+  "complete_png_visually_inspected": true,
+  "axis_and_footer_text_separated": true,
+  "numerical_inputs_unchanged": true,
+  "svg_line_end_whitespace_normalized": true,
+  "normalization_preserves_png_bytes_and_svg_geometry": true
+}

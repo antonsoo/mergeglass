@@ -77,7 +77,7 @@ def main() -> None:
         {"font.size": 9, "svg.fonttype": "path", "svg.hashsalt": "mergeglass-function-calls-v1"}
     )
     fig, axes = plt.subplots(1, 3, figsize=(11.6, 4.3), sharey=True)
-    fig.subplots_adjust(left=0.24, right=0.98, top=0.76, bottom=0.28, wspace=0.30)
+    fig.subplots_adjust(left=0.24, right=0.98, top=0.76, bottom=0.30, wspace=0.30)
     y = [0, 1, 2]
     values = [kl, [n / positions for n in argmax], [n / 658 for n in sequences]]
     captions = [
@@ -128,18 +128,22 @@ def main() -> None:
     )
     fig.text(
         0.02,
-        0.11,
+        0.16,
         f"Probability panels: 656 selected valid calls, {positions:,} prefixes including EOS. "
         "KL is position-weighted.\n"
         "Greedy panel: 658 recorded outputs, capped at 160 new tokens. "
-        "Token differences are not differences in task accuracy.\n"
+        "Token differences and AST grades are separate measurements.\n"
         "Training prompt and training overlap are unknown; "
         "this is not a held-out quality estimate.",
         fontsize=8.2,
         linespacing=1.6,
+        va="top",
         color="#444444",
     )
-    fig.savefig(args.output / "merge-effects.svg", metadata={"Date": None, "Creator": "Mergeglass"})
+    svg = args.output / "merge-effects.svg"
+    fig.savefig(svg, metadata={"Date": None, "Creator": "Mergeglass"})
+    # Matplotlib leaves spaces at path line endings; retain a clean, reproducible text artifact.
+    svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")
     fig.savefig(args.output / "merge-effects.png", dpi=170, metadata={"Software": "Mergeglass"})
     plt.close(fig)
     assert sha(args.summary) == summary_hash and sha(args.independent_check) == check_hash

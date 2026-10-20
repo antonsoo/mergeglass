@@ -134,6 +134,20 @@ partial report leaves directions, complete updates and unmapped tensors
 unmeasured. A matching norm cannot establish a correct merge.
 [No-base example and report contract](docs/dora-without-base.md).
 
+A separate [matched native inference replay](studies/function-calls/README.md)
+now records 658 questions across six execution profiles. The FP32 merge produces
+the same greedy token IDs as unmerged FP32 on all 658 questions; matched BF16
+merging changes 298 sequences, and a local FP32 control that omits magnitudes
+changes 134. At 18,453 shared selected-answer prediction positions, the respective
+argmax disagreement counts are 0, 283 and 73.
+
+The omitted-magnitude control also has lower selected-answer loss on 596 of 656
+questions despite its incorrect row norms. These observations keep weight
+fidelity, likelihood and generated-call grades separate. The training prompt
+and training overlap are unknown. The study retains all native outputs,
+unknown outcomes, a standalone figure and an archive that reproduces its
+aggregates without a model runtime.
+
 ## Use your checkpoints
 
 ```sh

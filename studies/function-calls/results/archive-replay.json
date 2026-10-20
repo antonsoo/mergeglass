@@ -1,0 +1,68 @@
+{
+  "status": "complete",
+  "source_hashes": {
+    "analyze.py": "cba6d2e0b3cd8752a574ecc83a0c2f391b53eec35ba7490c024ec219fa70afa1",
+    "check_analysis.py": "f6857bedcdf4e828318cf17ad42022c61ed92e2e08e7b2dd9d6d73faf37c2ea3",
+    "capture_logits.py": "65c35903a5242a788a9f9207857909c0f4dd77256187f61192af7fe7c076522f",
+    "check_logits.py": "20df7d9168d5d8f6bb32b7e5cab8fc7da0df134211087b95b6cd80dceca9ed81"
+  },
+  "members_verified": 649,
+  "native_logits_control_chunks_linked": 2,
+  "completed_utc": "2026-10-20T02:20:50.769820+00:00",
+  "scope": "Recorded aggregate/receipt replay on the same host; no model inference or generated function execution",
+  "archive_sha256": "bde338eaa7185fd36f5d71418d8df58d0770fd58c75063b92edbaaa590350ef3",
+  "replays": {
+    "installed-310": {
+      "environment": {
+        "python": "3.10.21",
+        "sqlite": "3.53.1",
+        "model_runtimes_importable": {
+          "torch": false,
+          "peft": false,
+          "transformers": false
+        }
+      },
+      "command_returncodes": {
+        "analysis": 0,
+        "independent-sql": 0
+      },
+      "summary_bytes_match_retained": true,
+      "summary_sha256": "44382b733a02b78e56224335b95ef9a1535280e5c25ad50acd2bf9812eaa6912",
+      "independent_check_sha256": "281e991232c3f20f513c07f641115b02d289cf64529bed451f5209e3d8d24b92",
+      "complete_parent_receipts": {
+        "generation": "372a54f68df59637fd23b38af1614b132581f4301777505e29e8aada77c21a23",
+        "teacher": "bedf4f33e49ed4a6b8747b5d02cf05febfbe12902833cc25a9b04cc6646745f2",
+        "prompts": "931dcb2e2793c230096f8c439e5617fc90781ef59a563205bdd18950bd6b9c99"
+      }
+    },
+    "installed-315": {
+      "environment": {
+        "python": "3.15.0",
+        "sqlite": "3.53.1",
+        "model_runtimes_importable": {
+          "torch": false,
+          "peft": false,
+          "transformers": false
+        }
+      },
+      "command_returncodes": {
+        "analysis": 0,
+        "independent-sql": 0
+      },
+      "summary_bytes_match_retained": true,
+      "summary_sha256": "44382b733a02b78e56224335b95ef9a1535280e5c25ad50acd2bf9812eaa6912",
+      "independent_check_sha256": "281e991232c3f20f513c07f641115b02d289cf64529bed451f5209e3d8d24b92",
+      "complete_parent_receipts": {
+        "generation": "372a54f68df59637fd23b38af1614b132581f4301777505e29e8aada77c21a23",
+        "teacher": "bedf4f33e49ed4a6b8747b5d02cf05febfbe12902833cc25a9b04cc6646745f2",
+        "prompts": "931dcb2e2793c230096f8c439e5617fc90781ef59a563205bdd18950bd6b9c99"
+      }
+    }
+  },
+  "raw_logit_control_files": {
+    "capture.json": "d37a48d932d3cdd0da471458cf409523217e93469a280da8f7e65eccb0cf9532",
+    "logits.npz": "06b970b82887dca470d723e3eef0744c43e176be7b439f1eecd4ee405dff445b",
+    "numpy-310.json": "1e8894f5f62e4f26e816515a7d715cc3061e32e95fadd231a1f95444660ef6b5",
+    "numpy-315.json": "b4579203aacc335e0045d11754525c592b759ccd35bf0b7983377a52724c5e88"
+  }
+}

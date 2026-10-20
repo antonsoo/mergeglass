@@ -1,0 +1,20 @@
+{
+  "sqlite": "3.50.4",
+  "generation_profiles": 6,
+  "generation_rows": 3948,
+  "teacher_questions": 656,
+  "independent_sql_queries_agree": true,
+  "category_and_context_budget_checked": true,
+  "float_tolerance": {
+    "relative": 1e-12,
+    "absolute": 1e-15
+  },
+  "script_sha256": "f6857bedcdf4e828318cf17ad42022c61ed92e2e08e7b2dd9d6d73faf37c2ea3",
+  "analysis_sha256": "cba6d2e0b3cd8752a574ecc83a0c2f391b53eec35ba7490c024ec219fa70afa1",
+  "complete_parent_receipts": {
+    "generation": "372a54f68df59637fd23b38af1614b132581f4301777505e29e8aada77c21a23",
+    "teacher": "bedf4f33e49ed4a6b8747b5d02cf05febfbe12902833cc25a9b04cc6646745f2",
+    "prompts": "931dcb2e2793c230096f8c439e5617fc90781ef59a563205bdd18950bd6b9c99"
+  },
+  "serialized_summary_sha256": "44382b733a02b78e56224335b95ef9a1535280e5c25ad50acd2bf9812eaa6912"
+}

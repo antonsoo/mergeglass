@@ -21,11 +21,63 @@ The adapter is
 the supplied base is
 [HuggingFaceTB/SmolLM2-135M-Instruct](https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct/tree/12fd25f77366fa6b3b4b768ec3050bf629380bac).
 Merged profiles execute the locally produced native controls.
+The BF16 comparison includes PEFT's native mixed-precision adapter path and
+the saved merge's operation order. It measures the resulting execution profiles;
+it does not isolate one final rounding operation as the cause of every difference.
 The original training-base revision, training prompt and overlap with BFCL
 are unknown. The plain-LoRA artifact is a deliberate local control, not the
 author's published checkpoint. This experiment is conditional on the supplied
 base, prompt, model runtime and categories; it is not a held-out quality
 estimate or a full BFCL leaderboard submission.
+
+## Complete recorded generations
+
+All 658 questions finished in every profile: 3,948 generations in 162 native
+chunks. The separate probability cohort contains 656 selected valid calls,
+18,453 target prediction positions and 27 native chunks. Every accepted chunk
+preserves its named parameters and persistent buffers.
+
+The native FP32 merge produces identical greedy token IDs to unmerged FP32 on
+all 658 questions. Native BF16 merging changes 298 of 658 sequences relative
+to unmerged BF16. The local omitted-magnitude FP32 control changes 134 of 658
+relative to unmerged FP32. The corresponding fixed-prefix argmax disagreements
+are 0, 283 and 73 out of 18,453 positions.
+
+[![Measured probability and greedy-token differences for the complete cohorts](figures/merge-effects.png)](figures/merge-effects.svg)
+
+[Standalone SVG](figures/merge-effects.svg),
+[figure identities](figures/figure.json),
+[complete aggregate report](results/summary.json).
+The figure's comparisons use the same base execution precision on each native
+merge/reference pair. Its probability and greedy panels have different prefixes
+and denominators.
+
+| Profile | AST accepted | Rejected | Ungraded | EOS stop | 160-token stop |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `base-f32` | 1 | 655 | 2 | 139 | 519 |
+| `unmerged-f32` | 3 | 645 | 10 | 503 | 155 |
+| `merged-f32` | 3 | 645 | 10 | 503 | 155 |
+| `unmerged-bf16` | 3 | 644 | 11 | 508 | 150 |
+| `merged-bf16` | 2 | 644 | 12 | 506 | 152 |
+| `as-lora-f32` | 3 | 646 | 9 | 500 | 158 |
+
+Under this fixed prompt, most outputs fail the pinned AST decoder. Accepted
+counts describe the recorded checker outcomes; no generated function is
+executed. Two questions have incomplete required-answer alternatives in every
+profile. Additional ungraded outputs contain binary/lambda expressions. Their
+counts differ across profiles, so paired outcomes retain the union of unknowns.
+
+For example, the matched BF16 comparison changes one accepted outcome to a
+rejection among 645 pairs with both grades known; 13 pairs include an unknown.
+The omitted-magnitude control keeps the same outcome in all 648 pairs with
+known grades, while 10 pairs include an unknown. Sequence differences, selected
+answer likelihood and AST grades remain separate measurements.
+
+The original training prompt, training overlap and training-base revision are
+unknown. These results establish this supplied-artifact, CPU-runtime and prompt
+comparison. They do not establish the adapter's held-out quality or its behavior
+under another prompt. Raw timings come from overlapping workers on a shared
+host and are retained for execution audit, without a performance ranking.
 
 ## Fixed populations and scoring
 
@@ -58,8 +110,9 @@ that expression. No generated function call is executed.
 The longest prompt is 1,166 tokens. The longest selected reference is 164
 tokens including EOS (`live_simple_108-65-0`), exceeding the 160-token generation
 cap; a shorter valid serialization may exist. The selected-target length is
-reported rather than used to invent a missing generation result. The largest
-prompt-plus-selected-target input is 1,083 tokens. Neither path truncates.
+reported rather than used to invent a missing generation result. Among the 656
+questions with selected valid references, the largest prompt-plus-target input
+is 1,083 tokens. Neither path truncates.
 
 ## Probabilities at identical prefixes
 
@@ -76,6 +129,29 @@ and argmax disagreement. Both unmerged FP32 and unmerged BF16 serve as
 probability references. A two-class closed form independently checks the
 probability arithmetic. Target likelihood and conditional argmax counts are
 not generation success or task accuracy.
+
+### Measured probability differences
+
+All 656 selected valid reference calls are complete across six profiles, with
+18,453 prediction positions including EOS. The table uses position-weighted
+KL(reference || candidate) and total variation:
+
+| Candidate / reference | Mean KL, nats | Mean total variation | Changed argmax positions |
+| --- | ---: | ---: | ---: |
+| Native FP32 merge / unmerged FP32 | 1.47e-11 | 1.12e-06 | 0 / 18,453 |
+| Native BF16 merge / unmerged BF16 | 0.00276 | 0.0152 | 283 / 18,453 |
+| Omit magnitudes in FP32 / unmerged FP32 | 0.000224 | 0.00427 | 73 / 18,453 |
+
+These positions follow the same selected reference prefixes. Greedy generations
+follow their own generated prefixes and are checked separately.
+
+The controlled merge with omitted magnitudes has lower selected-call NLL on
+596 of 656 questions than unmerged FP32, while the
+[saved-weight audit](../../docs/dora-rows.md) measures its incorrect row norms.
+Its mean question NLL is 0.9480 nats, versus 0.9577 for native unmerged FP32.
+That result keeps answer likelihood separate from fidelity to the intended
+DoRA weights. The original training prompt and training overlap are unknown;
+these selected-call measurements are conditional on this fixed local protocol.
 
 ### Independent checks on actual vocabulary logits
 
@@ -144,7 +220,8 @@ complete-run result.
 `check_analysis.py --summary FILE` checks the actual serialized primary
 aggregates with independent SQLite JSON queries and binds the check to the
 summary and complete parent receipts. It checks both token-weighted and
-question-weighted measurements. The figure and retention programs require
+question-weighted measurements, every reported category subtotal, and the
+separate prompt/reference-token budgets. The figure and retention programs require
 that checked, complete result. Limited diagnostic cohorts cannot produce a
 full-study figure or archive.
 
@@ -260,3 +337,58 @@ once in the canonical tree. Its separate compressed manifest retains every
 member's size and digest. Native model weights, worker logs and incomplete
 attempts are excluded. Every archived byte is compared with its original and
 read back from the archive before the retention receipt is written.
+
+### Retained complete evidence
+
+The [3.65 MB native archive](results/native-cohorts.tar.gz) contains 649 original
+files: canonical records and receipts, prompt IDs, checked aggregates, origin
+metadata, four benchmark question/reference files, and their attribution.
+[The archive identity](results/archive.json) and
+[compressed member manifest](results/native-cohorts-files.json.gz) bind every
+member's bytes. The original outputs and native receipts are stored once;
+shared imported records are not duplicated by their origin metadata.
+
+[Independent decoding and regrading](results/generation-check.json) reproduces
+all 3,948 saved texts, full grade dictionaries, EOS/cap stops and token bounds
+using a fresh pinned upstream checkout and tokenizer. That checker environment
+has no Torch, Transformers or PEFT.
+
+[The extracted-archive replay](results/archive-replay.json) checks every member
+again, links the raw vocabulary controls to the same native chunks and model
+identities, and recomputes the complete report on Python 3.10.21 and 3.15.0.
+Both copies match the retained summary byte for byte. Their independent SQLite
+queries also agree, using SQLite 3.53.1; the original complete-report check used
+SQLite 3.50.4. This replays recorded aggregates on the same host, with no model
+inference.
+
+[Fresh input recreation](results/input-recreation.json) regenerates the three
+local native controls into another directory: all 30 files match the expected
+bytes, and fresh pinned tokenizers/BFCL sources reproduce all 658 prompt IDs
+exactly. [The loaded upstream source proof](results/bfcl-source-proof.json)
+checks all 22 imported module files against their pinned Git objects.
+
+The independent checker initially missed altered category subtotals and prompt
+budgets. [The before/after controls](results/category-check-after.json) retain
+that reproduced gap and rejection of all seven targeted corruptions after the
+fix. [Current runtime identities](results/core-runtime-identity.json) keep these
+research tools separate from the eight unchanged auditor modules in the tested
+Python 3.10/3.15 wheel installs. [Verification index](results/verification.json).
+
+### Recompute from recorded native outputs
+
+The aggregate analysis and SQLite checker use Python's standard library. With
+the same identified study sources, extract the archive and recompute the report:
+
+```sh
+mkdir /tmp/mergeglass-recorded
+tar -xzf studies/function-calls/results/native-cohorts.tar.gz -C /tmp/mergeglass-recorded
+python studies/function-calls/analyze.py /tmp/mergeglass-recorded/generation /tmp/mergeglass-recorded/teacher /tmp/mergeglass-recorded/prompts.json /tmp/mergeglass-recomputed.json
+python studies/function-calls/check_analysis.py /tmp/mergeglass-recorded/generation /tmp/mergeglass-recorded/teacher /tmp/mergeglass-recorded/prompts.json /tmp/mergeglass-recomputed-check.json --summary /tmp/mergeglass-recomputed.json
+cmp /tmp/mergeglass-recorded/summary.json /tmp/mergeglass-recomputed.json
+```
+
+Source, prompt, interval, receipt and model-state identities are rechecked
+before aggregation. This reproduces the reported aggregates from recorded
+native outputs; the model-inference reproduction uses the producer steps above.
+The pinned question/reference files under `benchmark/` keep individual cases
+readable without decoding a tokenizer or downloading weights.

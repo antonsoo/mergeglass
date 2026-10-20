@@ -1,0 +1,79 @@
+{
+  "records_decoded_and_regraded": 658,
+  "all_decoded_texts_match": true,
+  "all_original_grade_dicts_match": true,
+  "all_stops_and_token_bounds_match": true,
+  "statuses": {
+    "decode_error": 592,
+    "unevaluated_expression": 10,
+    "simple_function_checker:missing_required": 35,
+    "value_error:string": 5,
+    "simple_function_checker:wrong_func_name": 10,
+    "simple_function_checker:unexpected_param": 1,
+    "type_error:simple": 1,
+    "valid": 2,
+    "incomplete_reference": 2
+  },
+  "stops": {
+    "eos": 506,
+    "token_limit": 152
+  },
+  "accepted_ids": [
+    "simple_python_326",
+    "simple_python_377"
+  ],
+  "ungraded": [
+    {
+      "id": "simple_python_4",
+      "status": "unevaluated_expression"
+    },
+    {
+      "id": "simple_python_16",
+      "status": "unevaluated_expression"
+    },
+    {
+      "id": "simple_python_105",
+      "status": "unevaluated_expression"
+    },
+    {
+      "id": "simple_python_121",
+      "status": "unevaluated_expression"
+    },
+    {
+      "id": "simple_python_154",
+      "status": "unevaluated_expression"
+    },
+    {
+      "id": "simple_python_192",
+      "status": "unevaluated_expression"
+    },
+    {
+      "id": "simple_python_350",
+      "status": "unevaluated_expression"
+    },
+    {
+      "id": "simple_python_393",
+      "status": "unevaluated_expression"
+    },
+    {
+      "id": "live_simple_47-20-0",
+      "status": "unevaluated_expression"
+    },
+    {
+      "id": "live_simple_106-63-0",
+      "status": "incomplete_reference"
+    },
+    {
+      "id": "live_simple_112-68-0",
+      "status": "incomplete_reference"
+    },
+    {
+      "id": "live_simple_250-132-0",
+      "status": "unevaluated_expression"
+    }
+  ],
+  "scope": "One completed profile; diagnostic validation of rechecker, not the six-profile result",
+  "profile": "merged-bf16",
+  "script_sha256": "e88b9c5b4cde88dbb6e13c02b6458cdb48abf7f2c7c95a5ca92133c08d171a13",
+  "model_runtimes_installed": false
+}

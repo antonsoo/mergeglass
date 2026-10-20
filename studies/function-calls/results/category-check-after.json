@@ -1,0 +1,68 @@
+{
+  "scope": "Diagnostic only: 150 generation rows plus the complete 656-question probability cohort; not the full generation study",
+  "checker_sha256": "f6857bedcdf4e828318cf17ad42022c61ed92e2e08e7b2dd9d6d73faf37c2ea3",
+  "before_receipt_sha256": "4cb60c6cab0222aa1467e25d6cdcff9c58067693a0af08115cbc6cb818c71686",
+  "valid_report": {
+    "sqlite": "3.45.1",
+    "generation_profiles": 6,
+    "generation_rows": 150,
+    "teacher_questions": 656,
+    "independent_sql_queries_agree": true,
+    "category_and_context_budget_checked": true,
+    "float_tolerance": {
+      "relative": 1e-12,
+      "absolute": 1e-15
+    }
+  },
+  "corrupted_reports": [
+    {
+      "case": "incorrect_category_accepted_count",
+      "rejected": true
+    },
+    {
+      "case": "incorrect_category_target_tokens",
+      "rejected": true
+    },
+    {
+      "case": "incorrect_maximum_prompt_length",
+      "rejected": true
+    },
+    {
+      "case": "incorrect_maximum_target_length",
+      "rejected": true
+    },
+    {
+      "case": "incorrect_maximum_combined_length",
+      "rejected": true
+    },
+    {
+      "case": "incorrect_generation_cap",
+      "rejected": true
+    },
+    {
+      "case": "missing_over_budget_reference",
+      "rejected": true
+    }
+  ],
+  "observed_category_counts": {
+    "generation": {
+      "simple_python": 25,
+      "live_simple": 0
+    },
+    "teacher": {
+      "simple_python": 400,
+      "live_simple": 256
+    }
+  },
+  "context": {
+    "max_prompt_tokens": 1166,
+    "max_selected_target_tokens_including_eos": 164,
+    "max_prompt_plus_selected_target_tokens": 1083,
+    "generation_token_cap": 160,
+    "selected_references_exceeding_generation_budget": [
+      "live_simple_108-65-0"
+    ]
+  },
+  "elapsed_seconds_diagnostic": 8.601339775006636,
+  "timing_scope": "One diagnostic execution on the shared contended host; not an isolated performance comparison"
+}

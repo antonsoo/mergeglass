@@ -1,0 +1,20 @@
+{
+  "method": "fresh BFCL checkout, fresh pinned tokenizer downloads, native merges regenerated into a different output root with original public input bytes",
+  "prompt_records": 658,
+  "prompt_sha256": "931dcb2e2793c230096f8c439e5617fc90781ef59a563205bdd18950bd6b9c99",
+  "native_merge_files_identical": 30,
+  "native_merge_cases": [
+    "local-f32",
+    "local-bf16",
+    "local-as-lora-f32"
+  ],
+  "grader_receipt_identical": true,
+  "versions": {
+    "torch": "2.14.1+cpu",
+    "peft": "0.21.0",
+    "transformers": "5.20.1",
+    "safetensors": "0.8.0",
+    "numpy": "2.5.4"
+  },
+  "note": "same pinned producer environment and host; no cross-kernel byte equivalence claim"
+}
