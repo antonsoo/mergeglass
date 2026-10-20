@@ -15,7 +15,6 @@ UNSUPPORTED = {
     "use_qalora",
     "use_bdlora",
     "lora_bias",
-    "fan_in_fan_out",
     "layer_replication",
     "trainable_token_indices",
     "target_parameters",
@@ -53,6 +52,7 @@ KNOWN = UNSUPPORTED | {
     "alpha_pattern",
     "use_rslora",
     "use_dora",
+    "fan_in_fan_out",
     "init_lora_weights",
     "auto_mapping",
     "megatron_core",
@@ -75,12 +75,48 @@ CONV1D_PATH = re.compile(
     r"(?:^|\.)h\.[0-9]+\.(?:(?:attn|crossattention)\.(?:c_attn|q_attn|c_proj)"
     r"|mlp\.(?:c_fc|c_proj))\Z"
 )
-CONV1D_MODELS = ("gpt2", "openai-gpt", "imagegpt")
-CONV1D_LIBRARIES = (
-    "transformers.models.gpt2.modeling_gpt2",
-    "transformers.models.openai.modeling_openai",
-    "transformers.models.imagegpt.modeling_imagegpt",
+STANDARD_CONV1D_PATH = re.compile(
+    r"(?:transformer\.)?h\.[0-9]+\.(?:attn\.(?:c_attn|c_proj)"
+    r"|crossattention\.(?:c_attn|q_attn|c_proj)"
+    r"|mlp\.(?:c_fc|c_proj))\Z"
 )
+CONV1D_LIBRARIES = {
+    "transformers.models.gpt2.modeling_gpt2": "gpt2",
+    "transformers.models.openai.modeling_openai": "openai-gpt",
+    "transformers.models.imagegpt.modeling_imagegpt": "imagegpt",
+}
+CONV1D_MODELS = frozenset(CONV1D_LIBRARIES.values())
+
+
+def _conv1d_evidence(config: dict[str, Any], base: Checkpoint, path: str) -> tuple[str, ...]:
+    """Resolve standard GPT layouts from declared metadata, never a numeric fit.
+
+    PEFT dispatch mutates its *global* flag at each target. An ordinary head
+    can leave it false even though earlier Conv1D modules need transposition.
+    """
+    mapping = config.get("auto_mapping")
+    library = mapping.get("parent_library") if isinstance(mapping, dict) else None
+    model_type = base.config.get("model_type")
+    mapped_type = CONV1D_LIBRARIES.get(library) if isinstance(library, str) else None
+    known_model = isinstance(model_type, str) and model_type in CONV1D_MODELS
+    evidence = []
+    if (known_model or mapped_type) and CONV1D_PATH.search(path):
+        if known_model and library is not None and mapped_type is None:
+            raise AuditError(f"Unrecognized Conv1D adapter library at {path}: {library}")
+        if model_type is not None and mapped_type is not None and model_type != mapped_type:
+            raise AuditError(f"Conflicting Conv1D model metadata at {path}")
+        if base.config.get("auto_map"):
+            raise AuditError(f"Custom model auto_map cannot establish a Conv1D layout: {path}")
+        if not STANDARD_CONV1D_PATH.fullmatch(path):
+            raise AuditError(f"Unsupported nonstandard Conv1D module path: {path}")
+        kind = model_type if known_model else mapped_type
+        if (".crossattention." in path or path.endswith(".q_attn")) and kind != "gpt2":
+            raise AuditError(f"Unsupported Conv1D path for {kind}: {path}")
+        if known_model:
+            evidence.append(f"{base.source.name}/config.json:model_type={model_type}")
+        if mapped_type:
+            evidence.append(f"adapter_config.json:auto_mapping.parent_library={library}")
+    return tuple(evidence)
 
 
 def _number(value: Any, field: str, *, rank: bool = False) -> float:
@@ -130,6 +166,11 @@ class Pair:
     magnitude: Tensor | None = None
     embedding: bool = False
     base_snapshot: Tensor | None = None
+    conv1d_evidence: tuple[str, ...] = ()
+
+    @property
+    def transposed(self) -> bool:
+        return self.embedding or bool(self.conv1d_evidence)
 
 
 @dataclass(frozen=True)
@@ -230,6 +271,9 @@ def adapter_pairs(
     dora = config.get("use_dora", False)
     if not isinstance(dora, bool):
         raise AuditError("use_dora must be boolean")
+    fan = config.get("fan_in_fan_out", False)
+    if not isinstance(fan, bool):
+        raise AuditError("fan_in_fan_out must be boolean")
     ranks = _pattern(config, "rank_pattern")
     alphas = _pattern(config, "alpha_pattern")
     modules: dict[str, dict[str, Tensor]] = {}
@@ -260,18 +304,24 @@ def adapter_pairs(
             raise AuditError(f"Mixed Linear and Embedding factors at the same module: {path}")
         if embedding and dora:
             raise AuditError(f"Embedding DoRA is unsupported: {path}")
-        mapping = config.get("auto_mapping")
-        library = mapping.get("parent_library") if isinstance(mapping, dict) else None
-        if (
-            base.config.get("model_type") in CONV1D_MODELS or library in CONV1D_LIBRARIES
-        ) and CONV1D_PATH.search(path):
-            # PEFT mutates the global config flag as it dispatches each target.
-            # A final Linear head can hide earlier Conv1D targets. Square weights
-            # pass the Linear shape check despite requiring a transposed product.
-            raise AuditError(
-                f"Unsupported Conv1D target indicated by model metadata: {path}; "
-                "saved fan_in_fan_out is not a per-module orientation map"
+        conv1d_evidence = _conv1d_evidence(config, base, path)
+        if conv1d_evidence and embedding:
+            raise AuditError(f"Embedding factors conflict with Conv1D model metadata: {path}")
+        if conv1d_evidence and dora:
+            raise AuditError(f"Conv1D DoRA is unsupported: {path}")
+        if fan and not conv1d_evidence and not embedding:
+            # In a mixed standard model, the ordinary head is still Linear.
+            mapping = config.get("auto_mapping")
+            library = mapping.get("parent_library") if isinstance(mapping, dict) else None
+            model_type = base.config.get("model_type")
+            known_model = (isinstance(model_type, str) and model_type in CONV1D_MODELS) or (
+                isinstance(library, str) and library in CONV1D_LIBRARIES
             )
+            if not known_model or path != "lm_head":
+                raise AuditError(
+                    f"Unsupported adapter option: fan_in_fan_out=True without a supported "
+                    f"per-module layout at {path}; supply standard model metadata"
+                )
         a_key, b_key = ("embedding_A", "embedding_B") if embedding else ("A", "B")
         if not {a_key, b_key} <= sides.keys():
             raise AuditError(f"Incomplete A/B pair: {path}")
@@ -285,11 +335,12 @@ def adapter_pairs(
         shape = base.tensors[weight].shape
         rank = int(_override(path, ranks, r))
         layer_alpha = _override(path, alphas, alpha)
+        transposed = embedding or bool(conv1d_evidence)
         if (
             len(shape) != 2
             or min(shape) == 0
-            or a.shape != (rank, shape[0] if embedding else shape[1])
-            or b.shape != (shape[1] if embedding else shape[0], rank)
+            or a.shape != (rank, shape[0] if transposed else shape[1])
+            or b.shape != (shape[1] if transposed else shape[0], rank)
         ):
             raise AuditError(f"Adapter/{weight_role}/rank shape mismatch at {path}")
         if magnitude is not None and magnitude.shape != (shape[0],):
@@ -299,7 +350,19 @@ def adapter_pairs(
             raise AuditError(f"Base snapshot shape/dtype mismatch at {path}")
         scale = layer_alpha / (math.sqrt(rank) if rs else rank)
         result.append(
-            Pair(path, weight, a, b, rank, layer_alpha, scale, magnitude, embedding, snapshot)
+            Pair(
+                path,
+                weight,
+                a,
+                b,
+                rank,
+                layer_alpha,
+                scale,
+                magnitude,
+                embedding,
+                snapshot,
+                conv1d_evidence,
+            )
         )
     if not result:
         raise AuditError("Adapter contains no supported A/B pairs")

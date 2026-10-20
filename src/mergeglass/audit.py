@@ -146,15 +146,15 @@ def _layer(
 ) -> dict[str, Any]:
     if base.dtype not in FLOAT_DTYPES:
         raise AuditError(f"Adapted base tensor is not floating point: {base.name}")
-    # Linear: B rows @ A. Embedding: A columns, transposed @ B.T.
+    # Linear: B rows @ A. Embedding/Conv1D: A columns, transposed @ B.T.
     # Keep the factor independent of saved-weight rows; a vocabulary-wide A
     # must not be decoded in full merely to audit a few token rows at a time.
-    stationary = pair.b if pair.embedding else pair.a
+    stationary = pair.b if pair.transposed else pair.a
     if stationary.elements * 8 > max_adapter_bytes:
-        name = "B" if pair.embedding else "A"
+        name = "B" if pair.transposed else "A"
         raise AuditError(f"{name} exceeds the configured adapter memory limit: {pair.module}")
     fixed = stationary.floats().reshape(stationary.shape)
-    if pair.embedding:
+    if pair.transposed:
         fixed = fixed.T
     rows, columns = base.shape
     block_rows = max(1, elements // max(columns, pair.rank))
@@ -173,7 +173,7 @@ def _layer(
     worst_size = -1.0
     for row in range(0, rows, block_rows):
         count = min(rows - row, block_rows)
-        if pair.embedding:
+        if pair.transposed:
             factor = np.empty((count, pair.rank), dtype=np.float64)
             for component in range(pair.rank):
                 factor[:, component] = pair.a.floats(component * rows + row, count)
@@ -261,6 +261,16 @@ def _layer(
         **(
             {"weight_layout": "embedding", "reference_product": "(B @ A).T"}
             if pair.embedding
+            else {}
+        ),
+        **(
+            {
+                "weight_layout": "conv1d",
+                "reference_product": "(B @ A).T",
+                "layout_evidence": list(pair.conv1d_evidence),
+                "coordinate_axes": {"row": "input", "column": "output"},
+            }
+            if pair.conv1d_evidence
             else {}
         ),
         "shape": list(base.shape),
@@ -515,6 +525,17 @@ def audit(
             **CONTRACT,
             **(
                 {
+                    "conv1d_reference": (
+                        "delta = (B_float64 @ A_float64).T * scale; saved weight rows "
+                        "are inputs, columns are outputs; standard GPT module paths "
+                        "resolved from declared model metadata, not a global orientation flag"
+                    ),
+                }
+                if any(pair.conv1d_evidence for pair in pairs)
+                else {}
+            ),
+            **(
+                {
                     "embedding_reference": (
                         "delta = (B_float64 @ A_float64).T * scale; "
                         "weight rows are token indices, columns are embedding dimensions; "
@@ -563,6 +584,16 @@ def audit(
                     )
                 }
                 if any("dora_rows" in layer for layer in layers)
+                else {}
+            ),
+            **(
+                {
+                    "scope": (
+                        "saved Linear LoRA/DoRA, standard GPT Conv1D LoRA, Embedding LoRA "
+                        "and explicit full modules; no architecture execution or quality estimate"
+                    )
+                }
+                if any(pair.conv1d_evidence for pair in pairs)
                 else {}
             ),
         },

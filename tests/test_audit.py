@@ -220,8 +220,12 @@ def test_global_linear_flag_cannot_hide_known_square_conv1d(
             },
         )
         base_input = base / "model.safetensors"
-    with pytest.raises(AuditError, match="Conv1D.*per-module orientation"):
-        audit(base_input, adapter, merged)
+    layer = audit(base_input, adapter, merged)["layers"][0]
+    assert layer["weight_layout"] == "conv1d"
+    assert layer["reference_product"] == "(B @ A).T"
+    assert len(layer["layout_evidence"]) == 1
+    assert layer["relative_residual"] == 0
+    assert layer["projection_gain"] == pytest.approx(1)
 
 
 def test_known_conv1d_architecture_keeps_its_linear_head_supported(tmp_path: Path) -> None:

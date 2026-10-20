@@ -76,6 +76,14 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
     if variants.get("dora"):
         kind = "LoRA/DoRA" if variants.get("lora") else "DoRA"
     lines = [f"Mergeglass | saved {kind} merge audit", ""]
+    if any(layer.get("weight_layout") == "conv1d" for layer in report["layers"]):
+        lines.extend(
+            [
+                "Conv1D reference: (B @ A).T; saved rows are inputs, columns are outputs.",
+                "Layouts follow standard GPT module paths and declared model metadata (see JSON).",
+                "",
+            ]
+        )
     if any(layer.get("weight_layout") == "embedding" for layer in report["layers"]):
         lines.extend(
             [
