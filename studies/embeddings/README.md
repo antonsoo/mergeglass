@@ -123,6 +123,8 @@ OPENBLAS_NUM_THREADS=1 python studies/embeddings/streaming.py measure /tmp/embed
 - Vocabulary resizing, missing tied-weight aliases and different base/merged
   inventories remain unsupported. No architecture or tokenizer identity is
   inferred from tensor shapes or module names.
-- This work is local source for review. It has no source push, registry release
-  or hosted application. The new wheel and source distribution are checked
-  independently from the working checkout; see [package evidence](results/installed.json).
+- This work is available from the repository's `main` branch. No registry
+  release or hosted application accompanies it. The new wheel and source
+  distribution are checked independently from the working checkout; see
+  [package evidence](results/installed.json). That receipt records the local
+  validation stage before source publication.

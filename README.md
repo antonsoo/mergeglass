@@ -150,7 +150,7 @@ aggregates without a model runtime.
 
 ## Token embeddings need the transpose
 
-The local source now audits **Embedding LoRA** alongside Linear LoRA. PEFT stores
+The source audits **Embedding LoRA** alongside Linear LoRA. PEFT stores
 embedding weights as `[vocabulary, dimensions]`, so their update is `(B @ A).T`.
 A square matrix can hide a missing transpose: in a native controlled merge all
 121 entries change, but its gain is 0.1182 and relative residual is 1.328.
@@ -172,8 +172,8 @@ against the supplied original base. A 32,000,384-weight native embedding merge
 measured 44.6 MiB peak RSS at a 1 MiB block setting; its full float64 update alone
 would occupy 244 MiB. Embedding B stays decoded while vocabulary-wide A is streamed.
 [Native FP32/F16/BF16 cases, scalar oracle, memory method and limits](studies/embeddings/README.md).
-This extension is committed locally for review; no source push or registry
-release accompanies it.
+This extension is available from this repository's `main` branch. The registry
+package has not been released with this support; build or install the source.
 
 ## Use your checkpoints
 
