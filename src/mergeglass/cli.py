@@ -76,6 +76,13 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
     if variants.get("dora"):
         kind = "LoRA/DoRA" if variants.get("lora") else "DoRA"
     lines = [f"Mergeglass | saved {kind} merge audit", ""]
+    if any(layer.get("weight_layout") == "embedding" for layer in report["layers"]):
+        lines.extend(
+            [
+                "Embedding reference: (B @ A).T; rows are token indices, columns are dimensions.",
+                "",
+            ]
+        )
     if variants.get("dora"):
         lines.extend(
             [
@@ -236,7 +243,7 @@ def main(argv: list[str] | None = None) -> int:
             "--max-adapter-mib",
             type=int,
             default=512,
-            help="maximum decoded A matrix size (default 512)",
+            help="maximum decoded fixed factor: Linear A or Embedding B (default 512 MiB)",
         )
     parser.add_argument("--version", action="version", version=__version__)
     args = parser.parse_args(arguments)

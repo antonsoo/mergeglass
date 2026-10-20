@@ -1,4 +1,4 @@
-"""The deliberately narrow PEFT Linear LoRA/DoRA contract; no guessed key matching."""
+"""Explicit PEFT Linear/Embedding layouts; no guessed key matching."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
-from .storage import AuditError, Checkpoint, Tensor
+from .storage import FLOAT_DTYPES, AuditError, Checkpoint, Tensor
 
 # These fields select variants, add other trained parameters, change the base,
 # or require architecture information that a checkpoint cannot establish.
@@ -67,6 +67,8 @@ KNOWN = UNSUPPORTED | {
     "mica_config",
 }
 PAIR = re.compile(r"base_model\.model\.(.+)\.lora_([AB])\.weight\Z")
+EMBEDDING_PAIR = re.compile(r"base_model\.model\.(.+)\.lora_embedding_([AB])\Z")
+BASE_SNAPSHOT = re.compile(r"base_model\.model\.(.+)\.base_layer\.weight\Z")
 MAGNITUDE = re.compile(r"base_model\.model\.(.+)\.lora_magnitude_vector\Z")
 LITERAL_PATH = re.compile(r"[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)*\Z")
 CONV1D_PATH = re.compile(
@@ -126,6 +128,8 @@ class Pair:
     alpha: float
     scale: float
     magnitude: Tensor | None = None
+    embedding: bool = False
+    base_snapshot: Tensor | None = None
 
 
 def adapter_pairs(
@@ -172,15 +176,28 @@ def adapter_pairs(
     for name, tensor in sorted(adapter.tensors.items()):
         match = PAIR.fullmatch(name)
         if match is None:
-            magnitude_match = MAGNITUDE.fullmatch(name)
-            if magnitude_match is None or not dora:
-                raise AuditError(f"Unsupported adapter tensor: {name}")
-            path, side = magnitude_match.group(1), "magnitude"
+            embedding_match = EMBEDDING_PAIR.fullmatch(name)
+            if embedding_match is not None:
+                path, side = embedding_match.group(1), "embedding_" + embedding_match.group(2)
+            else:
+                snapshot_match = BASE_SNAPSHOT.fullmatch(name)
+                magnitude_match = MAGNITUDE.fullmatch(name)
+                if snapshot_match is not None:
+                    path, side = snapshot_match.group(1), "base_snapshot"
+                elif magnitude_match is not None and dora:
+                    path, side = magnitude_match.group(1), "magnitude"
+                else:
+                    raise AuditError(f"Unsupported adapter tensor: {name}")
         else:
             path, side = match.groups()
         modules.setdefault(path, {})[side] = tensor
     result = []
     for path, sides in modules.items():
+        embedding = bool({"embedding_A", "embedding_B"} & sides.keys())
+        if embedding and {"A", "B"} & sides.keys():
+            raise AuditError(f"Mixed Linear and Embedding factors at the same module: {path}")
+        if embedding and dora:
+            raise AuditError(f"Embedding DoRA is unsupported: {path}")
         mapping = config.get("auto_mapping")
         library = mapping.get("parent_library") if isinstance(mapping, dict) else None
         if (
@@ -193,12 +210,13 @@ def adapter_pairs(
                 f"Unsupported Conv1D target indicated by model metadata: {path}; "
                 "saved fan_in_fan_out is not a per-module orientation map"
             )
-        if not {"A", "B"} <= sides.keys():
+        a_key, b_key = ("embedding_A", "embedding_B") if embedding else ("A", "B")
+        if not {a_key, b_key} <= sides.keys():
             raise AuditError(f"Incomplete A/B pair: {path}")
         magnitude = sides.get("magnitude")
         if dora and magnitude is None:
             raise AuditError(f"Missing DoRA magnitude vector: {path}")
-        a, b = sides["A"], sides["B"]
+        a, b = sides[a_key], sides[b_key]
         weight = path + ".weight"
         if weight not in base.tensors:
             raise AuditError(f"No exact {weight_role} tensor for adapter module: {weight}")
@@ -208,14 +226,19 @@ def adapter_pairs(
         if (
             len(shape) != 2
             or min(shape) == 0
-            or a.shape != (rank, shape[1])
-            or b.shape != (shape[0], rank)
+            or a.shape != (rank, shape[0] if embedding else shape[1])
+            or b.shape != (shape[1] if embedding else shape[0], rank)
         ):
             raise AuditError(f"Adapter/{weight_role}/rank shape mismatch at {path}")
         if magnitude is not None and magnitude.shape != (shape[0],):
             raise AuditError(f"DoRA magnitude shape must match the output rows at {path}")
+        snapshot = sides.get("base_snapshot")
+        if snapshot is not None and (snapshot.shape != shape or snapshot.dtype not in FLOAT_DTYPES):
+            raise AuditError(f"Base snapshot shape/dtype mismatch at {path}")
         scale = layer_alpha / (math.sqrt(rank) if rs else rank)
-        result.append(Pair(path, weight, a, b, rank, layer_alpha, scale, magnitude))
+        result.append(
+            Pair(path, weight, a, b, rank, layer_alpha, scale, magnitude, embedding, snapshot)
+        )
     if not result:
         raise AuditError("Adapter contains no supported A/B pairs")
     return result

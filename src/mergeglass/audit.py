@@ -15,7 +15,7 @@ from .storage import FLOAT_DTYPES, AuditError, Checkpoint, FloatArray, Tensor, c
 
 CONTRACT = {
     "reference": (
-        "LoRA: delta = (B_float64 @ A_float64) * scale; "
+        "Linear LoRA: delta = (B_float64 @ A_float64) * scale; "
         "DoRA: direction = base_float64 + (B_float64 @ A_float64) * scale; "
         "reference_weight = row_normalize(direction) * magnitude_float64; "
         "delta = reference_weight - base_float64; no dense full-layer delta retained"
@@ -146,10 +146,16 @@ def _layer(
 ) -> dict[str, Any]:
     if base.dtype not in FLOAT_DTYPES:
         raise AuditError(f"Adapted base tensor is not floating point: {base.name}")
-    # Loading only A is enough: B rows are read alongside their base rows.
-    if pair.a.elements * 8 > max_adapter_bytes:
-        raise AuditError(f"A exceeds the configured adapter memory limit: {pair.module}")
-    a = pair.a.floats().reshape(pair.a.shape)
+    # Linear: B rows @ A. Embedding: A columns, transposed @ B.T.
+    # Keep the factor independent of saved-weight rows; a vocabulary-wide A
+    # must not be decoded in full merely to audit a few token rows at a time.
+    stationary = pair.b if pair.embedding else pair.a
+    if stationary.elements * 8 > max_adapter_bytes:
+        name = "B" if pair.embedding else "A"
+        raise AuditError(f"{name} exceeds the configured adapter memory limit: {pair.module}")
+    fixed = stationary.floats().reshape(stationary.shape)
+    if pair.embedding:
+        fixed = fixed.T
     rows, columns = base.shape
     block_rows = max(1, elements // max(columns, pair.rank))
     norms = {
@@ -167,12 +173,26 @@ def _layer(
     worst_size = -1.0
     for row in range(0, rows, block_rows):
         count = min(rows - row, block_rows)
-        b = pair.b.floats(row * pair.rank, count * pair.rank).reshape(count, pair.rank)
+        if pair.embedding:
+            factor = np.empty((count, pair.rank), dtype=np.float64)
+            for component in range(pair.rank):
+                factor[:, component] = pair.a.floats(component * rows + row, count)
+        else:
+            factor = pair.b.floats(row * pair.rank, count * pair.rank).reshape(count, pair.rank)
         with np.errstate(over="ignore", invalid="ignore", under="ignore"):
-            delta = (b @ a) * pair.scale
+            delta = (factor @ fixed) * pair.scale
         if not np.isfinite(delta).all():
             raise AuditError(f"Nonfinite LoRA product at {pair.module}")
         original = base.floats(row * columns, count * columns).reshape(count, columns)
+        if pair.base_snapshot is not None:
+            snapshot = pair.base_snapshot.floats(row * columns, count * columns)
+            expected_snapshot = cast(original.reshape(-1), pair.base_snapshot.dtype)
+            if not np.isfinite(expected_snapshot).all() or not np.array_equal(
+                snapshot, expected_snapshot
+            ):
+                raise AuditError(
+                    f"Saved base snapshot differs from the supplied original base at {pair.module}"
+                )
         after = merged.floats(row * columns, count * columns).reshape(count, columns)
         baseline = cast(original, merged.dtype)
         if not np.isfinite(baseline).all():
@@ -238,6 +258,11 @@ def _layer(
         "module": pair.module,
         "weight": pair.weight,
         "adapter_variant": "lora" if pair.magnitude is None else "dora",
+        **(
+            {"weight_layout": "embedding", "reference_product": "(B @ A).T"}
+            if pair.embedding
+            else {}
+        ),
         "shape": list(base.shape),
         "rank": pair.rank,
         "alpha": pair.alpha,
@@ -247,6 +272,17 @@ def _layer(
             "B": pair.b.dtype,
             **({"magnitude": pair.magnitude.dtype} if pair.magnitude is not None else {}),
         },
+        **(
+            {
+                "base_snapshot": {
+                    "tensor": pair.base_snapshot.name,
+                    "dtype": pair.base_snapshot.dtype,
+                    "comparison": "equal to supplied original base rounded to snapshot dtype",
+                }
+            }
+            if pair.base_snapshot is not None
+            else {}
+        ),
         "base_dtype": base.dtype,
         "merged_dtype": merged.dtype,
         "status": status,
@@ -332,7 +368,7 @@ def audit(
     pairs = adapter_pairs(update, before)
     by_weight = {pair.weight: pair for pair in pairs}
     # Workspace target for the several simultaneous binary64 blocks. A whole
-    # row and the rank-wide B row are the minimum; A has a separate limit.
+    # row and rank-wide factor row are the minimum; the fixed factor has a separate limit.
     elements = max(1, block_mib * 1024 * 1024 // (8 * 10))
     layers = []
     unrelated = []
@@ -368,6 +404,31 @@ def audit(
         "schema_version": 1,
         "arithmetic": {
             **CONTRACT,
+            **(
+                {
+                    "embedding_reference": (
+                        "delta = (B_float64 @ A_float64).T * scale; "
+                        "weight rows are token indices, columns are embedding dimensions; "
+                        "A columns are streamed, B is retained in full"
+                    ),
+                    "scope": (
+                        "saved Linear LoRA/DoRA and Embedding LoRA adapters only; "
+                        "no architecture execution or quality estimate"
+                    ),
+                }
+                if any(pair.embedding for pair in pairs)
+                else {}
+            ),
+            **(
+                {
+                    "adapter_base_snapshots": (
+                        "saved <module>.base_layer.weight must equal the supplied original base "
+                        "rounded to snapshot dtype; not a replacement weight or inferred base"
+                    )
+                }
+                if any(pair.base_snapshot is not None for pair in pairs)
+                else {}
+            ),
             **(
                 {
                     "dora_rows": (

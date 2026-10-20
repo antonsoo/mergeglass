@@ -26,6 +26,8 @@ def audit_dora_norms(
     inputs = {"adapter": Checkpoint(adapter, adapter=True), "merged": Checkpoint(merged)}
     update, after = inputs["adapter"], inputs["merged"]
     pairs = adapter_pairs(update, after, weight_role="merged")
+    if any(pair.base_snapshot is not None for pair in pairs):
+        raise AuditError("Saved base snapshots require an original base for comparison")
     if any(pair.magnitude is None for pair in pairs):
         raise AuditError("Norm observations without a base require a saved DoRA magnitude vector")
     elements = max(1, block_mib * 1024 * 1024 // (8 * 10))

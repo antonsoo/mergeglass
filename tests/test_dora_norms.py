@@ -14,6 +14,24 @@ from mergeglass import AuditError, audit, audit_dora_norms
 from mergeglass.cli import main, render
 
 
+def test_saved_base_snapshot_requires_the_actual_original_base(tmp_path: Path) -> None:
+    base, adapter, merged = dora_fixture(
+        tmp_path,
+        np.array([[3.0, 4]]),
+        np.zeros((1, 2)),
+        np.zeros((1, 1)),
+        np.array([10.0]),
+        np.array([[6.0, 8]]),
+    )
+    path = adapter / "adapter_model.safetensors"
+    data = load_file(path)
+    data["base_model.model.linear.base_layer.weight"] = np.array([[3.0, 4]])
+    save_file(data, path)
+    assert audit(base, adapter, merged)["layers"][0]["relative_residual"] == 0
+    with pytest.raises(AuditError, match="snapshots require an original base"):
+        audit_dora_norms(adapter, merged)
+
+
 def test_no_base_observation_keeps_norms_and_leaves_direction_unknown(tmp_path: Path) -> None:
     base, adapter, merged = dora_fixture(
         tmp_path,
