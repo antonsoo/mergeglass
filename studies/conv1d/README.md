@@ -191,3 +191,6 @@ The native layout rules are checked against pinned upstream
 and [ImageGPT](https://github.com/huggingface/transformers/blob/v5.20.1/src/transformers/models/imagegpt/modeling_imagegpt.py).
 Tensor shapes and metadata remain declarations about a supported layout, not
 proof of an unseen architecture, training provenance or inference equivalence.
+
+[Clean archive checks and final package verification](../../docs/conv1d-verification.md)
+record Python 3.10/3.15 checks, wheel/sdist contents and local publication status.

@@ -1,0 +1,65 @@
+{
+  "source_commit": "9abce44897f3c0d136d48aa71b577fb2293cd176",
+  "git_archive_sha256": "9ac3e26a46369b34f30f545ed9c6ee7c4522a09432515ae1b4480a731d2bd882",
+  "runtime_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "b4509882564cec7974b7df8f9c8b9b41eea6b333c6f43ec2f733554fc5a848d7",
+    "audit.py": "080aa7923d6dd38d3a16b1687c4f0c44543da35c48ffdfe1051d4819c8b87e45",
+    "cli.py": "a557e3165636989de38127b2552881cca6715d70a1748bb1e640a00cc9209b9c",
+    "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "clean_archive_checks": [
+    {
+      "python": "3.10.21",
+      "commands": [
+        "uv sync --locked --python 3.10",
+        "uv run ruff check .",
+        "uv run ruff format --check .",
+        "uv run mypy src",
+        "uv run pytest -q",
+        "uv build"
+      ],
+      "all_exit_codes": 0,
+      "tests_passed": 150,
+      "wheel_sha256": "de1231ce9b3c6713077ee5e3729dc201ad8572c76285f8ef7d047688f40e17a2",
+      "sdist_sha256": "62b2fe60e163f16c42e515c2e016937e17fff799c8f17758d69e0efa90e31f1d",
+      "wheel_runtime_equals_source": true,
+      "sdist_example_bytes_equal_source": true
+    },
+    {
+      "python": "3.15.0",
+      "commands": [
+        "uv sync --locked --python 3.15",
+        "uv run ruff check .",
+        "uv run ruff format --check .",
+        "uv run mypy src",
+        "uv run pytest -q",
+        "uv build"
+      ],
+      "all_exit_codes": 0,
+      "tests_passed": 150,
+      "wheel_sha256": "de1231ce9b3c6713077ee5e3729dc201ad8572c76285f8ef7d047688f40e17a2",
+      "sdist_sha256": "2433650b6c3872eb3c7bdbe0300a19764790ed718d487f82a2c278dbb8d892c3",
+      "wheel_runtime_equals_source": true,
+      "sdist_example_bytes_equal_source": true
+    }
+  ],
+  "status": {
+    "local_commits": true,
+    "pushed": false,
+    "registry_release": false,
+    "deployment": false
+  },
+  "wheels_identical_across_pythons": true,
+  "sdist_payloads_identical_across_pythons": true,
+  "archive_wheel_installed_python_310": {
+    "exit_code": 0,
+    "working_directory": "outside checkout",
+    "isolation": "python -I -m mergeglass",
+    "case": "examples/conv1d/wrong-square-orientation",
+    "report_sha256": "dd4b3ab89b54a9a5ffbad5e79f12c3a9b96e93612d4046a961b4875a9833b735"
+  }
+}
