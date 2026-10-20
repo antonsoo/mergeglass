@@ -1,0 +1,354 @@
+{
+  "scope": "Source publication and retained research bytes only; no registry release, new inference, or hosted application claim",
+  "repository": "https://github.com/antonsoo/mergeglass",
+  "base_commit": "bece45b831e62fd1da7cf1f3e1ad275c76c94b5e",
+  "source_commit": "67b227b978d8012e54ce5009a5bef23e84acb3d6",
+  "checked_utc": "2026-10-20T02:36:23.364656+00:00",
+  "changed_files_and_frozen_native_sources_checked": 49,
+  "all_public_bytes_match_git_objects": true,
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 15606,
+      "sha256": "af7393c9bc9e4bb0751350babe685e2aa16ea4a9d5238435f661208f9603321c",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/README.md",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/dora/public-sources.json",
+      "bytes": 2234,
+      "sha256": "04e1401ac7cac207214ae36df267f80e310fff4a7ff760b4e73a841c8b594301",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/dora/public-sources.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/dora/results/public.json",
+      "bytes": 1992593,
+      "sha256": "98cf729ffbbc5feb1f458446f93e3e00030034d8ebee868aaecd6f23158da693",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/dora/results/public.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/BFCL-LICENSE.txt",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/BFCL-LICENSE.txt",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/NOTICE.md",
+      "bytes": 1361,
+      "sha256": "9a5112e8b6a14335ac59cd0ab7f5c8b83220262803fba0395b4daec64eb4fee3",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/NOTICE.md",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/README.md",
+      "bytes": 23183,
+      "sha256": "d0fccf37b23238fb9885f5bf9c0b80d237a0089fa59afeb2ff0828d2cb438e86",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/README.md",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/analyze.py",
+      "bytes": 10502,
+      "sha256": "cba6d2e0b3cd8752a574ecc83a0c2f391b53eec35ba7490c024ec219fa70afa1",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/analyze.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/bfcl.py",
+      "bytes": 6551,
+      "sha256": "5b22fec2246e7f5ebd1217807c4082fb7fd3a527a845056309b9466ebfc482cb",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/bfcl.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/capture_logits.py",
+      "bytes": 10000,
+      "sha256": "65c35903a5242a788a9f9207857909c0f4dd77256187f61192af7fe7c076522f",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/capture_logits.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/check_analysis.py",
+      "bytes": 16975,
+      "sha256": "f6857bedcdf4e828318cf17ad42022c61ed92e2e08e7b2dd9d6d73faf37c2ea3",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/check_analysis.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/check_generations.py",
+      "bytes": 6360,
+      "sha256": "e88b9c5b4cde88dbb6e13c02b6458cdb48abf7f2c7c95a5ca92133c08d171a13",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/check_generations.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/check_logits.py",
+      "bytes": 5264,
+      "sha256": "20df7d9168d5d8f6bb32b7e5cab8fc7da0df134211087b95b6cd80dceca9ed81",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/check_logits.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/figures/figure.json",
+      "bytes": 920,
+      "sha256": "5afb88047ad9e2edbc2ceb7c2a613f950f16493be45c82b6373bd1b7b0c713b8",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/figures/figure.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/figures/layout-review.json",
+      "bytes": 1098,
+      "sha256": "2a58f8a44412fde0a1805234c4d0f8ca25fccb837cfd1d0aecf3e8058aa69632",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/figures/layout-review.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/figures/merge-effects.png",
+      "bytes": 161737,
+      "sha256": "b15f1067e0f3831408e74a97583777f09cfada90905ea2253b399cba726a0ae4",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/figures/merge-effects.png",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/figures/merge-effects.svg",
+      "bytes": 103612,
+      "sha256": "3b247966a2496f30cce56b9b8be6e4597c57075c5f386272d505606cac95c708",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/figures/merge-effects.svg",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/import_chunks.py",
+      "bytes": 4285,
+      "sha256": "1b4c5d5f405ec605092b5e4ee8bc02bf2f747aeef8621cdc63e7883c5ee483de",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/import_chunks.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/plot.py",
+      "bytes": 7222,
+      "sha256": "7e4af06a258bcc623d8c9b672ab68577649cad51bf695216beccdafc5928b080",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/plot.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/probability-controls/capture.json",
+      "bytes": 17114,
+      "sha256": "d37a48d932d3cdd0da471458cf409523217e93469a280da8f7e65eccb0cf9532",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/probability-controls/capture.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/probability-controls/logits.npz",
+      "bytes": 5068352,
+      "sha256": "06b970b82887dca470d723e3eef0744c43e176be7b439f1eecd4ee405dff445b",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/probability-controls/logits.npz",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/probability-controls/numpy-310.json",
+      "bytes": 15103,
+      "sha256": "1e8894f5f62e4f26e816515a7d715cc3061e32e95fadd231a1f95444660ef6b5",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/probability-controls/numpy-310.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/probability-controls/numpy-315.json",
+      "bytes": 15104,
+      "sha256": "b4579203aacc335e0045d11754525c592b759ccd35bf0b7983377a52724c5e88",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/probability-controls/numpy-315.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/protocol.json",
+      "bytes": 1812,
+      "sha256": "88ed3f171f23ecffa4ceafbd02b516b53249db5cd876b73aad9b4aedfd8acc5f",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/protocol.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/replay.py",
+      "bytes": 14940,
+      "sha256": "ab07f4b5273040aafdbab07aed155effdd246e7fd50c4daab7ec7d4e81f94b1b",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/replay.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/requirements-check-generations.txt",
+      "bytes": 232,
+      "sha256": "4ead99d043f16e42031e71164074ac55d8a32e6c9aaa03e3e65bfc50c8a9a3e2",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/requirements-check-generations.txt",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/requirements-plots.txt",
+      "bytes": 267,
+      "sha256": "68ef3e6a8430b9788dbeeabe44e387a685e2818584441562682ac5653cfb9dc0",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/requirements-plots.txt",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/archive-replay.json",
+      "bytes": 2929,
+      "sha256": "3f330b03700552bcff79b2916c67e7eb94c60508f53d819d6c248eedac677baf",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/archive-replay.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/archive.json",
+      "bytes": 1083,
+      "sha256": "735b323e1d81f0fa963d906f5e8438c402bfcd76efdb7dc8fccb10d840d37ce9",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/archive.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/bfcl-source-proof.json",
+      "bytes": 2698,
+      "sha256": "a22f80c67c441bf44609db22b0d3fa065039567f44fc6f2f96abfc9dd44f2e04",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/bfcl-source-proof.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/category-check-after.json",
+      "bytes": 1884,
+      "sha256": "4137aaa81937150a2e71398d1e5fefb85365befbc81c5ac3e3df369a65b85a0f",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/category-check-after.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/category-check-before.json",
+      "bytes": 485,
+      "sha256": "4cb60c6cab0222aa1467e25d6cdcff9c58067693a0af08115cbc6cb818c71686",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/category-check-before.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/core-runtime-identity.json",
+      "bytes": 3048,
+      "sha256": "e4e67743d1c6a201b603b092065dc600124c45ca1d6f8abb4d6b4de6fb99bd3b",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/core-runtime-identity.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/decoder-control-bf16.json",
+      "bytes": 1952,
+      "sha256": "bce9f80b3b5290298d5fd22cafb76a8d1892797322fc24c2049391b79a574362",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/decoder-control-bf16.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/decoder-control-verification.json",
+      "bytes": 1295,
+      "sha256": "77e33761226058529989d42f2a158edb800ac3b180c821ef69a156cce136a46c",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/decoder-control-verification.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/generation-check.json",
+      "bytes": 16748,
+      "sha256": "f246c9164be978b0447b6db445e2d7d31af12adfed11cf769b7401534243c8e4",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/generation-check.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/independent-check.json",
+      "bytes": 832,
+      "sha256": "72e7de16d2affb0c272b1656214a2d074ea5246b8726d6a9865a64157fc0c955",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/independent-check.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/input-recreation.json",
+      "bytes": 681,
+      "sha256": "ef95e0b40815a7c8b459d5a7d4df112109b97d35da11a0cc413163e13ec77e3b",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/input-recreation.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/native-cohorts-files.json.gz",
+      "bytes": 30548,
+      "sha256": "d2857aa5bd246b5d74f32ce396e6837e10a2cfd5571f155f94a109ade5a6079f",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/native-cohorts-files.json.gz",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/native-cohorts.tar.gz",
+      "bytes": 3650324,
+      "sha256": "bde338eaa7185fd36f5d71418d8df58d0770fd58c75063b92edbaaa590350ef3",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/native-cohorts.tar.gz",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/replay-310-check.json",
+      "bytes": 832,
+      "sha256": "281e991232c3f20f513c07f641115b02d289cf64529bed451f5209e3d8d24b92",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/replay-310-check.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/replay-315-check.json",
+      "bytes": 832,
+      "sha256": "281e991232c3f20f513c07f641115b02d289cf64529bed451f5209e3d8d24b92",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/replay-315-check.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/summary.json",
+      "bytes": 29058,
+      "sha256": "44382b733a02b78e56224335b95ef9a1535280e5c25ad50acd2bf9812eaa6912",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/summary.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/results/verification.json",
+      "bytes": 3097,
+      "sha256": "2efdbe46070941e49613147fb079f2abadf574ff80ae14cad4b2c5d92656d42f",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/results/verification.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/retain.py",
+      "bytes": 8846,
+      "sha256": "8ae867166f226ff8f6656feadd933c84a5db00d7e69862551adb8b96c4cfe3d2",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/retain.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/run_chunks.py",
+      "bytes": 11053,
+      "sha256": "e5be7fcc392e321e69f287fb1e98d69cd0748f3f9cf0274dfcffbd9795956946",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/run_chunks.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/run_future.py",
+      "bytes": 7527,
+      "sha256": "7737e7d6bc3fbe03b1499893b131df0f46bca4cfcf315a16672d00911d458049",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/run_future.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/teacher-forced-protocol.json",
+      "bytes": 1794,
+      "sha256": "2d973b3dce717a7bbd10dce6e03537185462b5322fa7bfea9586cc0b457f5c20",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/teacher-forced-protocol.json",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/teacher_forced.py",
+      "bytes": 13083,
+      "sha256": "c250b99a7fa23e0c8d40d6e1b572cd4c65d2a9e674a55d360d20bc4885aff660",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/teacher_forced.py",
+      "public_bytes_match_git_object": true
+    },
+    {
+      "file": "studies/function-calls/verify_grader.py",
+      "bytes": 4193,
+      "sha256": "c01122263c8e2fe41b59d6e207516e119d1afc0bb0064e06388efb3d08b2b75e",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/67b227b978d8012e54ce5009a5bef23e84acb3d6/studies/function-calls/verify_grader.py",
+      "public_bytes_match_git_object": true
+    }
+  ]
+}
