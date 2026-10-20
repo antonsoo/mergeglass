@@ -292,11 +292,27 @@ base_model.model.<module>.lora_B.weight
 ```
 
 Factor weights are never suffix-searched and no architecture is imported.
-Convolutional/unsupported Conv1D LoRA, quantized checkpoints, extra trained biases outside full saved
-modules, aLoRA,
+Convolutional/unsupported Conv1D LoRA, quantized checkpoints, trained base biases
+outside full saved modules (`bias: "all"` / `"lora_only"`), aLoRA,
 base-mutating initializers and other variant payloads refuse. Unknown adapter
 configuration fields also refuse. This version recognizes the saved configuration
 of PEFT 0.21.0; other versions can work only within that explicit field contract.
+
+For `lora_bias: true`, each Linear or supported Conv1D pair must also supply
+`base_model.model.<module>.lora_B.bias`, mapping exactly to `<module>.bias` in
+both checkpoints. Its shape is the output width: Linear weight rows or Conv1D
+weight columns. The numerical reference is the saved B-bias vector widened to
+binary64 and multiplied by the same rank/alpha scale as the matrix. Add it to
+the original bias in binary64, then round once to the saved bias dtype.
+Observed change is measured from the dtype-cast base bias, as for matrices.
+
+`lora_biases` retains separate vector measurements and original indices. Matrix
+`layers` and existing matrix summary counts keep their meaning; new
+`lora_bias_*` summary fields describe only these vectors. Full saved-module
+biases remain absolute targets. Bias vectors are streamed, not retained in full.
+Missing vectors, missing original biases, shape/type conflicts, undeclared B
+bias payloads, and combinations with DoRA or Embedding factors refuse the
+audit. See the [native controls and exact contract](../studies/lora-bias/README.md).
 
 A saved `fan_in_fan_out=False` flag does not establish every module's layout.
 PEFT can overwrite this global flag while loading mixed Conv1D and Linear

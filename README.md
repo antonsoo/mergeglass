@@ -12,6 +12,9 @@ reports what changed, what stayed equal, and the residual against the intended
 update, with original tensor coordinates and artifact hashes.
 It also checks complete trained modules saved beside the factors, such as
 embedding tables and classifier heads, against their absolute saved values.
+Optional LoRA B bias updates are audited separately: correct matrix products
+cannot hide an omitted or incorrectly scaled bias vector. [Native example and
+precision limits](studies/lora-bias/README.md).
 
 ![An actual saved BF16 merge of the pinned public SmolLM2 adapter, with count and squared-norm measurements](docs/assets/public-bf16.png)
 
@@ -345,8 +348,11 @@ on 65,280 of those deliberately chosen boundary cases.
   factors are absent, metadata alone cannot establish that a pair should have
   existed. Saved-module selectors without an observed tensor prefix are
   reported separately; no architecture or missing alias is inferred.
-- Quantized weights, Embedding/Conv1D DoRA, convolutional adapters, LoRA `bias`/`lora_bias`
-  options and base-mutating initializers are unsupported. Complex
+- Quantized weights, Embedding/Conv1D DoRA, convolutional adapters, trained base
+  biases (`bias: "all"` / `"lora_only"`) and base-mutating initializers are unsupported.
+  `lora_bias: true` supports the separate B-bias update on Linear and supported
+  Conv1D targets with existing base biases; combining it with DoRA or Embedding
+  factors is refused. Complex
   rank/alpha regexes and unknown configuration fields refuse explicitly.
 - DoRA uses one saved magnitude per output row and the supplied original base.
   It does not emulate producer-specific intermediate precision or reconstruct

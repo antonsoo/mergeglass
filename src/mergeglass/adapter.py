@@ -14,7 +14,6 @@ from .storage import FLOAT_DTYPES, AuditError, Checkpoint, Tensor
 UNSUPPORTED = {
     "use_qalora",
     "use_bdlora",
-    "lora_bias",
     "layer_replication",
     "trainable_token_indices",
     "target_parameters",
@@ -52,6 +51,7 @@ KNOWN = UNSUPPORTED | {
     "alpha_pattern",
     "use_rslora",
     "use_dora",
+    "lora_bias",
     "fan_in_fan_out",
     "init_lora_weights",
     "auto_mapping",
@@ -67,6 +67,7 @@ KNOWN = UNSUPPORTED | {
     "mica_config",
 }
 PAIR = re.compile(r"base_model\.model\.(.+)\.lora_([AB])\.weight\Z")
+LORA_B_BIAS = re.compile(r"base_model\.model\.(.+)\.lora_B\.bias\Z")
 EMBEDDING_PAIR = re.compile(r"base_model\.model\.(.+)\.lora_embedding_([AB])\Z")
 BASE_SNAPSHOT = re.compile(r"base_model\.model\.(.+)\.base_layer\.weight\Z")
 MAGNITUDE = re.compile(r"base_model\.model\.(.+)\.lora_magnitude_vector\Z")
@@ -167,6 +168,7 @@ class Pair:
     embedding: bool = False
     base_snapshot: Tensor | None = None
     conv1d_evidence: tuple[str, ...] = ()
+    bias: Tensor | None = None
 
     @property
     def transposed(self) -> bool:
@@ -271,6 +273,11 @@ def adapter_pairs(
     dora = config.get("use_dora", False)
     if not isinstance(dora, bool):
         raise AuditError("use_dora must be boolean")
+    lora_bias = config.get("lora_bias", False)
+    if not isinstance(lora_bias, bool):
+        raise AuditError("lora_bias must be boolean")
+    if lora_bias and dora:
+        raise AuditError("LoRA B bias combined with DoRA is unsupported")
     fan = config.get("fan_in_fan_out", False)
     if not isinstance(fan, bool):
         raise AuditError("fan_in_fan_out must be boolean")
@@ -288,7 +295,10 @@ def adapter_pairs(
             else:
                 snapshot_match = BASE_SNAPSHOT.fullmatch(name)
                 magnitude_match = MAGNITUDE.fullmatch(name)
-                if snapshot_match is not None:
+                bias_match = LORA_B_BIAS.fullmatch(name)
+                if bias_match is not None and lora_bias:
+                    path, side = bias_match.group(1), "bias"
+                elif snapshot_match is not None:
                     path, side = snapshot_match.group(1), "base_snapshot"
                 elif magnitude_match is not None and dora:
                     path, side = magnitude_match.group(1), "magnitude"
@@ -304,6 +314,8 @@ def adapter_pairs(
             raise AuditError(f"Mixed Linear and Embedding factors at the same module: {path}")
         if embedding and dora:
             raise AuditError(f"Embedding DoRA is unsupported: {path}")
+        if embedding and lora_bias:
+            raise AuditError(f"LoRA B bias with Embedding factors is unsupported: {path}")
         conv1d_evidence = _conv1d_evidence(config, base, path)
         if conv1d_evidence and embedding:
             raise AuditError(f"Embedding factors conflict with Conv1D model metadata: {path}")
@@ -345,6 +357,18 @@ def adapter_pairs(
             raise AuditError(f"Adapter/{weight_role}/rank shape mismatch at {path}")
         if magnitude is not None and magnitude.shape != (shape[0],):
             raise AuditError(f"DoRA magnitude shape must match the output rows at {path}")
+        bias = sides.get("bias")
+        if lora_bias:
+            if bias is None:
+                raise AuditError(f"Missing LoRA B bias: {path}")
+            bias_weight = base.tensors.get(path + ".bias")
+            expected = (shape[1] if transposed else shape[0],)
+            if bias_weight is None:
+                raise AuditError(f"No exact {weight_role} bias tensor for adapter module: {path}")
+            if bias.shape != expected or bias_weight.shape != expected:
+                raise AuditError(f"Adapter/{weight_role} bias shape mismatch at {path}")
+            if bias_weight.dtype not in FLOAT_DTYPES:
+                raise AuditError(f"Adapted {weight_role} bias is not floating point: {path}")
         snapshot = sides.get("base_snapshot")
         if snapshot is not None and (snapshot.shape != shape or snapshot.dtype not in FLOAT_DTYPES):
             raise AuditError(f"Base snapshot shape/dtype mismatch at {path}")
@@ -362,6 +386,7 @@ def adapter_pairs(
                 embedding,
                 snapshot,
                 conv1d_evidence,
+                bias,
             )
         )
     if not result:

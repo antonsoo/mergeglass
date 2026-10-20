@@ -1,0 +1,193 @@
+{
+  "source_tree": "188849d2dc56744eb30215b7a91b39f62ccbece6",
+  "source_archive_sha256": "2b600ec961889b5bc6f75151bdca627db86d2b610794fad3b561d4138d71486d",
+  "runtime": {
+    "python": "3.10.21 (main, Sep  1 2026, 14:16:49) [Clang 22.1.3 ]",
+    "numpy": "2.2.6",
+    "heavy_imports": []
+  },
+  "checks": [
+    {
+      "command": [
+        "uv",
+        "sync",
+        "--locked",
+        "--python",
+        "3.10"
+      ],
+      "exit_code": 0,
+      "seconds": 1.012,
+      "output_sha256": "db38eed44007f8d039c7b55f1340fe7ed963603b97e4bad37eb791ae6fea2924",
+      "tail": "Using CPython 3.10.21\nCreating virtual environment at: .venv\nResolved 24 packages in 1ms\n   Building mergeglass @ file://<scratch>/mergeglass-lora-bias-clean-310\n      Built mergeglass @ file://<scratch>/mergeglass-lora-bias-clean-310\nPrepared 1 package in 802ms\nInstalled 19 packages in 143ms\n + ast-serialize==0.13.1\n + build==1.6.1\n + exceptiongroup==1.3.1\n + iniconfig==2.3.1\n + librt==0.16.0\n + mergeglass==0.1.0 (from file://<scratch>/mergeglass-lora-bias-clean-310)\n + mypy==2.4.0\n + mypy-extensions==1.1.0\n + numpy==2.2.6\n + packaging==26.3\n + pathspec==1.1.1\n + pluggy==1.7.0\n + pygments==2.21.0\n + pyproject-hooks==1.3.3\n + pytest==9.1.1\n + ruff==0.17.1\n + safetensors==0.8.0\n + tomli==2.5.0\n + typing-extensions==4.16.0\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "seconds": 0.145,
+      "output_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "tail": "All checks passed!\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "seconds": 0.067,
+      "output_sha256": "0630d17f291436f92891b883c95ef30e42b7761e2fb6a2926cfb8e4eb8edb3e8",
+      "tail": "103 files already formatted\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "mypy",
+        "src"
+      ],
+      "exit_code": 0,
+      "seconds": 3.343,
+      "output_sha256": "157a09cfcdfdfb5977479c5a1c08345149263a3e990a2ec976ef28aaeec9cae6",
+      "tail": "Success: no issues found in 8 source files\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "pytest",
+        "-q"
+      ],
+      "exit_code": 0,
+      "seconds": 2.293,
+      "output_sha256": "65ffa83c8446cbc76321dd62d453d9667c510eb01dd9cb82e7903d8beb5d4e48",
+      "tail": "........................................................................ [ 44%]\n........................................................................ [ 89%]\n.................                                                        [100%]\n161 passed in 1.72s\n"
+    },
+    {
+      "command": [
+        "uv",
+        "build",
+        "--python",
+        "3.10"
+      ],
+      "exit_code": 0,
+      "seconds": 1.435,
+      "output_sha256": "25ce5651923dcd1e3da14b2c5c0b6c7bec0ad2f948439f56f1652e0d67235f2e",
+      "tail": "Building source distribution...\nBuilding wheel from source distribution...\nSuccessfully built dist/mergeglass-0.1.0.tar.gz\nSuccessfully built dist/mergeglass-0.1.0-py3-none-any.whl\n"
+    },
+    {
+      "command": [
+        "uv",
+        "venv",
+        "--python",
+        "3.10",
+        "<scratch>/mergeglass-lora-bias-installed-310"
+      ],
+      "exit_code": 0,
+      "seconds": 0.016,
+      "output_sha256": "5e1f60cc02380258e00e3e4cb57129dc70e8792ebac3bd26a60e4926e61773cd",
+      "tail": "Using CPython 3.10.21\nCreating virtual environment at: <scratch>/mergeglass-lora-bias-installed-310\nActivate with: source <scratch>/mergeglass-lora-bias-installed-310/bin/activate\n"
+    },
+    {
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "<scratch>/mergeglass-lora-bias-installed-310/bin/python",
+        "<scratch>/mergeglass-lora-bias-clean-310/dist/mergeglass-0.1.0-py3-none-any.whl"
+      ],
+      "exit_code": 0,
+      "seconds": 1.136,
+      "output_sha256": "3823b440b02cd55a8bb32601c3226aecf69548183fdccd7586675e905f575238",
+      "tail": "Using Python 3.10.21 environment at: <scratch>/mergeglass-lora-bias-installed-310\nResolved 3 packages in 938ms\nPrepared 1 package in 15ms\nInstalled 3 packages in 74ms\n + mergeglass==0.1.0 (from file://<scratch>/mergeglass-lora-bias-clean-310/dist/mergeglass-0.1.0-py3-none-any.whl)\n + numpy==2.2.6\n + safetensors==0.8.0\n"
+    },
+    {
+      "command": [
+        "<scratch>/mergeglass-lora-bias-installed-310/bin/python",
+        "-c",
+        "import importlib.metadata,json,mergeglass,pathlib,sys; print(json.dumps({\"python\":sys.version,\"numpy\":importlib.metadata.version(\"numpy\"),\"module\":mergeglass.__file__,\"heavy_imports\":[m for m in [\"torch\",\"peft\",\"transformers\"] if m in sys.modules]}))"
+      ],
+      "exit_code": 0,
+      "seconds": 0.325,
+      "output_sha256": "1b2eed72b0b138c65c23db3a14ac29bff15944f4fe6d279f419aae197f6850d4",
+      "tail": "{\"python\": \"3.10.21 (main, Sep  1 2026, 14:16:49) [Clang 22.1.3 ]\", \"numpy\": \"2.2.6\", \"module\": \"<scratch>/mergeglass-lora-bias-installed-310/lib/python3.10/site-packages/mergeglass/__init__.py\", \"heavy_imports\": []}\n"
+    },
+    {
+      "command": [
+        "<scratch>/mergeglass-lora-bias-installed-310/bin/python",
+        "<checkout>/studies/lora-bias/verify.py",
+        "<scratch>/mergeglass-lora-bias-final",
+        "<checkout>/studies/lora-bias/results/installed-310.json.gz"
+      ],
+      "exit_code": 0,
+      "seconds": 0.284,
+      "output_sha256": "94f550b338f32d2c65427fea4bbf40ce3e833121c9fe5e1ad7b29003cdc332a2",
+      "tail": "Verified 32 saved merges; 944 independent bias scalar entries.\n"
+    },
+    {
+      "command": [
+        "<scratch>/mergeglass-lora-bias-installed-310/bin/mergeglass",
+        "examples/lora-bias/base",
+        "examples/lora-bias/adapter",
+        "examples/lora-bias/correct-f32-safe-false",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "seconds": 0.137,
+      "output_sha256": "93c0b7b7482149a001fda7b291dcb33d454f64e12a5588b82fbda9d9e4141b33",
+      "tail": "  \"reference_merged\": -0.2557249069213867\n      }\n    }\n  ],\n  \"unadapted_changes\": [],\n  \"limitations\": [\n    \"Supplied base identity and training provenance are not independently established.\",\n    \"Equal weights do not distinguish rounding from an omitted or wrong adapter.\",\n    \"The float64 reference is numerical; it is not a PEFT merge emulator.\",\n    \"DoRA normalizes rows of the supplied original base plus its directional update.\",\n    \"Tensor shapes and a global adapter flag do not establish every module's type.\",\n    \"Operation order and matmul precision can differ from the producer, notably at ties.\",\n    \"Weight-space changes and residuals do not establish generation or task quality.\",\n    \"Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit.\"\n  ]\n}\n"
+    },
+    {
+      "command": [
+        "<scratch>/mergeglass-lora-bias-installed-310/bin/mergeglass",
+        "examples/lora-bias/base",
+        "examples/lora-bias/adapter",
+        "examples/lora-bias/omitted-bias",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "seconds": 0.106,
+      "output_sha256": "671be113a99614b73aa39cc8fb61fcbfc7103e3ad3c11c1afa701c247fa5d1e8",
+      "tail": "  \"reference_merged\": 0.22561012208461761\n      }\n    }\n  ],\n  \"unadapted_changes\": [],\n  \"limitations\": [\n    \"Supplied base identity and training provenance are not independently established.\",\n    \"Equal weights do not distinguish rounding from an omitted or wrong adapter.\",\n    \"The float64 reference is numerical; it is not a PEFT merge emulator.\",\n    \"DoRA normalizes rows of the supplied original base plus its directional update.\",\n    \"Tensor shapes and a global adapter flag do not establish every module's type.\",\n    \"Operation order and matmul precision can differ from the producer, notably at ties.\",\n    \"Weight-space changes and residuals do not establish generation or task quality.\",\n    \"Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit.\"\n  ]\n}\n"
+    },
+    {
+      "command": [
+        "<scratch>/mergeglass-lora-bias-installed-310/bin/mergeglass",
+        "examples/lora-bias/base",
+        "examples/lora-bias/adapter",
+        "examples/lora-bias/unscaled-bias",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "seconds": 0.111,
+      "output_sha256": "a91438bc67cb035475dc9af043e6d1f5f3ac7902b8ccafaf125635d8da2c8764",
+      "tail": "  \"reference_merged\": 0.22561012208461761\n      }\n    }\n  ],\n  \"unadapted_changes\": [],\n  \"limitations\": [\n    \"Supplied base identity and training provenance are not independently established.\",\n    \"Equal weights do not distinguish rounding from an omitted or wrong adapter.\",\n    \"The float64 reference is numerical; it is not a PEFT merge emulator.\",\n    \"DoRA normalizes rows of the supplied original base plus its directional update.\",\n    \"Tensor shapes and a global adapter flag do not establish every module's type.\",\n    \"Operation order and matmul precision can differ from the producer, notably at ties.\",\n    \"Weight-space changes and residuals do not establish generation or task quality.\",\n    \"Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit.\"\n  ]\n}\n"
+    }
+  ],
+  "wheel": {
+    "filename": "mergeglass-0.1.0-py3-none-any.whl",
+    "sha256": "2f5b21075e313ac82a42d59508370026b7459398c5c6f1bb249b6e78dad9d0ba",
+    "verified_runtime_files": 8
+  },
+  "registry_release": false
+}

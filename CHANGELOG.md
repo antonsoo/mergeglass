@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+Audit PEFT `lora_bias: true` on Linear and supported Conv1D targets, using
+`base.bias + lora_B.bias * scale` as a separate vector reference. Retain gain,
+residual, rounding, unchanged-update counts and original one-dimensional
+coordinates without mixing them into matrix totals. Require complete declared
+payloads and existing floating base biases; keep `bias: all/lora_only`,
+Embedding combinations and DoRA combinations unsupported. Include 32 native
+precision/control cases, a bias-only trained adapter, an independent stdlib
+reader/Decimal oracle and a runnable omission example. No registry release.
+
 Audit standard GPT-2, OpenAI GPT and ImageGPT Conv1D LoRA with `(B @ A).T`,
 resolving each supported module from declared model metadata rather than PEFT's
 global orientation flag. Retain saved input/output coordinates and layout

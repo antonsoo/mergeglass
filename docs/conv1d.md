@@ -103,7 +103,9 @@ verify any required reserialization. A model name, a matching shape, or a low
 residual does not establish the training base's identity.
 
 Conv1D DoRA, arbitrary custom/transposed modules, convolutional adapters,
-quantization and extra trained biases remain outside this extension. Signed
+quantization and trained base biases remain outside this extension. Optional
+LoRA B biases now have a [separate vector audit](../studies/lora-bias/README.md).
+Signed
 alpha, rsLoRA, supported rank/alpha overrides and explicit full saved modules
 keep their existing contracts. Matching weights do not certify inference
 equivalence or model quality.

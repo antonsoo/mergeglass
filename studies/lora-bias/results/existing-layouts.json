@@ -1,0 +1,17 @@
+{
+  "native_conv1d_merges": 48,
+  "independent_decimal_matrix_entries": 18368,
+  "previous_report": "studies/conv1d/results/after.json",
+  "all_case_reports_identical": true,
+  "replay_sha256": "3b79836ce9737d64d7b5392f7a7b92d029a0dea6ca8ef8eeceb80f234caf5bbd",
+  "auditor_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "537dcb0db509f8a61b9933f3b34ae6e906f3eeccb35584a1c2fa961481b6591b",
+    "audit.py": "49a948fbbefeaf8ec3373ef55093d20b0e453fa33d7d0138d285fd5588277faa",
+    "cli.py": "81d0975a57a065e05cf55e9104c11b0d534d7a988e31a210a180fa303d5d4f8c",
+    "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  }
+}

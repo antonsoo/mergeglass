@@ -1,0 +1,209 @@
+{
+  "native_manifest_sha256": "35399a515cd7e5db9545e549062de956edb3247fcb6560436aa35893ff74261b",
+  "producer_versions": {
+    "torch": "2.14.1+cpu",
+    "peft": "0.21.0",
+    "transformers": "5.20.1",
+    "safetensors": "0.8.0",
+    "numpy": "2.5.4"
+  },
+  "verified_artifacts": 99,
+  "decimal_precision": 80,
+  "bias_scalar_entries_checked": 0,
+  "before": true,
+  "cases": [
+    {
+      "profile": "affine",
+      "merge": "correct-f32-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine",
+      "merge": "correct-f32-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine",
+      "merge": "correct-f16-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine",
+      "merge": "correct-f16-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine",
+      "merge": "correct-bf16-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine",
+      "merge": "correct-bf16-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine",
+      "merge": "omitted-bias",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine",
+      "merge": "unscaled-bias",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "bias-only",
+      "merge": "correct-f32-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "bias-only",
+      "merge": "correct-f32-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "bias-only",
+      "merge": "correct-f16-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "bias-only",
+      "merge": "correct-f16-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "bias-only",
+      "merge": "correct-bf16-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "bias-only",
+      "merge": "correct-bf16-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "bias-only",
+      "merge": "omitted-bias",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "bias-only",
+      "merge": "unscaled-bias",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine-saved-head",
+      "merge": "correct-f32-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine-saved-head",
+      "merge": "correct-f32-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine-saved-head",
+      "merge": "correct-f16-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine-saved-head",
+      "merge": "correct-f16-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine-saved-head",
+      "merge": "correct-bf16-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine-saved-head",
+      "merge": "correct-bf16-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine-saved-head",
+      "merge": "omitted-bias",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "affine-saved-head",
+      "merge": "unscaled-bias",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "gpt2-conv1d",
+      "merge": "correct-f32-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "gpt2-conv1d",
+      "merge": "correct-f32-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "gpt2-conv1d",
+      "merge": "correct-f16-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "gpt2-conv1d",
+      "merge": "correct-f16-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "gpt2-conv1d",
+      "merge": "correct-bf16-safe-false",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "gpt2-conv1d",
+      "merge": "correct-bf16-safe-true",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "gpt2-conv1d",
+      "merge": "omitted-bias",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    },
+    {
+      "profile": "gpt2-conv1d",
+      "merge": "unscaled-bias",
+      "status": "refused",
+      "reason": "Unsupported adapter option: lora_bias"
+    }
+  ],
+  "verifier_sha256": "9013dd5ad151403a5eeb837c8280295858598f0e1020cd61a6c4bf939e1880bf"
+}

@@ -142,21 +142,31 @@ def _dora_reference(
 
 
 def _layer(
-    pair: Pair, base: Tensor, merged: Tensor, elements: int, max_adapter_bytes: int
+    pair: Pair,
+    base: Tensor,
+    merged: Tensor,
+    elements: int,
+    max_adapter_bytes: int,
+    *,
+    bias: bool = False,
 ) -> dict[str, Any]:
     if base.dtype not in FLOAT_DTYPES:
         raise AuditError(f"Adapted base tensor is not floating point: {base.name}")
     # Linear: B rows @ A. Embedding/Conv1D: A columns, transposed @ B.T.
     # Keep the factor independent of saved-weight rows; a vocabulary-wide A
     # must not be decoded in full merely to audit a few token rows at a time.
-    stationary = pair.b if pair.transposed else pair.a
-    if stationary.elements * 8 > max_adapter_bytes:
-        name = "B" if pair.transposed else "A"
-        raise AuditError(f"{name} exceeds the configured adapter memory limit: {pair.module}")
-    fixed = stationary.floats().reshape(stationary.shape)
-    if pair.transposed:
-        fixed = fixed.T
-    rows, columns = base.shape
+    fixed = None
+    if not bias:
+        stationary = pair.b if pair.transposed else pair.a
+        if stationary.elements * 8 > max_adapter_bytes:
+            name = "B" if pair.transposed else "A"
+            raise AuditError(f"{name} exceeds the configured adapter memory limit: {pair.module}")
+        fixed = stationary.floats().reshape(stationary.shape)
+        if pair.transposed:
+            fixed = fixed.T
+    # A bias vector uses the same observed/reference arithmetic in bounded
+    # one-column blocks. Its saved shape and index remain one-dimensional.
+    rows, columns = (base.elements, 1) if bias else base.shape
     block_rows = max(1, elements // max(columns, pair.rank))
     norms = {
         key: Squares()
@@ -173,18 +183,24 @@ def _layer(
     worst_size = -1.0
     for row in range(0, rows, block_rows):
         count = min(rows - row, block_rows)
-        if pair.transposed:
+        if bias:
+            assert pair.bias is not None
+            with np.errstate(over="ignore", invalid="ignore", under="ignore"):
+                delta = pair.bias.floats(row, count).reshape(count, 1) * pair.scale
+        elif pair.transposed:
             factor = np.empty((count, pair.rank), dtype=np.float64)
             for component in range(pair.rank):
                 factor[:, component] = pair.a.floats(component * rows + row, count)
         else:
             factor = pair.b.floats(row * pair.rank, count * pair.rank).reshape(count, pair.rank)
-        with np.errstate(over="ignore", invalid="ignore", under="ignore"):
-            delta = (factor @ fixed) * pair.scale
+        if not bias:
+            assert fixed is not None
+            with np.errstate(over="ignore", invalid="ignore", under="ignore"):
+                delta = (factor @ fixed) * pair.scale
         if not np.isfinite(delta).all():
             raise AuditError(f"Nonfinite LoRA product at {pair.module}")
         original = base.floats(row * columns, count * columns).reshape(count, columns)
-        if pair.base_snapshot is not None:
+        if pair.base_snapshot is not None and not bias:
             snapshot = pair.base_snapshot.floats(row * columns, count * columns)
             expected_snapshot = cast(original.reshape(-1), pair.base_snapshot.dtype)
             if not np.isfinite(expected_snapshot).all() or not np.array_equal(
@@ -231,8 +247,11 @@ def _layer(
             local_row, column = np.unravel_index(flat, residual.shape)
             expected = float(reference.flat[flat])
             worst = {
-                "row": row + int(local_row),
-                "column": int(column),
+                **(
+                    {"index": row + int(local_row)}
+                    if bias
+                    else {"row": row + int(local_row), "column": int(column)}
+                ),
                 "base": float(original.flat[flat]),
                 "cast_base": float(baseline.flat[flat]),
                 "intended_delta": float(delta.flat[flat]),
@@ -256,11 +275,11 @@ def _layer(
     )
     return {
         "module": pair.module,
-        "weight": pair.weight,
+        "weight": base.name,
         "adapter_variant": "lora" if pair.magnitude is None else "dora",
         **(
             {"weight_layout": "embedding", "reference_product": "(B @ A).T"}
-            if pair.embedding
+            if pair.embedding and not bias
             else {}
         ),
         **(
@@ -270,7 +289,7 @@ def _layer(
                 "layout_evidence": list(pair.conv1d_evidence),
                 "coordinate_axes": {"row": "input", "column": "output"},
             }
-            if pair.conv1d_evidence
+            if pair.conv1d_evidence and not bias
             else {}
         ),
         "shape": list(base.shape),
@@ -278,8 +297,11 @@ def _layer(
         "alpha": pair.alpha,
         "scale": pair.scale,
         "adapter_dtypes": {
-            "A": pair.a.dtype,
-            "B": pair.b.dtype,
+            **(
+                {"bias": pair.bias.dtype}
+                if bias and pair.bias is not None
+                else {"A": pair.a.dtype, "B": pair.b.dtype}
+            ),
             **({"magnitude": pair.magnitude.dtype} if pair.magnitude is not None else {}),
         },
         **(
@@ -290,7 +312,12 @@ def _layer(
                     "comparison": "equal to supplied original base rounded to snapshot dtype",
                 }
             }
-            if pair.base_snapshot is not None
+            if pair.base_snapshot is not None and not bias
+            else {}
+        ),
+        **(
+            {"tensor_role": "lora_B_bias", "reference_product": "bias_float64 * scale"}
+            if bias
             else {}
         ),
         "base_dtype": base.dtype,
@@ -478,10 +505,12 @@ def audit(
         ):
             raise AuditError(f"LoRA target overlaps a full saved module: {pair.module}")
     by_weight = {pair.weight: pair for pair in pairs}
+    by_bias = {pair.module + ".bias": pair for pair in pairs if pair.bias is not None}
     # Workspace target for the several simultaneous binary64 blocks. A whole
     # row and rank-wide factor row are the minimum; the fixed factor has a separate limit.
     elements = max(1, block_mib * 1024 * 1024 // (8 * 10))
     layers = []
+    biases = []
     full_results = []
     unrelated = []
     with np.errstate(over="raise", invalid="raise", divide="raise"):
@@ -496,7 +525,11 @@ def audit(
                     continue
                 tensor = before.tensors[name]
                 _compatible(tensor, counterpart)
-                if name in by_weight:
+                if name in by_bias:
+                    biases.append(
+                        _layer(by_bias[name], tensor, counterpart, elements, 0, bias=True)
+                    )
+                elif name in by_weight:
                     layers.append(
                         _layer(
                             by_weight[name],
@@ -523,6 +556,17 @@ def audit(
         "schema_version": 1,
         "arithmetic": {
             **CONTRACT,
+            **(
+                {
+                    "lora_bias_reference": (
+                        "delta_bias = saved lora_B.bias_float64 * scale; "
+                        "reference_bias = round_to_merged_dtype(base_bias_float64 + delta_bias); "
+                        "reported separately from matrix updates and full saved-module biases"
+                    ),
+                }
+                if biases
+                else {}
+            ),
             **(
                 {
                     "conv1d_reference": (
@@ -596,6 +640,17 @@ def audit(
                 if any(pair.conv1d_evidence for pair in pairs)
                 else {}
             ),
+            **(
+                {
+                    "scope": (
+                        "saved Linear LoRA/DoRA, standard GPT Conv1D LoRA, Embedding LoRA, "
+                        "scaled LoRA B bias and explicit full modules; "
+                        "no architecture execution or quality estimate"
+                    )
+                }
+                if biases
+                else {}
+            ),
         },
         "inputs": fingerprints,
         "settings": {"block_mib": block_mib, "max_adapter_mib": max_adapter_mib},
@@ -623,6 +678,23 @@ def audit(
             "unadapted_changed_elements": sum(layer["changed_elements"] for layer in unrelated),
             **(
                 {
+                    "lora_bias_tensors": len(biases),
+                    "lora_bias_elements": sum(row["elements"] for row in biases),
+                    "lora_bias_intended_nonzero_elements": sum(
+                        row["intended_nonzero_elements"] for row in biases
+                    ),
+                    "lora_bias_unchanged_nonzero_update_elements": sum(
+                        row["unchanged_nonzero_update_elements"] for row in biases
+                    ),
+                    "lora_bias_reference_merge_mismatches": sum(
+                        row["reference_merge_mismatches"] for row in biases
+                    ),
+                }
+                if biases
+                else {}
+            ),
+            **(
+                {
                     "saved_module_tensors": len(full_results),
                     "saved_module_elements": sum(row["elements"] for row in full_results),
                     "saved_module_target_mismatches": sum(
@@ -637,6 +709,7 @@ def audit(
             ),
         },
         "layers": layers,
+        **({"lora_biases": biases} if biases else {}),
         **(
             {
                 "saved_modules": full_results,

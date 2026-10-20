@@ -140,10 +140,13 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
                 lines.append("  " + layer["status"])
     total = summary["intended_nonzero_elements"]
     unchanged_total = summary["unchanged_nonzero_update_elements"]
+    update_kind = "matrix updates" if report.get("lora_biases") else "updates"
     aggregate = (
-        f"Of {total:,} nonzero intended updates, {unchanged_total:,} are unchanged "
+        f"Of {total:,} nonzero intended {update_kind}, {unchanged_total:,} are unchanged "
         f"({summary['unchanged_nonzero_update_fraction']:.2%})."
         if total
+        else "The reference update is zero across all adapted matrices."
+        if report.get("lora_biases")
         else "The reference update is zero across all adapted weights."
     )
     lines.extend(["", aggregate])
@@ -155,6 +158,34 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
     lines.extend(_dora_row_lines(report["layers"]))
     if not summary_only:
         lines.append("* Nonzero intended update elements equal to the dtype-cast base.")
+    if report.get("lora_biases"):
+        biases = report["lora_biases"]
+        lines.extend(
+            [
+                "",
+                f"LoRA B biases: {summary['lora_bias_tensors']:,} vectors / "
+                f"{summary['lora_bias_elements']:,} entries (separate from matrix counts).",
+                "Reference: base bias + saved lora_B.bias * scale, rounded to merged dtype.",
+                f"Nonzero bias updates unchanged: "
+                f"{summary['lora_bias_unchanged_nonzero_update_elements']:,} / "
+                f"{summary['lora_bias_intended_nonzero_elements']:,}; "
+                f"reference-merge mismatches: "
+                f"{summary['lora_bias_reference_merge_mismatches']:,}.",
+                f"Bias gain range: {_range(biases, 'projection_gain')}; "
+                f"relative residual range: {_range(biases, 'relative_residual')}.",
+            ]
+        )
+        if not summary_only:
+            lines.append("BIAS TENSOR                             DTYPE       GAIN  REL.RESID")
+            for row in biases:
+                name = ascii(row["weight"])[1:-1]
+                if len(name) > 38:
+                    name = "..." + name[-35:]
+                gain = "n/a" if row["projection_gain"] is None else f"{row['projection_gain']:.4g}"
+                residual = (
+                    "n/a" if row["relative_residual"] is None else f"{row['relative_residual']:.4g}"
+                )
+                lines.append(f"{name:<39} {row['merged_dtype']:<6} {gain:>9} {residual:>10}")
     if report.get("saved_modules"):
         saved = report["saved_modules"]
         lines.extend(
