@@ -1,0 +1,42 @@
+{
+  "retrieved": "2026-10-19",
+  "sources": [
+    {
+      "role": "base",
+      "repository": "HuggingFaceTB/SmolLM2-135M",
+      "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+      "license": "Apache-2.0",
+      "files": [
+        {
+          "file": "config.json",
+          "bytes": 704,
+          "sha256": "1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843"
+        },
+        {
+          "file": "model.safetensors",
+          "bytes": 269060552,
+          "sha256": "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1"
+        }
+      ]
+    },
+    {
+      "role": "adapter",
+      "repository": "Kibalama/smollm2-finetune-python-2",
+      "revision": "8612b1f0feaeb3d34005848813d13387a13a901f",
+      "license": "No license declared in retrieved card metadata; weights are not redistributed.",
+      "files": [
+        {
+          "file": "adapter_config.json",
+          "bytes": 835,
+          "sha256": "8fd6c37b2ade8d0f45c57d73e76c413f330ab7f383bc91c026139024be7bc902"
+        },
+        {
+          "file": "adapter_model.safetensors",
+          "bytes": 246087008,
+          "sha256": "ea29b8d3134c55f85021c07c2c7fb79a75493a67483415f4a4f6b16c6642419e"
+        }
+      ]
+    }
+  ],
+  "base_identity_limit": "The adapter names this base repository but does not pin its training revision. The supplied original base is independently pinned; original training identity is not established."
+}

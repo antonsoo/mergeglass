@@ -1,0 +1,491 @@
+{
+  "scope": "independent dense Torch replay of complete full-module state and all LoRA matrices",
+  "before": true,
+  "public": true,
+  "producer": {
+    "scope": "saved-weight and deterministic token-ID observations; no quality assessment",
+    "sources": {
+      "retrieved": "2026-10-19",
+      "sources": [
+        {
+          "role": "base",
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "license": "Apache-2.0",
+          "files": [
+            {
+              "file": "config.json",
+              "bytes": 704,
+              "sha256": "1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843"
+            },
+            {
+              "file": "model.safetensors",
+              "bytes": 269060552,
+              "sha256": "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1"
+            }
+          ]
+        },
+        {
+          "role": "adapter",
+          "repository": "Kibalama/smollm2-finetune-python-2",
+          "revision": "8612b1f0feaeb3d34005848813d13387a13a901f",
+          "license": "No license declared in retrieved card metadata; weights are not redistributed.",
+          "files": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 835,
+              "sha256": "8fd6c37b2ade8d0f45c57d73e76c413f330ab7f383bc91c026139024be7bc902"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 246087008,
+              "sha256": "ea29b8d3134c55f85021c07c2c7fb79a75493a67483415f4a4f6b16c6642419e"
+            }
+          ]
+        }
+      ],
+      "base_identity_limit": "The adapter names this base repository but does not pin its training revision. The supplied original base is independently pinned; original training identity is not established."
+    },
+    "versions": {
+      "torch": "2.14.1+cpu",
+      "peft": "0.21.0",
+      "transformers": "5.20.1",
+      "safetensors": "0.8.0",
+      "numpy": "2.5.4"
+    },
+    "script_sha256": "9ec312c9d646e409b559c6210138705a26ecb2d7ac5b240b888e41596c149f3c",
+    "token_ids": [
+      [
+        1,
+        28,
+        409,
+        1217,
+        37,
+        901
+      ],
+      [
+        55,
+        72,
+        91,
+        110,
+        129,
+        148
+      ]
+    ],
+    "cases": [
+      {
+        "name": "correct-f32",
+        "purpose": "unchanged public adapter; native merge_and_unload(safe_merge=False)",
+        "requested_base_dtype": "torch.float32",
+        "loaded_factor_dtypes": [
+          "torch.float32"
+        ],
+        "full_weight_dtypes": {
+          "embedding": "torch.float32",
+          "head": "torch.float32"
+        },
+        "warnings": [
+          "Model has `tie_word_embeddings=True` and a tied layer is part of the adapter, but `ensure_weight_tying` is not set to True. This can lead to complications, for example when merging the adapter or converting your model to formats other than safetensors. Check the discussion here: https://github.com/huggingface/peft/issues/2777"
+        ],
+        "forward": {
+          "unmerged_vs_merged_max_logit_difference": 0.0001010894775390625,
+          "unmerged_vs_merged_argmax_changes": 0
+        },
+        "files": [
+          {
+            "file": "config.json",
+            "bytes": 794,
+            "sha256": "71f028c04712b527b2693ad8871ce98ba23927dafdf9d9417955ec0a2acee346"
+          },
+          {
+            "file": "generation_config.json",
+            "bytes": 132,
+            "sha256": "a2eea4fc7c308e564345a9e55741669a74726eeb64ba96fc4b5fd907a5da4241"
+          },
+          {
+            "file": "model-00001-of-00016.safetensors",
+            "bytes": 113246336,
+            "sha256": "cfc81119ae6b6750c717340cea4a6109a93fd9f4fd3a9d009ee78ef872aebcf1"
+          },
+          {
+            "file": "model-00002-of-00016.safetensors",
+            "bytes": 113246344,
+            "sha256": "0d0d3e9a93eac21d90eab7ab8861adeae8c0b577275724be857c0eee09f6407f"
+          },
+          {
+            "file": "model-00003-of-00016.safetensors",
+            "bytes": 31864216,
+            "sha256": "924a90f80a5f91845da9faf816c319ab52918f71229df1420d98ac6faf442e32"
+          },
+          {
+            "file": "model-00004-of-00016.safetensors",
+            "bytes": 31861808,
+            "sha256": "28fe1f043fcf98e0b8ec653fb684831dea1735b12cfe985a5baeebd264957e43"
+          },
+          {
+            "file": "model-00005-of-00016.safetensors",
+            "bytes": 31864224,
+            "sha256": "d16ae93dc5c2d52790e66da5ecaf0eb6fbf16099d94607d2852965ae4adbc248"
+          },
+          {
+            "file": "model-00006-of-00016.safetensors",
+            "bytes": 31864544,
+            "sha256": "c749cce4921d3b891573015e735f42648fd1438cb8df9f8b812800b27e0a09f4"
+          },
+          {
+            "file": "model-00007-of-00016.safetensors",
+            "bytes": 31861816,
+            "sha256": "1c9b99676f115302bee5924adab301dcc8481505742d74465b76e981bc3d4ec3"
+          },
+          {
+            "file": "model-00008-of-00016.safetensors",
+            "bytes": 31861824,
+            "sha256": "1e790fb22b789345604fe6da12c7e10d330c1354b072317df4d233c58233a99c"
+          },
+          {
+            "file": "model-00009-of-00016.safetensors",
+            "bytes": 31864240,
+            "sha256": "3b2517e5049b42b0e63c94faf6d222d6036dcbe1554846a2b9470120b2fb9d88"
+          },
+          {
+            "file": "model-00010-of-00016.safetensors",
+            "bytes": 31864568,
+            "sha256": "3ed158752aa28180e866e7b33228e8cabb683cdfa077d5429034198d223c0444"
+          },
+          {
+            "file": "model-00011-of-00016.safetensors",
+            "bytes": 31861832,
+            "sha256": "9c146a3eb6920d2eeeff2d0b4554f65fadd67166b9e0e3f64eaebf8c3b067b27"
+          },
+          {
+            "file": "model-00012-of-00016.safetensors",
+            "bytes": 31861824,
+            "sha256": "7565168de3d51515d28ea09843d95b6bb534fe433cc81555b825f4e6a3c5ae2e"
+          },
+          {
+            "file": "model-00013-of-00016.safetensors",
+            "bytes": 31864240,
+            "sha256": "1be28a95fb77471409791ddc5e7b800a545fd13381539ba201040ae04633abd1"
+          },
+          {
+            "file": "model-00014-of-00016.safetensors",
+            "bytes": 31864568,
+            "sha256": "428a3cd4142545e372de1cb192faabfb1bc0eaa0fb1a93aa8578c15d0b4ca9ab"
+          },
+          {
+            "file": "model-00015-of-00016.safetensors",
+            "bytes": 31861832,
+            "sha256": "6c0341f4953836b277b8dc0b95cc71e224c70616ed6a3048b2b40b0f79951ae1"
+          },
+          {
+            "file": "model-00016-of-00016.safetensors",
+            "bytes": 10622328,
+            "sha256": "cfffa1514b2642ffe2fa81790a54d3a9c66b3f26415f544609e002c2132481c9"
+          },
+          {
+            "file": "model.safetensors.index.json",
+            "bytes": 22497,
+            "sha256": "f983fda12bb224f2f570d998b3c687334e52307f643048d7176f92cadfb9798c"
+          }
+        ]
+      },
+      {
+        "name": "omit-full-modules-f32",
+        "purpose": "authored wrong-conversion control, not an observed incident; all native LoRA weights retained, embedding and head restored to base",
+        "forward": {
+          "correct_vs_control_max_logit_difference": 13.59390640258789,
+          "correct_vs_control_argmax_changes": 7,
+          "token_positions": 12
+        },
+        "files": [
+          {
+            "file": "config.json",
+            "bytes": 794,
+            "sha256": "71f028c04712b527b2693ad8871ce98ba23927dafdf9d9417955ec0a2acee346"
+          },
+          {
+            "file": "generation_config.json",
+            "bytes": 132,
+            "sha256": "a2eea4fc7c308e564345a9e55741669a74726eeb64ba96fc4b5fd907a5da4241"
+          },
+          {
+            "file": "model-00001-of-00016.safetensors",
+            "bytes": 113246336,
+            "sha256": "e26ff354959899f7aa5d100145ce06aed006e75ded04423a5cc346afa23d4043"
+          },
+          {
+            "file": "model-00002-of-00016.safetensors",
+            "bytes": 113246344,
+            "sha256": "06ae33cdd14d8e132db5a9effa3f733f18b6d825060f83127c65d1953ef5268f"
+          },
+          {
+            "file": "model-00003-of-00016.safetensors",
+            "bytes": 31864216,
+            "sha256": "924a90f80a5f91845da9faf816c319ab52918f71229df1420d98ac6faf442e32"
+          },
+          {
+            "file": "model-00004-of-00016.safetensors",
+            "bytes": 31861808,
+            "sha256": "28fe1f043fcf98e0b8ec653fb684831dea1735b12cfe985a5baeebd264957e43"
+          },
+          {
+            "file": "model-00005-of-00016.safetensors",
+            "bytes": 31864224,
+            "sha256": "d16ae93dc5c2d52790e66da5ecaf0eb6fbf16099d94607d2852965ae4adbc248"
+          },
+          {
+            "file": "model-00006-of-00016.safetensors",
+            "bytes": 31864544,
+            "sha256": "c749cce4921d3b891573015e735f42648fd1438cb8df9f8b812800b27e0a09f4"
+          },
+          {
+            "file": "model-00007-of-00016.safetensors",
+            "bytes": 31861816,
+            "sha256": "1c9b99676f115302bee5924adab301dcc8481505742d74465b76e981bc3d4ec3"
+          },
+          {
+            "file": "model-00008-of-00016.safetensors",
+            "bytes": 31861824,
+            "sha256": "1e790fb22b789345604fe6da12c7e10d330c1354b072317df4d233c58233a99c"
+          },
+          {
+            "file": "model-00009-of-00016.safetensors",
+            "bytes": 31864240,
+            "sha256": "3b2517e5049b42b0e63c94faf6d222d6036dcbe1554846a2b9470120b2fb9d88"
+          },
+          {
+            "file": "model-00010-of-00016.safetensors",
+            "bytes": 31864568,
+            "sha256": "3ed158752aa28180e866e7b33228e8cabb683cdfa077d5429034198d223c0444"
+          },
+          {
+            "file": "model-00011-of-00016.safetensors",
+            "bytes": 31861832,
+            "sha256": "9c146a3eb6920d2eeeff2d0b4554f65fadd67166b9e0e3f64eaebf8c3b067b27"
+          },
+          {
+            "file": "model-00012-of-00016.safetensors",
+            "bytes": 31861824,
+            "sha256": "7565168de3d51515d28ea09843d95b6bb534fe433cc81555b825f4e6a3c5ae2e"
+          },
+          {
+            "file": "model-00013-of-00016.safetensors",
+            "bytes": 31864240,
+            "sha256": "1be28a95fb77471409791ddc5e7b800a545fd13381539ba201040ae04633abd1"
+          },
+          {
+            "file": "model-00014-of-00016.safetensors",
+            "bytes": 31864568,
+            "sha256": "428a3cd4142545e372de1cb192faabfb1bc0eaa0fb1a93aa8578c15d0b4ca9ab"
+          },
+          {
+            "file": "model-00015-of-00016.safetensors",
+            "bytes": 31861832,
+            "sha256": "6c0341f4953836b277b8dc0b95cc71e224c70616ed6a3048b2b40b0f79951ae1"
+          },
+          {
+            "file": "model-00016-of-00016.safetensors",
+            "bytes": 10622328,
+            "sha256": "cfffa1514b2642ffe2fa81790a54d3a9c66b3f26415f544609e002c2132481c9"
+          },
+          {
+            "file": "model.safetensors.index.json",
+            "bytes": 22497,
+            "sha256": "f983fda12bb224f2f570d998b3c687334e52307f643048d7176f92cadfb9798c"
+          }
+        ]
+      },
+      {
+        "name": "correct-f16",
+        "purpose": "unchanged public adapter; native merge_and_unload(safe_merge=False)",
+        "requested_base_dtype": "torch.float16",
+        "loaded_factor_dtypes": [
+          "torch.float32"
+        ],
+        "full_weight_dtypes": {
+          "embedding": "torch.float16",
+          "head": "torch.float16"
+        },
+        "warnings": [
+          "Model has `tie_word_embeddings=True` and a tied layer is part of the adapter, but `ensure_weight_tying` is not set to True. This can lead to complications, for example when merging the adapter or converting your model to formats other than safetensors. Check the discussion here: https://github.com/huggingface/peft/issues/2777"
+        ],
+        "forward": {
+          "unmerged_vs_merged_max_logit_difference": 0.125,
+          "unmerged_vs_merged_argmax_changes": 0
+        },
+        "files": [
+          {
+            "file": "config.json",
+            "bytes": 794,
+            "sha256": "7822342ab7ec9938a682ee0c4e042726b1a131a1c51e6ddf4972f7f57dd45e45"
+          },
+          {
+            "file": "generation_config.json",
+            "bytes": 132,
+            "sha256": "a2eea4fc7c308e564345a9e55741669a74726eeb64ba96fc4b5fd907a5da4241"
+          },
+          {
+            "file": "model-00001-of-00009.safetensors",
+            "bytes": 56623232,
+            "sha256": "5d371d869ea94cf1ff0b374a0664ae553974a9f8b110b248114b9707b800b7b3"
+          },
+          {
+            "file": "model-00002-of-00009.safetensors",
+            "bytes": 56623240,
+            "sha256": "eca5f9293d510a0efa44abb6558fa4dd01aff04d3815b5466c27cdbb542bd95b"
+          },
+          {
+            "file": "model-00003-of-00009.safetensors",
+            "bytes": 31865120,
+            "sha256": "fdb06f47ab7ff69c08a1591aa973f887e2a3c5b24d72fd5dbd9c9ed00c351bb5"
+          },
+          {
+            "file": "model-00004-of-00009.safetensors",
+            "bytes": 31866712,
+            "sha256": "195030f7604ed76154e5f6df16388461e415dbcb17333cc761af6807536c4f72"
+          },
+          {
+            "file": "model-00005-of-00009.safetensors",
+            "bytes": 31863888,
+            "sha256": "d1b2168c7174bada0221b203ea9ea492560fd9faf2ea8893bdcdd7a353e1d9fb"
+          },
+          {
+            "file": "model-00006-of-00009.safetensors",
+            "bytes": 31866760,
+            "sha256": "3075228dea0eb524beeb94f574d831e5358436da9be9fa3e030553c545dc1cf4"
+          },
+          {
+            "file": "model-00007-of-00009.safetensors",
+            "bytes": 31863904,
+            "sha256": "1b0a6bfb7dc7f6ef915f8f7d39698f5d1b709280e2ad1e2ab40ea961f37418f7"
+          },
+          {
+            "file": "model-00008-of-00009.safetensors",
+            "bytes": 31866760,
+            "sha256": "a7093918015a4e3012a251f2286c672066997b8729fb2ff34a4a12a746c475bc"
+          },
+          {
+            "file": "model-00009-of-00009.safetensors",
+            "bytes": 21243544,
+            "sha256": "6db1e248a6ff64b6ac67dcf62655d85be0b72906ef54dd14696f0a8f0a59ad6f"
+          },
+          {
+            "file": "model.safetensors.index.json",
+            "bytes": 22497,
+            "sha256": "2532ef8407a02af463f6ab66ef05e1cec70b349906b8faf9a1a1e7192197e0ae"
+          }
+        ]
+      },
+      {
+        "name": "correct-bf16",
+        "purpose": "unchanged public adapter; native merge_and_unload(safe_merge=False)",
+        "requested_base_dtype": "torch.bfloat16",
+        "loaded_factor_dtypes": [
+          "torch.float32"
+        ],
+        "full_weight_dtypes": {
+          "embedding": "torch.bfloat16",
+          "head": "torch.bfloat16"
+        },
+        "warnings": [
+          "Model has `tie_word_embeddings=True` and a tied layer is part of the adapter, but `ensure_weight_tying` is not set to True. This can lead to complications, for example when merging the adapter or converting your model to formats other than safetensors. Check the discussion here: https://github.com/huggingface/peft/issues/2777"
+        ],
+        "forward": {
+          "unmerged_vs_merged_max_logit_difference": 0.875,
+          "unmerged_vs_merged_argmax_changes": 2
+        },
+        "files": [
+          {
+            "file": "config.json",
+            "bytes": 795,
+            "sha256": "41ab623c27a530dc3cef05e0de7a1f38827581855f30cb15b3a8d165ec5ea268"
+          },
+          {
+            "file": "generation_config.json",
+            "bytes": 132,
+            "sha256": "a2eea4fc7c308e564345a9e55741669a74726eeb64ba96fc4b5fd907a5da4241"
+          },
+          {
+            "file": "model-00001-of-00009.safetensors",
+            "bytes": 56623232,
+            "sha256": "c5a339f6f4309e9edf21a1525d7c7409b43f96a088ba9ee44fc1162647af48e6"
+          },
+          {
+            "file": "model-00002-of-00009.safetensors",
+            "bytes": 56623240,
+            "sha256": "10982d4d03faddc2f2edcd24e159a218d7a33f437d6eb865d54e1108a101241f"
+          },
+          {
+            "file": "model-00003-of-00009.safetensors",
+            "bytes": 31865160,
+            "sha256": "565846524eecd5560ac3a1c7445fe029705a1931505baf4b967d0e4269caf5f4"
+          },
+          {
+            "file": "model-00004-of-00009.safetensors",
+            "bytes": 31866760,
+            "sha256": "a704e17f6bb70a403f16b0a8ee14d3d8c473ccaba767c9a304ff232ef7e401f2"
+          },
+          {
+            "file": "model-00005-of-00009.safetensors",
+            "bytes": 31863928,
+            "sha256": "a0495ce3af49729459fbd140c548a5d0307cf2b13fa882b74ecf2ab81a5ed9c5"
+          },
+          {
+            "file": "model-00006-of-00009.safetensors",
+            "bytes": 31866800,
+            "sha256": "40f6425b022f98bf3b5375ebb5aa0473f65f7588d62ff739268040e1b045d115"
+          },
+          {
+            "file": "model-00007-of-00009.safetensors",
+            "bytes": 31863944,
+            "sha256": "e8aa48491f54f7b3ae47ba57c49975580bec02b7c73cf26f3af847f985a75c21"
+          },
+          {
+            "file": "model-00008-of-00009.safetensors",
+            "bytes": 31866800,
+            "sha256": "ef3b9b87ce402574a1340f49d575a4d0075a7b8ac9e1d0f43119dd386e0be2ab"
+          },
+          {
+            "file": "model-00009-of-00009.safetensors",
+            "bytes": 21243568,
+            "sha256": "000742efb426c68fdbd8b26b9dc95bfbabc480f8b02a2fc401ae9bfe27d12591"
+          },
+          {
+            "file": "model.safetensors.index.json",
+            "bytes": 22497,
+            "sha256": "2532ef8407a02af463f6ab66ef05e1cec70b349906b8faf9a1a1e7192197e0ae"
+          }
+        ]
+      }
+    ]
+  },
+  "verifier_sha256": "db4b60313767163b5c28c83be9b6b813f0b29bbd2ee2a6838b40f6d3dce8373b",
+  "auditor_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "9f32ae16cd7cf96a4ee119395c8efe57e23f13f9c4053fd40c915427dcf26294",
+    "audit.py": "0b4e8135227a76f61c75ca745401338933bcebbda292f30acf3776658fde70c1",
+    "cli.py": "d479ab8d5c0d9e597befb60a10467d3f7dec2a446c076707f6c2f93b98f58915",
+    "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "results": [
+    {
+      "case": "correct-f32",
+      "refusal": "Base/merged tensor inventories differ; missing=[], extra=['lm_head.weight']"
+    },
+    {
+      "case": "omit-full-modules-f32",
+      "refusal": "Base/merged tensor inventories differ; missing=[], extra=['lm_head.weight']"
+    },
+    {
+      "case": "correct-f16",
+      "refusal": "Base/merged tensor inventories differ; missing=[], extra=['lm_head.weight']"
+    },
+    {
+      "case": "correct-bf16",
+      "refusal": "Base/merged tensor inventories differ; missing=[], extra=['lm_head.weight']"
+    }
+  ]
+}

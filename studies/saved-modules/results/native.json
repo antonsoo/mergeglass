@@ -1,0 +1,2118 @@
+{
+  "scope": "independent dense Torch replay of complete full-module state and all LoRA matrices",
+  "before": false,
+  "public": false,
+  "producer": {
+    "scope": "synthetic training, native saves and explicitly authored faulty conversions; no quality benchmark",
+    "seed": 21706,
+    "versions": {
+      "torch": "2.14.1+cpu",
+      "peft": "0.21.0",
+      "transformers": "5.20.1",
+      "numpy": "2.5.4",
+      "safetensors": "0.8.0"
+    },
+    "script_sha256": "116c76af86e8071d70b96cf6e41b61658f4249ef1615b75b2a708dff7b9facef",
+    "classifier_training_losses": [
+      1.2013672590255737,
+      0.01855136640369892
+    ],
+    "forward_observations": [
+      {
+        "case": "correct-f32",
+        "max_logit_difference": 1.430511474609375e-06,
+        "argmax_changes": 0,
+        "probes": 96
+      },
+      {
+        "case": "omit-head-f32",
+        "correct_vs_control_max_logit_difference": 5.359663963317871,
+        "correct_vs_control_argmax_changes": 47,
+        "probes": 96
+      },
+      {
+        "case": "correct-f16",
+        "max_logit_difference": 0.01025390625,
+        "argmax_changes": 0,
+        "probes": 96
+      },
+      {
+        "case": "correct-bf16",
+        "max_logit_difference": 0.03125,
+        "argmax_changes": 0,
+        "probes": 96
+      }
+    ],
+    "cases": [
+      {
+        "base": "base",
+        "adapter": "adapter",
+        "merged": "correct-f32",
+        "purpose": "native merge"
+      },
+      {
+        "base": "base",
+        "adapter": "adapter",
+        "merged": "omit-head-f32",
+        "purpose": "native LoRA retained; complete original classifier restored"
+      },
+      {
+        "base": "base",
+        "adapter": "adapter",
+        "merged": "wrong-counter-f32",
+        "purpose": "all float weights correct; integer buffer differs by one above 2**60"
+      },
+      {
+        "base": "base",
+        "adapter": "adapter",
+        "merged": "correct-f16",
+        "purpose": "native merge"
+      },
+      {
+        "base": "base",
+        "adapter": "adapter",
+        "merged": "correct-bf16",
+        "purpose": "native merge"
+      },
+      {
+        "base": "bert-base",
+        "adapter": "bert-adapter",
+        "merged": "bert-merged",
+        "purpose": "native sequence classifier; automatically added classifier/score selectors"
+      },
+      {
+        "base": "llama-37-base",
+        "adapter": "llama-37-adapter",
+        "merged": "llama-37-merged",
+        "purpose": "native tied base omits head; original 37 tokens"
+      },
+      {
+        "base": "llama-41-base",
+        "adapter": "llama-41-adapter",
+        "merged": "llama-41-merged",
+        "purpose": "native tied base omits head; token table resized 37 -> 41"
+      },
+      {
+        "base": "base",
+        "adapter": "dora-adapter",
+        "merged": "dora-correct-f32",
+        "purpose": "native Linear DoRA with a complete trained classifier"
+      },
+      {
+        "base": "base",
+        "adapter": "dora-adapter",
+        "merged": "dora-correct-f16",
+        "purpose": "native Linear DoRA with a complete trained classifier"
+      },
+      {
+        "base": "base",
+        "adapter": "dora-adapter",
+        "merged": "dora-correct-bf16",
+        "purpose": "native Linear DoRA with a complete trained classifier"
+      },
+      {
+        "base": "base",
+        "adapter": "incomplete-adapter",
+        "merged": "correct-f32",
+        "purpose": "derived malformed evidence: one trained full-module bias deleted",
+        "expect_refusal": true
+      }
+    ],
+    "files": [
+      {
+        "file": "adapter/adapter_config.json",
+        "bytes": 1151,
+        "sha256": "4aed2fb7664150b429dc0487fa782242ea7d6ed55bf7b53d06dd9a88249a1723"
+      },
+      {
+        "file": "adapter/adapter_model.safetensors",
+        "bytes": 1092,
+        "sha256": "63b135dbec24dff4059328b83fa4218b052e4113ee0dae341116d4c68e57d3d1"
+      },
+      {
+        "file": "base/model.safetensors",
+        "bytes": 980,
+        "sha256": "e25ced7ac38a89398132d9918b930b32e777d71e4a23dc70803011eb03a5f320"
+      },
+      {
+        "file": "bert-adapter/adapter_config.json",
+        "bytes": 1105,
+        "sha256": "fb773eaed1d54e48d804a94f33c0271ae459c0d5752815829f5ca448394bdc6e"
+      },
+      {
+        "file": "bert-adapter/adapter_model.safetensors",
+        "bytes": 1460,
+        "sha256": "6bd90002079235b51298a2f11a188b47bdb9a625a2ee02092ff158a2502d858f"
+      },
+      {
+        "file": "bert-base/config.json",
+        "bytes": 831,
+        "sha256": "90fcb72fb8069cb75570169a471ecabdb776e774eb32772d7e11a1bc02cc2d0c"
+      },
+      {
+        "file": "bert-base/model-00001-of-00005.safetensors",
+        "bytes": 2512,
+        "sha256": "4074b9a91b173faa27734f2f4ef70bfeb1c2e27438de863f74093c5fb88c0f9e"
+      },
+      {
+        "file": "bert-base/model-00002-of-00005.safetensors",
+        "bytes": 4032,
+        "sha256": "256ffffcbc239c3ab5067302e093266977c4a2d04529d83e8da2ee4017035c90"
+      },
+      {
+        "file": "bert-base/model-00003-of-00005.safetensors",
+        "bytes": 4296,
+        "sha256": "3a410197cfe75cdac9958cc78970e27cc361d0db82161fc2a2cf105ceaaaeb85"
+      },
+      {
+        "file": "bert-base/model-00004-of-00005.safetensors",
+        "bytes": 2424,
+        "sha256": "3a7d1f4879ccbb693b1f23d2ae3576d18e96b35c5971fc0284b84b37e317df50"
+      },
+      {
+        "file": "bert-base/model-00005-of-00005.safetensors",
+        "bytes": 4284,
+        "sha256": "57f9b96382c10212a15ae4524d64cb227abb4aa5aa84fe61c6fbefdab26f68c7"
+      },
+      {
+        "file": "bert-base/model.safetensors.index.json",
+        "bytes": 2200,
+        "sha256": "094b2b38aff27d65be6f315474dd473588b6932e68c539d9abf4d03ef447d640"
+      },
+      {
+        "file": "bert-merged/config.json",
+        "bytes": 880,
+        "sha256": "4cb41e3bfde3a0840bec7828e8531abf14ba30f33837fa26a2f6feac861ad17a"
+      },
+      {
+        "file": "bert-merged/model-00001-of-00005.safetensors",
+        "bytes": 2512,
+        "sha256": "4074b9a91b173faa27734f2f4ef70bfeb1c2e27438de863f74093c5fb88c0f9e"
+      },
+      {
+        "file": "bert-merged/model-00002-of-00005.safetensors",
+        "bytes": 4032,
+        "sha256": "d6b47f9ca27376d833e055b4dcd9f609c6694940a85aa2270858928b59942e7e"
+      },
+      {
+        "file": "bert-merged/model-00003-of-00005.safetensors",
+        "bytes": 4296,
+        "sha256": "56c470a5db4b7cd1aed3d0c9de30117c5c49fd3fbc466ec500d3a0321190a2e0"
+      },
+      {
+        "file": "bert-merged/model-00004-of-00005.safetensors",
+        "bytes": 2424,
+        "sha256": "3a7d1f4879ccbb693b1f23d2ae3576d18e96b35c5971fc0284b84b37e317df50"
+      },
+      {
+        "file": "bert-merged/model-00005-of-00005.safetensors",
+        "bytes": 4284,
+        "sha256": "c9e33872dbc161afd4eb2874121dcc4e445a6157f8d5e997afe9676a9f056044"
+      },
+      {
+        "file": "bert-merged/model.safetensors.index.json",
+        "bytes": 2200,
+        "sha256": "094b2b38aff27d65be6f315474dd473588b6932e68c539d9abf4d03ef447d640"
+      },
+      {
+        "file": "correct-bf16/model.safetensors",
+        "bytes": 726,
+        "sha256": "71bbf8723ceaaf47e9850f4371f4f0cb341ba980b0b0186c360a8c867b8f8bfc"
+      },
+      {
+        "file": "correct-f16/model.safetensors",
+        "bytes": 718,
+        "sha256": "c9a32c3332cae3deea9fe9b17d3c3a2de43107aee050bf81980f34ef3235d16a"
+      },
+      {
+        "file": "correct-f32/model.safetensors",
+        "bytes": 980,
+        "sha256": "056e67efd6e3ca5f20842708bb1e8ae8bb7cd97c7e544da4e37ece7dbcb3dc55"
+      },
+      {
+        "file": "dora-adapter/adapter_config.json",
+        "bytes": 1150,
+        "sha256": "24cb4a648bbd2cbf630dc9df35f6e9cb105c484ffcb34d2ed03eb16ac669d3f0"
+      },
+      {
+        "file": "dora-adapter/adapter_model.safetensors",
+        "bytes": 1228,
+        "sha256": "5ea3cd3654ad0672e6a3e89e903ece044753fdfe2c99788835e2a63d0d1093d0"
+      },
+      {
+        "file": "dora-correct-bf16/model.safetensors",
+        "bytes": 726,
+        "sha256": "a8429b26de518a9cb7117c4d31eb2b62d804efd93cf81445cec65953ddc166d0"
+      },
+      {
+        "file": "dora-correct-f16/model.safetensors",
+        "bytes": 718,
+        "sha256": "76bd9591b31e1d852f02fb076cc0ed610c3a32834d49ebb0bc828c190bb55a2e"
+      },
+      {
+        "file": "dora-correct-f32/model.safetensors",
+        "bytes": 980,
+        "sha256": "11ce42a8e10c725e42021dd16cdff2eed852c6487d55156213a5ece25176a260"
+      },
+      {
+        "file": "incomplete-adapter/adapter_config.json",
+        "bytes": 1151,
+        "sha256": "4aed2fb7664150b429dc0487fa782242ea7d6ed55bf7b53d06dd9a88249a1723"
+      },
+      {
+        "file": "incomplete-adapter/adapter_model.safetensors",
+        "bytes": 944,
+        "sha256": "c7e2a8b02b2915cf11409f60bce1ff4941c9ebbf12e554f401ee5d6982dadcad"
+      },
+      {
+        "file": "llama-37-adapter/adapter_config.json",
+        "bytes": 1202,
+        "sha256": "1c3bf8dd4929476c4e7b0eeb450a4ee5da9d1e7ff07e3f2a645b70f96c5db783"
+      },
+      {
+        "file": "llama-37-adapter/adapter_model.safetensors",
+        "bytes": 5472,
+        "sha256": "e83a8b0213b3cf7ed5a2c0428c52e6776a395a4acc8bcfb4c4730da431ae202c"
+      },
+      {
+        "file": "llama-37-base/config.json",
+        "bytes": 712,
+        "sha256": "6000d377a95e6a76e24aaa612ac86dd8f17270aa4814b997312b7bb6306e7d77"
+      },
+      {
+        "file": "llama-37-base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "llama-37-base/model-00001-of-00004.safetensors",
+        "bytes": 4232,
+        "sha256": "eed7ac9a96fcd06bb8b252b3156d7d36255824acd96f55fcd506912a9a685b79"
+      },
+      {
+        "file": "llama-37-base/model-00002-of-00004.safetensors",
+        "bytes": 3920,
+        "sha256": "7ec8c7da71f2c03ffbd19eca033e8e095d993704657eb91779453bfe38c4c92a"
+      },
+      {
+        "file": "llama-37-base/model-00003-of-00004.safetensors",
+        "bytes": 2184,
+        "sha256": "713bdf4b448bbaf97b2a362144446e7082a92834808605fab8f8581dff3d8c48"
+      },
+      {
+        "file": "llama-37-base/model-00004-of-00004.safetensors",
+        "bytes": 2648,
+        "sha256": "2d5dbb9cab488bb537b89146dce398a328a32fc9c69026ffc0985456f23b0122"
+      },
+      {
+        "file": "llama-37-base/model.safetensors.index.json",
+        "bytes": 964,
+        "sha256": "c9de16e8b959238fad9bb60ec89e3a2debf8f73ebdf9a8a91dc41d76b386883a"
+      },
+      {
+        "file": "llama-37-merged/config.json",
+        "bytes": 713,
+        "sha256": "08b619214183178bbb9029a3410cb05aff4979b1313ffa4ebbd23a02eba6292b"
+      },
+      {
+        "file": "llama-37-merged/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "llama-37-merged/model-00001-of-00005.safetensors",
+        "bytes": 4232,
+        "sha256": "312b3680a4ca9f4f46377374d93b09ee3701fbb0c269af5f371f0c89e40855bc"
+      },
+      {
+        "file": "llama-37-merged/model-00002-of-00005.safetensors",
+        "bytes": 3920,
+        "sha256": "7ec8c7da71f2c03ffbd19eca033e8e095d993704657eb91779453bfe38c4c92a"
+      },
+      {
+        "file": "llama-37-merged/model-00003-of-00005.safetensors",
+        "bytes": 2184,
+        "sha256": "713bdf4b448bbaf97b2a362144446e7082a92834808605fab8f8581dff3d8c48"
+      },
+      {
+        "file": "llama-37-merged/model-00004-of-00005.safetensors",
+        "bytes": 2648,
+        "sha256": "2d5dbb9cab488bb537b89146dce398a328a32fc9c69026ffc0985456f23b0122"
+      },
+      {
+        "file": "llama-37-merged/model-00005-of-00005.safetensors",
+        "bytes": 2488,
+        "sha256": "4a82465adb6e5f927e45e1f749791b67011aadaf77519f423d8e9cc7c2eb920c"
+      },
+      {
+        "file": "llama-37-merged/model.safetensors.index.json",
+        "bytes": 1022,
+        "sha256": "afd0e959cd204aadcfc24e55ee295d768e09d4e2b5c20b3a205cc256100ff59d"
+      },
+      {
+        "file": "llama-41-adapter/adapter_config.json",
+        "bytes": 1202,
+        "sha256": "1c3bf8dd4929476c4e7b0eeb450a4ee5da9d1e7ff07e3f2a645b70f96c5db783"
+      },
+      {
+        "file": "llama-41-adapter/adapter_model.safetensors",
+        "bytes": 5984,
+        "sha256": "5072839bc973be7af18847a925ac0cbbb757308a016c03702cd688fee7e4fb15"
+      },
+      {
+        "file": "llama-41-base/config.json",
+        "bytes": 712,
+        "sha256": "6000d377a95e6a76e24aaa612ac86dd8f17270aa4814b997312b7bb6306e7d77"
+      },
+      {
+        "file": "llama-41-base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "llama-41-base/model-00001-of-00004.safetensors",
+        "bytes": 4232,
+        "sha256": "eb8c6dd9dff6ddfcde43345a6a4443994802dcaac339479180568a11ffcddb4f"
+      },
+      {
+        "file": "llama-41-base/model-00002-of-00004.safetensors",
+        "bytes": 3920,
+        "sha256": "56406884c4ace43f86de2997810d4cb03e0b76b2e125b70ed507937a99149bae"
+      },
+      {
+        "file": "llama-41-base/model-00003-of-00004.safetensors",
+        "bytes": 2184,
+        "sha256": "e594c09f2c1613bb6fd92eeb84304dd1f63c8b3d96be375c64c4ca70585cd1ec"
+      },
+      {
+        "file": "llama-41-base/model-00004-of-00004.safetensors",
+        "bytes": 2648,
+        "sha256": "ff0dcb3461e57a25e6e6a973e8231f2dc0e6782f3bbb2d974bc8a50e425d6cba"
+      },
+      {
+        "file": "llama-41-base/model.safetensors.index.json",
+        "bytes": 964,
+        "sha256": "c9de16e8b959238fad9bb60ec89e3a2debf8f73ebdf9a8a91dc41d76b386883a"
+      },
+      {
+        "file": "llama-41-merged/config.json",
+        "bytes": 713,
+        "sha256": "01fb9984dd305be0949397880671c69fe36eb8d62d729614836ad34297b0e82e"
+      },
+      {
+        "file": "llama-41-merged/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "llama-41-merged/model-00001-of-00006.safetensors",
+        "bytes": 3872,
+        "sha256": "3544f89b7620ec5bb04cae58632b4c4a8b539ecfea051bb8f1d205781e7016c2"
+      },
+      {
+        "file": "llama-41-merged/model-00002-of-00006.safetensors",
+        "bytes": 2384,
+        "sha256": "11592e1a407bfaf4faaed3ea3a79cef14f23c8f17ca423b3aa6b04df111ecc4d"
+      },
+      {
+        "file": "llama-41-merged/model-00003-of-00006.safetensors",
+        "bytes": 2184,
+        "sha256": "4a717a99e728110832dafa418286718d6d34d3d91ab2036007829684407317c5"
+      },
+      {
+        "file": "llama-41-merged/model-00004-of-00006.safetensors",
+        "bytes": 2184,
+        "sha256": "e594c09f2c1613bb6fd92eeb84304dd1f63c8b3d96be375c64c4ca70585cd1ec"
+      },
+      {
+        "file": "llama-41-merged/model-00005-of-00006.safetensors",
+        "bytes": 2648,
+        "sha256": "ff0dcb3461e57a25e6e6a973e8231f2dc0e6782f3bbb2d974bc8a50e425d6cba"
+      },
+      {
+        "file": "llama-41-merged/model-00006-of-00006.safetensors",
+        "bytes": 2744,
+        "sha256": "52224b1112b0a1e603ee4a52b7e7828f39d1fab5a788b1604a57364f531363e8"
+      },
+      {
+        "file": "llama-41-merged/model.safetensors.index.json",
+        "bytes": 1022,
+        "sha256": "79a8f69fe78ed6d19e144fca7f8a98c5aaad7d021479f5d8f470935bd64742e9"
+      },
+      {
+        "file": "omit-head-f32/model.safetensors",
+        "bytes": 980,
+        "sha256": "c84f6652604ce52cd6cee9d0a8ee41a51f11b835db4c6cbedd85c66ade27c021"
+      },
+      {
+        "file": "wrong-counter-f32/model.safetensors",
+        "bytes": 980,
+        "sha256": "46d4c889d75f0a29ffdcaf6965555a7c1e8720edad12519557df6e665b76d2e5"
+      }
+    ]
+  },
+  "verifier_sha256": "db4b60313767163b5c28c83be9b6b813f0b29bbd2ee2a6838b40f6d3dce8373b",
+  "auditor_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "f400ec4b08df8bd6eaa35d3140d24b7cb6b7e1e5e4d9b31f1fcc14816316f194",
+    "audit.py": "14bb9c1c2549d9ac1242f78970c07914a5f64be3700c44215bc3fc4ecc8479da",
+    "cli.py": "4d86739f825d6409cbe01450bd996be16efd26bc02e5b543bbefeb0b5db8673c",
+    "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "results": [
+    {
+      "case": "correct-f32",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 6,
+        "adapted_elements": 64,
+        "intended_nonzero_elements": 64,
+        "changed_adapted_elements": 64,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 5,
+        "saved_module_elements": 64,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 5
+      },
+      "saved_modules": [
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.bias",
+          "shape": [
+            5
+          ],
+          "elements": 5,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 1.0214022586409999,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 5,
+          "expected_change_elements": 5,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.weight",
+          "shape": [
+            5,
+            8
+          ],
+          "elements": 40,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            5,
+            8
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 3.818921883157237,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 40,
+          "expected_change_elements": 40,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.bias",
+          "shape": [
+            3
+          ],
+          "elements": 3,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            3
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.29522445042060996,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 3,
+          "expected_change_elements": 3,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.weight",
+          "shape": [
+            3,
+            5
+          ],
+          "elements": 15,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            3,
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 3.904624388807118,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 15,
+          "expected_change_elements": 15,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.seen",
+          "shape": [],
+          "elements": 1,
+          "adapter_dtype": "I64",
+          "merged_dtype": "I64",
+          "base_dtype": "I64",
+          "base_shape": [],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": null,
+          "relative_error": null,
+          "changed_from_base_elements": 1,
+          "expected_change_elements": 1,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        }
+      ],
+      "unmatched_saved_module_selectors": [],
+      "all_lora_layers_checked": 1,
+      "lora_elements_checked": 64,
+      "factor_measurements_sha256": "2c120b8675dfc866cc84a33acf2f41fe1e92b8d67c3307308d317e5d4b646084",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        1.0000000045780022,
+        1.0000000045780022
+      ],
+      "lora_relative_residual_range": [
+        4.708024794718663e-08,
+        4.708024794718663e-08
+      ],
+      "complete_report_sha256": "7d3aebef41715e1d3e4080963ccd6fb3b41bcd673ae455ab190c097a4b110914"
+    },
+    {
+      "case": "omit-head-f32",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 6,
+        "adapted_elements": 64,
+        "intended_nonzero_elements": 64,
+        "changed_adapted_elements": 64,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 5,
+        "saved_module_elements": 64,
+        "saved_module_target_mismatches": 64,
+        "saved_module_base_comparable_tensors": 5
+      },
+      "saved_modules": [
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.bias",
+          "shape": [
+            5
+          ],
+          "elements": 5,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "differs-from-saved-module",
+          "target_mismatches": 5,
+          "norms": {
+            "target": 1.0214022586409999,
+            "error": 1.182820693378402,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 1.1580361051405674,
+          "changed_from_base_elements": 0,
+          "expected_change_elements": 5,
+          "unchanged_expected_change_elements": 5,
+          "first_mismatch": {
+            "flat_index": 0,
+            "cast_target": -0.21944966912269592,
+            "merged": 0.13652071356773376
+          }
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.weight",
+          "shape": [
+            5,
+            8
+          ],
+          "elements": 40,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            5,
+            8
+          ],
+          "base_comparison_unavailable": null,
+          "status": "differs-from-saved-module",
+          "target_mismatches": 40,
+          "norms": {
+            "target": 3.818921883157237,
+            "error": 3.674082323116167,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.9620731807372488,
+          "changed_from_base_elements": 0,
+          "expected_change_elements": 40,
+          "unchanged_expected_change_elements": 40,
+          "first_mismatch": {
+            "flat_index": 0,
+            "cast_target": -0.6338043808937073,
+            "merged": -0.08547414094209671
+          }
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.bias",
+          "shape": [
+            3
+          ],
+          "elements": 3,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            3
+          ],
+          "base_comparison_unavailable": null,
+          "status": "differs-from-saved-module",
+          "target_mismatches": 3,
+          "norms": {
+            "target": 0.29522445042060996,
+            "error": 0.649706693431578,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 2.2007211547212053,
+          "changed_from_base_elements": 0,
+          "expected_change_elements": 3,
+          "unchanged_expected_change_elements": 3,
+          "first_mismatch": {
+            "flat_index": 0,
+            "cast_target": -0.007961170747876167,
+            "merged": 0.3535415530204773
+          }
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.weight",
+          "shape": [
+            3,
+            5
+          ],
+          "elements": 15,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            3,
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "differs-from-saved-module",
+          "target_mismatches": 15,
+          "norms": {
+            "target": 3.904624388807118,
+            "error": 3.2016764709964742,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.8199704125637043,
+          "changed_from_base_elements": 0,
+          "expected_change_elements": 15,
+          "unchanged_expected_change_elements": 15,
+          "first_mismatch": {
+            "flat_index": 0,
+            "cast_target": -0.5429024696350098,
+            "merged": -0.2553810775279999
+          }
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.seen",
+          "shape": [],
+          "elements": 1,
+          "adapter_dtype": "I64",
+          "merged_dtype": "I64",
+          "base_dtype": "I64",
+          "base_shape": [],
+          "base_comparison_unavailable": null,
+          "status": "differs-from-saved-module",
+          "target_mismatches": 1,
+          "norms": null,
+          "relative_error": null,
+          "changed_from_base_elements": 0,
+          "expected_change_elements": 1,
+          "unchanged_expected_change_elements": 1,
+          "first_mismatch": {
+            "flat_index": 0,
+            "cast_target": 1152921504606846979,
+            "merged": 1152921504606846976
+          }
+        }
+      ],
+      "unmatched_saved_module_selectors": [],
+      "all_lora_layers_checked": 1,
+      "lora_elements_checked": 64,
+      "factor_measurements_sha256": "2c120b8675dfc866cc84a33acf2f41fe1e92b8d67c3307308d317e5d4b646084",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        1.0000000045780022,
+        1.0000000045780022
+      ],
+      "lora_relative_residual_range": [
+        4.708024794718663e-08,
+        4.708024794718663e-08
+      ],
+      "complete_report_sha256": "a29f51d27f595243cb12884327b3577aba9a27e50d58379ae82a66033f9ad361"
+    },
+    {
+      "case": "wrong-counter-f32",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 6,
+        "adapted_elements": 64,
+        "intended_nonzero_elements": 64,
+        "changed_adapted_elements": 64,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 5,
+        "saved_module_elements": 64,
+        "saved_module_target_mismatches": 1,
+        "saved_module_base_comparable_tensors": 5
+      },
+      "saved_modules": [
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.bias",
+          "shape": [
+            5
+          ],
+          "elements": 5,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 1.0214022586409999,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 5,
+          "expected_change_elements": 5,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.weight",
+          "shape": [
+            5,
+            8
+          ],
+          "elements": 40,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            5,
+            8
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 3.818921883157237,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 40,
+          "expected_change_elements": 40,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.bias",
+          "shape": [
+            3
+          ],
+          "elements": 3,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            3
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.29522445042060996,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 3,
+          "expected_change_elements": 3,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.weight",
+          "shape": [
+            3,
+            5
+          ],
+          "elements": 15,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            3,
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 3.904624388807118,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 15,
+          "expected_change_elements": 15,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.seen",
+          "shape": [],
+          "elements": 1,
+          "adapter_dtype": "I64",
+          "merged_dtype": "I64",
+          "base_dtype": "I64",
+          "base_shape": [],
+          "base_comparison_unavailable": null,
+          "status": "differs-from-saved-module",
+          "target_mismatches": 1,
+          "norms": null,
+          "relative_error": null,
+          "changed_from_base_elements": 1,
+          "expected_change_elements": 1,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": {
+            "flat_index": 0,
+            "cast_target": 1152921504606846979,
+            "merged": 1152921504606846978
+          }
+        }
+      ],
+      "unmatched_saved_module_selectors": [],
+      "all_lora_layers_checked": 1,
+      "lora_elements_checked": 64,
+      "factor_measurements_sha256": "2c120b8675dfc866cc84a33acf2f41fe1e92b8d67c3307308d317e5d4b646084",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        1.0000000045780022,
+        1.0000000045780022
+      ],
+      "lora_relative_residual_range": [
+        4.708024794718663e-08,
+        4.708024794718663e-08
+      ],
+      "complete_report_sha256": "8c6176bceaa4ee62860185638ee638359773a8ce80e815810e149712a59738f7"
+    },
+    {
+      "case": "correct-f16",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 6,
+        "adapted_elements": 64,
+        "intended_nonzero_elements": 64,
+        "changed_adapted_elements": 64,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 5,
+        "saved_module_elements": 64,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 5
+      },
+      "saved_modules": [
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.bias",
+          "shape": [
+            5
+          ],
+          "elements": 5,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F16",
+          "base_dtype": "F32",
+          "base_shape": [
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 1.0213251883354328,
+            "error": 0.0,
+            "target_cast_drift": 0.00010330177201283333
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 5,
+          "expected_change_elements": 5,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.weight",
+          "shape": [
+            5,
+            8
+          ],
+          "elements": 40,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F16",
+          "base_dtype": "F32",
+          "base_shape": [
+            5,
+            8
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 3.8188395151964354,
+            "error": 0.0,
+            "target_cast_drift": 0.0006887894604097799
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 40,
+          "expected_change_elements": 40,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.bias",
+          "shape": [
+            3
+          ],
+          "elements": 3,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F16",
+          "base_dtype": "F32",
+          "base_shape": [
+            3
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.2951735227567282,
+            "error": 0.0,
+            "target_cast_drift": 6.505267341229835e-05
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 3,
+          "expected_change_elements": 3,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.weight",
+          "shape": [
+            3,
+            5
+          ],
+          "elements": 15,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F16",
+          "base_dtype": "F32",
+          "base_shape": [
+            3,
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 3.9045379897219012,
+            "error": 0.0,
+            "target_cast_drift": 0.0008183183995946634
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 15,
+          "expected_change_elements": 15,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.seen",
+          "shape": [],
+          "elements": 1,
+          "adapter_dtype": "I64",
+          "merged_dtype": "I64",
+          "base_dtype": "I64",
+          "base_shape": [],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": null,
+          "relative_error": null,
+          "changed_from_base_elements": 1,
+          "expected_change_elements": 1,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        }
+      ],
+      "unmatched_saved_module_selectors": [],
+      "all_lora_layers_checked": 1,
+      "lora_elements_checked": 64,
+      "factor_measurements_sha256": "37e39bb5d16d7a4119b47d6388853b3ae8cad7f0654174d25964d034e6c7736a",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        1.0000649995533841,
+        1.0000649995533841
+      ],
+      "lora_relative_residual_range": [
+        0.0002547493364728265,
+        0.0002547493364728265
+      ],
+      "complete_report_sha256": "25b393235d2c1cd7e60d6b33948166ecb039e7e6ddc793e9bdcf9c5b40a24504"
+    },
+    {
+      "case": "correct-bf16",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 6,
+        "adapted_elements": 64,
+        "intended_nonzero_elements": 64,
+        "changed_adapted_elements": 64,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 5,
+        "saved_module_elements": 64,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 5
+      },
+      "saved_modules": [
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.bias",
+          "shape": [
+            5
+          ],
+          "elements": 5,
+          "adapter_dtype": "F32",
+          "merged_dtype": "BF16",
+          "base_dtype": "F32",
+          "base_shape": [
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 1.0220627031967005,
+            "error": 0.0,
+            "target_cast_drift": 0.0007202768009757861
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 5,
+          "expected_change_elements": 5,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.weight",
+          "shape": [
+            5,
+            8
+          ],
+          "elements": 40,
+          "adapter_dtype": "F32",
+          "merged_dtype": "BF16",
+          "base_dtype": "F32",
+          "base_shape": [
+            5,
+            8
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 3.81722510776427,
+            "error": 0.0,
+            "target_cast_drift": 0.0053123412619443845
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 40,
+          "expected_change_elements": 40,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.bias",
+          "shape": [
+            3
+          ],
+          "elements": 3,
+          "adapter_dtype": "F32",
+          "merged_dtype": "BF16",
+          "base_dtype": "F32",
+          "base_shape": [
+            3
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.2946311325985474,
+            "error": 0.0,
+            "target_cast_drift": 0.0005939452805663725
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 3,
+          "expected_change_elements": 3,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.weight",
+          "shape": [
+            3,
+            5
+          ],
+          "elements": 15,
+          "adapter_dtype": "F32",
+          "merged_dtype": "BF16",
+          "base_dtype": "F32",
+          "base_shape": [
+            3,
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 3.904333300513627,
+            "error": 0.0,
+            "target_cast_drift": 0.007496098247502367
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 15,
+          "expected_change_elements": 15,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.seen",
+          "shape": [],
+          "elements": 1,
+          "adapter_dtype": "I64",
+          "merged_dtype": "I64",
+          "base_dtype": "I64",
+          "base_shape": [],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": null,
+          "relative_error": null,
+          "changed_from_base_elements": 1,
+          "expected_change_elements": 1,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        }
+      ],
+      "unmatched_saved_module_selectors": [],
+      "all_lora_layers_checked": 1,
+      "lora_elements_checked": 64,
+      "factor_measurements_sha256": "a055568a6c34553d316fe24d7e46df607b41a063c021442f60e15d08bdbddf00",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        0.999832661458423,
+        0.999832661458423
+      ],
+      "lora_relative_residual_range": [
+        0.0017627943154803337,
+        0.0017627943154803337
+      ],
+      "complete_report_sha256": "c824d7a99e089f33a8c2121f2a556eeadc744fb04a190818e99e753581dd3db7"
+    },
+    {
+      "case": "bert-merged",
+      "summary": {
+        "adapted_tensors": 2,
+        "checked_tensors": 25,
+        "adapted_elements": 512,
+        "intended_nonzero_elements": 512,
+        "changed_adapted_elements": 512,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 2,
+        "saved_module_elements": 51,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 2
+      },
+      "saved_modules": [
+        {
+          "module": "classifier",
+          "weight": "classifier.bias",
+          "shape": [
+            3
+          ],
+          "elements": 3,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            3
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.025409137285531513,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 3,
+          "expected_change_elements": 3,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.weight",
+          "shape": [
+            3,
+            16
+          ],
+          "elements": 48,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            3,
+            16
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.5862316183202699,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 48,
+          "expected_change_elements": 48,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        }
+      ],
+      "unmatched_saved_module_selectors": [
+        "score"
+      ],
+      "all_lora_layers_checked": 2,
+      "lora_elements_checked": 512,
+      "factor_measurements_sha256": "50dbd22762b62c35d3daa4adfb24ee37134a43bdcb041aa3a18d6840c4373a48",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        1.0000000004842502,
+        1.000000001352117
+      ],
+      "lora_relative_residual_range": [
+        4.1724668970201396e-08,
+        5.088865127340961e-08
+      ],
+      "complete_report_sha256": "e6c0219ac0481b65718bac209fdb192c4087111fe549615fbeebfc2a45cba872"
+    },
+    {
+      "case": "llama-37-merged",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 12,
+        "adapted_elements": 256,
+        "intended_nonzero_elements": 256,
+        "changed_adapted_elements": 256,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 2,
+        "saved_module_elements": 1184,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 1
+      },
+      "saved_modules": [
+        {
+          "module": "lm_head",
+          "weight": "lm_head.weight",
+          "shape": [
+            37,
+            16
+          ],
+          "elements": 592,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": null,
+          "base_shape": null,
+          "base_comparison_unavailable": "absent",
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 1.3662828809066112,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": null,
+          "expected_change_elements": null,
+          "unchanged_expected_change_elements": null,
+          "first_mismatch": null
+        },
+        {
+          "module": "model.embed_tokens",
+          "weight": "model.embed_tokens.weight",
+          "shape": [
+            37,
+            16
+          ],
+          "elements": 592,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            37,
+            16
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.8716588865499346,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 592,
+          "expected_change_elements": 592,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        }
+      ],
+      "unmatched_saved_module_selectors": [],
+      "all_lora_layers_checked": 1,
+      "lora_elements_checked": 256,
+      "factor_measurements_sha256": "ab7423637c3e30df9d18287ed24a4a6f46e4cb73e9c600ce18edad797d7c450e",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        0.9999999902142994,
+        0.9999999902142994
+      ],
+      "lora_relative_residual_range": [
+        5.2294614418733545e-08,
+        5.2294614418733545e-08
+      ],
+      "complete_report_sha256": "744af194b6adf848b333c22a7d6840fdff0502d3511d0759fa4941acdd7ec9a6"
+    },
+    {
+      "case": "llama-41-merged",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 12,
+        "adapted_elements": 256,
+        "intended_nonzero_elements": 256,
+        "changed_adapted_elements": 256,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 2,
+        "saved_module_elements": 1312,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 0
+      },
+      "saved_modules": [
+        {
+          "module": "lm_head",
+          "weight": "lm_head.weight",
+          "shape": [
+            41,
+            16
+          ],
+          "elements": 656,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": null,
+          "base_shape": null,
+          "base_comparison_unavailable": "absent",
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 1.4700376875442007,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": null,
+          "expected_change_elements": null,
+          "unchanged_expected_change_elements": null,
+          "first_mismatch": null
+        },
+        {
+          "module": "model.embed_tokens",
+          "weight": "model.embed_tokens.weight",
+          "shape": [
+            41,
+            16
+          ],
+          "elements": 656,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            37,
+            16
+          ],
+          "base_comparison_unavailable": "shape-changed",
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.8518064069970919,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": null,
+          "expected_change_elements": null,
+          "unchanged_expected_change_elements": null,
+          "first_mismatch": null
+        }
+      ],
+      "unmatched_saved_module_selectors": [],
+      "all_lora_layers_checked": 1,
+      "lora_elements_checked": 256,
+      "factor_measurements_sha256": "590e660333a739a9b7595926d040989e54aaa78ed9c2c39d8089684c8560ef22",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        1.0000000021252637,
+        1.0000000021252637
+      ],
+      "lora_relative_residual_range": [
+        5.0119211460112166e-08,
+        5.0119211460112166e-08
+      ],
+      "complete_report_sha256": "f00ed285903d9ae6f233bb1f12ee15779e17cdbcca7c98933220841aeb988956"
+    },
+    {
+      "case": "dora-correct-f32",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 6,
+        "adapted_elements": 64,
+        "intended_nonzero_elements": 64,
+        "changed_adapted_elements": 64,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 5,
+        "saved_module_elements": 64,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 5
+      },
+      "saved_modules": [
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.bias",
+          "shape": [
+            5
+          ],
+          "elements": 5,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.6095608110103876,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 5,
+          "expected_change_elements": 5,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.weight",
+          "shape": [
+            5,
+            8
+          ],
+          "elements": 40,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            5,
+            8
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 2.5732620487193185,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 40,
+          "expected_change_elements": 40,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.bias",
+          "shape": [
+            3
+          ],
+          "elements": 3,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            3
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.18465499324864396,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 3,
+          "expected_change_elements": 3,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.weight",
+          "shape": [
+            3,
+            5
+          ],
+          "elements": 15,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F32",
+          "base_dtype": "F32",
+          "base_shape": [
+            3,
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 2.0759447073294752,
+            "error": 0.0,
+            "target_cast_drift": 0.0
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 15,
+          "expected_change_elements": 15,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.seen",
+          "shape": [],
+          "elements": 1,
+          "adapter_dtype": "I64",
+          "merged_dtype": "I64",
+          "base_dtype": "I64",
+          "base_shape": [],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": null,
+          "relative_error": null,
+          "changed_from_base_elements": 1,
+          "expected_change_elements": 1,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        }
+      ],
+      "unmatched_saved_module_selectors": [],
+      "all_lora_layers_checked": 1,
+      "lora_elements_checked": 64,
+      "factor_measurements_sha256": "7bbe2712318e7c24c9461ced57f58b2106522a6017d6b34bcd00cc0ce7491d6f",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        0.9999999868192797,
+        0.9999999868192797
+      ],
+      "lora_relative_residual_range": [
+        5.8987336393922974e-08,
+        5.8987336393922974e-08
+      ],
+      "complete_report_sha256": "a3499e6287e00076d33a7557c3716f8a388ffd817ebbff458ca7be33009d4162"
+    },
+    {
+      "case": "dora-correct-f16",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 6,
+        "adapted_elements": 64,
+        "intended_nonzero_elements": 64,
+        "changed_adapted_elements": 64,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 5,
+        "saved_module_elements": 64,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 5
+      },
+      "saved_modules": [
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.bias",
+          "shape": [
+            5
+          ],
+          "elements": 5,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F16",
+          "base_dtype": "F32",
+          "base_shape": [
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.6094790436817672,
+            "error": 0.0,
+            "target_cast_drift": 0.00010943234822707007
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 5,
+          "expected_change_elements": 5,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.weight",
+          "shape": [
+            5,
+            8
+          ],
+          "elements": 40,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F16",
+          "base_dtype": "F32",
+          "base_shape": [
+            5,
+            8
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 2.573259628099263,
+            "error": 0.0,
+            "target_cast_drift": 0.00045559405134031647
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 40,
+          "expected_change_elements": 40,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.bias",
+          "shape": [
+            3
+          ],
+          "elements": 3,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F16",
+          "base_dtype": "F32",
+          "base_shape": [
+            3
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.18462107290887655,
+            "error": 0.0,
+            "target_cast_drift": 5.687777570771425e-05
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 3,
+          "expected_change_elements": 3,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.weight",
+          "shape": [
+            3,
+            5
+          ],
+          "elements": 15,
+          "adapter_dtype": "F32",
+          "merged_dtype": "F16",
+          "base_dtype": "F32",
+          "base_shape": [
+            3,
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 2.0760447982698116,
+            "error": 0.0,
+            "target_cast_drift": 0.00035877015708642206
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 15,
+          "expected_change_elements": 15,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.seen",
+          "shape": [],
+          "elements": 1,
+          "adapter_dtype": "I64",
+          "merged_dtype": "I64",
+          "base_dtype": "I64",
+          "base_shape": [],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": null,
+          "relative_error": null,
+          "changed_from_base_elements": 1,
+          "expected_change_elements": 1,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        }
+      ],
+      "unmatched_saved_module_selectors": [],
+      "all_lora_layers_checked": 1,
+      "lora_elements_checked": 64,
+      "factor_measurements_sha256": "ea056f9400a66be7fc5bbcf03e541b44b2099358632a4d5d0580960784ea989e",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        1.000003362881934,
+        1.000003362881934
+      ],
+      "lora_relative_residual_range": [
+        0.00027944087613306523,
+        0.00027944087613306523
+      ],
+      "complete_report_sha256": "cb3b292bb5088af6242c7b9c33fbf1e2bc842092ac8909194bbc3bd8c4e50168"
+    },
+    {
+      "case": "dora-correct-bf16",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 6,
+        "adapted_elements": 64,
+        "intended_nonzero_elements": 64,
+        "changed_adapted_elements": 64,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 5,
+        "saved_module_elements": 64,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 5
+      },
+      "saved_modules": [
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.bias",
+          "shape": [
+            5
+          ],
+          "elements": 5,
+          "adapter_dtype": "F32",
+          "merged_dtype": "BF16",
+          "base_dtype": "F32",
+          "base_shape": [
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.6094267193536399,
+            "error": 0.0,
+            "target_cast_drift": 0.0011987614472115863
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 5,
+          "expected_change_elements": 5,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.dense.weight",
+          "shape": [
+            5,
+            8
+          ],
+          "elements": 40,
+          "adapter_dtype": "F32",
+          "merged_dtype": "BF16",
+          "base_dtype": "F32",
+          "base_shape": [
+            5,
+            8
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 2.57218484599635,
+            "error": 0.0,
+            "target_cast_drift": 0.004070015055929806
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 40,
+          "expected_change_elements": 40,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.bias",
+          "shape": [
+            3
+          ],
+          "elements": 3,
+          "adapter_dtype": "F32",
+          "merged_dtype": "BF16",
+          "base_dtype": "F32",
+          "base_shape": [
+            3
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 0.18434776533351266,
+            "error": 0.0,
+            "target_cast_drift": 0.0003099577381128074
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 3,
+          "expected_change_elements": 3,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.out.weight",
+          "shape": [
+            3,
+            5
+          ],
+          "elements": 15,
+          "adapter_dtype": "F32",
+          "merged_dtype": "BF16",
+          "base_dtype": "F32",
+          "base_shape": [
+            3,
+            5
+          ],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": {
+            "target": 2.074755008436355,
+            "error": 0.0,
+            "target_cast_drift": 0.004168146467807714
+          },
+          "relative_error": 0.0,
+          "changed_from_base_elements": 15,
+          "expected_change_elements": 15,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        },
+        {
+          "module": "classifier",
+          "weight": "classifier.seen",
+          "shape": [],
+          "elements": 1,
+          "adapter_dtype": "I64",
+          "merged_dtype": "I64",
+          "base_dtype": "I64",
+          "base_shape": [],
+          "base_comparison_unavailable": null,
+          "status": "matches-saved-module",
+          "target_mismatches": 0,
+          "norms": null,
+          "relative_error": null,
+          "changed_from_base_elements": 1,
+          "expected_change_elements": 1,
+          "unchanged_expected_change_elements": 0,
+          "first_mismatch": null
+        }
+      ],
+      "unmatched_saved_module_selectors": [],
+      "all_lora_layers_checked": 1,
+      "lora_elements_checked": 64,
+      "factor_measurements_sha256": "716641b655069539f6188507c64eef169e7036fc13d784b5b7c2590bceba6dfa",
+      "torch_provisional_low_precision_casts_repaired": 0,
+      "lora_gain_range": [
+        1.0003236699332683,
+        1.0003236699332683
+      ],
+      "lora_relative_residual_range": [
+        0.0018729712506762655,
+        0.0018729712506762655
+      ],
+      "complete_report_sha256": "6eb3020acfb8ff49338b3ef5ca19e6c8c063c67fee32bb77917d207b1c92f6b7"
+    },
+    {
+      "case": "incomplete-adapter",
+      "refusal": "Incomplete saved module; missing adapter tensor: base_model.model.classifier.dense.bias"
+    }
+  ]
+}

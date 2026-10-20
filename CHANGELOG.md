@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+Audit PEFT `modules_to_save` as complete absolute replacement state beside
+LoRA/DoRA factors. Check every floating, integer and bool value in blocks,
+including nested module biases and scalar buffers above `2**53`. Accept only
+explicit saved tensors for added heads or resized full modules; retain null
+original-base measurements where comparison is unavailable. Refuse incomplete
+or overlapping scopes, factor/module overlap, unexplained payloads and
+nonfinite state. Keep ordinary factor reports unchanged. Include native trained
+classifiers, tied/resized Llama embeddings, the unchanged public SmolLM2 adapter,
+lost-module and wrong-counter controls, independent dense checks and real forwards.
+
 Audit native token-embedding LoRA factors with `(B @ A).T`, retaining token-row
 coordinates. Mix Embedding and Linear LoRA, including rsLoRA and rank/alpha
 overrides. Stream vocabulary-wide A columns and retain only embedding B;

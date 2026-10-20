@@ -10,6 +10,8 @@ adapter can also leave a plausible-looking artifact. Mergeglass compares the
 original base, the saved LoRA/DoRA adapter and the actual merged safetensors. It
 reports what changed, what stayed equal, and the residual against the intended
 update, with original tensor coordinates and artifact hashes.
+It also checks complete trained modules saved beside the factors, such as
+embedding tables and classifier heads, against their absolute saved values.
 
 ![An actual saved BF16 merge of the pinned public SmolLM2 adapter, with count and squared-norm measurements](docs/assets/public-bf16.png)
 
@@ -78,6 +80,35 @@ Another control loads rsLoRA factors with standard LoRA scaling; the rank-4
 layers have gain 0.5 and the rank-2 layer has gain 0.707107. Two finite BF16
 artifacts differ in 755 saved entries solely from PEFT's `safe_merge` operation
 sequence. [Native controls, complete receipts and reproduction](studies/merge-controls/README.md).
+
+## Full trained modules need their own audit
+
+A converter can retain every LoRA update and still discard a trained head or
+token table. PEFT saves these through `modules_to_save` as full replacement
+weights, so they need an absolute comparison against the saved adapter state.
+
+On the unchanged public
+[Kibalama SmolLM2 adapter](https://huggingface.co/Kibalama/smollm2-finetune-python-2/tree/8612b1f0feaeb3d34005848813d13387a13a901f),
+the native FP32 merge copies both full modules correctly. An authored control
+restores their original values while retaining all 210 native LoRA merges:
+39,791,249 of the 56,623,104 full-module values then differ from their targets.
+The control changes next-token choices at 7 of 12 deterministic token-ID probe
+positions. This measures a deliberately faulty conversion, not model quality
+or an observed incident rate.
+
+```sh
+uv run --no-dev mergeglass examples/saved-modules/base examples/saved-modules/adapter examples/saved-modules/omit-head-f32
+```
+
+![Actual audit of the synthetic classifier control: correct LoRA weights and 64 missing full-state changes](docs/assets/saved-modules.png)
+
+The small included synthetic classifier has the same failure: all LoRA weights
+remain correct, while 64 full-state values differ, including an integer buffer.
+The auditor also accepts explicit replacement embeddings with a changed shape
+and saved heads absent from the original tensor inventory. Their target values
+are checked completely; unavailable original-base comparisons stay null.
+[Native/public inputs, independent checks, controls and limits](studies/saved-modules/README.md).
+This support is in the source; no registry release accompanies it.
 
 ## DoRA magnitudes must survive too
 
@@ -221,6 +252,9 @@ Base --> cast to merged dtype --> compare to merge --+
   residual and the largest residual's row/column.
 - Across the checkpoint: every unadapted tensor checked against its cast base,
   with unrelated changes retained individually. Large integer values stay exact.
+- Complete modules saved through `modules_to_save`: absolute target mismatches,
+  cast drift, error norms and original-base changes where comparable. Full
+  module biases and integer/bool buffers are included.
 - Linear LoRA and DoRA, Embedding LoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
   and F64 storage. Finite [signed alpha coefficients](studies/signed-scale/README.md)
   keep their declared sign.
@@ -244,7 +278,8 @@ can differ from the binary64 reference.
 ## Memory and verification
 
 In a full audit, Linear A or Embedding B is decoded in full. The auditor reads
-the other factor, DoRA magnitudes, optional base snapshots, base and merged in blocks
+the other factor, DoRA magnitudes, optional base snapshots, full saved modules,
+base and merged in blocks
 and never allocates a full-layer dense update. NumPy and the Rust safetensors
 validator are its only runtime dependencies; PyTorch and PEFT belong to the
 separate verification environment.
@@ -275,10 +310,12 @@ on 65,280 of those deliberately chosen boundary cases.
 - Supply the original base weights for a complete audit. The optional DoRA
   norm-only mode provides partial observations without one. A model name does not establish training
   identity, and the auditor does not reconstruct an unseen architecture.
-- Coverage is the saved A/B pairs. If both factors are absent, metadata alone
-  cannot establish that the missing pair should have existed.
-- Quantized weights, Embedding DoRA, conv/Conv1D adapters, extra trained biases,
-  modules-to-save and base-mutating initializers are unsupported. Complex
+- Coverage is the saved A/B pairs and explicit full-module state. If both
+  factors are absent, metadata alone cannot establish that a pair should have
+  existed. Saved-module selectors without an observed tensor prefix are
+  reported separately; no architecture or missing alias is inferred.
+- Quantized weights, Embedding DoRA, conv/Conv1D adapters, LoRA `bias`/`lora_bias`
+  options and base-mutating initializers are unsupported. Complex
   rank/alpha regexes and unknown configuration fields refuse explicitly.
 - DoRA uses one saved magnitude per output row and the supplied original base.
   It does not emulate producer-specific intermediate precision or reconstruct

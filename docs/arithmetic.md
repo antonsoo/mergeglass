@@ -2,8 +2,10 @@
 
 Mergeglass reads three local artifacts: the original base, one saved PEFT LoRA/DoRA
 adapter, and the actual merged checkpoint. It never loads a model class or writes
-weights. An audit requires matching complete base/merged tensor inventories and
-an exact A/B pair for every saved adapter module.
+weights. An audit requires every original base tensor in the merged inventory,
+an exact A/B pair for each saved factor module and complete explicit state for
+each observed `modules_to_save` scope. Additional merged tensors are accepted
+only as exact full-module targets saved in the adapter.
 
 For each ordinary Linear weight with `A: [rank, in]`, `B: [out, rank]`:
 
@@ -61,15 +63,76 @@ snapshot must match the supplied original weight, rounded to the snapshot's
 floating dtype, at every coordinate. Shape, nonfinite or value disagreements
 refuse the entire audit. Reports retain each snapshot's key and dtype, and all
 input files are hashed as usual. The snapshot does not replace the supplied
-original base. A standalone snapshot without factors, arbitrary full weights,
-and `modules_to_save` remain unsupported. Base-independent DoRA observations
+original base. A standalone snapshot without factors and arbitrary undeclared
+full weights remain unsupported. Base-independent DoRA observations
 refuse snapshots because their relationship to an original base is unmeasured.
 
-This extension does not reconstruct tied-weight aliases, resize vocabularies,
-or infer architecture from token IDs. Complete base/merged inventories and
-shapes must still match. Saved coordinates do not identify human-readable tokens
+Factor-adapted embedding shapes must still match the original base. Explicit
+full saved modules have the separate replacement contract below. Neither path
+reconstructs tied-weight aliases or infers architecture from token IDs.
+Saved coordinates do not identify human-readable tokens
 without a separately verified tokenizer. [Native merge controls, a sharded
 Llama save and memory measurements](../studies/embeddings/README.md).
+
+## Full saved modules
+
+PEFT's `modules_to_save` contains literal module suffixes. Its native save strips
+the training wrapper and adapter name, leaving exact tensor keys:
+
+```text
+adapter: base_model.model.<module>.<state path>
+                         |
+merged:                  +--> <module>.<state path>
+```
+
+These tensors are **absolute trained state**, including parameters and buffers.
+No A/B product or additive update is inferred for them. For floating state:
+
+```text
+target           = round_to_merged_dtype(saved_adapter_state)
+target_mismatches = count(merged != target)
+norms.error      = norm(merged - target)
+relative_error   = norms.error / norm(target), or null when target is zero
+```
+
+`norms.target_cast_drift` measures `target - saved_adapter_state` separately.
+Equality is numeric; signed zeros do not count as mismatches. Integer/bool
+state requires the target and merged dtype to match exactly, without a float
+conversion. Its mismatch counts and witnesses preserve all bits; error norms
+and relative error are null.
+
+The resolver follows PEFT's literal `endswith` module-selection rule against
+observable tensor prefixes from the base and merged inventories. It then
+requires an exact saved adapter tensor for **every** observed tensor under each
+resolved scope. There is no fuzzy tensor-name mapping. Extra payloads outside
+those scopes refuse, as do overlapping scopes or a full scope overlapping a
+factor module. The literal-path alphabet excludes wildcards and regex syntax.
+Selectors with no observed prefix are retained in
+`unmatched_saved_module_selectors`; their architecture existence is unknown.
+Native sequence classifiers can name both `classifier` and `score` while only
+one has saved state. At least one full saved tensor must resolve when selectors
+are declared.
+
+Full modules may explicitly add a merged tensor absent from the original file,
+or replace a tensor with a different shape. Their saved targets are still
+checked at every coordinate. `base_comparison_unavailable` records `absent`,
+`shape-changed`, `dtype-category-changed` or `integer-dtype-changed` as applicable.
+Original dtype/shape metadata is retained, while original-change counts are
+null. No tied alias, original head value or resized token row is invented.
+An incompatible original floating tensor is still scanned for finite values.
+Every original tensor must remain present in the merged artifact.
+
+Where base shapes and dtype categories permit comparison, the base is rounded
+to the merged dtype. `changed_from_base_elements`, `expected_change_elements`
+and `unchanged_expected_change_elements` count observed changes, required target
+changes and required changes still equal to that base. This is separate from
+the LoRA unchanged-update fraction. The `saved_modules` list and its summary
+counts are separate from factor `layers` and unadapted changes. Existing reports
+without full modules retain their original fields and measurements.
+
+The complete audit checks these targets. Base-independent DoRA norm mode
+explicitly refuses full saved modules instead of silently omitting them.
+[Native/public full-state study](../studies/saved-modules/README.md).
 
 ## Linear DoRA
 
@@ -196,8 +259,9 @@ Signed zero differences are not counted as numeric changes.
 Unadapted floating tensors are checked against the base cast to their merged
 dtype. Unadapted integer/bool tensors require identical dtypes and values;
 integer comparisons preserve values above `2**53`. Each changed tensor is
-listed with its count and one original flat-index example. Missing, extra,
-shape-incompatible or unsupported-dtype tensors refuse the entire audit.
+listed with its count and one original flat-index example. Missing original
+tensors, unexplained additions, unadapted shape changes and unsupported dtypes
+refuse the entire audit. Explicit full-module targets follow the contract above.
 
 ## Coverage and inputs
 
@@ -210,8 +274,9 @@ base_model.model.<module>.lora_B.weight
               +--> <module>.weight in base and merged checkpoints
 ```
 
-There is no suffix search or architecture import. Conv/Conv1D LoRA,
-Quantized checkpoints, extra trained biases, modules-to-save, aLoRA,
+Factor weights are never suffix-searched and no architecture is imported.
+Conv/Conv1D LoRA, quantized checkpoints, extra trained biases outside full saved
+modules, aLoRA,
 base-mutating initializers and other variant payloads refuse. Unknown adapter
 configuration fields also refuse. This version recognizes the saved configuration
 of PEFT 0.21.0; other versions can work only within that explicit field contract.

@@ -1,0 +1,7 @@
+{
+  "method": "Regenerate all native saves twice with the final unchanged producer, fixed hash seed, one CPU thread and deterministic Torch operations. Compare every file size/SHA-256 and every forward observation.",
+  "files_matched": 66,
+  "producer_script_sha256": "116c76af86e8071d70b96cf6e41b61658f4249ef1615b75b2a708dff7b9facef",
+  "producer_manifest_sha256": "ca5e35e80f49ba3999c95616bc2c261845997c044f59bb5f980615032a65d123",
+  "identical_complete_producer_receipts": true
+}

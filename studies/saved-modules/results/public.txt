@@ -1,0 +1,20 @@
+Mergeglass | saved LoRA merge audit
+
+Adapted matrices: 210 (F32: 210).
+Matrix states: 210 observed; 0 with no observed update.
+Zero-reference matrices: 0 unchanged; 0 changed.
+Gain range: 1..1; relative residual range: 5.86e-07..4.164e-06.
+
+Of 106,168,320 nonzero intended updates, 204 are unchanged (0.00%).
+Those unchanged entries contain 6.761e-16% of the reference squared norm.
+
+Full saved modules: 39,791,249 target mismatches across 56,623,104 elements in 2 tensors.
+Target = absolute adapter state rounded to merged dtype; integer/bool values are compared exactly.
+Comparable full-state target changes equal to the original base: 11,479,698.
+Original-base comparison unavailable for 1 full-state tensor(s); no missing base aliases or resized values are inferred.
+
+Relative error = ||observed change - intended update|| / ||intended update||.
+Gain = projection of the observed change onto the intended update (ideal 1).
+Checked 273 tensors; 0 unadapted tensor(s) changed.
+Equal weights alone cannot tell rounding from an omitted adapter.
+This measures saved weights, not model quality.

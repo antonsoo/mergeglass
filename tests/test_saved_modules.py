@@ -174,6 +174,27 @@ def test_base_less_norm_mode_cannot_silently_ignore_a_full_module(tmp_path: Path
         audit_dora_norms(adapter, merged)
 
 
+def test_boolean_scalar_state_is_exact_and_has_no_float_norm(tmp_path: Path) -> None:
+    base, adapter, merged = full_fixture(tmp_path)
+    for directory, stem, name, value in [
+        (base, "model", "model.classifier.enabled", False),
+        (merged, "model", "model.classifier.enabled", False),
+        (adapter, "adapter_model", "base_model.model.model.classifier.enabled", True),
+    ]:
+        path = directory / f"{stem}.safetensors"
+        data = load_file(path)
+        data[name] = np.array(value, dtype=np.bool_)
+        save_file(data, path)
+    row = next(
+        row
+        for row in audit(base, adapter, merged)["saved_modules"]
+        if row["weight"] == "model.classifier.enabled"
+    )
+    assert row["target_mismatches"] == row["unchanged_expected_change_elements"] == 1
+    assert row["norms"] is None
+    assert row["first_mismatch"] == {"flat_index": 0, "cast_target": True, "merged": False}
+
+
 def test_full_state_casting_and_zero_target_have_explicit_numeric_semantics(tmp_path: Path) -> None:
     base, adapter, merged = full_fixture(tmp_path)
     path = adapter / "adapter_model.safetensors"

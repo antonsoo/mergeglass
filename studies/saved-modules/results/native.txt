@@ -1,0 +1,25 @@
+Mergeglass | saved LoRA merge audit
+
+MODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID
+projection                   F32          64         0.0%        1  4.708e-08
+
+Of 64 nonzero intended updates, 0 are unchanged (0.00%).
+Those unchanged entries contain 0% of the reference squared norm.
+* Nonzero intended update elements equal to the dtype-cast base.
+
+Full saved modules: 64 target mismatches across 64 elements in 5 tensors.
+Target = absolute adapter state rounded to merged dtype; integer/bool values are compared exactly.
+FULL SAVED TENSOR                       DTYPE    MISMATCHES / ELEMENTS
+classifier.dense.bias                   F32             5 / 5
+classifier.dense.weight                 F32            40 / 40
+classifier.out.bias                     F32             3 / 3
+classifier.out.weight                   F32            15 / 15
+classifier.seen                         I64             1 / 1
+Comparable full-state target changes equal to the original base: 64.
+Original-base comparison unavailable for 0 full-state tensor(s); no missing base aliases or resized values are inferred.
+
+Relative error = ||observed change - intended update|| / ||intended update||.
+Gain = projection of the observed change onto the intended update (ideal 1).
+Checked 6 tensors; 0 unadapted tensor(s) changed.
+Equal weights alone cannot tell rounding from an omitted adapter.
+This measures saved weights, not model quality.

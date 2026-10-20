@@ -1,0 +1,184 @@
+{
+  "method": "Exact UTF-8 equality of complete serialized reports and both per-layer/summary terminal views in independent before/after source processes",
+  "source_modules": {
+    "before": {
+      "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+      "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "adapter.py": "9f32ae16cd7cf96a4ee119395c8efe57e23f13f9c4053fd40c915427dcf26294",
+      "audit.py": "0b4e8135227a76f61c75ca745401338933bcebbda292f30acf3776658fde70c1",
+      "cli.py": "d479ab8d5c0d9e597befb60a10467d3f7dec2a446c076707f6c2f93b98f58915",
+      "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+      "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+      "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+    },
+    "after": {
+      "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+      "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "adapter.py": "f400ec4b08df8bd6eaa35d3140d24b7cb6b7e1e5e4d9b31f1fcc14816316f194",
+      "audit.py": "14bb9c1c2549d9ac1242f78970c07914a5f64be3700c44215bc3fc4ecc8479da",
+      "cli.py": "4d86739f825d6409cbe01450bd996be16efd26bc02e5b543bbefeb0b5db8673c",
+      "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+      "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+      "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+    }
+  },
+  "script_sha256": "fbcf6bbea5feaf76d9f02ddee78e460bdc5bb8d90af1d8d8e4eb635ca9889ce5",
+  "cases": [
+    {
+      "group": "rounding",
+      "case": "merged-bf16",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "b55e098ca37a43e4b28f111b14565f38dcaa9589df76743088924b0cbac4e19c"
+    },
+    {
+      "group": "rounding",
+      "case": "merged-f16",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "24b8c9b7d3465eb1faa9acf07c6288c0d7ef34d78ea5c4000e2d7f490b3d10f4"
+    },
+    {
+      "group": "rounding",
+      "case": "merged-f32",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "4a7e441790f39a5a5da07341caadf83722c23824d0e7a8b18f457406c3ad9653"
+    },
+    {
+      "group": "rounding",
+      "case": "omitted",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "80af651ad85b89476939a0da3d41506dc4900347a7a607c0ce3853996ed6ef4a"
+    },
+    {
+      "group": "rounding",
+      "case": "unrelated-edit",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "5e325ce6a168c340ffaf91c92992c5e40b61168e618dfaac1f501b65ddb0b4ec"
+    },
+    {
+      "group": "dora",
+      "case": "as-lora-f32",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "315d597ecaeb2483452021f263e7c5473ac2facaa37f57983c2551453f3c3faf"
+    },
+    {
+      "group": "dora",
+      "case": "correct-bf16-safe-false",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "b025028c0564a092c03188581a11eb142d802b1a4f9a6e608fcd89beb402c1d3"
+    },
+    {
+      "group": "dora",
+      "case": "correct-f32-safe-false",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "b45fc73d53a2c72ec963a9d4cce931d5edf3d6c64b98ab0b7722ce962b7feea8"
+    },
+    {
+      "group": "dora",
+      "case": "omitted",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "12ac5bf713434bb12a05fc93a3021c5117fe3c0785af53242e152a9d19ed6117"
+    },
+    {
+      "group": "public",
+      "case": "merged-bf16",
+      "checked_tensors": 272,
+      "complete_reports_and_terminal_views_sha256": "7c88d72cc5d10c1e7302e25dc89de3235f98a0835d17425e7fdb23403f2c1b2d"
+    },
+    {
+      "group": "public",
+      "case": "merged-f32",
+      "checked_tensors": 272,
+      "complete_reports_and_terminal_views_sha256": "681f91ce6053baf816a3a52e61420854cb8933e2aee0cca488aefefc2a83c986"
+    },
+    {
+      "group": "embedding",
+      "case": "correct-f32-safe-false",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "9fde2cfc5d40cc71fdddfddcbe5df7fae3f72a3f37812f5e522b4339b3516f3e"
+    },
+    {
+      "group": "embedding",
+      "case": "correct-f32-safe-true",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "9fde2cfc5d40cc71fdddfddcbe5df7fae3f72a3f37812f5e522b4339b3516f3e"
+    },
+    {
+      "group": "embedding",
+      "case": "omit-embeddings-f32",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "3b7a7e6018fb43ced9ca733c7ac1944ff1d574f5ead02b61a052cee9449a1fa8"
+    },
+    {
+      "group": "embedding",
+      "case": "reverse-embeddings-f32",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "dbe2a1be3571ad010659d00befc0b613a2e9e2023cdc7f82f980a91d7f4b4609"
+    },
+    {
+      "group": "embedding",
+      "case": "correct-f16-safe-false",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "345d6e150e22d51ed0d5fceaecad9ad0a40f9d0147a442599b07e73f84a75cde"
+    },
+    {
+      "group": "embedding",
+      "case": "correct-f16-safe-true",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "e66af3de909d968622a3dae8b09315a7395ce7dbeb541b1a0ebcfb168ccc1804"
+    },
+    {
+      "group": "embedding",
+      "case": "omit-embeddings-f16",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "347ec24487c225b00a83ccdd9dc55a976681a66befd6eeddf97377b0953f51dc"
+    },
+    {
+      "group": "embedding",
+      "case": "reverse-embeddings-f16",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "167f17587f3d4e415512e6414425697abb36fdfb4cbf33e24ab43e081974a4a1"
+    },
+    {
+      "group": "embedding",
+      "case": "correct-bf16-safe-false",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "bb0fb74e417bc524a6773d232bce2e95e3b71964908964891f1b6e7289883efe"
+    },
+    {
+      "group": "embedding",
+      "case": "correct-bf16-safe-true",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "5a14226e583ea5df42c930a818b7c05515ea1cb9bd1d819c8ee7bad9f309f7ed"
+    },
+    {
+      "group": "embedding",
+      "case": "omit-embeddings-bf16",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "06f3a5704ac1513b43439d0f05fd50dacf1b057e0dd435026aca35b70ffd20d9"
+    },
+    {
+      "group": "embedding",
+      "case": "reverse-embeddings-bf16",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "d4b2455755c1b12350d2307db3382cbbb7cd2360092a215ca2626ecc6eb0e277"
+    },
+    {
+      "group": "embedding",
+      "case": "wrong-orientation-f32",
+      "checked_tensors": 4,
+      "complete_reports_and_terminal_views_sha256": "efb29c115a392f1dd87fdc976f5c6f3b317c8f3e45200c006dea0890bf8a936a"
+    },
+    {
+      "group": "embedding-transformer",
+      "case": "transformer-adapter",
+      "checked_tensors": 12,
+      "complete_reports_and_terminal_views_sha256": "516f7a7c7e925a5beb01336d2de2435c1793fd110f0c0b0cd41d067356409b3f"
+    },
+    {
+      "group": "embedding-transformer",
+      "case": "transformer-default-save",
+      "checked_tensors": 12,
+      "complete_reports_and_terminal_views_sha256": "9760b7395b42f7bcad530ded6cd64c7921923123ae7b7dda0cb80a84d358140a"
+    }
+  ]
+}

@@ -120,9 +120,10 @@ OPENBLAS_NUM_THREADS=1 python studies/embeddings/streaming.py measure /tmp/embed
   arbitrary saved full weights are not interpreted as adapters.
 - Both factor key families at one module are ambiguous and refuse, including
   square shapes. Unknown payloads and adapter variants still refuse.
-- Vocabulary resizing, missing tied-weight aliases and different base/merged
-  inventories remain unsupported. No architecture or tokenizer identity is
-  inferred from tensor shapes or module names.
+- Factor-adapted embedding shapes still require the original vocabulary.
+  [Explicit full saved modules](../saved-modules/README.md) have a separate
+  replacement contract for resized weights and added heads. No architecture,
+  missing tied alias or tokenizer identity is inferred from tensor shapes.
 - This work is available from the repository's `main` branch. No registry
   release or hosted application accompanies it. The new wheel and source
   distribution are checked independently from the working checkout; see
