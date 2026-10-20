@@ -375,8 +375,8 @@ research tools separate from the eight unchanged auditor modules in the tested
 Python 3.10/3.15 wheel installs. [Verification index](results/verification.json).
 
 [The public-file check](results/publication.json) fetched all 49 changed files
-and frozen native sources from commit `67b227b`, including both retained
-binary artifacts and the complete archive. Every file matched its reviewed
+and frozen native sources from commit `67b227b`, including the raw
+logit arrays, figure and complete archive. Every file matched its reviewed
 Git object byte for byte. This publishes source and study evidence; no registry
 release was made.
 

@@ -51,7 +51,8 @@
       "decoder-control-verification.json"
     ],
     "raw_vocabulary_controls": "../probability-controls/capture.json",
-    "reviewed_standalone_figure": "../figures/figure.json"
+    "reviewed_standalone_figure": "../figures/figure.json",
+    "public_source_and_evidence_bytes": "publication.json"
   },
   "archive": {
     "members": 649,
