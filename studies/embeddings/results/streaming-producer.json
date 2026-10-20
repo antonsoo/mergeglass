@@ -1,0 +1,10 @@
+{
+  "scope": "native PEFT merge of explicitly controlled synthetic embedding weights",
+  "shape": [
+    250003,
+    128
+  ],
+  "rank": 8,
+  "producer_sha256": "dacb551e001449636b5d08aeb3512a1f9dcb6697144cc2c2db810339d61c6137",
+  "torch": "2.14.1+cpu"
+}

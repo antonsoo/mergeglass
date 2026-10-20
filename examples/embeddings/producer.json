@@ -1,0 +1,125 @@
+{
+  "scope": "synthetic training; wrong merges are explicit authored controls, not observed incidents",
+  "seed": 91871,
+  "python": "3.12.12",
+  "libraries": {
+    "torch": "2.14.1+cpu",
+    "peft": "0.21.0",
+    "transformers": "5.20.1",
+    "safetensors": "0.8.0",
+    "numpy": "2.5.4"
+  },
+  "producer_sha256": "f5dce43881e7ee169ac14d98fa51afb3ba083313a7e351d995365bee7e9aca21",
+  "training_losses": [
+    1.634279489517212,
+    1.5615496635437012,
+    1.496111273765564,
+    1.4366391897201538,
+    1.3823935985565186,
+    1.3327490091323853,
+    1.287337303161621,
+    1.2460592985153198,
+    1.2089920043945312,
+    1.176267385482788,
+    1.1479005813598633,
+    1.1236952543258667,
+    1.1032001972198486,
+    1.0857110023498535,
+    1.0704104900360107,
+    1.0565718412399292,
+    1.0436818599700928,
+    1.0314433574676514,
+    1.0197160243988037,
+    1.0084680318832397,
+    0.997747540473938,
+    0.9876513481140137,
+    0.9782772064208984,
+    0.96968013048172
+  ],
+  "cases": {
+    "correct-f32-safe-false": "native merge; FP32 factors, selected base dtype",
+    "correct-f32-safe-true": "native merge; FP32 factors, selected base dtype",
+    "omit-embeddings-f32": "native merge after zeroing embedding A; Linear unchanged",
+    "reverse-embeddings-f32": "native merge after negating embedding A; Linear unchanged",
+    "correct-f16-safe-false": "native merge; FP32 factors, selected base dtype",
+    "correct-f16-safe-true": "native merge; FP32 factors, selected base dtype",
+    "omit-embeddings-f16": "native merge after zeroing embedding A; Linear unchanged",
+    "reverse-embeddings-f16": "native merge after negating embedding A; Linear unchanged",
+    "correct-bf16-safe-false": "native merge; FP32 factors, selected base dtype",
+    "correct-bf16-safe-true": "native merge; FP32 factors, selected base dtype",
+    "omit-embeddings-bf16": "native merge after zeroing embedding A; Linear unchanged",
+    "reverse-embeddings-bf16": "native merge after negating embedding A; Linear unchanged",
+    "wrong-orientation-f32": "native merge with square embedding replaced by base + untransposed B @ A"
+  },
+  "native_forward_differences": [
+    {
+      "case": "correct-f32-safe-false",
+      "max_absolute_difference": 5.364418029785156e-07
+    },
+    {
+      "case": "correct-f32-safe-true",
+      "max_absolute_difference": 5.364418029785156e-07
+    },
+    {
+      "case": "correct-f16-safe-false",
+      "max_absolute_difference": 0.00146484375
+    },
+    {
+      "case": "correct-f16-safe-true",
+      "max_absolute_difference": 0.0010986328125
+    },
+    {
+      "case": "correct-bf16-safe-false",
+      "max_absolute_difference": 0.01171875
+    },
+    {
+      "case": "correct-bf16-safe-true",
+      "max_absolute_difference": 0.015625
+    }
+  ],
+  "files": [
+    {
+      "file": "adapter/adapter_config.json",
+      "bytes": 1220,
+      "sha256": "1d9998db5ad816f27ff20faac38c755af775db517d4926890d83f96a70d2b7db"
+    },
+    {
+      "file": "adapter/adapter_model.safetensors",
+      "bytes": 1872,
+      "sha256": "324fb79bea40ad227bd3b54c77ed8cfe94c1a46255c9c40f75e53396203f878c"
+    },
+    {
+      "file": "base/model.safetensors",
+      "bytes": 2856,
+      "sha256": "afd15db4f4a5318b08f04f3abf8a28ebdfbef9f8c6cbedfa59b624323e0418a4"
+    },
+    {
+      "file": "correct-bf16-safe-false/model.safetensors",
+      "bytes": 1588,
+      "sha256": "e6b9ff6effa3c01aed22c890990f358a51781faddb2b71aea8da5c54196f7843"
+    },
+    {
+      "file": "correct-f32-safe-false/model.safetensors",
+      "bytes": 2856,
+      "sha256": "2ec0655b53fdd33e9df37f646bf93b2e110b9bce6a292b51af9674bf07bb4939"
+    },
+    {
+      "file": "omit-embeddings-bf16/model.safetensors",
+      "bytes": 1588,
+      "sha256": "96c11c11232e6b8fb5510296df607212509ca7f523b63f9418d03417ceebd347"
+    },
+    {
+      "file": "wrong-orientation-f32/model.safetensors",
+      "bytes": 2856,
+      "sha256": "db3cc44347b0fbffcc5fa3601bca0c75abc37aeca9d70d5d9c9f9ed253aa17dd"
+    }
+  ],
+  "selection": [
+    "base",
+    "adapter",
+    "correct-f32-safe-false",
+    "correct-bf16-safe-false",
+    "omit-embeddings-bf16",
+    "wrong-orientation-f32"
+  ]
+}

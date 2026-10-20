@@ -148,6 +148,33 @@ and training overlap are unknown. The study retains all native outputs,
 unknown outcomes, a standalone figure and an archive that reproduces its
 aggregates without a model runtime.
 
+## Token embeddings need the transpose
+
+The local source now audits **Embedding LoRA** alongside Linear LoRA. PEFT stores
+embedding weights as `[vocabulary, dimensions]`, so their update is `(B @ A).T`.
+A square matrix can hide a missing transpose: in a native controlled merge all
+121 entries change, but its gain is 0.1182 and relative residual is 1.328.
+The correct FP32 merge's residual is 6.72e-8. An omitted-embedding control changes
+the Linear layer correctly while leaving both embedding updates absent.
+
+![Actual saved-weight audit of a shape-compatible wrong embedding merge](docs/assets/embeddings.png)
+
+These are synthetic training and explicit wrong-merge controls, not measured
+incident rates. Try the included artifacts:
+
+```sh
+uv run --no-dev mergeglass examples/embeddings/base examples/embeddings/adapter examples/embeddings/wrong-orientation-f32
+```
+
+Rows and residual coordinates retain the original token indices. Default PEFT
+saves containing a base-layer copy are accepted only after checking that copy
+against the supplied original base. A 32,000,384-weight native embedding merge
+measured 44.6 MiB peak RSS at a 1 MiB block setting; its full float64 update alone
+would occupy 244 MiB. Embedding B stays decoded while vocabulary-wide A is streamed.
+[Native FP32/F16/BF16 cases, scalar oracle, memory method and limits](studies/embeddings/README.md).
+This extension is committed locally for review; no source push or registry
+release accompanies it.
+
 ## Use your checkpoints
 
 ```sh
@@ -194,7 +221,7 @@ Base --> cast to merged dtype --> compare to merge --+
   residual and the largest residual's row/column.
 - Across the checkpoint: every unadapted tensor checked against its cast base,
   with unrelated changes retained individually. Large integer values stay exact.
-- Linear LoRA and DoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
+- Linear LoRA and DoRA, Embedding LoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
   and F64 storage. Finite [signed alpha coefficients](studies/signed-scale/README.md)
   keep their declared sign.
   Unknown variants and incomplete inventories refuse.
@@ -216,7 +243,8 @@ can differ from the binary64 reference.
 
 ## Memory and verification
 
-In a full audit, only A is decoded in full. The auditor reads B, DoRA magnitudes, base and merged rows in blocks
+In a full audit, Linear A or Embedding B is decoded in full. The auditor reads
+the other factor, DoRA magnitudes, optional base snapshots, base and merged in blocks
 and never allocates a full-layer dense update. NumPy and the Rust safetensors
 validator are its only runtime dependencies; PyTorch and PEFT belong to the
 separate verification environment.
@@ -249,7 +277,7 @@ on 65,280 of those deliberately chosen boundary cases.
   identity, and the auditor does not reconstruct an unseen architecture.
 - Coverage is the saved A/B pairs. If both factors are absent, metadata alone
   cannot establish that the missing pair should have existed.
-- Quantized weights, embedding/conv/Conv1D adapters, extra trained biases,
+- Quantized weights, Embedding DoRA, conv/Conv1D adapters, extra trained biases,
   modules-to-save and base-mutating initializers are unsupported. Complex
   rank/alpha regexes and unknown configuration fields refuse explicitly.
 - DoRA uses one saved magnitude per output row and the supplied original base.

@@ -32,6 +32,45 @@ Nonzero counts refer to this declared numerical reference. Very small products
 can underflow or cancel in binary64. This is not a proof about arbitrary real
 numbers.
 
+## Token-embedding LoRA
+
+Embedding factors have native parameter keys without a `.weight` suffix:
+
+```text
+base_model.model.<module>.lora_embedding_A   [rank, vocabulary]
+base_model.model.<module>.lora_embedding_B   [dimensions, rank]
+                 |
+                 +--> <module>.weight      [vocabulary, dimensions]
+```
+
+Their update is `(float64(B) @ float64(A)).T * scale`. Weight rows are token
+indices; columns are embedding dimensions. The report adds
+`weight_layout: "embedding"` and `reference_product: "(B @ A).T"` to these
+layers. Every count, gain, norm and residual uses that orientation. A largest
+residual's coordinates refer to the saved embedding weight, never the
+untransposed product. Ordinary Linear report fields remain unchanged.
+
+Linear and Embedding LoRA can coexist, including supported rank/alpha overrides
+and rsLoRA. A module with both key families refuses even when square shapes
+would otherwise fit. Embedding DoRA is outside this contract; its normalization
+must not be interpreted as Linear output-row normalization.
+
+PEFT's default save can also include
+`base_model.model.<module>.base_layer.weight` beside the factors. Every such
+snapshot must match the supplied original weight, rounded to the snapshot's
+floating dtype, at every coordinate. Shape, nonfinite or value disagreements
+refuse the entire audit. Reports retain each snapshot's key and dtype, and all
+input files are hashed as usual. The snapshot does not replace the supplied
+original base. A standalone snapshot without factors, arbitrary full weights,
+and `modules_to_save` remain unsupported. Base-independent DoRA observations
+refuse snapshots because their relationship to an original base is unmeasured.
+
+This extension does not reconstruct tied-weight aliases, resize vocabularies,
+or infer architecture from token IDs. Complete base/merged inventories and
+shapes must still match. Saved coordinates do not identify human-readable tokens
+without a separately verified tokenizer. [Native merge controls, a sharded
+Llama save and memory measurements](../studies/embeddings/README.md).
+
 ## Linear DoRA
 
 For `use_dora: true`, every saved A/B pair also needs the native
@@ -171,7 +210,7 @@ base_model.model.<module>.lora_B.weight
               +--> <module>.weight in base and merged checkpoints
 ```
 
-There is no suffix search or architecture import. Embedding/conv/Conv1D LoRA,
+There is no suffix search or architecture import. Conv/Conv1D LoRA,
 Quantized checkpoints, extra trained biases, modules-to-save, aLoRA,
 base-mutating initializers and other variant payloads refuse. Unknown adapter
 configuration fields also refuse. This version recognizes the saved configuration
@@ -211,11 +250,15 @@ filesystem snapshot or authentication scheme.
 
 ## Memory and time
 
-Only A is decoded in full; B, DoRA magnitudes, base, merged, delta and residual are row blocks.
+Linear adapters retain A and read B rows. Embedding adapters retain B and read
+the corresponding A columns in bounded slices, one per rank component. The
+vocabulary-wide A is never decoded in full. DoRA magnitudes, optional base
+snapshots, base, merged, delta and residual are read in blocks.
 Unadapted tensors use flat blocks. `--block-mib` is a working-block target, not
 a hard process RSS cap: at least one complete matrix row is needed, and NumPy,
-BLAS, Python, headers and A consume additional memory. The default decoded A
-limit is 512 MiB per module and can be changed with `--max-adapter-mib`.
+BLAS, Python, headers and the retained factor consume additional memory. The
+default decoded fixed-factor limit is 512 MiB per module (Linear A, Embedding B)
+and can be changed with `--max-adapter-mib`.
 There is never a full-layer dense delta allocation in the auditor.
 
 Arithmetic costs approximately `O(out * in * rank)` per adapted matrix, and

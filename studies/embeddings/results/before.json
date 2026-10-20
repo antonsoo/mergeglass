@@ -1,0 +1,350 @@
+{
+  "before": true,
+  "producer": {
+    "scope": "synthetic training; wrong merges are explicit authored controls, not observed incidents",
+    "seed": 91871,
+    "python": "3.12.12",
+    "libraries": {
+      "torch": "2.14.1+cpu",
+      "peft": "0.21.0",
+      "transformers": "5.20.1",
+      "safetensors": "0.8.0",
+      "numpy": "2.5.4"
+    },
+    "producer_sha256": "f5dce43881e7ee169ac14d98fa51afb3ba083313a7e351d995365bee7e9aca21",
+    "training_losses": [
+      1.634279489517212,
+      1.5615496635437012,
+      1.496111273765564,
+      1.4366391897201538,
+      1.3823935985565186,
+      1.3327490091323853,
+      1.287337303161621,
+      1.2460592985153198,
+      1.2089920043945312,
+      1.176267385482788,
+      1.1479005813598633,
+      1.1236952543258667,
+      1.1032001972198486,
+      1.0857110023498535,
+      1.0704104900360107,
+      1.0565718412399292,
+      1.0436818599700928,
+      1.0314433574676514,
+      1.0197160243988037,
+      1.0084680318832397,
+      0.997747540473938,
+      0.9876513481140137,
+      0.9782772064208984,
+      0.96968013048172
+    ],
+    "cases": {
+      "correct-f32-safe-false": "native merge; FP32 factors, selected base dtype",
+      "correct-f32-safe-true": "native merge; FP32 factors, selected base dtype",
+      "omit-embeddings-f32": "native merge after zeroing embedding A; Linear unchanged",
+      "reverse-embeddings-f32": "native merge after negating embedding A; Linear unchanged",
+      "correct-f16-safe-false": "native merge; FP32 factors, selected base dtype",
+      "correct-f16-safe-true": "native merge; FP32 factors, selected base dtype",
+      "omit-embeddings-f16": "native merge after zeroing embedding A; Linear unchanged",
+      "reverse-embeddings-f16": "native merge after negating embedding A; Linear unchanged",
+      "correct-bf16-safe-false": "native merge; FP32 factors, selected base dtype",
+      "correct-bf16-safe-true": "native merge; FP32 factors, selected base dtype",
+      "omit-embeddings-bf16": "native merge after zeroing embedding A; Linear unchanged",
+      "reverse-embeddings-bf16": "native merge after negating embedding A; Linear unchanged",
+      "wrong-orientation-f32": "native merge with square embedding replaced by base + untransposed B @ A"
+    },
+    "native_forward_differences": [
+      {
+        "case": "correct-f32-safe-false",
+        "max_absolute_difference": 5.364418029785156e-07
+      },
+      {
+        "case": "correct-f32-safe-true",
+        "max_absolute_difference": 5.364418029785156e-07
+      },
+      {
+        "case": "correct-f16-safe-false",
+        "max_absolute_difference": 0.00146484375
+      },
+      {
+        "case": "correct-f16-safe-true",
+        "max_absolute_difference": 0.0010986328125
+      },
+      {
+        "case": "correct-bf16-safe-false",
+        "max_absolute_difference": 0.01171875
+      },
+      {
+        "case": "correct-bf16-safe-true",
+        "max_absolute_difference": 0.015625
+      }
+    ],
+    "files": [
+      {
+        "file": "adapter/adapter_config.json",
+        "bytes": 1220,
+        "sha256": "1d9998db5ad816f27ff20faac38c755af775db517d4926890d83f96a70d2b7db"
+      },
+      {
+        "file": "adapter/adapter_model.safetensors",
+        "bytes": 1872,
+        "sha256": "324fb79bea40ad227bd3b54c77ed8cfe94c1a46255c9c40f75e53396203f878c"
+      },
+      {
+        "file": "base/model.safetensors",
+        "bytes": 2856,
+        "sha256": "afd15db4f4a5318b08f04f3abf8a28ebdfbef9f8c6cbedfa59b624323e0418a4"
+      },
+      {
+        "file": "correct-bf16-safe-false/model.safetensors",
+        "bytes": 1588,
+        "sha256": "e6b9ff6effa3c01aed22c890990f358a51781faddb2b71aea8da5c54196f7843"
+      },
+      {
+        "file": "correct-bf16-safe-true/model.safetensors",
+        "bytes": 1588,
+        "sha256": "40a372bb5f018fbd9f3aa6469e171f16001cd67533f162f59682c0c4b1dd9b38"
+      },
+      {
+        "file": "correct-f16-safe-false/model.safetensors",
+        "bytes": 1580,
+        "sha256": "5c234db1cb626fa29ef88d67c409032ec4c21dcda4986f00594a2226fafcb31e"
+      },
+      {
+        "file": "correct-f16-safe-true/model.safetensors",
+        "bytes": 1580,
+        "sha256": "7c1581adbfa6565103ed0345ef3d6386fc41233fbca117994a7b8fa060551cab"
+      },
+      {
+        "file": "correct-f32-safe-false/model.safetensors",
+        "bytes": 2856,
+        "sha256": "2ec0655b53fdd33e9df37f646bf93b2e110b9bce6a292b51af9674bf07bb4939"
+      },
+      {
+        "file": "correct-f32-safe-true/model.safetensors",
+        "bytes": 2856,
+        "sha256": "2ec0655b53fdd33e9df37f646bf93b2e110b9bce6a292b51af9674bf07bb4939"
+      },
+      {
+        "file": "omit-embeddings-bf16/model.safetensors",
+        "bytes": 1588,
+        "sha256": "96c11c11232e6b8fb5510296df607212509ca7f523b63f9418d03417ceebd347"
+      },
+      {
+        "file": "omit-embeddings-f16/model.safetensors",
+        "bytes": 1580,
+        "sha256": "9f1a5463480991e18825076127bb67c1db85d91f47ad56f41d993b0a60ec6452"
+      },
+      {
+        "file": "omit-embeddings-f32/model.safetensors",
+        "bytes": 2856,
+        "sha256": "82d1de1f8078f521742f930f77dc91da87796dbfb6b149c54d4f35edb0bbbd32"
+      },
+      {
+        "file": "reverse-embeddings-bf16/model.safetensors",
+        "bytes": 1588,
+        "sha256": "e52fbc7cdd38883d62246cdeef0fcbc8d8f5c8758a1bfc3c8221a59e6070a8cd"
+      },
+      {
+        "file": "reverse-embeddings-f16/model.safetensors",
+        "bytes": 1580,
+        "sha256": "13f8edb0232f68133ae462ec6de7496769051343b8654859a0dceb8fc5d79afb"
+      },
+      {
+        "file": "reverse-embeddings-f32/model.safetensors",
+        "bytes": 2856,
+        "sha256": "28e748ac7365b17e7fae4e0a7feb033f710e7203cb50710408fd45e3ffd74997"
+      },
+      {
+        "file": "transformer-adapter/adapter_config.json",
+        "bytes": 1187,
+        "sha256": "b749955e94f6fdb318f9964fe7abc33ca2f7039496290373ac8dda5cc07629a6"
+      },
+      {
+        "file": "transformer-adapter/adapter_model.safetensors",
+        "bytes": 1400,
+        "sha256": "f20719fba2f37a81c57640b9074e0d61a8bc5549473f174cca296ae22860ae97"
+      },
+      {
+        "file": "transformer-base/config.json",
+        "bytes": 713,
+        "sha256": "21ffce25ce5a5a141ea53e0eb9b3a880f6e85b383a68e101e263996fcb37868e"
+      },
+      {
+        "file": "transformer-base/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "transformer-base/model-00001-of-00006.safetensors",
+        "bytes": 4224,
+        "sha256": "8cb19eefa356f50072581a813bb6ac2dec97af34241a45f00a0de1759f7cdf59"
+      },
+      {
+        "file": "transformer-base/model-00002-of-00006.safetensors",
+        "bytes": 3512,
+        "sha256": "2be443b8150fdfaefe4b33b6434f1fe83f8232b5098a6d72027776e44c43c4e8"
+      },
+      {
+        "file": "transformer-base/model-00003-of-00006.safetensors",
+        "bytes": 2184,
+        "sha256": "68b6a3fc5d65d2a8f2f93c114dac16e0d14351f62d8633d61bc464bbd246230f"
+      },
+      {
+        "file": "transformer-base/model-00004-of-00006.safetensors",
+        "bytes": 2184,
+        "sha256": "465595d55a9e854e7cd86d7d173965a9d05825551aec8cfecb8e6294ccb76181"
+      },
+      {
+        "file": "transformer-base/model-00005-of-00006.safetensors",
+        "bytes": 4216,
+        "sha256": "7852893d1f5cd71c18b51e196ffdc331c270376346b2a2f1e1c9239f56ebe837"
+      },
+      {
+        "file": "transformer-base/model-00006-of-00006.safetensors",
+        "bytes": 2648,
+        "sha256": "994bf3d0b5469ec65ec038da4fef58f2594f1014dfdbe7321be2453ace17c347"
+      },
+      {
+        "file": "transformer-base/model.safetensors.index.json",
+        "bytes": 1022,
+        "sha256": "d3860a9db750b4a2b2341a1c7eca45bb63330d0094af3b979531ebea7915482a"
+      },
+      {
+        "file": "transformer-default-save/adapter_config.json",
+        "bytes": 1187,
+        "sha256": "b749955e94f6fdb318f9964fe7abc33ca2f7039496290373ac8dda5cc07629a6"
+      },
+      {
+        "file": "transformer-default-save/adapter_model.safetensors",
+        "bytes": 5616,
+        "sha256": "5a1f85e383dc9acbf625abafd2b8de49dcd5de9ff9d4f1a4c8922d01c53cee22"
+      },
+      {
+        "file": "transformer-merged/config.json",
+        "bytes": 713,
+        "sha256": "21ffce25ce5a5a141ea53e0eb9b3a880f6e85b383a68e101e263996fcb37868e"
+      },
+      {
+        "file": "transformer-merged/generation_config.json",
+        "bytes": 195,
+        "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+      },
+      {
+        "file": "transformer-merged/model-00001-of-00006.safetensors",
+        "bytes": 4224,
+        "sha256": "e0151c68963c9eab4678faae1de1d47ad59327130c534e53d0a8c750f7ec3263"
+      },
+      {
+        "file": "transformer-merged/model-00002-of-00006.safetensors",
+        "bytes": 3512,
+        "sha256": "5e132f699d53fc538cc09d722da9fa364642ff0edbb63d0558932714251245e7"
+      },
+      {
+        "file": "transformer-merged/model-00003-of-00006.safetensors",
+        "bytes": 2184,
+        "sha256": "68b6a3fc5d65d2a8f2f93c114dac16e0d14351f62d8633d61bc464bbd246230f"
+      },
+      {
+        "file": "transformer-merged/model-00004-of-00006.safetensors",
+        "bytes": 2184,
+        "sha256": "465595d55a9e854e7cd86d7d173965a9d05825551aec8cfecb8e6294ccb76181"
+      },
+      {
+        "file": "transformer-merged/model-00005-of-00006.safetensors",
+        "bytes": 4216,
+        "sha256": "7852893d1f5cd71c18b51e196ffdc331c270376346b2a2f1e1c9239f56ebe837"
+      },
+      {
+        "file": "transformer-merged/model-00006-of-00006.safetensors",
+        "bytes": 2648,
+        "sha256": "994bf3d0b5469ec65ec038da4fef58f2594f1014dfdbe7321be2453ace17c347"
+      },
+      {
+        "file": "transformer-merged/model.safetensors.index.json",
+        "bytes": 1022,
+        "sha256": "d3860a9db750b4a2b2341a1c7eca45bb63330d0094af3b979531ebea7915482a"
+      },
+      {
+        "file": "wrong-orientation-f32/model.safetensors",
+        "bytes": 2856,
+        "sha256": "db3cc44347b0fbffcc5fa3601bca0c75abc37aeca9d70d5d9c9f9ed253aa17dd"
+      }
+    ]
+  },
+  "verification": "dense PyTorch complete count/norm/gain/coordinate replay; 80-digit scalar sums at every teaching embedding coordinate",
+  "decimal_embedding_coordinates": 6864,
+  "auditor_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "dd0cd2eb2be8da457c4e4c0a2713ec4b8d4776e6443f5b4ec398e26323cb7725",
+    "audit.py": "9c73589184123a42ef798807d3769e9c17d98c9e96fd9ea7b330b4005f443bfc",
+    "cli.py": "2026a96f14ad79726c148def9620d2c13f703d1b541cbc22f8d6af059ee612e7",
+    "dora_norms.py": "f7ef86ad2438c664042861625f64fae1832f342d6e00f94b4c2e2302462c8ef7",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "verifier_sha256": "24b94eed7021752ab22db328a35867c2358fadde349f4421128f2d5b3b9e2165",
+  "results": [
+    {
+      "case": "correct-f32-safe-false",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "correct-f32-safe-true",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "omit-embeddings-f32",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "reverse-embeddings-f32",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "correct-f16-safe-false",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "correct-f16-safe-true",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "omit-embeddings-f16",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "reverse-embeddings-f16",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "correct-bf16-safe-false",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "correct-bf16-safe-true",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "omit-embeddings-bf16",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "reverse-embeddings-bf16",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "wrong-orientation-f32",
+      "refusal": "Unsupported adapter tensor: base_model.model.square.lora_embedding_A"
+    },
+    {
+      "case": "transformer-merged",
+      "refusal": "Unsupported adapter tensor: base_model.model.model.embed_tokens.lora_embedding_A"
+    },
+    {
+      "case": "transformer-default-save",
+      "refusal": "Unsupported adapter tensor: base_model.model.model.embed_tokens.base_layer.weight"
+    }
+  ]
+}

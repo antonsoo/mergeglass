@@ -1,0 +1,130 @@
+[
+  {
+    "python": "3.10.21",
+    "block_mib": 1,
+    "max_adapter_mib": 1,
+    "peak_rss_kib": 39324,
+    "elapsed_seconds": 8.548862069001189,
+    "dense_float64_delta_bytes": 256003072,
+    "decoded_full_a_bytes": 16000192,
+    "decoded_full_b_bytes": 8192,
+    "torch_imported": false,
+    "summary": {
+      "adapted_tensors": 1,
+      "checked_tensors": 1,
+      "adapted_elements": 32000384,
+      "intended_nonzero_elements": 31030656,
+      "changed_adapted_elements": 7757824,
+      "unchanged_nonzero_update_elements": 23272832,
+      "unchanged_nonzero_update_fraction": 0.7499948438086517,
+      "unchanged_reference_energy_fraction": 0.5681629576674764,
+      "zero_update_tensors": 0,
+      "no_observed_update_tensors": 0,
+      "unadapted_changed_tensors": 0,
+      "unadapted_changed_elements": 0
+    },
+    "inputs": {
+      "base": [
+        {
+          "file": "model.safetensors",
+          "bytes": 64000864,
+          "sha256": "7f20acc355fb9f7d30c3f4ff3a76706e74ef0546d8d2ade23c9e7cd6e1350458"
+        }
+      ],
+      "adapter": [
+        {
+          "file": "adapter_config.json",
+          "bytes": 1129,
+          "sha256": "b73847f724228eb904aefa2dd254869b671173bcfca56c8ee0e17ed20fed7aef"
+        },
+        {
+          "file": "adapter_model.safetensors",
+          "bytes": 8004448,
+          "sha256": "f186e6893697f2a55261280c09c304fcfa822cb64793d0e6261d6a3a8986717f"
+        }
+      ],
+      "merged": [
+        {
+          "file": "model.safetensors",
+          "bytes": 64000864,
+          "sha256": "6531af22c326f10718e76c681dab9bcb5fbe58821b4e1d41c92fe66818295172"
+        }
+      ]
+    },
+    "auditor_modules": {
+      "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+      "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "adapter.py": "9f32ae16cd7cf96a4ee119395c8efe57e23f13f9c4053fd40c915427dcf26294",
+      "audit.py": "0b4e8135227a76f61c75ca745401338933bcebbda292f30acf3776658fde70c1",
+      "cli.py": "d479ab8d5c0d9e597befb60a10467d3f7dec2a446c076707f6c2f93b98f58915",
+      "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+      "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+      "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+    },
+    "oracle": "integer residue counts and exact BF16 spacing; all counts and squared norms"
+  },
+  {
+    "python": "3.10.21",
+    "block_mib": 16,
+    "max_adapter_mib": 1,
+    "peak_rss_kib": 66124,
+    "elapsed_seconds": 7.602576491000946,
+    "dense_float64_delta_bytes": 256003072,
+    "decoded_full_a_bytes": 16000192,
+    "decoded_full_b_bytes": 8192,
+    "torch_imported": false,
+    "summary": {
+      "adapted_tensors": 1,
+      "checked_tensors": 1,
+      "adapted_elements": 32000384,
+      "intended_nonzero_elements": 31030656,
+      "changed_adapted_elements": 7757824,
+      "unchanged_nonzero_update_elements": 23272832,
+      "unchanged_nonzero_update_fraction": 0.7499948438086517,
+      "unchanged_reference_energy_fraction": 0.5681629576674764,
+      "zero_update_tensors": 0,
+      "no_observed_update_tensors": 0,
+      "unadapted_changed_tensors": 0,
+      "unadapted_changed_elements": 0
+    },
+    "inputs": {
+      "base": [
+        {
+          "file": "model.safetensors",
+          "bytes": 64000864,
+          "sha256": "7f20acc355fb9f7d30c3f4ff3a76706e74ef0546d8d2ade23c9e7cd6e1350458"
+        }
+      ],
+      "adapter": [
+        {
+          "file": "adapter_config.json",
+          "bytes": 1129,
+          "sha256": "b73847f724228eb904aefa2dd254869b671173bcfca56c8ee0e17ed20fed7aef"
+        },
+        {
+          "file": "adapter_model.safetensors",
+          "bytes": 8004448,
+          "sha256": "f186e6893697f2a55261280c09c304fcfa822cb64793d0e6261d6a3a8986717f"
+        }
+      ],
+      "merged": [
+        {
+          "file": "model.safetensors",
+          "bytes": 64000864,
+          "sha256": "6531af22c326f10718e76c681dab9bcb5fbe58821b4e1d41c92fe66818295172"
+        }
+      ]
+    },
+    "auditor_modules": {
+      "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+      "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "adapter.py": "9f32ae16cd7cf96a4ee119395c8efe57e23f13f9c4053fd40c915427dcf26294",
+      "audit.py": "0b4e8135227a76f61c75ca745401338933bcebbda292f30acf3776658fde70c1",
+      "cli.py": "d479ab8d5c0d9e597befb60a10467d3f7dec2a446c076707f6c2f93b98f58915",
+      "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+      "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+      "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+    },
+    "oracle": "integer residue counts and exact BF16 spacing; all counts and squared norms"
+  }
+]

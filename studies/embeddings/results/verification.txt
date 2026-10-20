@@ -1,0 +1,19 @@
+Mergeglass | saved LoRA merge audit
+
+Embedding reference: (B @ A).T; rows are token indices, columns are dimensions.
+
+MODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID
+projection                   BF16         76         1.3%        1   0.003791
+square                       BF16          0       100.0%        0          1
+  no-observed-update
+tokens                       BF16          0       100.0%        0          1
+  no-observed-update
+
+Of 605 nonzero intended updates, 529 are unchanged (87.44%).
+Those unchanged entries contain 99.89% of the reference squared norm.
+* Nonzero intended update elements equal to the dtype-cast base.
+Relative error = ||observed change - intended update|| / ||intended update||.
+Gain = projection of the observed change onto the intended update (ideal 1).
+Checked 4 tensors; 0 unadapted tensor(s) changed.
+Equal weights alone cannot tell rounding from an omitted adapter.
+This measures saved weights, not model quality.

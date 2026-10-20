@@ -1,0 +1,148 @@
+{
+  "comparison": "exact decoded equality of all measurements, input hashes, settings and unrelated changes; arithmetic label clarified separately",
+  "cases": [
+    {
+      "group": "rounding",
+      "case": "merged-bf16",
+      "checked_tensors": 4,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "924d9c0ff608aca5817489c1f7628a6cb08a597c194e5c411601d1f53419e8b4"
+    },
+    {
+      "group": "rounding",
+      "case": "merged-f16",
+      "checked_tensors": 4,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "aa3539cb7bfb7e479a38df72fb7cc23e0f6034c816291d57934e6ec9d9785c6e"
+    },
+    {
+      "group": "rounding",
+      "case": "merged-f32",
+      "checked_tensors": 4,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "bb770417f43bc750d98dc7939bacf3003bea37c33711b5a720551e22cb9cacd4"
+    },
+    {
+      "group": "rounding",
+      "case": "omitted",
+      "checked_tensors": 4,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "7975852b343b2a4c1934e78bb91bfbe243f0cf54e8cd8db4071792217a6918f7"
+    },
+    {
+      "group": "rounding",
+      "case": "unrelated-edit",
+      "checked_tensors": 4,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "ef77d13c5ee3f8a8392554b9f0987672c805d6a05fda52b9c3f77c8dd9cc8047"
+    },
+    {
+      "group": "dora",
+      "case": "as-lora-f32",
+      "checked_tensors": 4,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "71fcdd74bf46190b526d299e9b9df3ddb8d80af71722ff5b78750996845d85cd"
+    },
+    {
+      "group": "dora",
+      "case": "correct-bf16-safe-false",
+      "checked_tensors": 4,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "52e8e7f94c2002308cb9cc6ec725c60b870d5e148f981c871bfe758981a1219b"
+    },
+    {
+      "group": "dora",
+      "case": "correct-f32-safe-false",
+      "checked_tensors": 4,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "5fdfb2d9d8682947f6085a2cddf528d8cf27a597d2494a55c060115a9f41cef0"
+    },
+    {
+      "group": "dora",
+      "case": "omitted",
+      "checked_tensors": 4,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "782e65a7ef633e2d49808e0a2b9bf1df32acea34379ba735217570f269dab214"
+    },
+    {
+      "group": "community",
+      "case": "merged-bf16",
+      "checked_tensors": 272,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "c488e05cbf3d43e0e931c85839b66afa49c881871ba02b3c836f131a88ac6fef"
+    },
+    {
+      "group": "community",
+      "case": "merged-f32",
+      "checked_tensors": 272,
+      "matched_fields": [
+        "summary",
+        "layers",
+        "unadapted_changes",
+        "inputs",
+        "settings"
+      ],
+      "matching_measurement_sha256": "7a2c351c922c88da0365a48d37b041f5f4e3abe5dd79650e7e6ee436aae957ec"
+    }
+  ]
+}

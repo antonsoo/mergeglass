@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+Audit native token-embedding LoRA factors with `(B @ A).T`, retaining token-row
+coordinates. Mix Embedding and Linear LoRA, including rsLoRA and rank/alpha
+overrides. Stream vocabulary-wide A columns and retain only embedding B;
+apply the decoded-factor limit accordingly. Validate saved base-layer snapshots
+against the supplied original base instead of ignoring them. Refuse mixed
+factor identities, Embedding DoRA, changed snapshots and unrecognized payloads.
+Include native wrong-orientation, omitted/reversed embedding and sharded Llama
+controls, an independent scalar reference and a vocabulary-scale memory replay.
+
 Add `--dora-norms ADAPTER MERGED` and `audit_dora_norms` for base-independent
 row-length observations. Use a separate partial-report schema; leave reference
 directions, complete updates and unmapped tensor comparisons unmeasured.
