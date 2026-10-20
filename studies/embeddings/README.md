@@ -127,4 +127,5 @@ OPENBLAS_NUM_THREADS=1 python studies/embeddings/streaming.py measure /tmp/embed
   release or hosted application accompanies it. The new wheel and source
   distribution are checked independently from the working checkout; see
   [package evidence](results/installed.json). That receipt records the local
-  validation stage before source publication.
+  validation stage before source publication. [Source publication](results/publication.json)
+  records the subsequent immutable GitHub byte comparisons.

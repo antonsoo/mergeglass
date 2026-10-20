@@ -1,0 +1,179 @@
+{
+  "schema": "mergeglass.source-publication.v1",
+  "repository": "https://github.com/antonsoo/mergeglass",
+  "source_commit": "4901c1b1f51c0288f4f83d7eada26975f34fc91b",
+  "remote_main": "4901c1b1f51c0288f4f83d7eada26975f34fc91b",
+  "method": "Fetch each changed file from the immutable raw GitHub commit URL and compare exact bytes with the committed checkout. No registry release or hosted application was attempted.",
+  "verified_files": [
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 3394,
+      "sha256": "c10e9af95f27116bd740326e8591b6c9ea6b9ec98aaf25c1b06eb123fc5aa6b8"
+    },
+    {
+      "file": "README.md",
+      "bytes": 17202,
+      "sha256": "4bc4dc6e7f1e0d6d17ca115adb49f8d3d8f278579f279c903670c879f3469fe0"
+    },
+    {
+      "file": "docs/arithmetic.md",
+      "bytes": 15739,
+      "sha256": "a8048b75790293b6e857158046211ec17ad07862b2329174bb41fee526f363b6"
+    },
+    {
+      "file": "docs/assets/embeddings.png",
+      "bytes": 211433,
+      "sha256": "4e823eb7e540866bb9f9a411f7d3d9ff8fb182dad4c52ec0197827e2e3f48c5b"
+    },
+    {
+      "file": "examples/embeddings/README.md",
+      "bytes": 1343,
+      "sha256": "2e8f6ba995a500ab17a82c1727accdfc9519423e4ee488505c2eb71030880fec"
+    },
+    {
+      "file": "examples/embeddings/adapter/adapter_config.json",
+      "bytes": 1220,
+      "sha256": "1d9998db5ad816f27ff20faac38c755af775db517d4926890d83f96a70d2b7db"
+    },
+    {
+      "file": "examples/embeddings/adapter/adapter_model.safetensors",
+      "bytes": 1872,
+      "sha256": "324fb79bea40ad227bd3b54c77ed8cfe94c1a46255c9c40f75e53396203f878c"
+    },
+    {
+      "file": "examples/embeddings/base/model.safetensors",
+      "bytes": 2856,
+      "sha256": "afd15db4f4a5318b08f04f3abf8a28ebdfbef9f8c6cbedfa59b624323e0418a4"
+    },
+    {
+      "file": "examples/embeddings/correct-bf16-safe-false/model.safetensors",
+      "bytes": 1588,
+      "sha256": "e6b9ff6effa3c01aed22c890990f358a51781faddb2b71aea8da5c54196f7843"
+    },
+    {
+      "file": "examples/embeddings/correct-f32-safe-false/model.safetensors",
+      "bytes": 2856,
+      "sha256": "2ec0655b53fdd33e9df37f646bf93b2e110b9bce6a292b51af9674bf07bb4939"
+    },
+    {
+      "file": "examples/embeddings/omit-embeddings-bf16/model.safetensors",
+      "bytes": 1588,
+      "sha256": "96c11c11232e6b8fb5510296df607212509ca7f523b63f9418d03417ceebd347"
+    },
+    {
+      "file": "examples/embeddings/producer.json",
+      "bytes": 4138,
+      "sha256": "c734ad2c030f1f18f9416e2b121aebc5d381e83426b07da848d8dccf79a14ddc"
+    },
+    {
+      "file": "examples/embeddings/wrong-orientation-f32/model.safetensors",
+      "bytes": 2856,
+      "sha256": "db3cc44347b0fbffcc5fa3601bca0c75abc37aeca9d70d5d9c9f9ed253aa17dd"
+    },
+    {
+      "file": "src/mergeglass/adapter.py",
+      "bytes": 9438,
+      "sha256": "9f32ae16cd7cf96a4ee119395c8efe57e23f13f9c4053fd40c915427dcf26294"
+    },
+    {
+      "file": "src/mergeglass/audit.py",
+      "bytes": 21222,
+      "sha256": "0b4e8135227a76f61c75ca745401338933bcebbda292f30acf3776658fde70c1"
+    },
+    {
+      "file": "src/mergeglass/cli.py",
+      "bytes": 12364,
+      "sha256": "d479ab8d5c0d9e597befb60a10467d3f7dec2a446c076707f6c2f93b98f58915"
+    },
+    {
+      "file": "src/mergeglass/dora_norms.py",
+      "bytes": 4932,
+      "sha256": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f"
+    },
+    {
+      "file": "studies/embeddings/README.md",
+      "bytes": 7583,
+      "sha256": "a1540f2f87e6e3e8d765313c26c4053d66ff909f9ee12c503ed65e199553fa34"
+    },
+    {
+      "file": "studies/embeddings/produce.py",
+      "bytes": 7578,
+      "sha256": "f5dce43881e7ee169ac14d98fa51afb3ba083313a7e351d995365bee7e9aca21"
+    },
+    {
+      "file": "studies/embeddings/results/before.json",
+      "bytes": 13225,
+      "sha256": "ce93104d1a8037a31ef66bead97070273fd42ca0a3329395098c40e2082469ff"
+    },
+    {
+      "file": "studies/embeddings/results/installed-310-tests.txt",
+      "bytes": 180,
+      "sha256": "11eb5c53c9ba5ab3c29613024ec203b27ef9edfbdbdcd1dd5e7c9aaa9430ab5c"
+    },
+    {
+      "file": "studies/embeddings/results/installed-315-tests.txt",
+      "bytes": 180,
+      "sha256": "ba7ab768919efacef0cbc76913c04b87f93fa6cf8039997a5fada7f17f2685b3"
+    },
+    {
+      "file": "studies/embeddings/results/installed.json",
+      "bytes": 16311,
+      "sha256": "05d0b15eda58cb3097b049c9b6061282dc626c6098bacba77a7519dcaebb20bd"
+    },
+    {
+      "file": "studies/embeddings/results/legacy.json",
+      "bytes": 3901,
+      "sha256": "5055ffc9c74796e24d78aa206d22d526641b64b28239ba1655f1861d9585d4cb"
+    },
+    {
+      "file": "studies/embeddings/results/reproduction.json",
+      "bytes": 228,
+      "sha256": "cdf7fd1bfacd3da4b0aeb92311972709055555b1bb8441c7be2d7dd4bb0b9a64"
+    },
+    {
+      "file": "studies/embeddings/results/streaming-producer.json",
+      "bytes": 253,
+      "sha256": "8068cd748f0d91023857a32064fd9df325ef740c155e14a45f0417cee8595c2b"
+    },
+    {
+      "file": "studies/embeddings/results/streaming-repeat.json",
+      "bytes": 4928,
+      "sha256": "fbf5fe2ca7c49f38559639f5765a8be70eaa55507c69fdec3c4f2c58ed8632b5"
+    },
+    {
+      "file": "studies/embeddings/results/streaming.json",
+      "bytes": 4928,
+      "sha256": "3657ce01478c82f26a07c20b01e152ca025da401c59fcda1e77fa79b71b3d80c"
+    },
+    {
+      "file": "studies/embeddings/results/verification.json",
+      "bytes": 50718,
+      "sha256": "cf32c3659937bbd282526c5c8a81424cc7c94f74d745c43217e40571e4ac351b"
+    },
+    {
+      "file": "studies/embeddings/results/verification.txt",
+      "bytes": 989,
+      "sha256": "558bfa61adee908599fa85f8cd6d70e2028a204bd42f8ccd056c5fb436a96b50"
+    },
+    {
+      "file": "studies/embeddings/streaming.py",
+      "bytes": 6437,
+      "sha256": "dacb551e001449636b5d08aeb3512a1f9dcb6697144cc2c2db810339d61c6137"
+    },
+    {
+      "file": "studies/embeddings/verify.py",
+      "bytes": 9020,
+      "sha256": "24b94eed7021752ab22db328a35867c2358fadde349f4421128f2d5b3b9e2165"
+    },
+    {
+      "file": "tests/test_dora_norms.py",
+      "bytes": 8055,
+      "sha256": "5ad96f59269a40d4f1e2e8d115fdc3b99c9947f6e252a3ab39466bc0068ee015"
+    },
+    {
+      "file": "tests/test_embeddings.py",
+      "bytes": 8853,
+      "sha256": "32ec0e2f754806428cc9378181a521854c4a2f994a2878053ab79698f5f3613a"
+    }
+  ]
+}
