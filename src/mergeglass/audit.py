@@ -9,7 +9,7 @@ from typing import Any
 
 import numpy as np
 
-from .adapter import Pair, adapter_pairs
+from .adapter import Pair, SavedTensor, adapter_pairs, saved_modules
 from .dora_rows import DoraRows
 from .storage import FLOAT_DTYPES, AuditError, Checkpoint, FloatArray, Tensor, cast
 
@@ -111,11 +111,11 @@ def _energy_fraction(reference: Squares, unchanged: Squares) -> float | None:
     return min(1.0, ratio) ** 2
 
 
-def _compatible(base: Tensor, merged: Tensor) -> None:
+def _compatible(base: Tensor, merged: Tensor, *, role: str = "Base") -> None:
     if base.shape != merged.shape:
-        raise AuditError(f"Base/merged shape mismatch: {base.name}")
+        raise AuditError(f"{role}/merged shape mismatch: {base.name}")
     if (base.dtype in FLOAT_DTYPES) != (merged.dtype in FLOAT_DTYPES):
-        raise AuditError(f"Base/merged dtype category mismatch: {base.name}")
+        raise AuditError(f"{role}/merged dtype category mismatch: {base.name}")
     if base.dtype not in FLOAT_DTYPES and base.dtype != merged.dtype:
         raise AuditError(f"Integer/bool dtype changes are unsupported: {base.name}")
 
@@ -341,6 +341,95 @@ def _unadapted(base: Tensor, merged: Tensor, elements: int) -> dict[str, Any] | 
     }
 
 
+def _saved_tensor(
+    saved: SavedTensor, base: Tensor | None, merged: Tensor, elements: int
+) -> dict[str, Any]:
+    """Full trained state is an absolute target, never a low-rank update."""
+    target = saved.tensor
+    _compatible(target, merged, role="Saved-module")
+    floating = target.dtype in FLOAT_DTYPES
+    unavailable = (
+        "absent"
+        if base is None
+        else "shape-changed"
+        if base.shape != merged.shape
+        else "dtype-category-changed"
+        if (base.dtype in FLOAT_DTYPES) != floating
+        else "integer-dtype-changed"
+        if not floating and base.dtype != merged.dtype
+        else None
+    )
+    comparable = unavailable is None
+    # A replacement with a different shape still cannot hide nonfinite base input.
+    if base is not None and not comparable and base.dtype in FLOAT_DTYPES:
+        for start in range(0, base.elements, elements):
+            base.floats(start, min(elements, base.elements - start))
+    norms = {name: Squares() for name in ("target", "error", "target_cast_drift")}
+    mismatches = changed = intended = unchanged = 0
+    first = None
+    for start in range(0, target.elements, elements):
+        count = min(elements, target.elements - start)
+        if floating:
+            original = target.floats(start, count)
+            expected = cast(original, merged.dtype)
+            if not np.isfinite(expected).all():
+                raise AuditError(
+                    f"Saved module conversion overflows the merged dtype: {saved.weight}"
+                )
+            after = merged.floats(start, count)
+            norms["target"].add(expected)
+            norms["error"].add(after - expected)
+            norms["target_cast_drift"].add(expected - original)
+        else:
+            # Preserve integer identity above 2**53, including scalar buffers.
+            expected = target.raw(start, count)
+            after = merged.raw(start, count)
+        different = after != expected
+        mismatches += int(np.count_nonzero(different))
+        if first is None and different.any():
+            index = int(np.flatnonzero(different)[0])
+            first = {
+                "flat_index": start + index,
+                "cast_target": expected[index].item(),
+                "merged": after[index].item(),
+            }
+        if comparable:
+            assert base is not None
+            if floating:
+                baseline = cast(base.floats(start, count), merged.dtype)
+                if not np.isfinite(baseline).all():
+                    raise AuditError(f"Base conversion overflows the merged dtype: {saved.weight}")
+            else:
+                baseline = base.raw(start, count)
+            intended_change = expected != baseline
+            same_as_base = after == baseline
+            changed += int(np.count_nonzero(~same_as_base))
+            intended += int(np.count_nonzero(intended_change))
+            unchanged += int(np.count_nonzero(intended_change & same_as_base))
+    measured = {name: value.norm() for name, value in norms.items()} if floating else None
+    return {
+        "module": saved.module,
+        "weight": saved.weight,
+        "shape": list(merged.shape),
+        "elements": merged.elements,
+        "adapter_dtype": target.dtype,
+        "merged_dtype": merged.dtype,
+        "base_dtype": None if base is None else base.dtype,
+        "base_shape": None if base is None else list(base.shape),
+        "base_comparison_unavailable": unavailable,
+        "status": "differs-from-saved-module" if mismatches else "matches-saved-module",
+        "target_mismatches": mismatches,
+        "norms": measured,
+        "relative_error": (
+            _ratio(measured["error"], measured["target"]) if measured is not None else None
+        ),
+        "changed_from_base_elements": changed if comparable else None,
+        "expected_change_elements": intended if comparable else None,
+        "unchanged_expected_change_elements": unchanged if comparable else None,
+        "first_mismatch": first,
+    }
+
+
 def audit(
     base: str | Path,
     adapter: str | Path,
@@ -359,23 +448,43 @@ def audit(
         "merged": Checkpoint(merged),
     }
     before, update, after = inputs["base"], inputs["adapter"], inputs["merged"]
-    if before.tensors.keys() != after.tensors.keys():
-        missing = sorted(before.tensors.keys() - after.tensors.keys())
-        extra = sorted(after.tensors.keys() - before.tensors.keys())
+    full = saved_modules(update, before, after)
+    replacements = {saved.weight: saved for saved in full.tensors}
+    missing = sorted(before.tensors.keys() - after.tensors.keys())
+    extra = sorted(after.tensors.keys() - before.tensors.keys() - replacements.keys())
+    if missing or extra:
         raise AuditError(
             f"Base/merged tensor inventories differ; missing={missing[:5]}, extra={extra[:5]}"
         )
-    pairs = adapter_pairs(update, before)
+    pairs = adapter_pairs(
+        update, before, full_weights=frozenset(saved.tensor.name for saved in full.tensors)
+    )
+    for pair in pairs:
+        if any(
+            pair.module == saved.module
+            or pair.module.startswith(saved.module + ".")
+            or saved.module.startswith(pair.module + ".")
+            for saved in full.tensors
+        ):
+            raise AuditError(f"LoRA target overlaps a full saved module: {pair.module}")
     by_weight = {pair.weight: pair for pair in pairs}
     # Workspace target for the several simultaneous binary64 blocks. A whole
     # row and rank-wide factor row are the minimum; the fixed factor has a separate limit.
     elements = max(1, block_mib * 1024 * 1024 // (8 * 10))
     layers = []
+    full_results = []
     unrelated = []
     with np.errstate(over="raise", invalid="raise", divide="raise"):
         try:
-            for name, tensor in sorted(before.tensors.items()):
-                counterpart = after.tensors[name]
+            for name, counterpart in sorted(after.tensors.items()):
+                if name in replacements:
+                    full_results.append(
+                        _saved_tensor(
+                            replacements[name], before.tensors.get(name), counterpart, elements
+                        )
+                    )
+                    continue
+                tensor = before.tensors[name]
                 _compatible(tensor, counterpart)
                 if name in by_weight:
                     layers.append(
@@ -421,6 +530,22 @@ def audit(
             ),
             **(
                 {
+                    "saved_modules": (
+                        "absolute saved state, rounded to merged dtype; numeric equality, "
+                        "not a LoRA delta; integer/bool values require identical dtype and "
+                        "exact values without float conversion; original base comparisons "
+                        "are unavailable for absent or incompatible original tensors"
+                    ),
+                    "scope": (
+                        "saved Linear LoRA/DoRA, Embedding LoRA and explicit full modules; "
+                        "no architecture execution or quality estimate"
+                    ),
+                }
+                if full_results
+                else {}
+            ),
+            **(
+                {
                     "adapter_base_snapshots": (
                         "saved <module>.base_layer.weight must equal the supplied original base "
                         "rounded to snapshot dtype; not a replacement weight or inferred base"
@@ -445,7 +570,7 @@ def audit(
         "settings": {"block_mib": block_mib, "max_adapter_mib": max_adapter_mib},
         "summary": {
             "adapted_tensors": len(layers),
-            "checked_tensors": len(before.tensors),
+            "checked_tensors": len(after.tensors),
             "adapted_elements": sum(layer["elements"] for layer in layers),
             "intended_nonzero_elements": sum(
                 layer["intended_nonzero_elements"] for layer in layers
@@ -465,8 +590,30 @@ def audit(
             ),
             "unadapted_changed_tensors": len(unrelated),
             "unadapted_changed_elements": sum(layer["changed_elements"] for layer in unrelated),
+            **(
+                {
+                    "saved_module_tensors": len(full_results),
+                    "saved_module_elements": sum(row["elements"] for row in full_results),
+                    "saved_module_target_mismatches": sum(
+                        row["target_mismatches"] for row in full_results
+                    ),
+                    "saved_module_base_comparable_tensors": sum(
+                        row["base_comparison_unavailable"] is None for row in full_results
+                    ),
+                }
+                if full_results
+                else {}
+            ),
         },
         "layers": layers,
+        **(
+            {
+                "saved_modules": full_results,
+                "unmatched_saved_module_selectors": list(full.unmatched_selectors),
+            }
+            if full_results
+            else {}
+        ),
         "unadapted_changes": unrelated,
         "limitations": [
             "Supplied base identity and training provenance are not independently established.",
@@ -477,5 +624,15 @@ def audit(
             "Operation order and matmul precision can differ from the producer, notably at ties.",
             "Weight-space changes and residuals do not establish generation or task quality.",
             "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit.",
+            *(
+                [
+                    "Full modules are absolute adapter state, not inferred additive updates.",
+                    "Absent original aliases and resized original values are not reconstructed.",
+                    "Unmatched selectors have no observable tensor prefix; "
+                    "module existence is unknown.",
+                ]
+                if full_results
+                else []
+            ),
         ],
     }

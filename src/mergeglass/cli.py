@@ -147,6 +147,44 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
     lines.extend(_dora_row_lines(report["layers"]))
     if not summary_only:
         lines.append("* Nonzero intended update elements equal to the dtype-cast base.")
+    if report.get("saved_modules"):
+        saved = report["saved_modules"]
+        lines.extend(
+            [
+                "",
+                f"Full saved modules: {summary['saved_module_target_mismatches']:,} target "
+                f"mismatches across {summary['saved_module_elements']:,} elements in "
+                f"{summary['saved_module_tensors']:,} tensors.",
+                "Target = absolute adapter state rounded to merged dtype; "
+                "integer/bool values are compared exactly.",
+            ]
+        )
+        if not summary_only:
+            lines.append("FULL SAVED TENSOR                       DTYPE    MISMATCHES / ELEMENTS")
+            for row in saved:
+                name = ascii(row["weight"])[1:-1]
+                if len(name) > 38:
+                    name = "..." + name[-35:]
+                lines.append(
+                    f"{name:<39} {row['merged_dtype']:<6} "
+                    f"{row['target_mismatches']:>10,} / {row['elements']:,}"
+                )
+        missing = sum(row["unchanged_expected_change_elements"] or 0 for row in saved)
+        unavailable = sum(row["base_comparison_unavailable"] is not None for row in saved)
+        lines.extend(
+            [
+                f"Comparable full-state target changes equal to the original base: {missing:,}.",
+                f"Original-base comparison unavailable for {unavailable:,} full-state tensor(s); "
+                "no missing base aliases or resized values are inferred.",
+            ]
+        )
+        if report["unmatched_saved_module_selectors"]:
+            lines.append(
+                "Saved-module selectors with no observed tensor prefix: "
+                + ", ".join(ascii(s) for s in report["unmatched_saved_module_selectors"])
+                + "."
+            )
+        lines.append("")
     lines.extend(
         [
             "Relative error = ||observed change - intended update|| / ||intended update||.",

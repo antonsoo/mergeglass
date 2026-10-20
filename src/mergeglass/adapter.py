@@ -16,7 +16,6 @@ UNSUPPORTED = {
     "use_bdlora",
     "lora_bias",
     "fan_in_fan_out",
-    "modules_to_save",
     "layer_replication",
     "trainable_token_indices",
     "target_parameters",
@@ -46,6 +45,7 @@ KNOWN = UNSUPPORTED | {
     "lora_dropout",
     "bias",
     "target_modules",
+    "modules_to_save",
     "exclude_modules",
     "layers_to_transform",
     "layers_pattern",
@@ -132,12 +132,72 @@ class Pair:
     base_snapshot: Tensor | None = None
 
 
+@dataclass(frozen=True)
+class SavedTensor:
+    module: str
+    weight: str
+    tensor: Tensor
+
+
+@dataclass(frozen=True)
+class SavedModules:
+    tensors: tuple[SavedTensor, ...] = ()
+    unmatched_selectors: tuple[str, ...] = ()
+
+
+def _saved_selectors(config: dict[str, Any]) -> list[str]:
+    value = config.get("modules_to_save")
+    if value is None:
+        return []
+    if not isinstance(value, list) or any(
+        not isinstance(path, str) or not LITERAL_PATH.fullmatch(path) for path in value
+    ):
+        raise AuditError("modules_to_save must be a list of literal module paths or null")
+    return list(dict.fromkeys(value))
+
+
+def saved_modules(adapter: Checkpoint, base: Checkpoint, merged: Checkpoint) -> SavedModules:
+    """Map full saved state to exact names, including explicitly added weights.
+
+    PEFT selects modules with literal string suffixes, then strips its wrapper
+    and adapter name when saving their complete state_dict. Checkpoint tensors
+    establish observable module prefixes, not an architecture or tied aliases.
+    """
+    selectors = _saved_selectors(adapter.config)
+    if not selectors:
+        return SavedModules()
+    names = base.tensors.keys() | merged.tensors.keys()
+    prefixes = {name[:index] for name in names for index, char in enumerate(name) if char == "."}
+    modules = sorted(path for path in prefixes if any(path.endswith(s) for s in selectors))
+    for index, path in enumerate(modules):
+        if any(other.startswith(path + ".") for other in modules[index + 1 :]):
+            raise AuditError(f"Overlapping modules_to_save scopes are unsupported: {path}")
+    result = []
+    for module in modules:
+        for name in sorted(name for name in names if name.startswith(module + ".")):
+            key = "base_model.model." + name
+            if key not in adapter.tensors:
+                raise AuditError(f"Incomplete saved module; missing adapter tensor: {key}")
+            result.append(SavedTensor(module, name, adapter.tensors[key]))
+    if not result:
+        raise AuditError("No saved module tensors found for modules_to_save")
+    return SavedModules(
+        tuple(result), tuple(s for s in selectors if not any(m.endswith(s) for m in modules))
+    )
+
+
 def adapter_pairs(
-    adapter: Checkpoint, base: Checkpoint, *, weight_role: str = "base"
+    adapter: Checkpoint,
+    base: Checkpoint,
+    *,
+    weight_role: str = "base",
+    full_weights: frozenset[str] = frozenset(),
 ) -> list[Pair]:
     config = adapter.config
     if config.get("peft_type") != "LORA":
         raise AuditError("Only PEFT LORA adapters are supported")
+    if _saved_selectors(config) and not full_weights:
+        raise AuditError("Full saved modules require the complete base/adapter/merged audit")
     unknown = config.keys() - KNOWN
     if unknown:
         raise AuditError("Unknown adapter configuration fields: " + ", ".join(sorted(unknown)))
@@ -174,6 +234,8 @@ def adapter_pairs(
     alphas = _pattern(config, "alpha_pattern")
     modules: dict[str, dict[str, Tensor]] = {}
     for name, tensor in sorted(adapter.tensors.items()):
+        if name in full_weights:
+            continue
         match = PAIR.fullmatch(name)
         if match is None:
             embedding_match = EMBEDDING_PAIR.fullmatch(name)
