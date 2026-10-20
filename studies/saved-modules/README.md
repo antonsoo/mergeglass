@@ -188,3 +188,7 @@ retained hashes when comparing different NumPy versions.
   report a factor-only observation for an adapter with additional trained state.
 - No architecture execution, quality estimate, training identity certification,
   registry release or hosted application is part of the lightweight audit.
+
+The complete feature and evidence are published in the repository's `main`
+branch. [Immutable source-byte comparisons](results/publication.json) cover all
+40 changed files at `68fc880`; package and model-reload checks remain separate.
