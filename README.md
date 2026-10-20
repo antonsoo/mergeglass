@@ -233,7 +233,9 @@ a 16,777,216-weight projection at about 37 MiB peak RSS with a 1 MiB block setti
 its full binary64 update would occupy 128 MiB.
 [Supported layouts and input requirements](docs/conv1d.md),
 [native/public evidence and reproduction](studies/conv1d/README.md).
-This addition is local source work; no registry release accompanies it.
+This addition is available in the public source; no registry release accompanies it.
+[Immutable public bytes and fresh-clone replay](studies/conv1d/results/publication.json)
+verify the published implementation separately from package publication.
 
 ## Use your checkpoints
 

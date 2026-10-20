@@ -8,7 +8,9 @@ failure. This extension resolves supported standard module layouts from declared
 model metadata, records the evidence and audits the actual saved weights.
 It never chooses an orientation by a better residual.
 
-The change is local source work. No registry release or deployment accompanies
+The change is available in public source. The [publication receipt](results/publication.json)
+byte-matches 43 immutable public files at `e191b4f` and records a fresh public
+clone's complete example report. No registry release or deployment accompanies
 it. [Input contract and limits](../../docs/conv1d.md).
 
 ## Native synthetic producer

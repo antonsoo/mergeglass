@@ -16,7 +16,8 @@ the full verified source commit, Git archive digest and package hashes.
 | Package contents | Both wheels match source runtime hashes and are byte-identical; both sdists retain exact native example bytes and have identical file payloads |
 | Archive wheel consumer | Fresh Python 3.10 wheel install runs the wrong-orientation example with isolated imports outside the checkout |
 | Screenshot | [Actual CLI output](assets/conv1d.png), inspected for readable names, measurements and limitations |
-| Publication | Local commits only; no push, registry release, tag or hosted update |
+| Public source | 43 immutable files byte-match published revision `e191b4f`; fresh public clone reproduces the complete checked example report |
+| Registry / service | No registry release, tag or hosted application update |
 
 Build command: `uv build`. Output directory: `dist/`, containing the wheel and
 source distribution. There is no website build or deployment in this change.
@@ -40,5 +41,15 @@ Suggested topics: `lora`, `dora`, `peft`, `safetensors`, `model-merging`, `bfloa
 318cb53 feat: audit standard GPT Conv1D LoRA in saved coordinates
 ```
 
-The final documentation commit contains this verification handoff; no runtime
-code changes follow the archived implementation.
+The documentation commits contain this verification handoff; no runtime
+code changes follow the archived implementation. Source publication was
+authorized after the local verification. The earlier clean-source receipt's
+local-only status describes the time that archive was checked.
+
+The [public-source receipt](../studies/conv1d/results/publication.json) identifies
+revision `e191b4ff2881e7e898bcf8357cdac83461214fca`, GitHub's matching `main` head,
+and 43 downloaded files checked against the exact local commit bytes. A fresh
+public clone completed `uv sync --locked --no-dev` and the runnable Conv1D
+control. Its entire report equals the already checked local example. These
+checks establish public source delivery; they do not imply a PyPI release or
+that remote CI executed successfully.
