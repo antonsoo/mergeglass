@@ -16,8 +16,124 @@ def close(actual: float, expected: float) -> None:
     assert math.isclose(actual, expected, rel_tol=1e-12, abs_tol=1e-15), (actual, expected)
 
 
+def check_categories(db: sqlite3.Connection, profiles: list[str], report: dict) -> None:
+    categories = {
+        row[0]
+        for table in ("generation", "teacher")
+        for row in db.execute(f"SELECT DISTINCT json_extract(payload,'$.category') FROM {table}")
+    }
+    assert set(report["generation_by_category"]) == categories
+    assert set(report["teacher_forced_by_category"]) == categories
+    for category in categories:
+        generated = report["generation_by_category"][category]
+        targets = report["teacher_forced_by_category"][category]
+        assert set(generated) == set(targets) == set(profiles)
+        for profile in profiles:
+            observed = generated[profile]
+            n, accepted, rejected, known, tokens = db.execute(
+                "SELECT COUNT(*),COALESCE(SUM(CASE WHEN json_extract(payload,'$.grade.score')=1 "
+                "THEN 1 ELSE 0 END),0),COALESCE(SUM(CASE WHEN "
+                "json_extract(payload,'$.grade.score')=0 THEN 1 ELSE 0 END),0),"
+                "COUNT(json_extract(payload,'$.grade.score')),COALESCE(SUM("
+                "json_array_length(json_extract(payload,'$.generated_ids'))),0) "
+                "FROM generation WHERE profile=? AND json_extract(payload,'$.category')=?",
+                (profile, category),
+            ).fetchone()
+            assert (
+                observed["questions"],
+                observed["accepted"],
+                observed["rejected"],
+                observed["ungraded"],
+                observed["generated_tokens"],
+            ) == (n, accepted, rejected, n - known, tokens)
+            if known:
+                close(observed["accepted_fraction_of_graded"], accepted / known)
+            else:
+                assert observed["accepted_fraction_of_graded"] is None
+            for column, path in (("statuses", "$.grade.status"), ("stops", "$.stop")):
+                expected = dict(
+                    db.execute(
+                        "SELECT json_extract(payload,?),COUNT(*) FROM generation WHERE "
+                        "profile=? AND json_extract(payload,'$.category')=? "
+                        "GROUP BY json_extract(payload,?)",
+                        (path, profile, category, path),
+                    )
+                )
+                assert observed[column] == expected
+            prefix = f'$.profiles."{profile}".'
+            n, mean, weighted, tokens, matches, target_ids = db.execute(
+                "SELECT COUNT(*),AVG(json_extract(payload,?)),SUM(json_extract(payload,?))/"
+                "SUM(json_extract(payload,?)),SUM(json_extract(payload,?)),"
+                "SUM(json_extract(payload,?)),SUM(json_array_length("
+                "json_extract(payload,'$.target_ids'))) "
+                "FROM teacher WHERE json_extract(payload,'$.category')=?",
+                tuple(
+                    prefix + field
+                    for field in (
+                        "mean_target_nll_nats",
+                        "target_nll_sum_nats",
+                        "target_tokens",
+                        "target_tokens",
+                        "teacher_forced_target_argmax_matches",
+                    )
+                )
+                + (category,),
+            ).fetchone()
+            observed = targets[profile]
+            assert n > 0 and observed["questions"] == n
+            close(observed["mean_question_target_nll_nats"], mean)
+            close(observed["token_weighted_target_nll_nats"], weighted)
+            assert observed["target_tokens"] == tokens == target_ids
+            assert observed["teacher_forced_target_argmax_matches"] == matches
+
+
+def check_budget(db: sqlite3.Connection, prompts: list[dict], report: dict) -> None:
+    db.execute("CREATE TABLE prompts(id TEXT PRIMARY KEY, payload TEXT)")
+    db.executemany(
+        "INSERT INTO prompts VALUES (?,?)", [(row["id"], json.dumps(row)) for row in prompts]
+    )
+    for table in ("generation", "teacher"):
+        rows, joined, mismatched = db.execute(
+            "SELECT (SELECT COUNT(*) FROM " + table + "),COUNT(*),COALESCE(SUM("
+            "json_extract(a.payload,'$.input_tokens') IS NOT "
+            "json_array_length(json_extract(p.payload,'$.input_ids'))),0) "
+            "FROM " + table + " a JOIN prompts p ON json_extract(a.payload,'$.id')=p.id"
+        ).fetchone()
+        assert rows == joined and mismatched == 0
+    observed = report["context_and_generation_budget"]
+    longest = db.execute(
+        "SELECT MAX(json_array_length(json_extract(payload,'$.input_ids'))) FROM prompts"
+    ).fetchone()[0]
+    assert observed["max_prompt_tokens"] == longest
+    target, combined = db.execute(
+        "SELECT MAX(json_array_length(json_extract(payload,'$.target_ids'))),"
+        "MAX(json_extract(payload,'$.input_tokens')+"
+        "json_array_length(json_extract(payload,'$.target_ids'))) FROM teacher"
+    ).fetchone()
+    assert observed["max_selected_target_tokens_including_eos"] == target
+    assert observed["max_prompt_plus_selected_target_tokens"] == combined
+    cap = json.loads((Path(__file__).parent / "protocol.json").read_text())["generation"][
+        "max_new_tokens"
+    ]
+    assert observed["generation_token_cap"] == cap
+    over_budget = [
+        row[0]
+        for row in db.execute(
+            "SELECT json_extract(payload,'$.id') FROM teacher "
+            "WHERE json_array_length(json_extract(payload,'$.target_ids'))>? ORDER BY rowid",
+            (cap,),
+        )
+    ]
+    assert observed["selected_references_exceeding_generation_budget"] == over_budget
+
+
 def check(
-    generations: dict, rows: list[dict], profiles: list[str], report: dict | None = None
+    generations: dict,
+    rows: list[dict],
+    profiles: list[str],
+    report: dict | None = None,
+    *,
+    prompts: list[dict] | None = None,
 ) -> dict:
     db = sqlite3.connect(":memory:")
     db.execute("CREATE TABLE generation(profile TEXT, id TEXT, payload TEXT)")
@@ -180,6 +296,10 @@ def check(
             assert paired["identical_token_sequences"] == identical
             assert paired["questions"] == len(generations[reference])
             assert paired["different_token_sequences"] == paired["questions"] - identical
+    if report is not None:
+        assert prompts is not None
+        check_categories(db, profiles, report)
+        check_budget(db, prompts, report)
     db.close()
     return {
         "sqlite": sqlite3.sqlite_version,
@@ -187,6 +307,7 @@ def check(
         "generation_rows": sum(len(r) for r in generations.values()),
         "teacher_questions": len(rows),
         "independent_sql_queries_agree": True,
+        "category_and_context_budget_checked": report is not None,
         "float_tolerance": {"relative": 1e-12, "absolute": 1e-15},
     }
 
@@ -224,7 +345,11 @@ def main() -> None:
         assert report["weight_states"] == gen_receipt["weight_states"]
         assert report["versions"] == gen_receipt["contract"]["versions"]
     result = check(
-        generations, teacher_data["all-profiles"], gen_receipt["contract"]["profiles"], report
+        generations,
+        teacher_data["all-profiles"],
+        gen_receipt["contract"]["profiles"],
+        report,
+        prompts=prompts,
     )
     result.update(
         {

@@ -26,6 +26,7 @@ def main() -> None:
     checked = json.loads(args.independent_check.read_text())
     assert checked["serialized_summary_sha256"] == summary_hash
     assert checked["independent_sql_queries_agree"]
+    assert checked["category_and_context_budget_checked"] is True
     assert checked["generation_profiles"] == 6 and checked["generation_rows"] == 3948
     assert checked["teacher_questions"] == 656
     assert checked["analysis_sha256"] == report["analysis_sha256"]
