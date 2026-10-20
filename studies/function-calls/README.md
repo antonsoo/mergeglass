@@ -127,8 +127,8 @@ coordinator during import; its earlier worker can continue computing. The
 master subsequently validates those copied receipts through its normal resume
 path. No source output is changed or selected by its score.
 
-`run_future.py` can compute a later source-order interval for a running
-single-profile coordinator. It retains the native child's exit status, checks
+`run_future.py` can compute a later source-order interval for the currently
+active profile of a running coordinator. It retains the native child's exit status, checks
 the same prompt/source/model identities, briefly stops the verified owning
 coordinator to copy the completed interval, and resumes it. Its current native
 worker remains in a different directory. The coordinator subsequently checks

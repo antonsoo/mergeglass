@@ -92,6 +92,19 @@ def main() -> None:
                 assert execution["source_hashes"] == receipt["contract"]["source_hashes"]
                 add(execution_path, f"{label}/{name}/execution.json")
     master_chunks = {chunk["directory"]: chunk for chunk in gen["chunks"]}
+
+    def add_assisted(root: Path, prefix: str) -> None:
+        for assisted in sorted(root.glob("assisted-*.json")):
+            proof = json.loads(assisted.read_text())
+            assert proof["worker_returncode"] == 0 and proof["coordinator_stopped_for_import"]
+            assert proof["source_hashes"] == gen["contract"]["source_hashes"]
+            assert master_chunks[proof["directory"]] == {
+                "directory": proof["directory"],
+                **proof["validated_chunk"],
+            }
+            add(assisted, f"{prefix}/{assisted.name}")
+
+    add_assisted(args.generation, "generation")
     for path in sorted(args.generation.glob("imported-*.json")):
         imported = json.loads(path.read_text())
         directory = imported["worker_directory"]
@@ -105,14 +118,7 @@ def main() -> None:
         add(path, f"generation/{path.name}")
         for name in ("contract.json", "completed.json", "grader.json"):
             add(worker / name, f"origins/{directory}/{name}")
-        for assisted in sorted(worker.glob("assisted-*.json")):
-            proof = json.loads(assisted.read_text())
-            assert proof["worker_returncode"] == 0 and proof["coordinator_stopped_for_import"]
-            assert master_chunks[proof["directory"]] == {
-                "directory": proof["directory"],
-                **proof["validated_chunk"],
-            }
-            add(assisted, f"origins/{directory}/{assisted.name}")
+        add_assisted(worker, f"origins/{directory}")
     args.output.mkdir(parents=True, exist_ok=True)
     archive = args.output / "native-cohorts.tar.gz"
     with archive.open("wb") as raw:

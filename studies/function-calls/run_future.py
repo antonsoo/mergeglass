@@ -33,7 +33,14 @@ def owned_coordinator(pid: int, parent: Path, profile: str) -> str:
         and (HERE.parents[1] / argument).resolve() == (HERE / "run_chunks.py").resolve()
         for argument in command
     )
-    assert "--profile" in command and command[command.index("--profile") + 1] == profile
+    contract = json.loads((parent / "contract.json").read_text())
+    selected = [command[i + 1] for i, value in enumerate(command) if value == "--profile"]
+    if selected:
+        assert selected == contract["profiles"] == [profile]
+    else:
+        protocol = json.loads((HERE / "protocol.json").read_text())
+        assert contract["profiles"] == protocol["profiles"] and contract["is_complete_cohort"]
+        assert profile in contract["profiles"]
     state = next(
         line for line in (proc / "status").read_text().splitlines() if line.startswith("State:")
     ).split()[1]
@@ -52,7 +59,11 @@ def main() -> None:
     contract_path = args.parent / "contract.json"
     contract = json.loads(contract_path.read_text())
     contract_hash, script_hash = sha(contract_path), sha(Path(__file__))
-    assert contract["mode"] == "generate" and contract["profiles"] == [args.profile]
+    protocol = json.loads((HERE / "protocol.json").read_text())
+    assert contract["mode"] == "generate" and args.profile in contract["profiles"]
+    assert contract["profiles"] == [args.profile] or (
+        contract["profiles"] == protocol["profiles"] and contract["is_complete_cohort"]
+    )
     assert contract["target_records"] == contract["available_records"]
     size, start = contract["chunk_size"], args.start
     assert start > 0 and start % size == 0
