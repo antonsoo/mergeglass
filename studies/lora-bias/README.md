@@ -136,3 +136,10 @@ The [existing-layout replay](results/existing-layouts.json) rechecks all 48
 previous native GPT/Linear/Embedding/full-module cases and their 18,368 Decimal
 matrix entries. Every complete case report remains identical. These are local
 source and installed-package checks; no PyPI version has been released.
+
+[Public-source verification](results/publication.json) checks all 31 changed
+files at revision `b8b9fde601926554eba64b99cf3b779e990b768c`. A fresh HTTPS
+clone installs with only the normal runtime dependencies, reproduces the
+omission command and all 32 audits/944 independent entries, and retains the
+same eight runtime source files. This publication does not release a PyPI
+package or deploy a service.

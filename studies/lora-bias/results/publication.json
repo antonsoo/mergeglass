@@ -1,0 +1,204 @@
+{
+  "source_commit": "b8b9fde601926554eba64b99cf3b779e990b768c",
+  "source_files_verified": 31,
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 5407,
+      "sha256": "5b5afb1087fdd5dfbc229dd8966900eb7bc7f55378f15d200d4a1bb7c32c0624"
+    },
+    {
+      "path": "README.md",
+      "bytes": 21803,
+      "sha256": "128b34157668ea15622f815f4de1ce5a12165e34850350bed2d04582505b5fe3"
+    },
+    {
+      "path": "docs/arithmetic.md",
+      "bytes": 21241,
+      "sha256": "57f952036d8dff5881e3ef9985a318a495ce24061b3b8025c231c33974e7f00a"
+    },
+    {
+      "path": "docs/assets/lora-bias.png",
+      "bytes": 249832,
+      "sha256": "686c0afdbcc7cce04d8e04054d6d31e3441a5c01134a9cb8ef6b8ebddc83153e"
+    },
+    {
+      "path": "docs/conv1d.md",
+      "bytes": 5554,
+      "sha256": "834081eec24edcab321603f06de65be21eca649a89d2bc28fa54da5693515e11"
+    },
+    {
+      "path": "examples/lora-bias/README.md",
+      "bytes": 1174,
+      "sha256": "e03a11710d7621cc5012b749527ec5da2da58f8bc4f75651a4d657af5343f381"
+    },
+    {
+      "path": "examples/lora-bias/adapter/adapter_config.json",
+      "bytes": 1176,
+      "sha256": "382905f7938a15243ba133fadbfd265014a807cbcd2e9cad7873b60688fb1703"
+    },
+    {
+      "path": "examples/lora-bias/adapter/adapter_model.safetensors",
+      "bytes": 856,
+      "sha256": "343ab4b4af642cc5e010d0f2f94e81c5b923017d4e3a6ebed5e4033d1464c64e"
+    },
+    {
+      "path": "examples/lora-bias/base/config.json",
+      "bytes": 35,
+      "sha256": "b63631b5b8f6f5d10350aee1d9c52a8c7058f35709e1f8cbe6ee726091c2d304"
+    },
+    {
+      "path": "examples/lora-bias/base/model.safetensors",
+      "bytes": 712,
+      "sha256": "5c0daafe56b98749a4def77d28213825abd838e7d633d4a76def38820473d4d0"
+    },
+    {
+      "path": "examples/lora-bias/correct-f32-safe-false/config.json",
+      "bytes": 35,
+      "sha256": "b63631b5b8f6f5d10350aee1d9c52a8c7058f35709e1f8cbe6ee726091c2d304"
+    },
+    {
+      "path": "examples/lora-bias/correct-f32-safe-false/model.safetensors",
+      "bytes": 712,
+      "sha256": "8d357780d324176c3ea280ca043c7656f2db96f161700cec345a50bd037a32d9"
+    },
+    {
+      "path": "examples/lora-bias/omitted-bias/config.json",
+      "bytes": 35,
+      "sha256": "b63631b5b8f6f5d10350aee1d9c52a8c7058f35709e1f8cbe6ee726091c2d304"
+    },
+    {
+      "path": "examples/lora-bias/omitted-bias/model.safetensors",
+      "bytes": 712,
+      "sha256": "b42c9a3777db4d71270d4c8a773c459da7d4ae17aa8c7c43041ab82495bafe5f"
+    },
+    {
+      "path": "examples/lora-bias/unscaled-bias/config.json",
+      "bytes": 35,
+      "sha256": "b63631b5b8f6f5d10350aee1d9c52a8c7058f35709e1f8cbe6ee726091c2d304"
+    },
+    {
+      "path": "examples/lora-bias/unscaled-bias/model.safetensors",
+      "bytes": 712,
+      "sha256": "b5db2168459d7fb4e7d29727292893baee67748329ee7903bfccd15d43208fef"
+    },
+    {
+      "path": "src/mergeglass/adapter.py",
+      "bytes": 16298,
+      "sha256": "537dcb0db509f8a61b9933f3b34ae6e906f3eeccb35584a1c2fa961481b6591b"
+    },
+    {
+      "path": "src/mergeglass/audit.py",
+      "bytes": 32404,
+      "sha256": "49a948fbbefeaf8ec3373ef55093d20b0e453fa33d7d0138d285fd5588277faa"
+    },
+    {
+      "path": "src/mergeglass/cli.py",
+      "bytes": 16272,
+      "sha256": "81d0975a57a065e05cf55e9104c11b0d534d7a988e31a210a180fa303d5d4f8c"
+    },
+    {
+      "path": "studies/lora-bias/README.md",
+      "bytes": 7281,
+      "sha256": "6504d3df613c1199fce5194f3001eebe35085e8aa32c02616392489d3875aeea"
+    },
+    {
+      "path": "studies/lora-bias/artifacts/native.tar.gz",
+      "bytes": 39458,
+      "sha256": "ae2e0a66cb31743637ee154159b1cdb219651c4d34c479d3e515aa0503e3fe88"
+    },
+    {
+      "path": "studies/lora-bias/produce.py",
+      "bytes": 8784,
+      "sha256": "601fbec91ea0174139865ba63c3afe13513a5f2a142fe25619fb8d22456162f4"
+    },
+    {
+      "path": "studies/lora-bias/results/after.json.gz",
+      "bytes": 24103,
+      "sha256": "833796513c4ea039c423ed06498917adc802ae37e8ee62f957ab07d13d6dd1ee"
+    },
+    {
+      "path": "studies/lora-bias/results/before.json",
+      "bytes": 5792,
+      "sha256": "6aae14de1c8a59a9b5fa1bffe6905e12a2db42f8cefcafc63c03f4b4a123d3a4"
+    },
+    {
+      "path": "studies/lora-bias/results/clean-310.json",
+      "bytes": 9864,
+      "sha256": "438379bb71cfe3ec1c5621a03a695f8bc368418ca73486cc29495f36645f582b"
+    },
+    {
+      "path": "studies/lora-bias/results/clean-315.json",
+      "bytes": 9814,
+      "sha256": "58ef8f072440a71bd19b5cd01986d41338c1ec919eb5e9d63b4a7543f9e652f2"
+    },
+    {
+      "path": "studies/lora-bias/results/existing-layouts.json",
+      "bytes": 979,
+      "sha256": "3d85ab452bc5138ba3564e41ca64f6c0c7458652b7fa619f7f521f851524b265"
+    },
+    {
+      "path": "studies/lora-bias/results/installed-310.json.gz",
+      "bytes": 21978,
+      "sha256": "5e6d48ab4bddb146794c3a8cbb50240ff79e1fdb4c391f6c86b78b3cbdb2d107"
+    },
+    {
+      "path": "studies/lora-bias/results/installed-315.json.gz",
+      "bytes": 24103,
+      "sha256": "833796513c4ea039c423ed06498917adc802ae37e8ee62f957ab07d13d6dd1ee"
+    },
+    {
+      "path": "studies/lora-bias/verify.py",
+      "bytes": 10154,
+      "sha256": "9013dd5ad151403a5eeb837c8280295858598f0e1020cd61a6c4bf939e1880bf"
+    },
+    {
+      "path": "tests/test_lora_bias.py",
+      "bytes": 5388,
+      "sha256": "5dea26484412d14f8bd22d04acf14d44b794007a9ebe0665278dc68d3fdb1a6d"
+    }
+  ],
+  "registry_release": false,
+  "public_clone": {
+    "commit": "b8b9fde601926554eba64b99cf3b779e990b768c",
+    "install": "uv sync --locked --no-dev --python 3.10",
+    "verified_runtime_files": [
+      {
+        "file": "src/mergeglass/__init__.py",
+        "sha256": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23"
+      },
+      {
+        "file": "src/mergeglass/__main__.py",
+        "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+      },
+      {
+        "file": "src/mergeglass/adapter.py",
+        "sha256": "537dcb0db509f8a61b9933f3b34ae6e906f3eeccb35584a1c2fa961481b6591b"
+      },
+      {
+        "file": "src/mergeglass/audit.py",
+        "sha256": "49a948fbbefeaf8ec3373ef55093d20b0e453fa33d7d0138d285fd5588277faa"
+      },
+      {
+        "file": "src/mergeglass/cli.py",
+        "sha256": "81d0975a57a065e05cf55e9104c11b0d534d7a988e31a210a180fa303d5d4f8c"
+      },
+      {
+        "file": "src/mergeglass/dora_norms.py",
+        "sha256": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f"
+      },
+      {
+        "file": "src/mergeglass/dora_rows.py",
+        "sha256": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c"
+      },
+      {
+        "file": "src/mergeglass/storage.py",
+        "sha256": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+      }
+    ],
+    "native_audits": 32,
+    "oracle_bias_entries": 944,
+    "example_omitted_bias_updates": 10,
+    "result_sha256": "5e6d48ab4bddb146794c3a8cbb50240ff79e1fdb4c391f6c86b78b3cbdb2d107"
+  }
+}
