@@ -153,3 +153,10 @@ bundled example commands. [Python 3.10](results/clean-310.json),
 [installed 3.15](results/installed-315.json).
 The earlier 48 Conv1D and 32 bias case reports remain
 [identical](results/existing-layouts.json).
+
+Public source `b4b3eea478dacbd4b0c6610bbdf00e2480a9e7c3` was checked through
+45 immutable raw file downloads. A fresh HTTPS clone, runtime-only Python 3.10
+install, archive extraction, all 44 independent native checks and all three CLI
+examples also passed. [Publication receipt](results/publication.json).
+This publishes source and reproducible examples; there is no new registry
+release or hosted model service.

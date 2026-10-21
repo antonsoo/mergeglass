@@ -1,0 +1,348 @@
+{
+  "source_commit": "b4b3eea478dacbd4b0c6610bbdf00e2480a9e7c3",
+  "source_files_verified": 45,
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 6023,
+      "sha256": "58b6748cad897fda91062f45e9b6fe7d04f34c462cc3fbdc52965eef71982653"
+    },
+    {
+      "path": "README.md",
+      "bytes": 22090,
+      "sha256": "fb5232842b6922c81a06b09a377b06572151dc03a19ec7455eca89a0a78b108e"
+    },
+    {
+      "path": "docs/arithmetic.md",
+      "bytes": 22812,
+      "sha256": "19f202abc2ddd5a6b450fd20eb69e4abc86cb8f24ef20e78047aa27380446417"
+    },
+    {
+      "path": "docs/assets/expert-parameters.png",
+      "bytes": 351471,
+      "sha256": "5229807577ecabd1f529be5fc3a2fdd328ca7cccbf8b4da1a491098d9744cb56"
+    },
+    {
+      "path": "examples/expert-parameters/README.md",
+      "bytes": 1403,
+      "sha256": "a63dd6ca056ef5feaba7abdfe80985d2271de03ed42aed9790fa1f35fd06d83e"
+    },
+    {
+      "path": "examples/expert-parameters/adapter/adapter_config.json",
+      "bytes": 1199,
+      "sha256": "1355339ae6ac2f83e9e0d2b1eb9eba6c11623b825fb81703aaeabf9a660bfed2"
+    },
+    {
+      "path": "examples/expert-parameters/adapter/adapter_model.safetensors",
+      "bytes": 1680,
+      "sha256": "eaf2480c411d70921b23f6a90156b522edd537c4e3433828bfb13e367bac7725"
+    },
+    {
+      "path": "examples/expert-parameters/base/config.json",
+      "bytes": 972,
+      "sha256": "dd9370e44af3b217ae62b82d1adec7b918450b1b42f70fe188be6a42c47fb8d0"
+    },
+    {
+      "path": "examples/expert-parameters/base/generation_config.json",
+      "bytes": 153,
+      "sha256": "7095770722010f0143ccd805aca68ef00914e9a21e8878ed1fdb7ac10ceb80b9"
+    },
+    {
+      "path": "examples/expert-parameters/base/model-00001-of-00002.safetensors",
+      "bytes": 9304,
+      "sha256": "a0b46b9ce2fa883ce4b5a2f0440184bddc49712ee601cfc2d1f9764d33f7f216"
+    },
+    {
+      "path": "examples/expert-parameters/base/model-00002-of-00002.safetensors",
+      "bytes": 1128,
+      "sha256": "9f2b686acea9b7126f1d5b555fb91196be33ff438ee6a282eeb810bea3dfe3c7"
+    },
+    {
+      "path": "examples/expert-parameters/base/model.safetensors.index.json",
+      "bytes": 1819,
+      "sha256": "00960330beba88e153eb12ae7ca33b98106c3ae34f7901651675e88863a3cdcd"
+    },
+    {
+      "path": "examples/expert-parameters/contiguous-B/config.json",
+      "bytes": 972,
+      "sha256": "dd9370e44af3b217ae62b82d1adec7b918450b1b42f70fe188be6a42c47fb8d0"
+    },
+    {
+      "path": "examples/expert-parameters/contiguous-B/generation_config.json",
+      "bytes": 153,
+      "sha256": "7095770722010f0143ccd805aca68ef00914e9a21e8878ed1fdb7ac10ceb80b9"
+    },
+    {
+      "path": "examples/expert-parameters/contiguous-B/model-00001-of-00002.safetensors",
+      "bytes": 9304,
+      "sha256": "4c249cba79756b0637962433c83f8f04b3a86a3c9f22fa73e2e63f3fa98f14e5"
+    },
+    {
+      "path": "examples/expert-parameters/contiguous-B/model-00002-of-00002.safetensors",
+      "bytes": 1128,
+      "sha256": "9f2b686acea9b7126f1d5b555fb91196be33ff438ee6a282eeb810bea3dfe3c7"
+    },
+    {
+      "path": "examples/expert-parameters/contiguous-B/model.safetensors.index.json",
+      "bytes": 1819,
+      "sha256": "00960330beba88e153eb12ae7ca33b98106c3ae34f7901651675e88863a3cdcd"
+    },
+    {
+      "path": "examples/expert-parameters/correct-f32-safe-false/config.json",
+      "bytes": 972,
+      "sha256": "dd9370e44af3b217ae62b82d1adec7b918450b1b42f70fe188be6a42c47fb8d0"
+    },
+    {
+      "path": "examples/expert-parameters/correct-f32-safe-false/generation_config.json",
+      "bytes": 153,
+      "sha256": "7095770722010f0143ccd805aca68ef00914e9a21e8878ed1fdb7ac10ceb80b9"
+    },
+    {
+      "path": "examples/expert-parameters/correct-f32-safe-false/model-00001-of-00002.safetensors",
+      "bytes": 9304,
+      "sha256": "3b8cee3f4382db0396b44ea0f4d8df1d5ba8522d0623021c4bcca70753ebdd27"
+    },
+    {
+      "path": "examples/expert-parameters/correct-f32-safe-false/model-00002-of-00002.safetensors",
+      "bytes": 1128,
+      "sha256": "9f2b686acea9b7126f1d5b555fb91196be33ff438ee6a282eeb810bea3dfe3c7"
+    },
+    {
+      "path": "examples/expert-parameters/correct-f32-safe-false/model.safetensors.index.json",
+      "bytes": 1819,
+      "sha256": "00960330beba88e153eb12ae7ca33b98106c3ae34f7901651675e88863a3cdcd"
+    },
+    {
+      "path": "examples/expert-parameters/omitted-expert/config.json",
+      "bytes": 972,
+      "sha256": "dd9370e44af3b217ae62b82d1adec7b918450b1b42f70fe188be6a42c47fb8d0"
+    },
+    {
+      "path": "examples/expert-parameters/omitted-expert/generation_config.json",
+      "bytes": 153,
+      "sha256": "7095770722010f0143ccd805aca68ef00914e9a21e8878ed1fdb7ac10ceb80b9"
+    },
+    {
+      "path": "examples/expert-parameters/omitted-expert/model-00001-of-00002.safetensors",
+      "bytes": 9304,
+      "sha256": "21354a520d5bafd2063787fb9a1a45158ddbdde43de9c70e589cc59eaebcfdb1"
+    },
+    {
+      "path": "examples/expert-parameters/omitted-expert/model-00002-of-00002.safetensors",
+      "bytes": 1128,
+      "sha256": "9f2b686acea9b7126f1d5b555fb91196be33ff438ee6a282eeb810bea3dfe3c7"
+    },
+    {
+      "path": "examples/expert-parameters/omitted-expert/model.safetensors.index.json",
+      "bytes": 1819,
+      "sha256": "00960330beba88e153eb12ae7ca33b98106c3ae34f7901651675e88863a3cdcd"
+    },
+    {
+      "path": "src/mergeglass/adapter.py",
+      "bytes": 17471,
+      "sha256": "2e9764576c69bcae50ed32a75dcdca1529a9f65b42d0950268f0f4e2fdc6356c"
+    },
+    {
+      "path": "src/mergeglass/audit.py",
+      "bytes": 38824,
+      "sha256": "d6bb35463ab979189d263a8e4cc1c3b99c1db4d32744f8677e89ee6a485f8418"
+    },
+    {
+      "path": "src/mergeglass/cli.py",
+      "bytes": 17249,
+      "sha256": "c7a0c7e5b177f6a120e4192f9950b5359420e3d642b6cccb7e79ef21a274e2bb"
+    },
+    {
+      "path": "src/mergeglass/parameter_layouts.py",
+      "bytes": 6712,
+      "sha256": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4"
+    },
+    {
+      "path": "studies/expert-parameters/README.md",
+      "bytes": 8384,
+      "sha256": "b58951f6ed37dd48c563109432a71467c8a5c5f60677fdbae58043cd52856784"
+    },
+    {
+      "path": "studies/expert-parameters/artifacts/native.tar.gz",
+      "bytes": 162751,
+      "sha256": "4b8d4e421a0253991584a9fb8f814763aedb9a99b703b38358e63cb7978ba302"
+    },
+    {
+      "path": "studies/expert-parameters/produce.py",
+      "bytes": 11126,
+      "sha256": "84255464ac2b30058c157888cc6a97e7b818eda20e95ed93db90cbe61ba4386e"
+    },
+    {
+      "path": "studies/expert-parameters/results/after.json.gz",
+      "bytes": 71737,
+      "sha256": "6ce02ca698b2383e73acc2f9cd179f7b8246f902c8a3cd2372e9208ebfd7d1f8"
+    },
+    {
+      "path": "studies/expert-parameters/results/before.json.gz",
+      "bytes": 590,
+      "sha256": "fd257b7737a9296a4d01c826fba62033c49dbd8b9d9e2825cb61057948fc4eb1"
+    },
+    {
+      "path": "studies/expert-parameters/results/clean-310.json",
+      "bytes": 9874,
+      "sha256": "1a7263c7da680c07ae72ba477e17496a076a8dbdf1cc43d4ce532d4d6e6e45d6"
+    },
+    {
+      "path": "studies/expert-parameters/results/clean-315.json",
+      "bytes": 9825,
+      "sha256": "5397f75a0e5b29fa8fc08ff397f92d33b17d130e36ffd8de2e56f2912559904a"
+    },
+    {
+      "path": "studies/expert-parameters/results/existing-layouts.json",
+      "bytes": 1017,
+      "sha256": "81be2997dedd07f1a416e1b94ef3f0aed1750e4b840bce168f7ced9d58ff8cde"
+    },
+    {
+      "path": "studies/expert-parameters/results/installed-310.json",
+      "bytes": 369,
+      "sha256": "b466f0f5a80724eee1035800efa2f71f86606a6e8c8ed0b9d1ff628486e8e385"
+    },
+    {
+      "path": "studies/expert-parameters/results/installed-315.json",
+      "bytes": 369,
+      "sha256": "edce924a39d5057c204633308281855fe9e09dca366b433409468e5e9ccd7288"
+    },
+    {
+      "path": "studies/expert-parameters/results/oracle.json.gz",
+      "bytes": 5862,
+      "sha256": "4bf1ede5bb7fc0ef755bd9481e114ba08e528ee153e2df2756c7134a5dfc63db"
+    },
+    {
+      "path": "studies/expert-parameters/results/producer-source.json",
+      "bytes": 1903,
+      "sha256": "7f8c49e6cd43936dc9b62455445879574ab1d491af15794870b258690df6e4d7"
+    },
+    {
+      "path": "studies/expert-parameters/verify.py",
+      "bytes": 11877,
+      "sha256": "1a93a044129b578e19f11d94833fb6b42765430145551b94c3d1905770274571"
+    },
+    {
+      "path": "tests/test_expert_parameters.py",
+      "bytes": 6618,
+      "sha256": "92a5c261e6e45dac3a3cb82fb593cbb412d54c54cc405d87a47444c7cd691b90"
+    }
+  ],
+  "fresh_https_clone": true,
+  "native_cases": 44,
+  "decimal_entries": 37920,
+  "checks": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "https://github.com/antonsoo/mergeglass.git",
+        "<scratch>/mergeglass-expert-public-clone"
+      ],
+      "exit_code": 0,
+      "output_sha256": "f279527f20d57391637fe40193e52112baff92ff2e442a5492b0bcd175b7af42",
+      "tail": "Cloning into '<scratch>/mergeglass-expert-public-clone'...\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "output_sha256": "36f24d55991b749fbb20079aa783dc4ca53b0eb2e1894d802f6417b367f59133",
+      "tail": "b4b3eea478dacbd4b0c6610bbdf00e2480a9e7c3\n"
+    },
+    {
+      "command": [
+        "uv",
+        "sync",
+        "--locked",
+        "--no-dev",
+        "--python",
+        "3.10"
+      ],
+      "exit_code": 0,
+      "output_sha256": "f8353bc262ea24905787b807fd83603c3e4be349c5a67e1f39fc32875b63207c",
+      "tail": "laude-1000/mergeglass-expert-public-clone\n      Built mergeglass @ file://<scratch>/mergeglass-expert-public-clone\nPrepared 1 package in 251ms\nInstalled 3 packages in 46ms\n + mergeglass==0.1.0 (from file://<scratch>/mergeglass-expert-public-clone)\n + numpy==2.2.6\n + safetensors==0.8.0\n"
+    },
+    {
+      "command": [
+        "tar",
+        "-xzf",
+        "studies/expert-parameters/artifacts/native.tar.gz",
+        "-C",
+        "<scratch>/mergeglass-expert-public-inputs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tail": ""
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--no-dev",
+        "python",
+        "studies/expert-parameters/verify.py",
+        "<scratch>/mergeglass-expert-public-inputs",
+        "<scratch>/mergeglass-expert-public-oracle.json"
+      ],
+      "exit_code": 0,
+      "output_sha256": "b675f66da8018e5136536fbf7d6e0708024ed92726b662424454cb9ecbf7c6bd",
+      "tail": "Verified 44 merges / 37,920 expert entries.\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--no-dev",
+        "mergeglass",
+        "examples/expert-parameters/base",
+        "examples/expert-parameters/adapter",
+        "examples/expert-parameters/correct-f32-safe-false",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "output_sha256": "b281c8ce11271ba2b2cca4aef04a53ad5ca045a6e99d574ca94346d33efe89d1",
+      "tail": "ish every module's type.\",\n    \"Operation order and matmul precision can differ from the producer, notably at ties.\",\n    \"Weight-space changes and residuals do not establish generation or task quality.\",\n    \"Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit.\"\n  ]\n}\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--no-dev",
+        "mergeglass",
+        "examples/expert-parameters/base",
+        "examples/expert-parameters/adapter",
+        "examples/expert-parameters/omitted-expert",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "output_sha256": "5a55ec8584c345f74c6c88407ef484d7bb3ba687fa464da0fb17121ec23c6b24",
+      "tail": "ish every module's type.\",\n    \"Operation order and matmul precision can differ from the producer, notably at ties.\",\n    \"Weight-space changes and residuals do not establish generation or task quality.\",\n    \"Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit.\"\n  ]\n}\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--no-dev",
+        "mergeglass",
+        "examples/expert-parameters/base",
+        "examples/expert-parameters/adapter",
+        "examples/expert-parameters/contiguous-B",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "output_sha256": "cee9f4a8500abdc4e804316bd6d00413d4c38720ecf9f052b2f7aa0d99c00ed7",
+      "tail": "ish every module's type.\",\n    \"Operation order and matmul precision can differ from the producer, notably at ties.\",\n    \"Weight-space changes and residuals do not establish generation or task quality.\",\n    \"Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit.\"\n  ]\n}\n"
+    }
+  ],
+  "registry_release": false,
+  "hosted_service": false
+}
