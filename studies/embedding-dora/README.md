@@ -139,6 +139,54 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python studies/embedding-dora/streaming
 Production directories must be new. Repeated native saves depend on the pinned
 framework versions and seeds; producer receipts identify the files actually read.
 
+## Clean packages and installed CLI
+
+Two fresh clones of source `be6782043f973253a3ea7e80bce905f52be8b4b8` complete
+the locked development checks on Python 3.10 and 3.15, including all 181 contract
+cases. `uv build` produces a source distribution and builds its wheel from that
+distribution. Both wheels match byte for byte, as do both uncompressed source
+archives; their gzip streams differ across the build interpreters.
+[Commands, artifact hashes and installed identities](results/packages.json),
+[3.10 build log](results/clean-310.log), [3.15 build log](results/clean-315.log).
+
+| Isolated installation | Runtime dependencies | Native replay |
+|---|---|---|
+| Built wheel, Python 3.10.21 | NumPy 1.24.0, safetensors 0.6.2 | [15 cases, 1,848 scalar coordinates](results/installed-310.json) |
+| Source distribution, Python 3.15.0 | NumPy 2.5.4, safetensors 0.8.0 | [15 cases, 1,848 scalar coordinates](results/installed-315.json) |
+
+All ten installed runtime modules and all ten modules in each artifact match
+the source bytes. Every bundled native example file survives the source
+distribution unchanged. Neither installed runtime has Torch or PEFT available.
+The four example audits and no-base command run outside the checkout with
+isolated Python. Their terminal summaries equal the reviewed screenshots' input.
+Complete JSON comparisons exclude no fields: counts and identities are exact;
+18 floating norm diagnostics differ across NumPy versions by at most
+`1.11e-16` in absolute value. Those differences are retained in the receipt.
+
+The package identities above belong to the pinned feature source; later
+documentation receipts change source archives and wheel README metadata.
+They leave the verified runtime and native inputs unchanged.
+
+## Public source
+
+The feature revision above is pushed to GitHub. A fresh public HTTPS clone runs
+both README example commands with only the normal runtime dependencies; their
+summaries equal the reviewed screenshot inputs. A separate forced Git install
+resolves that exact commit, preserves all ten runtime module bytes and has no
+Torch or PEFT available. Its complete 15-case native replay is byte-identical
+to the source-distribution installation receipt.
+
+```sh
+uv venv /tmp/embedding-dora-auditor --python 3.15
+uv pip install --python /tmp/embedding-dora-auditor/bin/python --force-reinstall 'mergeglass @ git+https://github.com/antonsoo/mergeglass.git@be6782043f973253a3ea7e80bce905f52be8b4b8'
+```
+
+The [public-source receipt](results/publication.json) retains the install's
+commit metadata, the complete replay identity and exact comparisons of 26
+immutable HTTP files: runtime modules, native examples, study scripts and
+reviewed PNGs. This establishes public source and the observed install; it
+does not claim a registry release, executed CI jobs or a hosted application.
+
 ## Boundaries
 
 - The base identity, training provenance, tokenizer and model quality are not

@@ -246,7 +246,8 @@ a dense full update. On a native 32,000,384-weight BF16 control, the installed
 auditor measured 46.2 MiB peak RSS at a 1 MiB block target; a full float64 update
 would occupy 244.1 MiB. [Native artifacts, independent scalar/dense checks,
 memory method and limits](studies/embedding-dora/README.md).
-This is a source capability; no registry release accompanies it.
+The [pinned Git installation and package receipts](studies/embedding-dora/README.md#public-source)
+retain the published capability; no registry release accompanies it.
 
 ## GPT projections have a different saved layout
 

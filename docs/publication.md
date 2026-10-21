@@ -1,5 +1,9 @@
 # Public source and installed verification at 23ed58c
 
+Later Embedding DoRA support has its own [native and clean-package evidence](../studies/embedding-dora/README.md),
+including both installed dependency boundaries. The identities below remain
+specific to the historical source revision named in this heading.
+
 The [verification receipt](publication.json) identifies source revision
 `23ed58c50765fc3720856eb84090a7840ce320c3`, its 58 archived files, runtime module
 hashes, clean-build artifacts and three separately installed environments.

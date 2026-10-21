@@ -1,0 +1,433 @@
+{
+  "source_revision": "be6782043f973253a3ea7e80bce905f52be8b4b8",
+  "runtime_modules": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "64bdd5b3c02c7c694f7a97de5673bc521b419dc760c22b5b056f533f76e9dfd9",
+    "audit.py": "078de6f7ed78c2f533070109672c058db9593ed2858f1f4a02f9a120a489b958",
+    "cli.py": "29eb5aed3cebed9349277accbf576e8e2f6dbb3c97923f0509580bfa075aceb7",
+    "dora_columns.py": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6",
+    "dora_norms.py": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c",
+    "dora_rows.py": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a",
+    "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "clean_source": [
+    {
+      "python": "310",
+      "commands": [
+        "uv sync --locked --python 3.10",
+        "uv run ruff check .",
+        "uv run ruff format --check .",
+        "uv run mypy src",
+        "uv run pytest",
+        "uv build"
+      ],
+      "passed_tests": 181,
+      "log_sha256": "b93578373a73a770877a4ab6471d17d4697c4b3a62f0e70f70a24f8f14df6868",
+      "artifacts": [
+        {
+          "file": "mergeglass-0.1.0.tar.gz",
+          "bytes": 13227013,
+          "sha256": "ec70c3b6f0858a0184a0854ebc5d21f51674b67c2d6919a007b18ccf98537da8",
+          "runtime_files_match_source": 10
+        },
+        {
+          "file": "mergeglass-0.1.0-py3-none-any.whl",
+          "bytes": 44092,
+          "sha256": "609202096e777283de4a813d06a91b74e750fb5a05f3b0e8993ef7b3dddb57b6",
+          "runtime_files_match_source": 10
+        }
+      ],
+      "native_example_files_preserved_in_sdist": 7,
+      "sdist_uncompressed_tar_sha256": "2775baede7357166a0e18ccffb33f31f13a950a5ad98e07dfbc9a9c7e6912ad0"
+    },
+    {
+      "python": "315",
+      "commands": [
+        "uv sync --locked --python 3.15",
+        "uv run ruff check .",
+        "uv run ruff format --check .",
+        "uv run mypy src",
+        "uv run pytest",
+        "uv build"
+      ],
+      "passed_tests": 181,
+      "log_sha256": "0ff46377287ab9044e4120d104114ab907598c984f9c017540f95e00e468d48f",
+      "artifacts": [
+        {
+          "file": "mergeglass-0.1.0.tar.gz",
+          "bytes": 13271049,
+          "sha256": "1f46e677aaa9bd4a98e65e506a68859a9f9267d32cb5aa0d4499ba3547d33910",
+          "runtime_files_match_source": 10
+        },
+        {
+          "file": "mergeglass-0.1.0-py3-none-any.whl",
+          "bytes": 44092,
+          "sha256": "609202096e777283de4a813d06a91b74e750fb5a05f3b0e8993ef7b3dddb57b6",
+          "runtime_files_match_source": 10
+        }
+      ],
+      "native_example_files_preserved_in_sdist": 7,
+      "sdist_uncompressed_tar_sha256": "2775baede7357166a0e18ccffb33f31f13a950a5ad98e07dfbc9a9c7e6912ad0"
+    }
+  ],
+  "installed": [
+    {
+      "artifact": "wheel-310",
+      "identity": {
+        "python": "3.10.21 (main, Sep  1 2026, 14:16:49) [Clang 22.1.3 ]",
+        "module_path": "/tmp/claude-1000/mergeglass-embedding-dora-wheel-310/lib/python3.10/site-packages/mergeglass",
+        "versions": {
+          "mergeglass": "0.1.0",
+          "numpy": "1.24.0",
+          "safetensors": "0.6.2"
+        },
+        "dependencies": [
+          "numpy>=1.24",
+          "safetensors>=0.6.2"
+        ],
+        "runtime_modules": {
+          "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+          "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+          "adapter.py": "64bdd5b3c02c7c694f7a97de5673bc521b419dc760c22b5b056f533f76e9dfd9",
+          "audit.py": "078de6f7ed78c2f533070109672c058db9593ed2858f1f4a02f9a120a489b958",
+          "cli.py": "29eb5aed3cebed9349277accbf576e8e2f6dbb3c97923f0509580bfa075aceb7",
+          "dora_columns.py": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6",
+          "dora_norms.py": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c",
+          "dora_rows.py": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a",
+          "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+          "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+        },
+        "torch_available": false,
+        "peft_available": false,
+        "torch_imported": false,
+        "peft_imported": false
+      },
+      "examples": [
+        {
+          "case": "correct-f32-safe-false",
+          "summary_stdout": "Mergeglass | saved DoRA merge audit\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nDoRA reference includes learned magnitudes; Linear normalizes rows, Embedding normalizes columns.\nCounts, gain and residual use the complete weight update, not B @ A alone.\n\nAdapted matrices: 4 (F32: 4).\nMatrix states: 4 observed; 0 with no observed update.\nZero-reference matrices: 0 unchanged; 0 changed.\nGain range: 1..1; relative residual range: 1.791e-08..8.556e-08.\n\nOf 720 nonzero intended updates, 0 are unchanged (0.00%).\nThose unchanged entries contain 0% of the reference squared norm.\nDoRA full-row norm factor (saved / |m|): 0.99999995..1.0000001; 7 nonzero row pairs.\nFull-row direction cosine: 1..1; 7 nonzero row pairs.\nNonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 0.\nDoRA full-column norm factor (saved / |m|): 0.99999987..1.0000001; 25 nonzero column pairs.\nFull-column direction cosine: 1..1; 25 nonzero column pairs.\nNonzero magnitudes saved as zero columns: 0; zero magnitudes saved nonzero: 0.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 5 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+          "report_sha256": "a249f51fa527df385b10e725ccb961d91d1678ccf5514ce77f32da3de3dfb4cb",
+          "summary": {
+            "adapted_tensors": 4,
+            "checked_tensors": 5,
+            "adapted_elements": 720,
+            "intended_nonzero_elements": 720,
+            "changed_adapted_elements": 720,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          }
+        },
+        {
+          "case": "reset-embedding-magnitudes-f32",
+          "summary_stdout": "Mergeglass | saved DoRA merge audit\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nDoRA reference includes learned magnitudes; Linear normalizes rows, Embedding normalizes columns.\nCounts, gain and residual use the complete weight update, not B @ A alone.\n\nAdapted matrices: 4 (F32: 4).\nMatrix states: 3 observed; 1 with no observed update.\nZero-reference matrices: 0 unchanged; 0 changed.\nGain range: 0..1.167; relative residual range: 6.316e-08..1.\n\nOf 720 nonzero intended updates, 115 are unchanged (15.97%).\nThose unchanged entries contain 34.29% of the reference squared norm.\nDoRA full-row norm factor (saved / |m|): 0.99999995..1.0000001; 7 nonzero row pairs.\nFull-row direction cosine: 1..1; 7 nonzero row pairs.\nNonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 0.\nDoRA full-column norm factor (saved / |m|): 0.49999999..1.9999999; 25 nonzero column pairs.\nFull-column direction cosine: -1..1; 25 nonzero column pairs.\nNonzero magnitudes saved as zero columns: 0; zero magnitudes saved nonzero: 2.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 5 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+          "report_sha256": "f6eda5523125999983348bde4e47e4772dd9beba238a01857bae73c4eb051e8e",
+          "summary": {
+            "adapted_tensors": 4,
+            "checked_tensors": 5,
+            "adapted_elements": 720,
+            "intended_nonzero_elements": 720,
+            "changed_adapted_elements": 605,
+            "unchanged_nonzero_update_elements": 115,
+            "unchanged_nonzero_update_fraction": 0.1597222222222222,
+            "unchanged_reference_energy_fraction": 0.34294778057769437,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 1,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          }
+        },
+        {
+          "case": "wrong-row-axis-f32",
+          "summary_stdout": "Mergeglass | saved DoRA merge audit\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nDoRA reference includes learned magnitudes; Linear normalizes rows, Embedding normalizes columns.\nCounts, gain and residual use the complete weight update, not B @ A alone.\n\nAdapted matrices: 4 (F32: 4).\nMatrix states: 4 observed; 0 with no observed update.\nZero-reference matrices: 0 unchanged; 0 changed.\nGain range: 0.6235..1; relative residual range: 1.791e-08..1.093.\n\nOf 720 nonzero intended updates, 0 are unchanged (0.00%).\nThose unchanged entries contain 0% of the reference squared norm.\nDoRA full-row norm factor (saved / |m|): 0.99999995..1.0000001; 7 nonzero row pairs.\nFull-row direction cosine: 1..1; 7 nonzero row pairs.\nNonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 0.\nDoRA full-column norm factor (saved / |m|): 0.6496892..1.4788999; 25 nonzero column pairs.\nFull-column direction cosine: -0.52551556..1; 25 nonzero column pairs.\nNonzero magnitudes saved as zero columns: 0; zero magnitudes saved nonzero: 1.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 5 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+          "report_sha256": "9757b3d801126ca1cff3056da4b8b1a07481065384d2d1e13a77f9cb3f8cd0d0",
+          "summary": {
+            "adapted_tensors": 4,
+            "checked_tensors": 5,
+            "adapted_elements": 720,
+            "intended_nonzero_elements": 720,
+            "changed_adapted_elements": 720,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          }
+        },
+        {
+          "case": "rotated-token-rows-f32",
+          "summary_stdout": "Mergeglass | saved DoRA merge audit\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nDoRA reference includes learned magnitudes; Linear normalizes rows, Embedding normalizes columns.\nCounts, gain and residual use the complete weight update, not B @ A alone.\n\nAdapted matrices: 4 (F32: 4).\nMatrix states: 4 observed; 0 with no observed update.\nZero-reference matrices: 0 unchanged; 0 changed.\nGain range: 0.4238..1; relative residual range: 6.316e-08..2.235.\n\nOf 720 nonzero intended updates, 0 are unchanged (0.00%).\nThose unchanged entries contain 0% of the reference squared norm.\nDoRA full-row norm factor (saved / |m|): 0.99999995..1.0000001; 7 nonzero row pairs.\nFull-row direction cosine: 1..1; 7 nonzero row pairs.\nNonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 0.\nDoRA full-column norm factor (saved / |m|): 0.99999987..1.0000001; 25 nonzero column pairs.\nFull-column direction cosine: -0.6706581..0.30064756; 25 nonzero column pairs.\nNonzero magnitudes saved as zero columns: 0; zero magnitudes saved nonzero: 0.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 5 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+          "report_sha256": "bb9fe0685da31305490bbc8240cc47e32c38a43e18cf007c9bfb92497a15ddb3",
+          "summary": {
+            "adapted_tensors": 4,
+            "checked_tensors": 5,
+            "adapted_elements": 720,
+            "intended_nonzero_elements": 720,
+            "changed_adapted_elements": 720,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          }
+        }
+      ],
+      "partial_stdout": "Mergeglass | DoRA norms without a base\n\nPartial observations: reference directions and complete updates are unmeasured.\nObserved 7 Linear rows and 27 embedding columns in 4 DoRA matrices.\n\nDoRA full-row norm factor (saved / |m|): 0.99999995..1.0000001; 7 nonzero row pairs.\nNonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 0.\nDoRA full-column norm factor (saved / |m|): 0.99999987..1.0000001; 25 nonzero column pairs.\nNonzero magnitudes saved as zero columns: 0; zero magnitudes saved nonzero: 0.\nCheckpoint: 5 tensors; 1 unmapped tensor(s) have no base comparison.\nA matching norm does not establish a correct merge or direction.\nNo pass/fail threshold is applied. This measures saved weights, not model quality.\n",
+      "partial_summary": {
+        "norm_observed_tensors": 4,
+        "norm_observed_rows": 7,
+        "norm_observed_columns": 27,
+        "checkpoint_tensors": 5,
+        "unmapped_tensors": 1
+      },
+      "reviewed_screenshot_stdout_matches": true
+    },
+    {
+      "artifact": "sdist-315",
+      "identity": {
+        "python": "3.15.0 (main, Oct 14 2026, 01:05:07) [Clang 23.1.3 ]",
+        "module_path": "/tmp/claude-1000/mergeglass-embedding-dora-sdist-315/lib/python3.15/site-packages/mergeglass",
+        "versions": {
+          "mergeglass": "0.1.0",
+          "numpy": "2.5.4",
+          "safetensors": "0.8.0"
+        },
+        "dependencies": [
+          "numpy>=1.24",
+          "safetensors>=0.6.2"
+        ],
+        "runtime_modules": {
+          "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+          "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+          "adapter.py": "64bdd5b3c02c7c694f7a97de5673bc521b419dc760c22b5b056f533f76e9dfd9",
+          "audit.py": "078de6f7ed78c2f533070109672c058db9593ed2858f1f4a02f9a120a489b958",
+          "cli.py": "29eb5aed3cebed9349277accbf576e8e2f6dbb3c97923f0509580bfa075aceb7",
+          "dora_columns.py": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6",
+          "dora_norms.py": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c",
+          "dora_rows.py": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a",
+          "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+          "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+        },
+        "torch_available": false,
+        "peft_available": false,
+        "torch_imported": false,
+        "peft_imported": false
+      },
+      "examples": [
+        {
+          "case": "correct-f32-safe-false",
+          "summary_stdout": "Mergeglass | saved DoRA merge audit\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nDoRA reference includes learned magnitudes; Linear normalizes rows, Embedding normalizes columns.\nCounts, gain and residual use the complete weight update, not B @ A alone.\n\nAdapted matrices: 4 (F32: 4).\nMatrix states: 4 observed; 0 with no observed update.\nZero-reference matrices: 0 unchanged; 0 changed.\nGain range: 1..1; relative residual range: 1.791e-08..8.556e-08.\n\nOf 720 nonzero intended updates, 0 are unchanged (0.00%).\nThose unchanged entries contain 0% of the reference squared norm.\nDoRA full-row norm factor (saved / |m|): 0.99999995..1.0000001; 7 nonzero row pairs.\nFull-row direction cosine: 1..1; 7 nonzero row pairs.\nNonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 0.\nDoRA full-column norm factor (saved / |m|): 0.99999987..1.0000001; 25 nonzero column pairs.\nFull-column direction cosine: 1..1; 25 nonzero column pairs.\nNonzero magnitudes saved as zero columns: 0; zero magnitudes saved nonzero: 0.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 5 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+          "report_sha256": "e03b707bc12d122f72ae7a111b5b4446b372852e4c65fa3be38532536f6eb0de",
+          "summary": {
+            "adapted_tensors": 4,
+            "checked_tensors": 5,
+            "adapted_elements": 720,
+            "intended_nonzero_elements": 720,
+            "changed_adapted_elements": 720,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          }
+        },
+        {
+          "case": "reset-embedding-magnitudes-f32",
+          "summary_stdout": "Mergeglass | saved DoRA merge audit\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nDoRA reference includes learned magnitudes; Linear normalizes rows, Embedding normalizes columns.\nCounts, gain and residual use the complete weight update, not B @ A alone.\n\nAdapted matrices: 4 (F32: 4).\nMatrix states: 3 observed; 1 with no observed update.\nZero-reference matrices: 0 unchanged; 0 changed.\nGain range: 0..1.167; relative residual range: 6.316e-08..1.\n\nOf 720 nonzero intended updates, 115 are unchanged (15.97%).\nThose unchanged entries contain 34.29% of the reference squared norm.\nDoRA full-row norm factor (saved / |m|): 0.99999995..1.0000001; 7 nonzero row pairs.\nFull-row direction cosine: 1..1; 7 nonzero row pairs.\nNonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 0.\nDoRA full-column norm factor (saved / |m|): 0.49999999..1.9999999; 25 nonzero column pairs.\nFull-column direction cosine: -1..1; 25 nonzero column pairs.\nNonzero magnitudes saved as zero columns: 0; zero magnitudes saved nonzero: 2.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 5 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+          "report_sha256": "e573799bfc428c5672549da74c4dca4d29cd88011ab0730a7d708b574c4fc793",
+          "summary": {
+            "adapted_tensors": 4,
+            "checked_tensors": 5,
+            "adapted_elements": 720,
+            "intended_nonzero_elements": 720,
+            "changed_adapted_elements": 605,
+            "unchanged_nonzero_update_elements": 115,
+            "unchanged_nonzero_update_fraction": 0.1597222222222222,
+            "unchanged_reference_energy_fraction": 0.34294778057769437,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 1,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          }
+        },
+        {
+          "case": "wrong-row-axis-f32",
+          "summary_stdout": "Mergeglass | saved DoRA merge audit\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nDoRA reference includes learned magnitudes; Linear normalizes rows, Embedding normalizes columns.\nCounts, gain and residual use the complete weight update, not B @ A alone.\n\nAdapted matrices: 4 (F32: 4).\nMatrix states: 4 observed; 0 with no observed update.\nZero-reference matrices: 0 unchanged; 0 changed.\nGain range: 0.6235..1; relative residual range: 1.791e-08..1.093.\n\nOf 720 nonzero intended updates, 0 are unchanged (0.00%).\nThose unchanged entries contain 0% of the reference squared norm.\nDoRA full-row norm factor (saved / |m|): 0.99999995..1.0000001; 7 nonzero row pairs.\nFull-row direction cosine: 1..1; 7 nonzero row pairs.\nNonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 0.\nDoRA full-column norm factor (saved / |m|): 0.6496892..1.4788999; 25 nonzero column pairs.\nFull-column direction cosine: -0.52551556..1; 25 nonzero column pairs.\nNonzero magnitudes saved as zero columns: 0; zero magnitudes saved nonzero: 1.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 5 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+          "report_sha256": "07dfe8732a3f3dd29348e03c06e8ccc2bf384259f70f48328c722045ddbec800",
+          "summary": {
+            "adapted_tensors": 4,
+            "checked_tensors": 5,
+            "adapted_elements": 720,
+            "intended_nonzero_elements": 720,
+            "changed_adapted_elements": 720,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          }
+        },
+        {
+          "case": "rotated-token-rows-f32",
+          "summary_stdout": "Mergeglass | saved DoRA merge audit\n\nEmbedding reference: (B @ A).T; rows are token indices, columns are dimensions.\n\nDoRA reference includes learned magnitudes; Linear normalizes rows, Embedding normalizes columns.\nCounts, gain and residual use the complete weight update, not B @ A alone.\n\nAdapted matrices: 4 (F32: 4).\nMatrix states: 4 observed; 0 with no observed update.\nZero-reference matrices: 0 unchanged; 0 changed.\nGain range: 0.4238..1; relative residual range: 6.316e-08..2.235.\n\nOf 720 nonzero intended updates, 0 are unchanged (0.00%).\nThose unchanged entries contain 0% of the reference squared norm.\nDoRA full-row norm factor (saved / |m|): 0.99999995..1.0000001; 7 nonzero row pairs.\nFull-row direction cosine: 1..1; 7 nonzero row pairs.\nNonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 0.\nDoRA full-column norm factor (saved / |m|): 0.99999987..1.0000001; 25 nonzero column pairs.\nFull-column direction cosine: -0.6706581..0.30064756; 25 nonzero column pairs.\nNonzero magnitudes saved as zero columns: 0; zero magnitudes saved nonzero: 0.\nRelative error = ||observed change - intended update|| / ||intended update||.\nGain = projection of the observed change onto the intended update (ideal 1).\nChecked 5 tensors; 0 unadapted tensor(s) changed.\nEqual weights alone cannot tell rounding from an omitted adapter.\nThis measures saved weights, not model quality.\n",
+          "report_sha256": "21d446b30842e54de13d69753dd08921d7e7cc917f461d5ff77c3b92c5e86563",
+          "summary": {
+            "adapted_tensors": 4,
+            "checked_tensors": 5,
+            "adapted_elements": 720,
+            "intended_nonzero_elements": 720,
+            "changed_adapted_elements": 720,
+            "unchanged_nonzero_update_elements": 0,
+            "unchanged_nonzero_update_fraction": 0.0,
+            "unchanged_reference_energy_fraction": 0.0,
+            "zero_update_tensors": 0,
+            "no_observed_update_tensors": 0,
+            "unadapted_changed_tensors": 0,
+            "unadapted_changed_elements": 0
+          }
+        }
+      ],
+      "partial_stdout": "Mergeglass | DoRA norms without a base\n\nPartial observations: reference directions and complete updates are unmeasured.\nObserved 7 Linear rows and 27 embedding columns in 4 DoRA matrices.\n\nDoRA full-row norm factor (saved / |m|): 0.99999995..1.0000001; 7 nonzero row pairs.\nNonzero magnitudes saved as zero rows: 0; zero magnitudes saved nonzero: 0.\nDoRA full-column norm factor (saved / |m|): 0.99999987..1.0000001; 25 nonzero column pairs.\nNonzero magnitudes saved as zero columns: 0; zero magnitudes saved nonzero: 0.\nCheckpoint: 5 tensors; 1 unmapped tensor(s) have no base comparison.\nA matching norm does not establish a correct merge or direction.\nNo pass/fail threshold is applied. This measures saved weights, not model quality.\n",
+      "partial_summary": {
+        "norm_observed_tensors": 4,
+        "norm_observed_rows": 7,
+        "norm_observed_columns": 27,
+        "checkpoint_tensors": 5,
+        "unmapped_tensors": 1
+      },
+      "reviewed_screenshot_stdout_matches": true
+    }
+  ],
+  "complete_example_report_comparison": {
+    "excluded_fields": [],
+    "exact_except_floating_roundoff": true,
+    "floating_relative_tolerance": 1e-08,
+    "floating_absolute_tolerance": 1e-14,
+    "floating_differences": [
+      {
+        "path": "correct-f32-safe-false.layers[0].dora_columns.mean_absolute_log2_column_norm_factor",
+        "numpy_124": 2.8902227012404456e-08,
+        "numpy_254": 2.890222701240446e-08
+      },
+      {
+        "path": "correct-f32-safe-false.layers[1].dora_rows.log2_row_norm_factor_range[1]",
+        "numpy_124": 7.526344437079071e-08,
+        "numpy_254": 7.526344437079072e-08
+      },
+      {
+        "path": "correct-f32-safe-false.layers[1].dora_rows.mean_absolute_log2_row_norm_factor",
+        "numpy_124": 3.9207560188151576e-08,
+        "numpy_254": 3.920756018815158e-08
+      },
+      {
+        "path": "correct-f32-safe-false.layers[3].dora_columns.log2_column_norm_factor_range[1]",
+        "numpy_124": 4.9936511641863626e-08,
+        "numpy_254": 4.993651164186363e-08
+      },
+      {
+        "path": "reset-embedding-magnitudes-f32.layers[1].dora_rows.log2_row_norm_factor_range[1]",
+        "numpy_124": 7.526344437079071e-08,
+        "numpy_254": 7.526344437079072e-08
+      },
+      {
+        "path": "reset-embedding-magnitudes-f32.layers[1].dora_rows.mean_absolute_log2_row_norm_factor",
+        "numpy_124": 3.9207560188151576e-08,
+        "numpy_254": 3.920756018815158e-08
+      },
+      {
+        "path": "reset-embedding-magnitudes-f32.layers[2].dora_columns.log2_column_norm_factor_range[1]",
+        "numpy_124": 0.5056713627304976,
+        "numpy_254": 0.5056713627304975
+      },
+      {
+        "path": "reset-embedding-magnitudes-f32.layers[2].dora_columns.largest_nonzero_log2_norm_error.log2_column_norm_factor",
+        "numpy_124": 0.5056713627304976,
+        "numpy_254": 0.5056713627304975
+      },
+      {
+        "path": "reset-embedding-magnitudes-f32.layers[3].dora_columns.log2_column_norm_factor_range[1]",
+        "numpy_124": 0.8309391368628563,
+        "numpy_254": 0.8309391368628564
+      },
+      {
+        "path": "reset-embedding-magnitudes-f32.layers[3].dora_columns.largest_nonzero_log2_norm_error.log2_column_norm_factor",
+        "numpy_124": 0.8309391368628563,
+        "numpy_254": 0.8309391368628564
+      },
+      {
+        "path": "wrong-row-axis-f32.layers[0].dora_columns.mean_absolute_log2_column_norm_factor",
+        "numpy_124": 2.8902227012404456e-08,
+        "numpy_254": 2.890222701240446e-08
+      },
+      {
+        "path": "wrong-row-axis-f32.layers[1].dora_rows.log2_row_norm_factor_range[1]",
+        "numpy_124": 7.526344437079071e-08,
+        "numpy_254": 7.526344437079072e-08
+      },
+      {
+        "path": "wrong-row-axis-f32.layers[1].dora_rows.mean_absolute_log2_row_norm_factor",
+        "numpy_124": 3.9207560188151576e-08,
+        "numpy_254": 3.920756018815158e-08
+      },
+      {
+        "path": "wrong-row-axis-f32.layers[2].dora_columns.log2_column_norm_factor_range[1]",
+        "numpy_124": 0.5645243698879325,
+        "numpy_254": 0.5645243698879324
+      },
+      {
+        "path": "wrong-row-axis-f32.layers[3].dora_columns.log2_column_norm_factor_range[1]",
+        "numpy_124": 4.9936511641863626e-08,
+        "numpy_254": 4.993651164186363e-08
+      },
+      {
+        "path": "rotated-token-rows-f32.layers[1].dora_rows.log2_row_norm_factor_range[1]",
+        "numpy_124": 7.526344437079071e-08,
+        "numpy_254": 7.526344437079072e-08
+      },
+      {
+        "path": "rotated-token-rows-f32.layers[1].dora_rows.mean_absolute_log2_row_norm_factor",
+        "numpy_124": 3.9207560188151576e-08,
+        "numpy_254": 3.920756018815158e-08
+      },
+      {
+        "path": "rotated-token-rows-f32.layers[3].dora_columns.log2_column_norm_factor_range[1]",
+        "numpy_124": 4.9936511641863626e-08,
+        "numpy_254": 4.993651164186363e-08
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "file": "docs/assets/embedding-dora-norms.png",
+      "bytes": 184647,
+      "sha256": "184811bf87e2c46c1e6365949084f2a4e1979579ffbc5c423e54891a23086db5",
+      "reviewed": true
+    },
+    {
+      "file": "docs/assets/embedding-dora.png",
+      "bytes": 319612,
+      "sha256": "b117a065da696c4137a4f53c755e29359eefe22af789f52c33b0ab3c6c5c8a18",
+      "reviewed": true
+    }
+  ],
+  "boundaries": [
+    "No registry release or hosted deployment.",
+    "Native dense/scalar verification is recorded separately.",
+    "Test totals are supplemental to native saved-artifact checks."
+  ],
+  "sdist_uncompressed_tar_identical_across_build_interpreters": true
+}

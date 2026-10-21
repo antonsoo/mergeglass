@@ -1,0 +1,248 @@
+{
+  "verified_at_utc": "2026-10-21T14:19:14.067110+00:00",
+  "source_revision": "be6782043f973253a3ea7e80bce905f52be8b4b8",
+  "public_clone_tree": "64c7b142b41a18372e39d65dac397b08738b0e4f",
+  "install_command": "uv pip install --python /tmp/claude-1000/mergeglass-embedding-dora-public-install/bin/python --force-reinstall 'mergeglass @ git+https://github.com/antonsoo/mergeglass.git@be6782043f973253a3ea7e80bce905f52be8b4b8'",
+  "identity": {
+    "python": "3.15.0 (main, Oct 14 2026, 01:05:07) [Clang 23.1.3 ]",
+    "module": "/tmp/claude-1000/mergeglass-embedding-dora-public-install/lib/python3.15/site-packages/mergeglass",
+    "dependencies": [
+      "numpy>=1.24",
+      "safetensors>=0.6.2"
+    ],
+    "direct_url": {
+      "url": "https://github.com/antonsoo/mergeglass.git",
+      "vcs_info": {
+        "vcs": "git",
+        "commit_id": "be6782043f973253a3ea7e80bce905f52be8b4b8",
+        "requested_revision": "be6782043f973253a3ea7e80bce905f52be8b4b8"
+      }
+    },
+    "runtime_sha256": {
+      "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+      "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "adapter.py": "64bdd5b3c02c7c694f7a97de5673bc521b419dc760c22b5b056f533f76e9dfd9",
+      "audit.py": "078de6f7ed78c2f533070109672c058db9593ed2858f1f4a02f9a120a489b958",
+      "cli.py": "29eb5aed3cebed9349277accbf576e8e2f6dbb3c97923f0509580bfa075aceb7",
+      "dora_columns.py": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6",
+      "dora_norms.py": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c",
+      "dora_rows.py": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a",
+      "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+      "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+    },
+    "versions": {
+      "numpy": "2.5.4",
+      "safetensors": "0.8.0"
+    },
+    "torch_available": false,
+    "peft_available": false
+  },
+  "readme_quickstart": [
+    {
+      "mode": "summary",
+      "stdout_sha256": "7cd9a9dce627270efa599ef6019bfd5e3651035ae2fbf1edc82a00d10ad93ebc",
+      "matches_reviewed_screenshot_input": true
+    },
+    {
+      "mode": "norms",
+      "stdout_sha256": "32c2aa0471dae3c77c10939db7bdcf90b1d868d5c128257cd6be5c62c0328396",
+      "matches_reviewed_screenshot_input": true
+    }
+  ],
+  "native_replay": {
+    "cases": 15,
+    "scalar_coordinates": 1848,
+    "receipt_sha256": "f564a6f36c0c00cb3c8dad485c1c2a335695cd8221cb72e9d8a37b29d8409aa2",
+    "receipt": "installed-315.json",
+    "public_git_replay_identical_to_sdist_replay": true
+  },
+  "immutable_http_files": [
+    {
+      "file": "src/mergeglass/__init__.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/src/mergeglass/__init__.py",
+      "status": 200,
+      "bytes": 258,
+      "sha256": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23"
+    },
+    {
+      "file": "src/mergeglass/__main__.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/src/mergeglass/__main__.py",
+      "status": 200,
+      "bytes": 48,
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    {
+      "file": "src/mergeglass/adapter.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/src/mergeglass/adapter.py",
+      "status": 200,
+      "bytes": 17502,
+      "sha256": "64bdd5b3c02c7c694f7a97de5673bc521b419dc760c22b5b056f533f76e9dfd9"
+    },
+    {
+      "file": "src/mergeglass/audit.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/src/mergeglass/audit.py",
+      "status": 200,
+      "bytes": 42981,
+      "sha256": "078de6f7ed78c2f533070109672c058db9593ed2858f1f4a02f9a120a489b958"
+    },
+    {
+      "file": "src/mergeglass/cli.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/src/mergeglass/cli.py",
+      "status": 200,
+      "bytes": 18577,
+      "sha256": "29eb5aed3cebed9349277accbf576e8e2f6dbb3c97923f0509580bfa075aceb7"
+    },
+    {
+      "file": "src/mergeglass/dora_columns.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/src/mergeglass/dora_columns.py",
+      "status": 200,
+      "bytes": 3503,
+      "sha256": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6"
+    },
+    {
+      "file": "src/mergeglass/dora_norms.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/src/mergeglass/dora_norms.py",
+      "status": 200,
+      "bytes": 7498,
+      "sha256": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c"
+    },
+    {
+      "file": "src/mergeglass/dora_rows.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/src/mergeglass/dora_rows.py",
+      "status": 200,
+      "bytes": 6814,
+      "sha256": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a"
+    },
+    {
+      "file": "src/mergeglass/parameter_layouts.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/src/mergeglass/parameter_layouts.py",
+      "status": 200,
+      "bytes": 6712,
+      "sha256": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4"
+    },
+    {
+      "file": "src/mergeglass/storage.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/src/mergeglass/storage.py",
+      "status": 200,
+      "bytes": 11226,
+      "sha256": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+    },
+    {
+      "file": "docs/assets/embedding-dora-norms.png",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/docs/assets/embedding-dora-norms.png",
+      "status": 200,
+      "bytes": 184647,
+      "sha256": "184811bf87e2c46c1e6365949084f2a4e1979579ffbc5c423e54891a23086db5"
+    },
+    {
+      "file": "docs/assets/embedding-dora.png",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/docs/assets/embedding-dora.png",
+      "status": 200,
+      "bytes": 319612,
+      "sha256": "b117a065da696c4137a4f53c755e29359eefe22af789f52c33b0ab3c6c5c8a18"
+    },
+    {
+      "file": "studies/embedding-dora/legacy.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/studies/embedding-dora/legacy.py",
+      "status": 200,
+      "bytes": 4163,
+      "sha256": "b0f1eeeca1d6159e365cc0a45a03c13195d46578bbaedb6d958b5642fda22746"
+    },
+    {
+      "file": "studies/embedding-dora/produce.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/studies/embedding-dora/produce.py",
+      "status": 200,
+      "bytes": 11205,
+      "sha256": "820f4dc40f9ce5cea1a665b5f6aee65358b3039067044bf96474f08898bbf94f"
+    },
+    {
+      "file": "studies/embedding-dora/streaming.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/studies/embedding-dora/streaming.py",
+      "status": 200,
+      "bytes": 14649,
+      "sha256": "fef97a8ca0abdbf85842113a8938bb6e3a63b3e74f55bd26f35c02065eef3831"
+    },
+    {
+      "file": "studies/embedding-dora/verify.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/studies/embedding-dora/verify.py",
+      "status": 200,
+      "bytes": 18079,
+      "sha256": "684cb9de96cec22628e7e9f6957ca81811b79077a0d445b08188cab191668bc9"
+    },
+    {
+      "file": "studies/embedding-dora/README.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/studies/embedding-dora/README.md",
+      "status": 200,
+      "bytes": 9176,
+      "sha256": "f9453f72a2be98cb72aee3ac75707f6ffd2726c8ea2846797a7b21a2e17706d0"
+    },
+    {
+      "file": "examples/embedding-dora/README.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/examples/embedding-dora/README.md",
+      "status": 200,
+      "bytes": 2039,
+      "sha256": "7d9af58950d1eb65ffc99d6c9d1f2d0eef29f8e70d4bab221cbc3ef9af9cedaa"
+    },
+    {
+      "file": "examples/embedding-dora/manifest.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/examples/embedding-dora/manifest.json",
+      "status": 200,
+      "bytes": 1407,
+      "sha256": "5d64e5b46eeb410f97cff89469360eebd405111221c48892eadf0fc633e1ad13"
+    },
+    {
+      "file": "examples/embedding-dora/base/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/examples/embedding-dora/base/model.safetensors",
+      "status": 200,
+      "bytes": 3404,
+      "sha256": "3375a0d675d6bac55de12186da1c6ad96883f4fd91b34334100d92d29590d2fe"
+    },
+    {
+      "file": "examples/embedding-dora/adapter/adapter_config.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/examples/embedding-dora/adapter/adapter_config.json",
+      "status": 200,
+      "bytes": 1283,
+      "sha256": "7bd04fd744da16854b7a8b5938f0d2373cb03eb54aeace1cda6bffd1dcbc9f96"
+    },
+    {
+      "file": "examples/embedding-dora/adapter/adapter_model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/examples/embedding-dora/adapter/adapter_model.safetensors",
+      "status": 200,
+      "bytes": 2952,
+      "sha256": "537ebfd0fde7223bca2f749fd5f5a9a56bbb670e58d82b42a70dc52f76688aa2"
+    },
+    {
+      "file": "examples/embedding-dora/correct-f32-safe-false/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/examples/embedding-dora/correct-f32-safe-false/model.safetensors",
+      "status": 200,
+      "bytes": 3404,
+      "sha256": "7ee4ce0541229085b286368156148dd18eabce7652b2d4ca9515bce13ffae7d3"
+    },
+    {
+      "file": "examples/embedding-dora/reset-embedding-magnitudes-f32/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/examples/embedding-dora/reset-embedding-magnitudes-f32/model.safetensors",
+      "status": 200,
+      "bytes": 3404,
+      "sha256": "bde5860f92891c41dedba1f3f6a35465f3cfb95d782dabff5ce1e09fbd4090f3"
+    },
+    {
+      "file": "examples/embedding-dora/wrong-row-axis-f32/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/examples/embedding-dora/wrong-row-axis-f32/model.safetensors",
+      "status": 200,
+      "bytes": 3404,
+      "sha256": "4080f10fe7d063eac420691354168ce62c7c861047b17f7b81650ca1d52e3f9c"
+    },
+    {
+      "file": "examples/embedding-dora/rotated-token-rows-f32/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/be6782043f973253a3ea7e80bce905f52be8b4b8/examples/embedding-dora/rotated-token-rows-f32/model.safetensors",
+      "status": 200,
+      "bytes": 3404,
+      "sha256": "0b40bc5eb98f5499aba2412d04ed86ad8bcb320cc122d9e0f7c248ea8086a53a"
+    }
+  ],
+  "boundaries": [
+    "No registry release or hosted application.",
+    "GitHub Actions status is not established here.",
+    "Numerical artifact checks do not establish model quality."
+  ]
+}

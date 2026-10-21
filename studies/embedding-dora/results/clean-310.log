@@ -1,0 +1,52 @@
+Using CPython 3.10.21
+Creating virtual environment at: .venv
+Resolved 24 packages in 1ms
+   Building mergeglass @ file:///tmp/claude-1000/mergeglass-embedding-dora-clean-310
+      Built mergeglass @ file:///tmp/claude-1000/mergeglass-embedding-dora-clean-310
+Prepared 1 package in 642ms
+Installed 19 packages in 151ms
+ + ast-serialize==0.13.1
+ + build==1.6.1
+ + exceptiongroup==1.3.1
+ + iniconfig==2.3.1
+ + librt==0.16.0
+ + mergeglass==0.1.0 (from file:///tmp/claude-1000/mergeglass-embedding-dora-clean-310)
+ + mypy==2.4.0
+ + mypy-extensions==1.1.0
+ + numpy==2.2.6
+ + packaging==26.3
+ + pathspec==1.1.1
+ + pluggy==1.7.0
+ + pygments==2.21.0
+ + pyproject-hooks==1.3.3
+ + pytest==9.1.1
+ + ruff==0.17.1
+ + safetensors==0.8.0
+ + tomli==2.5.0
+ + typing-extensions==4.16.0
+All checks passed!
+117 files already formatted
+Success: no issues found in 10 source files
+============================= test session starts ==============================
+platform linux -- Python 3.10.21, pytest-9.1.1, pluggy-1.7.0
+rootdir: /tmp/claude-1000/mergeglass-embedding-dora-clean-310
+configfile: pyproject.toml
+testpaths: tests
+collected 181 items
+
+tests/test_audit.py ..................................................   [ 27%]
+tests/test_contracts.py ...........                                      [ 33%]
+tests/test_conv1d.py .........                                           [ 38%]
+tests/test_dora.py ............................                          [ 54%]
+tests/test_dora_norms.py ................                                [ 62%]
+tests/test_embedding_dora.py ..........                                  [ 68%]
+tests/test_embeddings.py ...............                                 [ 76%]
+tests/test_expert_parameters.py ..........                               [ 82%]
+tests/test_lora_bias.py ...........                                      [ 88%]
+tests/test_saved_modules.py .....................                        [100%]
+
+============================= 181 passed in 1.83s ==============================
+Building source distribution...
+Building wheel from source distribution...
+Successfully built dist/mergeglass-0.1.0.tar.gz
+Successfully built dist/mergeglass-0.1.0-py3-none-any.whl
