@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+Audit the declared PEFT 0.21.0 / Transformers 5.20.1 Qwen3 MoE parameter layout.
+Follow nested wrappers and interleaved B columns into actual saved per-expert
+gate/up/down matrices, retaining physical keys and logical expert coordinates.
+Stream saved rows with B plus one expert A slice under the decoded-factor cap.
+Keep zero references, omitted nonzero updates and wrong gains distinct; reject
+unknown layouts and full-module overlap. Retain 44 native precision/fault saves,
+original parameter-identity witnesses, 37,920 independent Decimal entry checks
+and runnable omission/order controls. No registry release.
+
 Audit PEFT `lora_bias: true` on Linear and supported Conv1D targets, using
 `base.bias + lora_B.bias * scale` as a separate vector reference. Retain gain,
 residual, rounding, unchanged-update counts and original one-dimensional

@@ -1,0 +1,193 @@
+{
+  "source_tree": "e52f4814a0393797aea4aaef4852ff5a614815ca",
+  "source_archive_sha256": "b9d8d5f5cfc654f4400116b08006ea11101b2c1ad63561232474efc5de135e99",
+  "runtime": {
+    "python": "3.10.21 (main, Sep  1 2026, 14:16:49) [Clang 22.1.3 ]",
+    "numpy": "2.2.6",
+    "heavy_imports": []
+  },
+  "checks": [
+    {
+      "command": [
+        "uv",
+        "sync",
+        "--locked",
+        "--python",
+        "3.10"
+      ],
+      "exit_code": 0,
+      "seconds": 1.491,
+      "output_sha256": "46562d47f714a8ad8c850910d2d368a53a0c61c6135bb0f0dc928d2c3b13ef60",
+      "tail": "Using CPython 3.10.21\nCreating virtual environment at: .venv\nResolved 24 packages in 1ms\n   Building mergeglass @ file://<scratch>/mergeglass-expert-clean-310\n      Built mergeglass @ file://<scratch>/mergeglass-expert-clean-310\nPrepared 1 package in 1.31s\nInstalled 19 packages in 106ms\n + ast-serialize==0.13.1\n + build==1.6.1\n + exceptiongroup==1.3.1\n + iniconfig==2.3.1\n + librt==0.16.0\n + mergeglass==0.1.0 (from file://<scratch>/mergeglass-expert-clean-310)\n + mypy==2.4.0\n + mypy-extensions==1.1.0\n + numpy==2.2.6\n + packaging==26.3\n + pathspec==1.1.1\n + pluggy==1.7.0\n + pygments==2.21.0\n + pyproject-hooks==1.3.3\n + pytest==9.1.1\n + ruff==0.17.1\n + safetensors==0.8.0\n + tomli==2.5.0\n + typing-extensions==4.16.0\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "seconds": 0.101,
+      "output_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "tail": "All checks passed!\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "seconds": 0.039,
+      "output_sha256": "93f257ad0b7294206e6eb174e7f37cfc2821709aff9dc074632c0d4fdbc8104d",
+      "tail": "109 files already formatted\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "mypy",
+        "src"
+      ],
+      "exit_code": 0,
+      "seconds": 2.726,
+      "output_sha256": "46984ca20bf69f7b14ec1fd9bd82101d56a4e109e68f016fd2a04f22481b09b3",
+      "tail": "Success: no issues found in 9 source files\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "pytest",
+        "-q"
+      ],
+      "exit_code": 0,
+      "seconds": 2.191,
+      "output_sha256": "ed73e1d3a225f723444e8663161efa61f4e8283bca43f5556ecebc2deac389fb",
+      "tail": "........................................................................ [ 42%]\n........................................................................ [ 84%]\n...........................                                              [100%]\n171 passed in 1.72s\n"
+    },
+    {
+      "command": [
+        "uv",
+        "build",
+        "--python",
+        "3.10"
+      ],
+      "exit_code": 0,
+      "seconds": 1.301,
+      "output_sha256": "25ce5651923dcd1e3da14b2c5c0b6c7bec0ad2f948439f56f1652e0d67235f2e",
+      "tail": "Building source distribution...\nBuilding wheel from source distribution...\nSuccessfully built dist/mergeglass-0.1.0.tar.gz\nSuccessfully built dist/mergeglass-0.1.0-py3-none-any.whl\n"
+    },
+    {
+      "command": [
+        "uv",
+        "venv",
+        "--python",
+        "3.10",
+        "<scratch>/mergeglass-expert-installed-310"
+      ],
+      "exit_code": 0,
+      "seconds": 0.013,
+      "output_sha256": "d860cd8f0e601e6bf5e0e9677db5e603feaecc289fe1bd3d98199e2ddf4d7d3e",
+      "tail": "Using CPython 3.10.21\nCreating virtual environment at: <scratch>/mergeglass-expert-installed-310\nActivate with: source <scratch>/mergeglass-expert-installed-310/bin/activate\n"
+    },
+    {
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "<scratch>/mergeglass-expert-installed-310/bin/python",
+        "<scratch>/mergeglass-expert-clean-310/dist/mergeglass-0.1.0-py3-none-any.whl"
+      ],
+      "exit_code": 0,
+      "seconds": 0.477,
+      "output_sha256": "23c2ee51f12712c7639113776f765839fb0cfd2c27a8bbe14da2712d92f9082d",
+      "tail": "Using Python 3.10.21 environment at: <scratch>/mergeglass-expert-installed-310\nResolved 3 packages in 326ms\nPrepared 1 package in 7ms\nInstalled 3 packages in 49ms\n + mergeglass==0.1.0 (from file://<scratch>/mergeglass-expert-clean-310/dist/mergeglass-0.1.0-py3-none-any.whl)\n + numpy==2.2.6\n + safetensors==0.8.0\n"
+    },
+    {
+      "command": [
+        "<scratch>/mergeglass-expert-installed-310/bin/python",
+        "-c",
+        "import importlib.metadata,json,mergeglass,pathlib,sys; print(json.dumps({\"python\":sys.version,\"numpy\":importlib.metadata.version(\"numpy\"),\"module\":mergeglass.__file__,\"heavy_imports\":[m for m in [\"torch\",\"peft\",\"transformers\"] if m in sys.modules]}))"
+      ],
+      "exit_code": 0,
+      "seconds": 0.207,
+      "output_sha256": "c6c3c60f9f3d0e7fc43a51b81e3c53a411f8ab925d87ee62201b7afa4a9111dd",
+      "tail": "{\"python\": \"3.10.21 (main, Sep  1 2026, 14:16:49) [Clang 22.1.3 ]\", \"numpy\": \"2.2.6\", \"module\": \"<scratch>/mergeglass-expert-installed-310/lib/python3.10/site-packages/mergeglass/__init__.py\", \"heavy_imports\": []}\n"
+    },
+    {
+      "command": [
+        "<scratch>/mergeglass-expert-installed-310/bin/python",
+        "<checkout>/studies/expert-parameters/verify.py",
+        "<scratch>/mergeglass-expert-final2",
+        "<checkout>/studies/expert-parameters/results/installed-310.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.972,
+      "output_sha256": "b675f66da8018e5136536fbf7d6e0708024ed92726b662424454cb9ecbf7c6bd",
+      "tail": "Verified 44 merges / 37,920 expert entries.\n"
+    },
+    {
+      "command": [
+        "<scratch>/mergeglass-expert-installed-310/bin/mergeglass",
+        "examples/expert-parameters/base",
+        "examples/expert-parameters/adapter",
+        "examples/expert-parameters/correct-f32-safe-false",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "seconds": 0.097,
+      "output_sha256": "b281c8ce11271ba2b2cca4aef04a53ad5ca045a6e99d574ca94346d33efe89d1",
+      "tail": " includes the declared gate/up output-row offset\"\n    }\n  ],\n  \"unadapted_changes\": [],\n  \"limitations\": [\n    \"Supplied base identity and training provenance are not independently established.\",\n    \"Equal weights do not distinguish rounding from an omitted or wrong adapter.\",\n    \"The float64 reference is numerical; it is not a PEFT merge emulator.\",\n    \"DoRA normalizes rows of the supplied original base plus its directional update.\",\n    \"Tensor shapes and a global adapter flag do not establish every module's type.\",\n    \"Operation order and matmul precision can differ from the producer, notably at ties.\",\n    \"Weight-space changes and residuals do not establish generation or task quality.\",\n    \"Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit.\"\n  ]\n}\n"
+    },
+    {
+      "command": [
+        "<scratch>/mergeglass-expert-installed-310/bin/mergeglass",
+        "examples/expert-parameters/base",
+        "examples/expert-parameters/adapter",
+        "examples/expert-parameters/omitted-expert",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "seconds": 0.098,
+      "output_sha256": "5a55ec8584c345f74c6c88407ef484d7bb3ba687fa464da0fb17121ec23c6b24",
+      "tail": " includes the declared gate/up output-row offset\"\n    }\n  ],\n  \"unadapted_changes\": [],\n  \"limitations\": [\n    \"Supplied base identity and training provenance are not independently established.\",\n    \"Equal weights do not distinguish rounding from an omitted or wrong adapter.\",\n    \"The float64 reference is numerical; it is not a PEFT merge emulator.\",\n    \"DoRA normalizes rows of the supplied original base plus its directional update.\",\n    \"Tensor shapes and a global adapter flag do not establish every module's type.\",\n    \"Operation order and matmul precision can differ from the producer, notably at ties.\",\n    \"Weight-space changes and residuals do not establish generation or task quality.\",\n    \"Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit.\"\n  ]\n}\n"
+    },
+    {
+      "command": [
+        "<scratch>/mergeglass-expert-installed-310/bin/mergeglass",
+        "examples/expert-parameters/base",
+        "examples/expert-parameters/adapter",
+        "examples/expert-parameters/contiguous-B",
+        "--json",
+        "-"
+      ],
+      "exit_code": 0,
+      "seconds": 0.093,
+      "output_sha256": "cee9f4a8500abdc4e804316bd6d00413d4c38720ecf9f052b2f7aa0d99c00ed7",
+      "tail": " includes the declared gate/up output-row offset\"\n    }\n  ],\n  \"unadapted_changes\": [],\n  \"limitations\": [\n    \"Supplied base identity and training provenance are not independently established.\",\n    \"Equal weights do not distinguish rounding from an omitted or wrong adapter.\",\n    \"The float64 reference is numerical; it is not a PEFT merge emulator.\",\n    \"DoRA normalizes rows of the supplied original base plus its directional update.\",\n    \"Tensor shapes and a global adapter flag do not establish every module's type.\",\n    \"Operation order and matmul precision can differ from the producer, notably at ties.\",\n    \"Weight-space changes and residuals do not establish generation or task quality.\",\n    \"Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit.\"\n  ]\n}\n"
+    }
+  ],
+  "wheel": {
+    "filename": "mergeglass-0.1.0-py3-none-any.whl",
+    "sha256": "899fe8aad3ab269fc1473c1eb48a52c847190ed01e4d4871452fec26003587da",
+    "verified_runtime_files": 9
+  },
+  "registry_release": false
+}

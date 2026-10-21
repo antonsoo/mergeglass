@@ -1,0 +1,8 @@
+{
+  "native_cases": 44,
+  "decimal_entries": 37920,
+  "verifier_sha256": "1a93a044129b578e19f11d94833fb6b42765430145551b94c3d1905770274571",
+  "native_manifest_sha256": "a0871ac1c13d11a51693d08a33a00a106f2204a4393d6a955e9cf0f8b5b6cfd2",
+  "all_reports_equal_source": true,
+  "report_archive_sha256": "c50814a623e472efbd07f6516d7f4134ff8f0a5568db05c32ad27f324914f7df"
+}

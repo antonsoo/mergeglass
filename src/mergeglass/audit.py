@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from collections.abc import Callable
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -149,6 +150,7 @@ def _layer(
     max_adapter_bytes: int,
     *,
     bias: bool = False,
+    product: Callable[[int, int], FloatArray] | None = None,
 ) -> dict[str, Any]:
     if base.dtype not in FLOAT_DTYPES:
         raise AuditError(f"Adapted base tensor is not floating point: {base.name}")
@@ -156,7 +158,7 @@ def _layer(
     # Keep the factor independent of saved-weight rows; a vocabulary-wide A
     # must not be decoded in full merely to audit a few token rows at a time.
     fixed = None
-    if not bias:
+    if not bias and product is None:
         stationary = pair.b if pair.transposed else pair.a
         if stationary.elements * 8 > max_adapter_bytes:
             name = "B" if pair.transposed else "A"
@@ -183,7 +185,10 @@ def _layer(
     worst_size = -1.0
     for row in range(0, rows, block_rows):
         count = min(rows - row, block_rows)
-        if bias:
+        if product is not None:
+            with np.errstate(over="ignore", invalid="ignore", under="ignore"):
+                delta = product(row, count)
+        elif bias:
             assert pair.bias is not None
             with np.errstate(over="ignore", invalid="ignore", under="ignore"):
                 delta = pair.bias.floats(row, count).reshape(count, 1) * pair.scale
@@ -193,7 +198,7 @@ def _layer(
                 factor[:, component] = pair.a.floats(component * rows + row, count)
         else:
             factor = pair.b.floats(row * pair.rank, count * pair.rank).reshape(count, pair.rank)
-        if not bias:
+        if not bias and product is None:
             assert fixed is not None
             with np.errstate(over="ignore", invalid="ignore", under="ignore"):
                 delta = (factor @ fixed) * pair.scale
@@ -341,6 +346,69 @@ def _layer(
         "largest_residual": worst,
         **({"dora_rows": dora_rows.result()} if dora_rows is not None else {}),
     }
+
+
+def _expert_parameter_layers(
+    pair: Pair, base: Checkpoint, merged: Checkpoint, elements: int, max_adapter_bytes: int
+) -> list[dict[str, Any]]:
+    layout = pair.expert_layout
+    assert layout is not None
+    # B interleaves experts in its columns. Keep it once, then decode and
+    # release one expert's contiguous A rows. Native checkpoints hold separate
+    # Linear weights; no dense 3-D parameter or delta is reconstructed.
+    if (pair.b.elements + pair.rank * layout.inputs) * 8 > max_adapter_bytes:
+        raise AuditError(
+            f"Expert B plus one A slice exceeds the adapter memory limit: {pair.module}"
+        )
+    b = pair.b.floats().reshape(layout.outputs, pair.rank, layout.experts)
+
+    def one_expert(expert: int) -> list[dict[str, Any]]:
+        a = pair.a.floats(expert * pair.rank * layout.inputs, pair.rank * layout.inputs)
+        a = a.reshape(pair.rank, layout.inputs)
+        results = []
+        for matrix in layout.matrices:
+            if matrix.expert != expert:
+                continue
+            original, after = base.tensors[matrix.weight], merged.tensors[matrix.weight]
+            _compatible(original, after)
+
+            def product(row: int, count: int, *, offset: int = matrix.output_start) -> FloatArray:
+                return (b[offset + row : offset + row + count, :, expert] @ a) * pair.scale
+
+            view = replace(
+                pair,
+                module=matrix.weight.removesuffix(".weight"),
+                weight=matrix.weight,
+                expert_layout=None,
+            )
+            result = _layer(view, original, after, elements, 0, product=product)
+            result.update(
+                {
+                    "weight_layout": "expert_parameter_slice",
+                    "expert_parameter": layout.parameter,
+                    "expert_index": expert,
+                    "parameter_output_rows": [
+                        matrix.output_start,
+                        matrix.output_start + matrix.rows,
+                    ],
+                    "coordinate_axes": {"row": "output", "column": "input"},
+                    "factor_tensors": {"A": pair.a.name, "B": pair.b.name},
+                    "layout_evidence": list(layout.evidence),
+                    "reference_product": (
+                        "sum_r B[o, r * experts + e] * A[e * rank + r, i] * scale; "
+                        "o includes the declared gate/up output-row offset"
+                    ),
+                }
+            )
+            result["largest_residual"] = {
+                "expert": expert,
+                "parameter_output_row": matrix.output_start + result["largest_residual"]["row"],
+                **result["largest_residual"],
+            }
+            results.append(result)
+        return results
+
+    return [row for expert in range(layout.experts) for row in one_expert(expert)]
 
 
 def _unadapted(base: Tensor, merged: Tensor, elements: int) -> dict[str, Any] | None:
@@ -497,6 +565,13 @@ def audit(
         update, before, full_weights=frozenset(saved.tensor.name for saved in full.tensors)
     )
     for pair in pairs:
+        physical_weights = (
+            {matrix.weight for matrix in pair.expert_layout.matrices}
+            if pair.expert_layout is not None
+            else {pair.weight}
+        )
+        if physical_weights & replacements.keys():
+            raise AuditError(f"LoRA target overlaps a full saved module: {pair.module}")
         if any(
             pair.module == saved.module
             or pair.module.startswith(saved.module + ".")
@@ -504,7 +579,16 @@ def audit(
             for saved in full.tensors
         ):
             raise AuditError(f"LoRA target overlaps a full saved module: {pair.module}")
-    by_weight = {pair.weight: pair for pair in pairs}
+    by_weight = {pair.weight: pair for pair in pairs if pair.expert_layout is None}
+    parameter_pairs = [pair for pair in pairs if pair.expert_layout is not None]
+    by_parameter_weight = {}
+    for pair in parameter_pairs:
+        assert pair.expert_layout is not None
+        for matrix in pair.expert_layout.matrices:
+            if matrix.weight in by_parameter_weight:
+                raise AuditError(f"Overlapping expert parameter targets: {matrix.weight}")
+            by_parameter_weight[matrix.weight] = pair
+    measured_parameters: set[str] = set()
     by_bias = {pair.module + ".bias": pair for pair in pairs if pair.bias is not None}
     # Workspace target for the several simultaneous binary64 blocks. A whole
     # row and rank-wide factor row are the minimum; the fixed factor has a separate limit.
@@ -529,6 +613,15 @@ def audit(
                     biases.append(
                         _layer(by_bias[name], tensor, counterpart, elements, 0, bias=True)
                     )
+                elif name in by_parameter_weight:
+                    pair = by_parameter_weight[name]
+                    if pair.weight not in measured_parameters:
+                        layers.extend(
+                            _expert_parameter_layers(
+                                pair, before, after, elements, max_adapter_mib * 1024 * 1024
+                            )
+                        )
+                        measured_parameters.add(pair.weight)
                 elif name in by_weight:
                     layers.append(
                         _layer(
@@ -545,6 +638,8 @@ def audit(
                         unrelated.append(difference)
         except FloatingPointError as exc:
             raise AuditError(f"Audit arithmetic exceeds float64 range: {exc}") from exc
+    if parameter_pairs:
+        layers.sort(key=lambda row: row["weight"])
     # All original files, including configs and indexes, are fingerprinted.
     fingerprints = {role: checkpoint.fingerprints() for role, checkpoint in inputs.items()}
     for checkpoint in inputs.values():
@@ -556,6 +651,19 @@ def audit(
         "schema_version": 1,
         "arithmetic": {
             **CONTRACT,
+            **(
+                {
+                    "expert_parameter_reference": (
+                        "one rank-r product per expert; A rows group experts, B columns "
+                        "interleave experts. Native HF serialization splits fused gate/up "
+                        "into separate per-expert Linear weights, preserving exact saved keys "
+                        "and row/column coordinates. B and one expert A slice are retained "
+                        "under the adapter memory cap"
+                    ),
+                }
+                if any(pair.expert_layout is not None for pair in pairs)
+                else {}
+            ),
             **(
                 {
                     "lora_bias_reference": (
@@ -651,6 +759,17 @@ def audit(
                 if biases
                 else {}
             ),
+            **(
+                {
+                    "scope": (
+                        "saved Linear LoRA/DoRA, standard GPT Conv1D LoRA, Embedding LoRA, "
+                        "explicit full modules and declared Qwen3 MoE parameter layouts; "
+                        "no architecture execution or quality estimate"
+                    )
+                }
+                if parameter_pairs
+                else {}
+            ),
         },
         "inputs": fingerprints,
         "settings": {"block_mib": block_mib, "max_adapter_mib": max_adapter_mib},
@@ -676,6 +795,24 @@ def audit(
             ),
             "unadapted_changed_tensors": len(unrelated),
             "unadapted_changed_elements": sum(layer["changed_elements"] for layer in unrelated),
+            **(
+                {
+                    "logical_expert_parameters": len(parameter_pairs),
+                    "expert_weight_tensors": sum("expert_parameter" in row for row in layers),
+                    "expert_no_observed_update_tensors": sum(
+                        row["status"] == "no-observed-update"
+                        for row in layers
+                        if "expert_parameter" in row
+                    ),
+                    "expert_zero_update_tensors": sum(
+                        row["status"] == "zero-update"
+                        for row in layers
+                        if "expert_parameter" in row
+                    ),
+                }
+                if parameter_pairs
+                else {}
+            ),
             **(
                 {
                     "lora_bias_tensors": len(biases),

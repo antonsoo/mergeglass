@@ -15,6 +15,10 @@ embedding tables and classifier heads, against their absolute saved values.
 Optional LoRA B bias updates are audited separately: correct matrix products
 cannot hide an omitted or incorrectly scaled bias vector. [Native example and
 precision limits](studies/lora-bias/README.md).
+It also follows supported Qwen3 MoE parameter factors into the native saved
+per-expert gate/up/down matrices, exposing omitted experts and incorrect factor
+ordering with exact saved coordinates. [Runnable faults and independent native
+verification](studies/expert-parameters/README.md).
 
 ![An actual saved BF16 merge of the pinned public SmolLM2 adapter, with count and squared-norm measurements](docs/assets/public-bf16.png)
 

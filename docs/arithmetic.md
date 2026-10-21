@@ -91,6 +91,35 @@ Saved coordinates do not identify human-readable tokens
 without a separately verified tokenizer. [Native merge controls, a sharded
 Llama save and memory measurements](../studies/embeddings/README.md).
 
+## Declared Qwen3 MoE expert parameters
+
+The supported `target_parameters` contract requires standard
+`Qwen3MoeForCausalLM` base metadata, Transformers 5.20.1, PEFT 0.21.0 and native
+expanded per-expert saved weights. Literal suffixes select `gate_up_proj` and/or
+`down_proj`. Native parameter registration order determines wrapper nesting;
+config selector order and numerical fit do not. Version, shape, physical key,
+custom-model or overlap disagreement refuses the whole audit.
+
+```text
+A shape = [experts * rank, inputs]
+B shape = [outputs, rank * experts]
+delta[e,o,i] = sum_k B[o,k*experts+e] * A[e*rank+k,i] * scale
+```
+
+The native saver expands runtime expert stacks into separate 2-D weights and
+splits fused gate/up output rows. Each report row keeps the actual saved key,
+expert index, logical parameter name, factor keys and output-row interval.
+Largest-residual witnesses include both saved and logical coordinates. Each
+physical matrix contributes once to normal totals; logical parameter counts
+are separate. A zero reference keeps gain and relative residual null, including
+when an incorrect merge writes unexpected nonzero values into that expert.
+
+B is retained once; A is read one expert at a time. Their combined decoded size
+must fit `max_adapter_mib`. No dense expert stack is reconstructed. DoRA,
+LoRA B bias, nonzero dropout, unknown/quantized layouts, other producer versions
+and repacked 3-D saves remain outside this explicit contract.
+[Native object-identity evidence, faults and scalar verification](../studies/expert-parameters/README.md).
+
 ## Full saved modules
 
 PEFT's `modules_to_save` contains literal module suffixes. Its native save strips

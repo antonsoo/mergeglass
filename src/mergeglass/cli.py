@@ -91,6 +91,22 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
                 "",
             ]
         )
+    if any("expert_parameter" in layer for layer in report["layers"]):
+        summary = report["summary"]
+        expert_rows = [row for row in report["layers"] if "expert_parameter" in row]
+        lines.extend(
+            [
+                "Qwen3 MoE expert parameters: A groups expert rows; B interleaves expert columns.",
+                "Native saved gate/up/down matrices keep their exact keys and coordinates.",
+                f"{summary['logical_expert_parameters']} logical parameters / "
+                f"{summary['expert_weight_tensors']} saved expert matrices; "
+                f"{summary['expert_no_observed_update_tensors']} with no observed update; "
+                f"{summary['expert_zero_update_tensors']} zero-reference matrices.",
+                f"Expert matrix gain range: {_range(expert_rows, 'projection_gain')}; "
+                f"relative residual range: {_range(expert_rows, 'relative_residual')}.",
+                "",
+            ]
+        )
     if variants.get("dora"):
         lines.extend(
             [

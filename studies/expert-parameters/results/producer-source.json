@@ -1,0 +1,52 @@
+{
+  "files": [
+    {
+      "repository": "huggingface/peft",
+      "commit": "9dc6fa2d2093853dec3889b790d4f251efe7fcac",
+      "path": "src/peft/tuners/lora/layer.py",
+      "bytes": 126148,
+      "sha256": "052d8fbd12774150315a4043ed66ef1648fb5ceabd0cbde3fced8fc718502c1b",
+      "installed_bytes_equal": true
+    },
+    {
+      "repository": "huggingface/peft",
+      "commit": "9dc6fa2d2093853dec3889b790d4f251efe7fcac",
+      "path": "src/peft/tuners/lora/model.py",
+      "bytes": 61493,
+      "sha256": "387e8fcb70ea7df22abb3f94e91f57f0286f6b53ca141eb98386f2ddf52b55c4",
+      "installed_bytes_equal": true
+    },
+    {
+      "repository": "huggingface/peft",
+      "commit": "9dc6fa2d2093853dec3889b790d4f251efe7fcac",
+      "path": "src/peft/tuners/tuners_utils.py",
+      "bytes": 132634,
+      "sha256": "ca8127d9108557c965d0870b3b0452daddc3e88ec9eaba2014b02296cfc3671f",
+      "installed_bytes_equal": true
+    },
+    {
+      "repository": "huggingface/transformers",
+      "commit": "0ea877911a11499053df677befd4b35b172ff502",
+      "path": "src/transformers/models/qwen3_moe/modeling_qwen3_moe.py",
+      "bytes": 30412,
+      "sha256": "58387f2cc22a706e7e4c7dabe6cf05cb1e9c9fe48c57e2f2a0fc5cbdb2132f4f",
+      "installed_bytes_equal": true
+    },
+    {
+      "repository": "huggingface/transformers",
+      "commit": "0ea877911a11499053df677befd4b35b172ff502",
+      "path": "src/transformers/conversion_mapping.py",
+      "bytes": 124113,
+      "sha256": "3b3a0cdccbce42fae59d91631effe74624c2c4073ba10810a1574c2ba0ab67dc",
+      "installed_bytes_equal": true
+    },
+    {
+      "repository": "huggingface/transformers",
+      "commit": "0ea877911a11499053df677befd4b35b172ff502",
+      "path": "src/transformers/integrations/moe.py",
+      "bytes": 28495,
+      "sha256": "f01d737d33628c9b218efa3bd2adfcc8d9ca424947ac2b8fe2b220331c491e13",
+      "installed_bytes_equal": true
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
+from .parameter_layouts import ExpertLayout, parameter_layouts
 from .storage import FLOAT_DTYPES, AuditError, Checkpoint, Tensor
 
 # These fields select variants, add other trained parameters, change the base,
@@ -16,7 +17,6 @@ UNSUPPORTED = {
     "use_bdlora",
     "layer_replication",
     "trainable_token_indices",
-    "target_parameters",
     "alora_invocation_tokens",
     "arrow_config",
     "megatron_config",
@@ -52,6 +52,7 @@ KNOWN = UNSUPPORTED | {
     "use_rslora",
     "use_dora",
     "lora_bias",
+    "target_parameters",
     "fan_in_fan_out",
     "init_lora_weights",
     "auto_mapping",
@@ -169,6 +170,7 @@ class Pair:
     base_snapshot: Tensor | None = None
     conv1d_evidence: tuple[str, ...] = ()
     bias: Tensor | None = None
+    expert_layout: ExpertLayout | None = None
 
     @property
     def transposed(self) -> bool:
@@ -283,6 +285,7 @@ def adapter_pairs(
         raise AuditError("fan_in_fan_out must be boolean")
     ranks = _pattern(config, "rank_pattern")
     alphas = _pattern(config, "alpha_pattern")
+    parameters = parameter_layouts(config, base)
     modules: dict[str, dict[str, Tensor]] = {}
     for name, tensor in sorted(adapter.tensors.items()):
         if name in full_weights:
@@ -307,8 +310,14 @@ def adapter_pairs(
         else:
             path, side = match.groups()
         modules.setdefault(path, {})[side] = tensor
+    if parameters.keys() - modules.keys():
+        raise AuditError(
+            "Missing expert parameter factors: "
+            + ", ".join(sorted(parameters.keys() - modules.keys()))
+        )
     result = []
     for path, sides in modules.items():
+        parameter = parameters.get(path)
         embedding = bool({"embedding_A", "embedding_B"} & sides.keys())
         if embedding and {"A", "B"} & sides.keys():
             raise AuditError(f"Mixed Linear and Embedding factors at the same module: {path}")
@@ -341,14 +350,25 @@ def adapter_pairs(
         if dora and magnitude is None:
             raise AuditError(f"Missing DoRA magnitude vector: {path}")
         a, b = sides[a_key], sides[b_key]
-        weight = path + ".weight"
-        if weight not in base.tensors:
+        if parameter and (
+            embedding or magnitude is not None or sides.get("base_snapshot") is not None
+        ):
+            raise AuditError(f"Unsupported expert parameter factor variant at {path}")
+        weight = parameter.parameter if parameter else path + ".weight"
+        if parameter is None and weight not in base.tensors:
             raise AuditError(f"No exact {weight_role} tensor for adapter module: {weight}")
-        shape = base.tensors[weight].shape
-        rank = int(_override(path, ranks, r))
-        layer_alpha = _override(path, alphas, alpha)
+        shape = (parameter.outputs, parameter.inputs) if parameter else base.tensors[weight].shape
+        pattern_path = parameter.parameter if parameter else path
+        rank = int(_override(pattern_path, ranks, r))
+        layer_alpha = _override(pattern_path, alphas, alpha)
         transposed = embedding or bool(conv1d_evidence)
-        if (
+        if parameter:
+            if a.shape != (rank * parameter.experts, parameter.inputs) or b.shape != (
+                parameter.outputs,
+                rank * parameter.experts,
+            ):
+                raise AuditError(f"Expert adapter/{weight_role}/rank shape mismatch at {weight}")
+        elif (
             len(shape) != 2
             or min(shape) == 0
             or a.shape != (rank, shape[0] if transposed else shape[1])
@@ -375,7 +395,7 @@ def adapter_pairs(
         scale = layer_alpha / (math.sqrt(rank) if rs else rank)
         result.append(
             Pair(
-                path,
+                parameter.parameter if parameter else path,
                 weight,
                 a,
                 b,
@@ -387,6 +407,7 @@ def adapter_pairs(
                 snapshot,
                 conv1d_evidence,
                 bias,
+                parameter,
             )
         )
     if not result:
