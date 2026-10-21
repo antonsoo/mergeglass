@@ -23,14 +23,17 @@ def _factor_text(log2: float) -> str:
     return f"{value:.8g}" if value else f"2^({log2:.4g})"
 
 
-def _dora_row_lines(layers: list[dict[str, Any]], *, include_direction: bool = True) -> list[str]:
-    rows = [layer["dora_rows"] for layer in layers if "dora_rows" in layer]
+def _dora_vector_lines(
+    layers: list[dict[str, Any]], *, include_direction: bool = True, axis: str = "row"
+) -> list[str]:
+    plural = axis + "s"
+    rows = [layer[f"dora_{plural}"] for layer in layers if f"dora_{plural}" in layer]
     if not rows:
         return []
     norms = [
-        row["log2_row_norm_factor_range"]
+        row[f"log2_{axis}_norm_factor_range"]
         for row in rows
-        if row["log2_row_norm_factor_range"] is not None
+        if row[f"log2_{axis}_norm_factor_range"] is not None
     ]
     directions = [
         row["direction_cosine_range"] for row in rows if row.get("direction_cosine_range")
@@ -46,19 +49,23 @@ def _dora_row_lines(layers: list[dict[str, Any]], *, include_direction: bool = T
         if directions
         else "n/a"
     )
+    norm_pairs = sum(row[f"norm_comparable_{plural}"] for row in rows)
+    direction_pairs = (
+        sum(row[f"direction_comparable_{plural}"] for row in rows) if include_direction else 0
+    )
+    nonzero_zero = sum(row[f"nonzero_magnitude_zero_saved_{plural}"] for row in rows)
+    zero_nonzero = sum(row[f"zero_magnitude_nonzero_saved_{plural}"] for row in rows)
     lines = [
-        f"DoRA full-row norm factor (saved / |m|): {factors}; "
-        f"{sum(row['norm_comparable_rows'] for row in rows):,} nonzero row pairs.",
-        f"Nonzero magnitudes saved as zero rows: "
-        f"{sum(row['nonzero_magnitude_zero_saved_rows'] for row in rows):,}; "
+        f"DoRA full-{axis} norm factor (saved / |m|): {factors}; "
+        f"{norm_pairs:,} nonzero {axis} pairs.",
+        f"Nonzero magnitudes saved as zero {plural}: {nonzero_zero:,}; "
         f"zero magnitudes saved nonzero: "
-        f"{sum(row['zero_magnitude_nonzero_saved_rows'] for row in rows):,}.",
+        f"{zero_nonzero:,}.",
     ]
     if include_direction:
         lines.insert(
             1,
-            f"Full-row direction cosine: {cosines}; "
-            f"{sum(row['direction_comparable_rows'] for row in rows):,} nonzero row pairs.",
+            f"Full-{axis} direction cosine: {cosines}; {direction_pairs:,} nonzero {axis} pairs.",
         )
     return lines
 
@@ -110,7 +117,12 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
     if variants.get("dora"):
         lines.extend(
             [
-                "DoRA reference includes learned magnitudes and row-normalized directions.",
+                (
+                    "DoRA reference includes learned magnitudes; "
+                    "Linear normalizes rows, Embedding normalizes columns."
+                    if any("dora_columns" in layer for layer in report["layers"])
+                    else "DoRA reference includes learned magnitudes and row-normalized directions."
+                ),
                 "Counts, gain and residual use the complete weight update, not B @ A alone.",
                 "",
             ]
@@ -171,7 +183,8 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
         lines.append(
             f"Those unchanged entries contain {100 * energy:.4g}% of the reference squared norm."
         )
-    lines.extend(_dora_row_lines(report["layers"]))
+    lines.extend(_dora_vector_lines(report["layers"]))
+    lines.extend(_dora_vector_lines(report["layers"], axis="column"))
     if not summary_only:
         lines.append("* Nonzero intended update elements equal to the dtype-cast base.")
     if report.get("lora_biases"):
@@ -255,23 +268,40 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
 
 def _render_norms(report: dict[str, Any], *, summary_only: bool) -> str:
     summary = report["summary"]
+    observed = f"{summary['norm_observed_rows']:,} rows"
+    columns = summary.get("norm_observed_columns", 0)
+    if columns:
+        observed = (
+            f"{summary['norm_observed_rows']:,} Linear rows and {columns:,} embedding columns"
+            if summary["norm_observed_rows"]
+            else f"{columns:,} embedding columns"
+        )
     lines = [
         "Mergeglass | DoRA norms without a base",
         "",
         "Partial observations: reference directions and complete updates are unmeasured.",
-        f"Observed {summary['norm_observed_rows']:,} rows in "
-        f"{summary['norm_observed_tensors']:,} DoRA matrices.",
+        f"Observed {observed} in {summary['norm_observed_tensors']:,} DoRA matrices.",
     ]
     if not summary_only:
-        lines.extend(["", "MODULE                       DTYPE      NORM FACTOR RANGE"])
+        lines.extend(
+            [
+                "",
+                "MODULE                       AXIS   DTYPE      NORM FACTOR RANGE"
+                if columns
+                else "MODULE                       DTYPE      NORM FACTOR RANGE",
+            ]
+        )
         for layer in report["layers"]:
             name = ascii(layer["module"])[1:-1]
             if len(name) > 27:
                 name = "..." + name[-24:]
-            pair = layer["dora_rows"]["log2_row_norm_factor_range"]
+            axis = "column" if "dora_columns" in layer else "row"
+            pair = layer[f"dora_{axis}s"][f"log2_{axis}_norm_factor_range"]
             factors = "n/a" if pair is None else f"{_factor_text(pair[0])}..{_factor_text(pair[1])}"
-            lines.append(f"{name:<28} {layer['merged_dtype']:<6} {factors:>21}")
-    lines.extend(["", *_dora_row_lines(report["layers"], include_direction=False)])
+            axis_label = f"{axis:<6} " if columns else ""
+            lines.append(f"{name:<28} {axis_label}{layer['merged_dtype']:<6} {factors:>21}")
+    lines.extend(["", *_dora_vector_lines(report["layers"], include_direction=False)])
+    lines.extend(_dora_vector_lines(report["layers"], include_direction=False, axis="column"))
     lines.extend(
         [
             f"Checkpoint: {summary['checkpoint_tensors']:,} tensors; "
@@ -308,7 +338,7 @@ def main(argv: list[str] | None = None) -> int:
     norms_only = "--dora-norms" in options
     parser = argparse.ArgumentParser(
         description=(
-            "Observe saved DoRA row norms without an original base."
+            "Observe saved DoRA vector norms without an original base."
             if norms_only
             else "Inspect a saved LoRA or DoRA merge, locally and read-only."
         )
@@ -329,7 +359,7 @@ def main(argv: list[str] | None = None) -> int:
         "--block-mib", type=int, default=16, help="block workspace target (default 16)"
     )
     parser.add_argument(
-        "--dora-norms", action="store_true", help="omit BASE and observe DoRA row norms only"
+        "--dora-norms", action="store_true", help="omit BASE and observe DoRA norms only"
     )
     if not norms_only:
         parser.add_argument(

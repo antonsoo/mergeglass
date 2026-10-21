@@ -1,5 +1,8 @@
 # DoRA: inspect the learned norm and the full row's direction
 
+This guide describes Linear DoRA rows. [Embedding DoRA](arithmetic.md#embedding-dora)
+instead normalizes complete vocabulary columns and reports `dora_columns`.
+
 DoRA writes each output row as `m * unit(base + scale * B @ A)`. Its norm
 is therefore `abs(m)`; a negative magnitude reverses the reference direction.
 The complete-update gain and residual remain the main audit measurements.

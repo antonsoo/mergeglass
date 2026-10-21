@@ -1,0 +1,167 @@
+{
+  "scope": "native saved weights only; no model or task quality inference",
+  "oracle": "dense Torch float64, 80-digit scalar products and vector roots; adjacent-bit-pattern direct rounding",
+  "verifier_sha256": "684cb9de96cec22628e7e9f6957ca81811b79077a0d445b08188cab191668bc9",
+  "auditor_runtime_sha256": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "2e9764576c69bcae50ed32a75dcdca1529a9f65b42d0950268f0f4e2fdc6356c",
+    "audit.py": "d6bb35463ab979189d263a8e4cc1c3b99c1db4d32744f8677e89ee6a485f8418",
+    "cli.py": "c7a0c7e5b177f6a120e4192f9950b5359420e3d642b6cccb7e79ef21a274e2bb",
+    "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+    "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+    "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "tolerance": {
+    "relative": 1e-08,
+    "absolute": 1e-14,
+    "counts": "exact"
+  },
+  "versions": {
+    "torch": "2.14.1+cpu",
+    "peft": "0.21.0",
+    "numpy": "2.5.4",
+    "safetensors": "0.8.0"
+  },
+  "auditor_mode": "in-process source",
+  "producer_sha256": "89542df99dbb00c1f383c4d64b1cbadf45f3644d3c133c341e58fd29cbb09848",
+  "scalar_checked_coordinates": 0,
+  "cases": [
+    {
+      "case": {
+        "merged": "correct-f32-safe-false",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "correct-f32-safe-true",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "reset-embedding-magnitudes-f32",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "embedding magnitudes reset to direction norms; Linear stays DoRA"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "correct-f16-safe-false",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "correct-f16-safe-true",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "reset-embedding-magnitudes-f16",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "embedding magnitudes reset to direction norms; Linear stays DoRA"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "correct-bf16-safe-false",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "correct-bf16-safe-true",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "reset-embedding-magnitudes-bf16",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "embedding magnitudes reset to direction norms; Linear stays DoRA"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "wrong-row-axis-f32",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "authored square-only row-axis error"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "rotated-token-rows-f32",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "authored token-row rotation; saved column multisets unchanged"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "unrelated-edit-f32",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native correct adapted weights plus authored unrelated edit"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "omitted-all-f32",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "unchanged original base"
+      },
+      "refusal": "Embedding DoRA is unsupported: magnitude_only"
+    },
+    {
+      "case": {
+        "merged": "llama-merged",
+        "base": "llama-base",
+        "adapter": "llama-adapter",
+        "kind": "native sharded Llama"
+      },
+      "refusal": "Embedding DoRA is unsupported: model.embed_tokens"
+    },
+    {
+      "case": {
+        "merged": "llama-merged",
+        "base": "llama-base",
+        "adapter": "llama-factors",
+        "kind": "native sharded Llama"
+      },
+      "refusal": "Embedding DoRA is unsupported: model.embed_tokens"
+    }
+  ]
+}

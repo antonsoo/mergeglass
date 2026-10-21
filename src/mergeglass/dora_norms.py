@@ -8,6 +8,7 @@ from typing import Any
 import numpy as np
 
 from .adapter import adapter_pairs
+from .dora_columns import DoraColumns
 from .dora_rows import DoraRows
 from .storage import FLOAT_DTYPES, AuditError, Checkpoint
 
@@ -46,11 +47,31 @@ def audit_dora_norms(
                 weight = after.tensors[pair.weight]
                 rows, columns = weight.shape
                 block_rows = max(1, elements // columns)
-                observed = DoraRows()
-                for row in range(0, rows, block_rows):
-                    count = min(rows - row, block_rows)
-                    values = weight.floats(row * columns, count * columns).reshape(count, columns)
-                    observed.add(row, pair.magnitude.floats(row, count), None, values)
+                if pair.embedding:
+                    observed_columns = DoraColumns(columns)
+                    for row in range(0, rows, block_rows):
+                        count = min(rows - row, block_rows)
+                        values = weight.floats(row * columns, count * columns).reshape(
+                            count, columns
+                        )
+                        observed_columns.add(values)
+                    observations = {
+                        "weight_layout": "embedding",
+                        "coordinate_axes": {"row": "token_index", "column": "embedding_dimension"},
+                        "dora_normalization_axis": 0,
+                        "dora_columns": observed_columns.result(
+                            pair.magnitude.floats(), include_direction=False
+                        ),
+                    }
+                else:
+                    observed = DoraRows()
+                    for row in range(0, rows, block_rows):
+                        count = min(rows - row, block_rows)
+                        values = weight.floats(row * columns, count * columns).reshape(
+                            count, columns
+                        )
+                        observed.add(row, pair.magnitude.floats(row, count), None, values)
+                    observations = {"dora_rows": observed.result(include_direction=False)}
                 layers.append(
                     {
                         "module": pair.module,
@@ -59,7 +80,7 @@ def audit_dora_norms(
                         "shape": list(weight.shape),
                         "merged_dtype": weight.dtype,
                         "magnitude_dtype": pair.magnitude.dtype,
-                        "dora_rows": observed.result(include_direction=False),
+                        **observations,
                     }
                 )
         except FloatingPointError as exc:
@@ -67,30 +88,73 @@ def audit_dora_norms(
     fingerprints = {role: checkpoint.fingerprints() for role, checkpoint in inputs.items()}
     for checkpoint in inputs.values():
         checkpoint.verify_stable()
+    has_columns = any("dora_columns" in layer for layer in layers)
     return {
         "schema": "mergeglass.dora-norms",
         "schema_version": 1,
-        "scope": "saved DoRA row norms without an original base; partial observations only",
+        "scope": (
+            "saved Linear row and Embedding column DoRA norms without an original base; "
+            "partial observations only"
+            if has_columns
+            else "saved DoRA row norms without an original base; partial observations only"
+        ),
         "arithmetic": {
             "row_norm_factor": "saved full-row norm / abs(saved magnitude), retained in log2 form",
             "zero_rows": "zero targets and zero saved rows have explicit counts, no invented ratio",
+            **(
+                {
+                    "column_norm_factor": (
+                        "saved full-vocabulary column norm / abs(saved magnitude), "
+                        "retained in log2 form"
+                    ),
+                    "zero_columns": (
+                        "zero targets and zero saved columns have explicit counts, "
+                        "no invented ratio"
+                    ),
+                }
+                if has_columns
+                else {}
+            ),
         },
         "inputs": fingerprints,
         "settings": {"block_mib": block_mib},
         "summary": {
             "norm_observed_tensors": len(layers),
-            "norm_observed_rows": sum(layer["dora_rows"]["rows"] for layer in layers),
+            "norm_observed_rows": sum(
+                layer.get("dora_rows", {}).get("rows", 0) for layer in layers
+            ),
+            **(
+                {
+                    "norm_observed_columns": sum(
+                        layer.get("dora_columns", {}).get("columns", 0) for layer in layers
+                    )
+                }
+                if has_columns
+                else {}
+            ),
             "checkpoint_tensors": len(after.tensors),
             "unmapped_tensors": len(after.tensors) - len(layers),
         },
         "layers": layers,
         "limitations": [
-            "A matching row norm does not establish a correct merge or even a correct direction.",
+            (
+                "A matching vector norm does not establish a correct merge "
+                "or even a correct direction."
+                if has_columns
+                else "A matching row norm does not establish a correct merge "
+                "or even a correct direction."
+            ),
             "Reference directions, complete updates, gain and residual require the original base.",
             "Unmapped tensors are not compared; their equality to a base is unknown.",
             "Saved magnitudes and adapter identity have no independent provenance verification.",
             "Tensor shapes and saved metadata do not establish every module's type.",
-            "Rounding can change a correctly merged row's norm; no pass/fail threshold is applied.",
+            (
+                "Rounding can change a correctly merged vector's norm; "
+                "no pass/fail threshold is applied."
+                if has_columns
+                else "Rounding can change a correctly merged row's norm; "
+                "no pass/fail threshold is applied."
+            ),
             "Weight-space observations do not establish generation or task quality.",
         ],
     }

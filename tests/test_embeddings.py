@@ -97,7 +97,9 @@ def test_omitted_embeddings_cannot_be_hidden_by_a_successful_linear_merge(tmp_pa
     assert report["summary"]["no_observed_update_tensors"] == 1
 
 
-@pytest.mark.parametrize("bad", ["mixed", "incomplete", "transposed", "dora", "extra", "nonfinite"])
+@pytest.mark.parametrize(
+    "bad", ["mixed", "incomplete", "transposed", "missing_dora_magnitude", "extra", "nonfinite"]
+)
 def test_embedding_evidence_cannot_be_ambiguous_or_silently_ignored(
     tmp_path: Path, bad: str
 ) -> None:
@@ -115,12 +117,12 @@ def test_embedding_evidence_cannot_be_ambiguous_or_silently_ignored(
             "base_model.model.tokens.lora_embedding_A"
         ].T.copy()
         message = "shape mismatch"
-    elif bad == "dora":
+    elif bad == "missing_dora_magnitude":
         config_path = adapter / "adapter_config.json"
         config = json.loads(config_path.read_text())
         config["use_dora"] = True
         config_path.write_text(json.dumps(config))
-        message = "Embedding DoRA"
+        message = "Missing DoRA magnitude"
     elif bad == "extra":
         data["base_model.model.tokens.weight"] = np.ones((37, 11), dtype=np.float32)
         message = "Unsupported adapter tensor"
@@ -130,8 +132,8 @@ def test_embedding_evidence_cannot_be_ambiguous_or_silently_ignored(
     save_file(data, path)
     with pytest.raises(AuditError, match=message):
         audit(base, adapter, merged)
-    if bad == "dora":
-        with pytest.raises(AuditError, match="Embedding DoRA"):
+    if bad == "missing_dora_magnitude":
+        with pytest.raises(AuditError, match="Missing DoRA magnitude"):
             audit_dora_norms(adapter, merged)
 
 

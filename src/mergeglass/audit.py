@@ -11,6 +11,7 @@ from typing import Any
 import numpy as np
 
 from .adapter import Pair, SavedTensor, adapter_pairs, saved_modules
+from .dora_columns import ColumnNorms, DoraColumns
 from .dora_rows import DoraRows
 from .storage import FLOAT_DTYPES, AuditError, Checkpoint, FloatArray, Tensor, cast
 
@@ -142,6 +143,30 @@ def _dora_reference(
     return reference
 
 
+def _embedding_dora_norms(
+    pair: Pair, base: Tensor, fixed: FloatArray, block_rows: int
+) -> ColumnNorms:
+    """First pass: each dimension's direction includes the full vocabulary."""
+    rows, columns = base.shape
+    norms = ColumnNorms(columns)
+    for row in range(0, rows, block_rows):
+        count = min(rows - row, block_rows)
+        factor = np.empty((count, pair.rank), dtype=np.float64)
+        for component in range(pair.rank):
+            factor[:, component] = pair.a.floats(component * rows + row, count)
+        original = base.floats(row * columns, count * columns).reshape(count, columns)
+        direction = original + (factor @ fixed) * pair.scale
+        if not np.isfinite(direction).all():
+            raise AuditError(f"Nonfinite Embedding DoRA direction at {pair.module}")
+        norms.add(direction)
+    zero = np.flatnonzero(norms.scale == 0)
+    if zero.size:
+        raise AuditError(
+            f"Undefined Embedding DoRA direction at {pair.module}, column {int(zero[0])}"
+        )
+    return norms
+
+
 def _layer(
     pair: Pair,
     base: Tensor,
@@ -180,7 +205,15 @@ def _layer(
     erased = 0
     mismatches = 0
     reference_overflows = 0
-    dora_rows = DoraRows() if pair.magnitude is not None else None
+    dora_rows = DoraRows() if pair.magnitude is not None and not pair.embedding else None
+    dora_columns = None
+    column_norms = None
+    column_magnitude = None
+    if pair.embedding and pair.magnitude is not None:
+        assert fixed is not None
+        column_magnitude = pair.magnitude.floats()
+        column_norms = _embedding_dora_norms(pair, base, fixed, block_rows)
+        dora_columns = DoraColumns(columns)
     worst: dict[str, Any] | None = None
     worst_size = -1.0
     for row in range(0, rows, block_rows):
@@ -220,9 +253,15 @@ def _layer(
             raise AuditError(f"Base conversion overflows the merged dtype at {pair.module}")
         reference_weight = None
         if pair.magnitude is not None:
-            reference_weight = _dora_reference(pair, original, delta, row)
-            assert dora_rows is not None
-            dora_rows.add(row, pair.magnitude.floats(row, count), reference_weight, after)
+            if pair.embedding:
+                assert column_norms is not None and column_magnitude is not None
+                assert dora_columns is not None
+                reference_weight = column_norms.normalize(original + delta, column_magnitude)
+                dora_columns.add(after, reference_weight)
+            else:
+                reference_weight = _dora_reference(pair, original, delta, row)
+                assert dora_rows is not None
+                dora_rows.add(row, pair.magnitude.floats(row, count), reference_weight, after)
             delta = reference_weight - original
         observed = after - baseline
         residual = observed - delta
@@ -345,6 +384,15 @@ def _layer(
         "reference_merge_overflows": reference_overflows,
         "largest_residual": worst,
         **({"dora_rows": dora_rows.result()} if dora_rows is not None else {}),
+        **(
+            {
+                "coordinate_axes": {"row": "token_index", "column": "embedding_dimension"},
+                "dora_normalization_axis": 0,
+                "dora_columns": dora_columns.result(column_magnitude),
+            }
+            if dora_columns is not None and column_magnitude is not None
+            else {}
+        ),
     }
 
 
@@ -647,6 +695,7 @@ def audit(
     reference, unchanged_reference = Squares(), Squares()
     reference.add(np.array([layer["norms"]["delta"] for layer in layers]))
     unchanged_reference.add(np.array([layer["norms"]["unchanged_reference"] for layer in layers]))
+    embedding_dora = any(pair.embedding and pair.magnitude is not None for pair in pairs)
     return {
         "schema_version": 1,
         "arithmetic": {
@@ -770,6 +819,37 @@ def audit(
                 if parameter_pairs
                 else {}
             ),
+            **(
+                {
+                    "reference": (
+                        "Linear LoRA/DoRA uses B @ A and full output rows; "
+                        "Embedding uses (B @ A).T. Embedding DoRA direction = "
+                        "base_float64 + (B_float64 @ A_float64).T * scale; "
+                        "reference_weight[:, column] = magnitude[column] * direction[:, column] / "
+                        "norm(direction[:, column]); delta = reference_weight - base_float64"
+                    ),
+                    "embedding_dora_reference": (
+                        "two passes over token rows; full-vocabulary column norms, "
+                        "then bounded reference/update blocks; no epsilon floor"
+                    ),
+                    "embedding_reference": (
+                        "directional product = (B_float64 @ A_float64).T * scale; "
+                        "rows are token indices, columns are embedding dimensions; "
+                        "A columns are streamed and B is retained"
+                    ),
+                    "dora_columns": (
+                        "saved full-column norm / abs(saved magnitude), retained in log2 form; "
+                        "direction compares saved and full-reference columns including magnitude "
+                        "sign; zero vectors have no invented ratio or direction"
+                    ),
+                    "scope": (
+                        "saved Linear and Embedding LoRA/DoRA and explicit full modules; "
+                        "no architecture execution or quality estimate"
+                    ),
+                }
+                if embedding_dora
+                else {}
+            ),
         },
         "inputs": fingerprints,
         "settings": {"block_mib": block_mib, "max_adapter_mib": max_adapter_mib},
@@ -860,7 +940,13 @@ def audit(
             "Supplied base identity and training provenance are not independently established.",
             "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
             "The float64 reference is numerical; it is not a PEFT merge emulator.",
-            "DoRA normalizes rows of the supplied original base plus its directional update.",
+            (
+                "Linear DoRA normalizes output rows; "
+                "Embedding DoRA normalizes full vocabulary columns."
+                if embedding_dora
+                else "DoRA normalizes rows of the supplied original base "
+                "plus its directional update."
+            ),
             "Tensor shapes and a global adapter flag do not establish every module's type.",
             "Operation order and matmul precision can differ from the producer, notably at ties.",
             "Weight-space changes and residuals do not establish generation or task quality.",

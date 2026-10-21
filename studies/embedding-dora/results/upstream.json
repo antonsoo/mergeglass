@@ -1,0 +1,20 @@
+[
+  {
+    "file": "dora.py",
+    "url": "https://raw.githubusercontent.com/huggingface/peft/v0.21.0/src/peft/tuners/lora/dora.py",
+    "sha256": "2ff9d222eeada2ec82d6414ad2e0e46b17c6ccb76fc2cc0923a20c079ccf974c",
+    "installedBytesMatch": true
+  },
+  {
+    "file": "layer.py",
+    "url": "https://raw.githubusercontent.com/huggingface/peft/v0.21.0/src/peft/tuners/lora/layer.py",
+    "sha256": "052d8fbd12774150315a4043ed66ef1648fb5ceabd0cbde3fced8fc718502c1b",
+    "installedBytesMatch": true
+  },
+  {
+    "file": "variants.py",
+    "url": "https://raw.githubusercontent.com/huggingface/peft/v0.21.0/src/peft/tuners/lora/variants.py",
+    "sha256": "233c2bdfeba0d3fa7db6436956dc5a847b1df1f7c43660c8a4837bf2067c7738",
+    "installedBytesMatch": true
+  }
+]

@@ -321,8 +321,6 @@ def adapter_pairs(
         embedding = bool({"embedding_A", "embedding_B"} & sides.keys())
         if embedding and {"A", "B"} & sides.keys():
             raise AuditError(f"Mixed Linear and Embedding factors at the same module: {path}")
-        if embedding and dora:
-            raise AuditError(f"Embedding DoRA is unsupported: {path}")
         if embedding and lora_bias:
             raise AuditError(f"LoRA B bias with Embedding factors is unsupported: {path}")
         conv1d_evidence = _conv1d_evidence(config, base, path)
@@ -375,8 +373,11 @@ def adapter_pairs(
             or b.shape != (shape[1] if transposed else shape[0], rank)
         ):
             raise AuditError(f"Adapter/{weight_role}/rank shape mismatch at {path}")
-        if magnitude is not None and magnitude.shape != (shape[0],):
-            raise AuditError(f"DoRA magnitude shape must match the output rows at {path}")
+        if magnitude is not None:
+            axis = 1 if embedding else 0
+            if magnitude.shape != (shape[axis],):
+                role = "embedding dimensions" if embedding else "output rows"
+                raise AuditError(f"DoRA magnitude shape must match the {role} at {path}")
         bias = sides.get("bias")
         if lora_bias:
             if bias is None:

@@ -1,0 +1,41 @@
+{
+  "scope": "unchanged native saved files from synthetic training and explicit wrong-merge controls",
+  "producerReceiptSha256": "89542df99dbb00c1f383c4d64b1cbadf45f3644d3c133c341e58fd29cbb09848",
+  "files": [
+    {
+      "path": "base/model.safetensors",
+      "sha256": "3375a0d675d6bac55de12186da1c6ad96883f4fd91b34334100d92d29590d2fe",
+      "bytes": 3404
+    },
+    {
+      "path": "adapter/adapter_config.json",
+      "sha256": "7bd04fd744da16854b7a8b5938f0d2373cb03eb54aeace1cda6bffd1dcbc9f96",
+      "bytes": 1283
+    },
+    {
+      "path": "adapter/adapter_model.safetensors",
+      "sha256": "537ebfd0fde7223bca2f749fd5f5a9a56bbb670e58d82b42a70dc52f76688aa2",
+      "bytes": 2952
+    },
+    {
+      "path": "correct-f32-safe-false/model.safetensors",
+      "sha256": "7ee4ce0541229085b286368156148dd18eabce7652b2d4ca9515bce13ffae7d3",
+      "bytes": 3404
+    },
+    {
+      "path": "reset-embedding-magnitudes-f32/model.safetensors",
+      "sha256": "bde5860f92891c41dedba1f3f6a35465f3cfb95d782dabff5ce1e09fbd4090f3",
+      "bytes": 3404
+    },
+    {
+      "path": "wrong-row-axis-f32/model.safetensors",
+      "sha256": "4080f10fe7d063eac420691354168ce62c7c861047b17f7b81650ca1d52e3f9c",
+      "bytes": 3404
+    },
+    {
+      "path": "rotated-token-rows-f32/model.safetensors",
+      "sha256": "0b40bc5eb98f5499aba2412d04ed86ad8bcb320cc122d9e0f7c248ea8086a53a",
+      "bytes": 3404
+    }
+  ]
+}

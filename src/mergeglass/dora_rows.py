@@ -58,6 +58,23 @@ class DoraRows:
         self, row: int, magnitude: FloatArray, reference: FloatArray | None, after: FloatArray
     ) -> None:
         units, scale, length = _unit_rows(after)
+        self.add_norms(row, magnitude, scale, length)
+        if reference is None:
+            return
+        reference_units, reference_scale, _ = _unit_rows(reference)
+        self.zero_reference += int(np.count_nonzero(reference_scale == 0))
+        directions = (scale != 0) & (reference_scale != 0)
+        if directions.any():
+            cosine = np.clip(np.einsum("ij,ij->i", units, reference_units)[directions], -1, 1)
+            self.direction_pairs += len(cosine)
+            self.direction_min = min(self.direction_min, float(np.min(cosine)))
+            self.direction_max = max(self.direction_max, float(np.max(cosine)))
+            self.direction_total = math.fsum((self.direction_total, float(np.sum(cosine))))
+
+    def add_norms(
+        self, row: int, magnitude: FloatArray, scale: FloatArray, length: FloatArray
+    ) -> None:
+        """Accept factored vector lengths, including streamed embedding columns."""
         self.rows += len(magnitude)
         target = np.abs(magnitude)
         self.zero_magnitude += int(np.count_nonzero(target == 0))
@@ -98,17 +115,6 @@ class DoraRows:
                     "row_norm_factor": _factor(value),
                     "log2_row_norm_factor": value,
                 }
-        if reference is None:
-            return
-        reference_units, reference_scale, _ = _unit_rows(reference)
-        self.zero_reference += int(np.count_nonzero(reference_scale == 0))
-        directions = (scale != 0) & (reference_scale != 0)
-        if directions.any():
-            cosine = np.clip(np.einsum("ij,ij->i", units, reference_units)[directions], -1, 1)
-            self.direction_pairs += len(cosine)
-            self.direction_min = min(self.direction_min, float(np.min(cosine)))
-            self.direction_max = max(self.direction_max, float(np.max(cosine)))
-            self.direction_total = math.fsum((self.direction_total, float(np.sum(cosine))))
 
     def result(self, *, include_direction: bool = True) -> dict[str, Any]:
         result = {

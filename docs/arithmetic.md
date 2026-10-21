@@ -71,8 +71,7 @@ untransposed product. Ordinary Linear report fields remain unchanged.
 
 Linear and Embedding LoRA can coexist, including supported rank/alpha overrides
 and rsLoRA. A module with both key families refuses even when square shapes
-would otherwise fit. Embedding DoRA is outside this contract; its normalization
-must not be interpreted as Linear output-row normalization.
+would otherwise fit. Embedding DoRA has the separate column normalization below.
 
 PEFT's default save can also include
 `base_model.model.<module>.base_layer.weight` beside the factors. Every such
@@ -90,6 +89,43 @@ reconstructs tied-weight aliases or infers architecture from token IDs.
 Saved coordinates do not identify human-readable tokens
 without a separately verified tokenizer. [Native merge controls, a sharded
 Llama save and memory measurements](../studies/embeddings/README.md).
+
+## Embedding DoRA
+
+The same embedding A/B key family, with `use_dora: true`, requires a saved
+`<module>.lora_magnitude_vector` of shape `[dimensions]`. One magnitude belongs
+to each complete vocabulary column, following native PEFT's embedding layout:
+
+```text
+direction[t,d] = base[t,d] + scale * sum_k B[d,k] * A[k,t]
+length[d]     = sqrt(sum_t direction[t,d]^2)
+reference[t,d]= magnitude[d] * direction[t,d] / length[d]
+delta[t,d]    = reference[t,d] - base[t,d]
+```
+
+The auditor first accumulates scaled column lengths across all token blocks.
+A second pass produces reference weights, updates and residuals in the original
+saved coordinates. It retains B plus per-dimension statistics and row blocks;
+it does not transpose or decode a complete vocabulary-wide matrix. These are
+binary64 numerical reductions; operation order can differ from the native merger.
+
+Embedding DoRA layers add `dora_normalization_axis: 0`, explicit `coordinate_axes`
+and `dora_columns`. These column diagnostics have the same factored-length,
+sign, zero and cosine meanings as Linear `dora_rows`, with column field names
+and original embedding-dimension witnesses. A largest residual still identifies
+both its token row and dimension. Linear records retain their existing schema.
+
+A zero direction column is undefined even when its saved magnitude is zero;
+there is no epsilon floor. Zero magnitudes on nonzero directions produce exact
+zero reference columns. Negative magnitudes reverse the reference direction.
+Base snapshots retain the original-value check above. Quantized, Conv1D DoRA,
+convolutional and other unsupported variants are not inferred from square shapes.
+
+The optional [no-base observations](dora-without-base.md) measure full saved
+column lengths without inferring directions or complete updates. A token-row
+permutation can retain every column length while changing the saved token
+coordinates. [Native artifacts and independent checks](../studies/embedding-dora/README.md)
+retain that counterexample and the separate complete audit.
 
 ## Declared Qwen3 MoE expert parameters
 

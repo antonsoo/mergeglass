@@ -113,8 +113,9 @@ OPENBLAS_NUM_THREADS=1 python studies/embeddings/streaming.py measure /tmp/embed
 
 ## Boundaries
 
-- Ordinary Embedding LoRA only; Embedding DoRA's different normalization is
-  explicitly refused. Linear DoRA remains supported.
+- These measurements cover ordinary Embedding LoRA. The separate
+  [Embedding DoRA study](../embedding-dora/README.md) checks its different
+  vocabulary-column normalization.
 - Native full base-layer snapshots require matching original values. Changed,
   nonfinite or shape-incompatible snapshots refuse. Snapshot-only modules and
   arbitrary saved full weights are not interpreted as adapters.

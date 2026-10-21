@@ -1,0 +1,365 @@
+{
+  "producer_script_sha256": "820f4dc40f9ce5cea1a665b5f6aee65358b3039067044bf96474f08898bbf94f",
+  "scope": "synthetic training, explicit post-training magnitudes and controlled wrong merges",
+  "python": "3.12.12",
+  "pythonhashseed": "0",
+  "versions": {
+    "torch": "2.14.1+cpu",
+    "peft": "0.21.0",
+    "transformers": "5.20.1",
+    "safetensors": "0.8.0",
+    "numpy": "2.5.4"
+  },
+  "training_losses": [
+    1.7515491247177124,
+    1.7243475914001465,
+    1.6967408657073975,
+    1.6685186624526978,
+    1.6398930549621582,
+    1.6112053394317627,
+    1.5827422142028809,
+    1.5547800064086914,
+    1.5275613069534302,
+    1.5011073350906372,
+    1.4754712581634521,
+    1.4510008096694946,
+    1.4279135465621948,
+    1.4060767889022827,
+    1.3860080242156982,
+    1.368474006652832,
+    1.3498553037643433,
+    1.3302028179168701,
+    1.3212847709655762,
+    1.3239942789077759,
+    1.3165779113769531,
+    1.3031526803970337,
+    1.2697770595550537,
+    1.2482562065124512
+  ],
+  "layers": {
+    "tokens": {
+      "rank": 4,
+      "alpha": 6,
+      "scale": 3.0,
+      "embedding": true,
+      "magnitude_shape": [
+        11
+      ]
+    },
+    "square": {
+      "rank": 3,
+      "alpha": 5,
+      "scale": 2.886751345948129,
+      "embedding": true,
+      "magnitude_shape": [
+        11
+      ]
+    },
+    "magnitude_only": {
+      "rank": 2,
+      "alpha": 8,
+      "scale": 5.65685424949238,
+      "embedding": true,
+      "magnitude_shape": [
+        5
+      ]
+    },
+    "projection": {
+      "rank": 4,
+      "alpha": -3,
+      "scale": -1.5,
+      "embedding": false,
+      "magnitude_shape": [
+        7
+      ]
+    }
+  },
+  "post_training_controls": [
+    "square magnitude 0 set to zero, 1 negated",
+    "magnitude_only A zeroed; original column norms multiplied by [0.5, 0, -1.25, 1.5, 2]"
+  ],
+  "cases": [
+    {
+      "merged": "correct-f32-safe-false",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "native"
+    },
+    {
+      "merged": "correct-f32-safe-true",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "native"
+    },
+    {
+      "merged": "reset-embedding-magnitudes-f32",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "embedding magnitudes reset to direction norms; Linear stays DoRA"
+    },
+    {
+      "merged": "correct-f16-safe-false",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "native"
+    },
+    {
+      "merged": "correct-f16-safe-true",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "native"
+    },
+    {
+      "merged": "reset-embedding-magnitudes-f16",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "embedding magnitudes reset to direction norms; Linear stays DoRA"
+    },
+    {
+      "merged": "correct-bf16-safe-false",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "native"
+    },
+    {
+      "merged": "correct-bf16-safe-true",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "native"
+    },
+    {
+      "merged": "reset-embedding-magnitudes-bf16",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "embedding magnitudes reset to direction norms; Linear stays DoRA"
+    },
+    {
+      "merged": "wrong-row-axis-f32",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "authored square-only row-axis error"
+    },
+    {
+      "merged": "rotated-token-rows-f32",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "authored token-row rotation; saved column multisets unchanged"
+    },
+    {
+      "merged": "unrelated-edit-f32",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "native correct adapted weights plus authored unrelated edit"
+    },
+    {
+      "merged": "omitted-all-f32",
+      "base": "base",
+      "adapter": "adapter",
+      "kind": "unchanged original base"
+    },
+    {
+      "merged": "llama-merged",
+      "base": "llama-base",
+      "adapter": "llama-adapter",
+      "kind": "native sharded Llama"
+    },
+    {
+      "merged": "llama-merged",
+      "base": "llama-base",
+      "adapter": "llama-factors",
+      "kind": "native sharded Llama"
+    }
+  ],
+  "files": [
+    {
+      "path": "adapter/adapter_config.json",
+      "bytes": 1283,
+      "sha256": "7bd04fd744da16854b7a8b5938f0d2373cb03eb54aeace1cda6bffd1dcbc9f96"
+    },
+    {
+      "path": "adapter/adapter_model.safetensors",
+      "bytes": 2952,
+      "sha256": "537ebfd0fde7223bca2f749fd5f5a9a56bbb670e58d82b42a70dc52f76688aa2"
+    },
+    {
+      "path": "base/model.safetensors",
+      "bytes": 3404,
+      "sha256": "3375a0d675d6bac55de12186da1c6ad96883f4fd91b34334100d92d29590d2fe"
+    },
+    {
+      "path": "correct-bf16-safe-false/model.safetensors",
+      "bytes": 1898,
+      "sha256": "9ed6cfc9d927609468696bc88d326bd3bfde16da29e1533aefdb7adb4a2e29cd"
+    },
+    {
+      "path": "correct-bf16-safe-true/model.safetensors",
+      "bytes": 1898,
+      "sha256": "9ed6cfc9d927609468696bc88d326bd3bfde16da29e1533aefdb7adb4a2e29cd"
+    },
+    {
+      "path": "correct-f16-safe-false/model.safetensors",
+      "bytes": 1890,
+      "sha256": "cdeabe765525a7a3c7c948d953ddd56ce6cb77af94ae4d974e00f2e88ac8d32c"
+    },
+    {
+      "path": "correct-f16-safe-true/model.safetensors",
+      "bytes": 1890,
+      "sha256": "cdeabe765525a7a3c7c948d953ddd56ce6cb77af94ae4d974e00f2e88ac8d32c"
+    },
+    {
+      "path": "correct-f32-safe-false/model.safetensors",
+      "bytes": 3404,
+      "sha256": "7ee4ce0541229085b286368156148dd18eabce7652b2d4ca9515bce13ffae7d3"
+    },
+    {
+      "path": "correct-f32-safe-true/model.safetensors",
+      "bytes": 3404,
+      "sha256": "7ee4ce0541229085b286368156148dd18eabce7652b2d4ca9515bce13ffae7d3"
+    },
+    {
+      "path": "llama-adapter/adapter_config.json",
+      "bytes": 1199,
+      "sha256": "c05ea0947fb51a15d5a18a8f3d12e6bf997ad131a2c05abacfe3a31342f987aa"
+    },
+    {
+      "path": "llama-adapter/adapter_model.safetensors",
+      "bytes": 3512,
+      "sha256": "49f5cbc506eca18c6076268c5e016fdbdc319ba709ed5aebc7a902f8b5de9ac8"
+    },
+    {
+      "path": "llama-base/config.json",
+      "bytes": 713,
+      "sha256": "270881dd75ff63772a84cb961b8f6a22ba4c0723c3056d6c6eb74817548d47e4"
+    },
+    {
+      "path": "llama-base/generation_config.json",
+      "bytes": 195,
+      "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+    },
+    {
+      "path": "llama-base/model-00001-of-00006.safetensors",
+      "bytes": 1616,
+      "sha256": "514f2c4aea15d1c6b782d3257b12960196907b441ada44fcf35db66ac4b0784b"
+    },
+    {
+      "path": "llama-base/model-00002-of-00006.safetensors",
+      "bytes": 1968,
+      "sha256": "927faf97c563a2a1cd777d4d62d19f0a80d3f4471c3c10448d0f33c440e904b3"
+    },
+    {
+      "path": "llama-base/model-00003-of-00006.safetensors",
+      "bytes": 1288,
+      "sha256": "81f9a3763cc976298f94c0fb788a8d91024c0a1977dcf86a23bd1765b390e8d8"
+    },
+    {
+      "path": "llama-base/model-00004-of-00006.safetensors",
+      "bytes": 1288,
+      "sha256": "3ec18ad1a840eb695a6af18d18b298586d45a5c345e91b5136fc42271aee3d41"
+    },
+    {
+      "path": "llama-base/model-00005-of-00006.safetensors",
+      "bytes": 1704,
+      "sha256": "1d50615e50148d64c8c9598d555cc40791c4e3d6489049b1268ab927085a1b19"
+    },
+    {
+      "path": "llama-base/model-00006-of-00006.safetensors",
+      "bytes": 1608,
+      "sha256": "8263c4d215cc1757a721995f43d7ddde9ccbd2afe8df9a05e0b09d6fe8f1e606"
+    },
+    {
+      "path": "llama-base/model.safetensors.index.json",
+      "bytes": 1021,
+      "sha256": "c863ee5b0bf0acf3f7efcadd880d67ce087ab9e1569eaa19cd488879efeaf29c"
+    },
+    {
+      "path": "llama-factors/adapter_config.json",
+      "bytes": 1199,
+      "sha256": "c05ea0947fb51a15d5a18a8f3d12e6bf997ad131a2c05abacfe3a31342f987aa"
+    },
+    {
+      "path": "llama-factors/adapter_model.safetensors",
+      "bytes": 1888,
+      "sha256": "9941e4728132b84ca6cc02f3451cbbfa02a6f64751f2f0b5994b758d46d9ecd4"
+    },
+    {
+      "path": "llama-merged/config.json",
+      "bytes": 713,
+      "sha256": "270881dd75ff63772a84cb961b8f6a22ba4c0723c3056d6c6eb74817548d47e4"
+    },
+    {
+      "path": "llama-merged/generation_config.json",
+      "bytes": 195,
+      "sha256": "a0277f34ec4b0ab17a4d7a79f2d2cd4b0377726d19d77b7a1cafa46284705a2d"
+    },
+    {
+      "path": "llama-merged/model-00001-of-00006.safetensors",
+      "bytes": 1616,
+      "sha256": "f994ff5f95b6b1e88f4e28c9756eeed9606aa3510363d96f9b94ef2f5afc868c"
+    },
+    {
+      "path": "llama-merged/model-00002-of-00006.safetensors",
+      "bytes": 1968,
+      "sha256": "28d665bc4d6c92d21b5b669710fb9c21deb79417dbc298b76629caa2a2487236"
+    },
+    {
+      "path": "llama-merged/model-00003-of-00006.safetensors",
+      "bytes": 1288,
+      "sha256": "81f9a3763cc976298f94c0fb788a8d91024c0a1977dcf86a23bd1765b390e8d8"
+    },
+    {
+      "path": "llama-merged/model-00004-of-00006.safetensors",
+      "bytes": 1288,
+      "sha256": "3ec18ad1a840eb695a6af18d18b298586d45a5c345e91b5136fc42271aee3d41"
+    },
+    {
+      "path": "llama-merged/model-00005-of-00006.safetensors",
+      "bytes": 1704,
+      "sha256": "1d50615e50148d64c8c9598d555cc40791c4e3d6489049b1268ab927085a1b19"
+    },
+    {
+      "path": "llama-merged/model-00006-of-00006.safetensors",
+      "bytes": 1608,
+      "sha256": "8263c4d215cc1757a721995f43d7ddde9ccbd2afe8df9a05e0b09d6fe8f1e606"
+    },
+    {
+      "path": "llama-merged/model.safetensors.index.json",
+      "bytes": 1021,
+      "sha256": "c863ee5b0bf0acf3f7efcadd880d67ce087ab9e1569eaa19cd488879efeaf29c"
+    },
+    {
+      "path": "omitted-all-f32/model.safetensors",
+      "bytes": 3404,
+      "sha256": "3375a0d675d6bac55de12186da1c6ad96883f4fd91b34334100d92d29590d2fe"
+    },
+    {
+      "path": "reset-embedding-magnitudes-bf16/model.safetensors",
+      "bytes": 1898,
+      "sha256": "b4e8bc18263fb44868cc3c99ce7d4519234095fdb7ec369976d66cdac659658c"
+    },
+    {
+      "path": "reset-embedding-magnitudes-f16/model.safetensors",
+      "bytes": 1890,
+      "sha256": "c7d6b5c7f3febc3dea424d7145c0f25fb50ebaa2b3d1b04088d078ac2c78a18d"
+    },
+    {
+      "path": "reset-embedding-magnitudes-f32/model.safetensors",
+      "bytes": 3404,
+      "sha256": "bde5860f92891c41dedba1f3f6a35465f3cfb95d782dabff5ce1e09fbd4090f3"
+    },
+    {
+      "path": "rotated-token-rows-f32/model.safetensors",
+      "bytes": 3404,
+      "sha256": "0b40bc5eb98f5499aba2412d04ed86ad8bcb320cc122d9e0f7c248ea8086a53a"
+    },
+    {
+      "path": "unrelated-edit-f32/model.safetensors",
+      "bytes": 3404,
+      "sha256": "5b929cb15bef57f082890a76baabf24966e93aa363202642ed0f84abd08a7483"
+    },
+    {
+      "path": "wrong-row-axis-f32/model.safetensors",
+      "bytes": 3404,
+      "sha256": "4080f10fe7d063eac420691354168ce62c7c861047b17f7b81650ca1d52e3f9c"
+    }
+  ]
+}

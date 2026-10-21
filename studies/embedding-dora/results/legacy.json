@@ -1,0 +1,132 @@
+{
+  "comparison": "complete decoded JSON and complete per-layer/summary terminal output; no excluded fields",
+  "caseCount": 25,
+  "partialCases": 4,
+  "runtimeSha256": {
+    "baseline": {
+      "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+      "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "adapter.py": "2e9764576c69bcae50ed32a75dcdca1529a9f65b42d0950268f0f4e2fdc6356c",
+      "audit.py": "d6bb35463ab979189d263a8e4cc1c3b99c1db4d32744f8677e89ee6a485f8418",
+      "cli.py": "c7a0c7e5b177f6a120e4192f9950b5359420e3d642b6cccb7e79ef21a274e2bb",
+      "dora_norms.py": "56144a4887784f16a4105c60c5a3e317e5fd767b871ecd52993e8cae2258936f",
+      "dora_rows.py": "9bb920699020cd904dd587ac626b88971b0f25c6a425bfc907c2f4bd8414cc4c",
+      "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+      "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+    },
+    "candidate": {
+      "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+      "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "adapter.py": "64bdd5b3c02c7c694f7a97de5673bc521b419dc760c22b5b056f533f76e9dfd9",
+      "audit.py": "078de6f7ed78c2f533070109672c058db9593ed2858f1f4a02f9a120a489b958",
+      "cli.py": "29eb5aed3cebed9349277accbf576e8e2f6dbb3c97923f0509580bfa075aceb7",
+      "dora_columns.py": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6",
+      "dora_norms.py": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c",
+      "dora_rows.py": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a",
+      "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+      "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+    }
+  },
+  "cases": [
+    {
+      "case": "conv1d/correct-f32-safe-false",
+      "completeResultSha256": "450b2176e165a0b3133c1bc5f7b53dc7ee5bd883a9eedb1c0a53fc9a08c99489"
+    },
+    {
+      "case": "conv1d/omitted-square",
+      "completeResultSha256": "226356c92406154272a5719182a2182312e594701d7b2b9255a229b6224a35ae"
+    },
+    {
+      "case": "conv1d/wrong-square-orientation",
+      "completeResultSha256": "c637b8d2004ccf3cd1beb66a3d440b4ae8ba09be3d5bdd77643a20d1a352da24"
+    },
+    {
+      "case": "dora/as-lora-f32",
+      "completeResultSha256": "898ac7f7755c724d00d18961b1f227b88ce68dc8c2351bf429d0218b70e92e6e"
+    },
+    {
+      "case": "dora/correct-bf16-safe-false",
+      "completeResultSha256": "01b621aeca40eea5f436c8d9b29241516e36d9c41c92138adc03237b69c8d03a"
+    },
+    {
+      "case": "dora/correct-f32-safe-false",
+      "completeResultSha256": "3f6cb816eb58097753f8457e66be483c407542718cabd3ca2b80351cfe119031"
+    },
+    {
+      "case": "dora/omitted",
+      "completeResultSha256": "6478b5d8689202869818f8dabff2fd644f8126b0e43e159938f7ced6020c4a89"
+    },
+    {
+      "case": "embeddings/correct-bf16-safe-false",
+      "completeResultSha256": "8d1aebb86709134ebece4fb78afba5474bb29a377a613ff8237df74809e345c9"
+    },
+    {
+      "case": "embeddings/correct-f32-safe-false",
+      "completeResultSha256": "51c976ea9c368ef2c96a87edb7a134b07573fe6595e05039865aa82cade1d84c"
+    },
+    {
+      "case": "embeddings/omit-embeddings-bf16",
+      "completeResultSha256": "05becc3e6e7bfc3b7e9b67b87186cb680665cd22d45bcc0ccac9315505c6114a"
+    },
+    {
+      "case": "embeddings/wrong-orientation-f32",
+      "completeResultSha256": "54b0c71103364b4913d46f962a8784a69b8b2746d28a925c66ef8e101d4d0b40"
+    },
+    {
+      "case": "expert-parameters/contiguous-B",
+      "completeResultSha256": "243978ea02617e2f45c40b163522fc8fa053acd99138e391296588067fd92441"
+    },
+    {
+      "case": "expert-parameters/correct-f32-safe-false",
+      "completeResultSha256": "d8c573e40ba644c1559fafabd8b2f41c32dfc60a23942610292aac6d858f5cd2"
+    },
+    {
+      "case": "expert-parameters/omitted-expert",
+      "completeResultSha256": "d232e8b85a67971b9329034e05692ee01729860289fdeb50d6a6281e5eec3ea4"
+    },
+    {
+      "case": "lora-bias/correct-f32-safe-false",
+      "completeResultSha256": "02a24e65387ccca4e7fd4b731bb4ca2a459f4659099a93373b383643330e12a6"
+    },
+    {
+      "case": "lora-bias/omitted-bias",
+      "completeResultSha256": "8e7599bf3f8b89885002ecf6b4aec883511dacdf9594f88d14f03486c3bb752d"
+    },
+    {
+      "case": "lora-bias/unscaled-bias",
+      "completeResultSha256": "83ec75ae8061f545c0a91ec8838f0b6a27fee90656dbdddd48797140b62cbdc4"
+    },
+    {
+      "case": "rounding/merged-bf16",
+      "completeResultSha256": "c946a7fdce04b110cc0f5844d7ed9874372174d7bf4d788742ed7e9b1dd9c4b2"
+    },
+    {
+      "case": "rounding/merged-f16",
+      "completeResultSha256": "36792a4db349c171cf2f98219923ef467eade5e19911afe4186f36a08b10bc97"
+    },
+    {
+      "case": "rounding/merged-f32",
+      "completeResultSha256": "f356ec3ffef91e7a61fc1a4470b713e338e3f8b53d8ee90f463229003d257bd7"
+    },
+    {
+      "case": "rounding/omitted",
+      "completeResultSha256": "6618e757efe7f62dbfc022162996ab5b6af7a41eab3406f8c57e5ac4cb95d099"
+    },
+    {
+      "case": "rounding/unrelated-edit",
+      "completeResultSha256": "7e036f47c19b745da48f281193a64ae7b16000b07b07198dd5293bbacbc56bcd"
+    },
+    {
+      "case": "saved-modules/correct-f32",
+      "completeResultSha256": "a157570e03fe8a53c4094172e855e600b3ada8bd1c2a92a5a9984313e077ff01"
+    },
+    {
+      "case": "saved-modules/omit-head-f32",
+      "completeResultSha256": "b8a4faa6b16a8b3b492491e3e6c6ecbd96f13daae2fc9428ff87e2cb9a42047b"
+    },
+    {
+      "case": "saved-modules/wrong-counter-f32",
+      "completeResultSha256": "35174a34076f5ca8e115d37422fb10bb1a0bb50192ef1cda474e68c0069a8423"
+    }
+  ]
+}

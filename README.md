@@ -213,6 +213,41 @@ would occupy 244 MiB. Embedding B stays decoded while vocabulary-wide A is strea
 This extension is available from this repository's `main` branch. The registry
 package has not been released with this support; build or install the source.
 
+## Embedding DoRA needs the whole vocabulary axis
+
+The source also audits **Embedding DoRA**, including mixed Linear adapters and
+default PEFT saves with verified base snapshots. Its magnitude vector has one
+value per embedding dimension. Each dimension normalizes across **all token
+rows**, rather than normalizing each token row independently.
+
+In the controlled native example, a square embedding hides a wrong axis:
+
+| Saved square embedding | Nonzero column norm factor range | Relative residual |
+| --- | ---: | ---: |
+| Native FP32 merge | 0.99999995..1.00000006 | 8.20e-8 |
+| Authored row-normalized control | 0.64969..1.47890 | 1.09273 |
+| Authored token-row rotation | 0.99999995..1.00000006 | 2.23538 |
+
+All 121 weights change in each case. The rotated rows retain the same saved
+column values and lengths while changing token coordinates; norm-only
+observations cannot establish a correct merge. A separate magnitude-only
+embedding has a zero factor product: resetting its saved magnitudes leaves
+all 115 intended updates unobserved. These are synthetic training and explicit
+controls, not failure rates or model-quality results.
+
+![Actual installed audit of rotated synthetic token rows: matching column norms and changed directions](docs/assets/embedding-dora.png)
+
+```sh
+uv run --no-dev mergeglass examples/embedding-dora/base examples/embedding-dora/adapter examples/embedding-dora/rotated-token-rows-f32 --summary
+```
+
+The two-pass calculation retains vocabulary coordinates without constructing
+a dense full update. On a native 32,000,384-weight BF16 control, the installed
+auditor measured 46.2 MiB peak RSS at a 1 MiB block target; a full float64 update
+would occupy 244.1 MiB. [Native artifacts, independent scalar/dense checks,
+memory method and limits](studies/embedding-dora/README.md).
+This is a source capability; no registry release accompanies it.
+
 ## GPT projections have a different saved layout
 
 The source checkout now audits standard GPT-2, OpenAI GPT and ImageGPT **Conv1D
@@ -293,7 +328,8 @@ Base --> cast to merged dtype --> compare to merge --+
 - Complete modules saved through `modules_to_save`: absolute target mismatches,
   cast drift, error norms and original-base changes where comparable. Full
   module biases and integer/bool buffers are included.
-- Linear LoRA and DoRA, standard GPT Conv1D LoRA, Embedding LoRA, rsLoRA and supported rank/alpha overrides; BF16, F16, F32
+- Linear and Embedding LoRA/DoRA, standard GPT Conv1D LoRA, rsLoRA and supported
+  rank/alpha overrides; BF16, F16, F32
   and F64 storage. Finite [signed alpha coefficients](studies/signed-scale/README.md)
   keep their declared sign.
   Unknown variants and incomplete inventories refuse.
@@ -304,8 +340,9 @@ The numerical reference is `(float64(B) @ float64(A)) * scale`. The observed
 change is `merged - cast(base, merged_dtype)`. Comparing against the cast base
 separates conversion noise from the added adapter. Relative residual is
 `norm(observed - intended) / norm(intended)`; zero denominators are null.
-For DoRA, the intended update is the complete row-normalized, magnitude-scaled
-weight minus the original base, rather than the factor product alone.
+For DoRA, the intended update is the complete normalized, magnitude-scaled weight
+minus the original base. Linear layers normalize output rows; embeddings
+normalize vocabulary columns. The factor product alone is insufficient.
 
 An unchanged nonzero update is evidence of absence, not a diagnosis of its
 cause. Changing every entry is also insufficient: a wrong scale or sign can
@@ -352,13 +389,14 @@ on 65,280 of those deliberately chosen boundary cases.
   factors are absent, metadata alone cannot establish that a pair should have
   existed. Saved-module selectors without an observed tensor prefix are
   reported separately; no architecture or missing alias is inferred.
-- Quantized weights, Embedding/Conv1D DoRA, convolutional adapters, trained base
+- Quantized weights, Conv1D DoRA, convolutional adapters, trained base
   biases (`bias: "all"` / `"lora_only"`) and base-mutating initializers are unsupported.
   `lora_bias: true` supports the separate B-bias update on Linear and supported
   Conv1D targets with existing base biases; combining it with DoRA or Embedding
   factors is refused. Complex
   rank/alpha regexes and unknown configuration fields refuse explicitly.
-- DoRA uses one saved magnitude per output row and the supplied original base.
+- Linear DoRA uses one magnitude per output row; Embedding DoRA uses one per
+  embedding dimension, across the whole vocabulary. Both use the supplied original base.
   It does not emulate producer-specific intermediate precision or reconstruct
   a different base used during merging. Zero directions are undefined even
   with a zero magnitude. Counts describe the declared binary64 reference.

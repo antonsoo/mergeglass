@@ -74,23 +74,26 @@ from mergeglass import audit_dora_norms
 report = audit_dora_norms("saved-adapter", "merged-model", block_mib=16)
 assert report["schema"] == "mergeglass.dora-norms"
 for layer in report["layers"]:
-    print(layer["weight"], layer["dora_rows"]["row_norm_factor_range"])
+    axis = "column" if layer.get("weight_layout") == "embedding" else "row"
+    print(layer["weight"], layer[f"dora_{axis}s"][f"{axis}_norm_factor_range"])
 ```
 
 `schema_version` is 1 within this separate `mergeglass.dora-norms` schema.
 `inputs` fingerprints only the adapter and merged files. `summary` identifies
-the observed matrices and rows, the checkpoint's tensor count, and the unmapped
-count. Layers retain full tensor identities, shapes, storage dtypes, norms,
-zero counts and original-row witnesses. They contain no reference direction,
+the observed matrices, Linear rows and optional Embedding columns, the
+checkpoint's tensor count, and the unmapped count. Layers retain full tensor
+identities, shapes, storage dtypes, norms,
+zero counts and original vector coordinates. They contain no reference direction,
 gain, residual, update count or correct/incorrect status. Existing complete
 audit reports retain their schema and measurements.
 
-The usual supported Linear DoRA configuration, exact A/B/magnitude inventory,
+The supported Linear/Embedding DoRA configuration, exact A/B/magnitude inventory,
 shape, checkpoint and metadata checks still apply. Every adapter tensor and
 every floating checkpoint tensor is scanned for finite values, including
 unmapped floats; malformed evidence refuses the whole observation. A/B are
-read in bounded slices and their product is never formed. Magnitudes and
-checkpoint rows are also read in blocks. `--block-mib` is a workspace target;
+read in bounded slices and their product is never formed. Linear magnitudes and
+checkpoint rows are read in blocks; Embedding keeps a magnitude/statistics vector
+per dimension while streaming the token rows. `--block-mib` is a workspace target;
 one complete row, headers and interpreter overhead can exceed it.
 
 The API performs no model execution and needs only NumPy and safetensors.
@@ -99,6 +102,20 @@ or an I/O failure. `--summary` changes only the terminal view. JSON remains
 complete and must be written outside the inputs, including their symlink
 targets. `--max-adapter-mib` belongs to complete audits and is not an option
 here because no whole A matrix is decoded.
+
+## Embedding column observations
+
+Embedding DoRA magnitudes belong to dimensions, not token rows. The source
+reports `layers[].dora_columns` with full-vocabulary column norms, explicit
+zero/sign counts and column witnesses. `summary.norm_observed_columns` counts
+these vectors separately from Linear `norm_observed_rows`.
+
+The captured [token-row rotation](../studies/embedding-dora/README.md) retains
+the native column value multisets and nearly matching magnitude norms while
+its complete-update residual changes substantially. The partial report keeps
+directions and token-coordinate fidelity unmeasured. Default PEFT embedding
+base snapshots still require the original base and are refused in this mode;
+the native study also retains a factor-only save for the partial replay.
 
 ## Native and installed replay
 

@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+Audit native Embedding DoRA by its complete vocabulary columns, alongside
+Linear DoRA rows. Stream the global column-length pass before measuring
+bounded reference/update blocks; preserve token/dimension coordinates,
+signed and zero magnitudes, default base snapshots and wrong-axis controls.
+Expose complete `dora_columns` diagnostics and base-independent column norms
+without fabricating reference directions. Retain native precision/sharded
+saves, independent dense/scalar checks, a norm-preserving token-row error,
+and vocabulary-scale memory evidence. No additional runtime dependency or
+registry release. [Evidence and reproduction](studies/embedding-dora/README.md).
+
 Audit the declared PEFT 0.21.0 / Transformers 5.20.1 Qwen3 MoE parameter layout.
 Follow nested wrappers and interleaved B columns into actual saved per-expert
 gate/up/down matrices, retaining physical keys and logical expert coordinates.

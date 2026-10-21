@@ -1,0 +1,3598 @@
+{
+  "scope": "native saved weights only; no model or task quality inference",
+  "oracle": "dense Torch float64, 80-digit scalar products and vector roots; adjacent-bit-pattern direct rounding",
+  "verifier_sha256": "684cb9de96cec22628e7e9f6957ca81811b79077a0d445b08188cab191668bc9",
+  "auditor_runtime_sha256": {
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "adapter.py": "64bdd5b3c02c7c694f7a97de5673bc521b419dc760c22b5b056f533f76e9dfd9",
+    "audit.py": "078de6f7ed78c2f533070109672c058db9593ed2858f1f4a02f9a120a489b958",
+    "cli.py": "29eb5aed3cebed9349277accbf576e8e2f6dbb3c97923f0509580bfa075aceb7",
+    "dora_columns.py": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6",
+    "dora_norms.py": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c",
+    "dora_rows.py": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a",
+    "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+  },
+  "tolerance": {
+    "relative": 1e-08,
+    "absolute": 1e-14,
+    "counts": "exact"
+  },
+  "versions": {
+    "torch": "2.14.1+cpu",
+    "peft": "0.21.0",
+    "numpy": "2.5.4",
+    "safetensors": "0.8.0"
+  },
+  "auditor_mode": "in-process source",
+  "producer_sha256": "89542df99dbb00c1f383c4d64b1cbadf45f3644d3c133c341e58fd29cbb09848",
+  "scalar_checked_coordinates": 1848,
+  "cases": [
+    {
+      "case": {
+        "merged": "correct-f32-safe-false",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 720,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 115,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000093868047,
+          "relative_residual": 1.7910842400923627e-08,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.9999999688444053,
+              1.0000000311474504
+            ],
+            "log2_column_norm_factor_range": [
+              -4.494802261170911e-08,
+              4.4936271523790765e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 2.890222701240446e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 0,
+              "saved_magnitude": 2.712979316711426,
+              "target_column_norm": 2.712979316711426,
+              "saved_column_norm": 2.712979232186942,
+              "saved_column_norm_scale": 1.265625,
+              "saved_column_norm_scaled_length": 2.1435885291353616,
+              "column_norm_factor": 0.9999999688444053,
+              "log2_column_norm_factor": -4.494802261170911e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              1.0,
+              1.0
+            ],
+            "mean_direction_cosine": 1.0
+          },
+          "witness": {
+            "row": 14,
+            "column": 2,
+            "base": -2.28125,
+            "cast_base": -2.28125,
+            "intended_delta": 5.132812411181101,
+            "merged": 2.8515625,
+            "observed_delta": 5.1328125,
+            "residual": 8.881889890233197e-08,
+            "reference_merged": 2.8515625
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000111340903,
+          "relative_residual": 6.316487899579204e-08,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9999999469851547,
+              1.0000000521686456
+            ],
+            "log2_row_norm_factor_range": [
+              -7.648425642297398e-08,
+              7.526344437079072e-08
+            ],
+            "mean_absolute_log2_row_norm_factor": 3.920756018815158e-08,
+            "largest_nonzero_log2_norm_error": {
+              "row": 6,
+              "saved_magnitude": 0.41193416714668274,
+              "target_row_norm": 0.41193416714668274,
+              "saved_row_norm": 0.4119341453080566,
+              "saved_row_norm_scale": 0.2083810716867447,
+              "saved_row_norm_scaled_length": 1.9768309183442025,
+              "row_norm_factor": 0.9999999469851547,
+              "log2_row_norm_factor": -7.648425642297398e-08
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999999999999951,
+              0.9999999999999993
+            ],
+            "mean_direction_cosine": 0.9999999999999982
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -0.2001953125,
+            "cast_base": -0.2001953125,
+            "intended_delta": 0.27668940692680005,
+            "merged": 0.07649412006139755,
+            "observed_delta": 0.27668943256139755,
+            "residual": 2.5634597500268086e-08,
+            "reference_merged": 0.07649409770965576
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000110567,
+          "relative_residual": 8.197411320148321e-08,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.9999999464610839,
+              1.0000000556878519
+            ],
+            "log2_column_norm_factor_range": [
+              -7.72403307883989e-08,
+              8.034058551578009e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 4.608358484137195e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 2,
+              "saved_magnitude": 2.980140447616577,
+              "target_column_norm": 2.980140447616577,
+              "saved_column_norm": 2.9801406135741972,
+              "saved_column_norm_scale": 1.9291428327560425,
+              "saved_column_norm_scaled_length": 1.5448003968252892,
+              "column_norm_factor": 1.0000000556878519,
+              "log2_column_norm_factor": 8.034058551578009e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              0.9999999999999976,
+              1.0
+            ],
+            "mean_direction_cosine": 0.9999999999999989
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -2.765625,
+            "cast_base": -2.765625,
+            "intended_delta": -0.18243786027161457,
+            "merged": -2.9480626583099365,
+            "observed_delta": -0.18243765830993652,
+            "residual": 2.0196167804797938e-07,
+            "reference_merged": -2.9480628967285156
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999999951497893,
+          "relative_residual": 8.556079925968239e-08,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.9999998677456642,
+              1.0000000346133529
+            ],
+            "log2_column_norm_factor_range": [
+              -1.9080268703534633e-07,
+              4.993651164186363e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 5.216930374863222e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 7,
+              "saved_magnitude": 5.228446006774902,
+              "target_column_norm": 5.228446006774902,
+              "saved_column_norm": 5.228445315290248,
+              "saved_column_norm_scale": 1.9466907978057861,
+              "saved_column_norm_scaled_length": 2.6858119025288936,
+              "column_norm_factor": 0.9999998677456642,
+              "log2_column_norm_factor": -1.9080268703534633e-07
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.9999999999999981,
+              0.9999999999999997
+            ],
+            "mean_direction_cosine": 0.9999999999999989
+          },
+          "witness": {
+            "row": 35,
+            "column": 7,
+            "base": 0.421875,
+            "cast_base": 0.421875,
+            "intended_delta": 0.969780968069549,
+            "merged": 1.391655683517456,
+            "observed_delta": 0.969780683517456,
+            "residual": -2.8455209299949047e-07,
+            "reference_merged": 1.3916559219360352
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "correct-f32-safe-true",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 720,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 115,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000093868047,
+          "relative_residual": 1.7910842400923627e-08,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.9999999688444053,
+              1.0000000311474504
+            ],
+            "log2_column_norm_factor_range": [
+              -4.494802261170911e-08,
+              4.4936271523790765e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 2.890222701240446e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 0,
+              "saved_magnitude": 2.712979316711426,
+              "target_column_norm": 2.712979316711426,
+              "saved_column_norm": 2.712979232186942,
+              "saved_column_norm_scale": 1.265625,
+              "saved_column_norm_scaled_length": 2.1435885291353616,
+              "column_norm_factor": 0.9999999688444053,
+              "log2_column_norm_factor": -4.494802261170911e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              1.0,
+              1.0
+            ],
+            "mean_direction_cosine": 1.0
+          },
+          "witness": {
+            "row": 14,
+            "column": 2,
+            "base": -2.28125,
+            "cast_base": -2.28125,
+            "intended_delta": 5.132812411181101,
+            "merged": 2.8515625,
+            "observed_delta": 5.1328125,
+            "residual": 8.881889890233197e-08,
+            "reference_merged": 2.8515625
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000111340903,
+          "relative_residual": 6.316487899579204e-08,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9999999469851547,
+              1.0000000521686456
+            ],
+            "log2_row_norm_factor_range": [
+              -7.648425642297398e-08,
+              7.526344437079072e-08
+            ],
+            "mean_absolute_log2_row_norm_factor": 3.920756018815158e-08,
+            "largest_nonzero_log2_norm_error": {
+              "row": 6,
+              "saved_magnitude": 0.41193416714668274,
+              "target_row_norm": 0.41193416714668274,
+              "saved_row_norm": 0.4119341453080566,
+              "saved_row_norm_scale": 0.2083810716867447,
+              "saved_row_norm_scaled_length": 1.9768309183442025,
+              "row_norm_factor": 0.9999999469851547,
+              "log2_row_norm_factor": -7.648425642297398e-08
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999999999999951,
+              0.9999999999999993
+            ],
+            "mean_direction_cosine": 0.9999999999999982
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -0.2001953125,
+            "cast_base": -0.2001953125,
+            "intended_delta": 0.27668940692680005,
+            "merged": 0.07649412006139755,
+            "observed_delta": 0.27668943256139755,
+            "residual": 2.5634597500268086e-08,
+            "reference_merged": 0.07649409770965576
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000110567,
+          "relative_residual": 8.197411320148321e-08,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.9999999464610839,
+              1.0000000556878519
+            ],
+            "log2_column_norm_factor_range": [
+              -7.72403307883989e-08,
+              8.034058551578009e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 4.608358484137195e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 2,
+              "saved_magnitude": 2.980140447616577,
+              "target_column_norm": 2.980140447616577,
+              "saved_column_norm": 2.9801406135741972,
+              "saved_column_norm_scale": 1.9291428327560425,
+              "saved_column_norm_scaled_length": 1.5448003968252892,
+              "column_norm_factor": 1.0000000556878519,
+              "log2_column_norm_factor": 8.034058551578009e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              0.9999999999999976,
+              1.0
+            ],
+            "mean_direction_cosine": 0.9999999999999989
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -2.765625,
+            "cast_base": -2.765625,
+            "intended_delta": -0.18243786027161457,
+            "merged": -2.9480626583099365,
+            "observed_delta": -0.18243765830993652,
+            "residual": 2.0196167804797938e-07,
+            "reference_merged": -2.9480628967285156
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999999951497893,
+          "relative_residual": 8.556079925968239e-08,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.9999998677456642,
+              1.0000000346133529
+            ],
+            "log2_column_norm_factor_range": [
+              -1.9080268703534633e-07,
+              4.993651164186363e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 5.216930374863222e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 7,
+              "saved_magnitude": 5.228446006774902,
+              "target_column_norm": 5.228446006774902,
+              "saved_column_norm": 5.228445315290248,
+              "saved_column_norm_scale": 1.9466907978057861,
+              "saved_column_norm_scaled_length": 2.6858119025288936,
+              "column_norm_factor": 0.9999998677456642,
+              "log2_column_norm_factor": -1.9080268703534633e-07
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.9999999999999981,
+              0.9999999999999997
+            ],
+            "mean_direction_cosine": 0.9999999999999989
+          },
+          "witness": {
+            "row": 35,
+            "column": 7,
+            "base": 0.421875,
+            "cast_base": 0.421875,
+            "intended_delta": 0.969780968069549,
+            "merged": 1.391655683517456,
+            "observed_delta": 0.969780683517456,
+            "residual": -2.8455209299949047e-07,
+            "reference_merged": 1.3916559219360352
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "reset-embedding-magnitudes-f32",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "embedding magnitudes reset to direction norms; Linear stays DoRA"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 605,
+        "unchanged_nonzero_update_elements": 115,
+        "unchanged_nonzero_update_fraction": 0.1597222222222222,
+        "unchanged_reference_energy_fraction": 0.34294778057769437,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 1,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 0,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 115,
+          "gain": 0.0,
+          "relative_residual": 1.0,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 1,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.4999999925680305,
+              1.9999999376888107
+            ],
+            "log2_column_norm_factor_range": [
+              -1.0000000214441311,
+              0.9999999550519774
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.7267226307219681,
+            "largest_nonzero_log2_norm_error": {
+              "column": 4,
+              "saved_magnitude": 7.340154647827148,
+              "target_column_norm": 7.340154647827148,
+              "saved_column_norm": 3.6700772693617694,
+              "saved_column_norm_scale": 1.4609375,
+              "saved_column_norm_scaled_length": 2.5121384517556495,
+              "column_norm_factor": 0.4999999925680305,
+              "log2_column_norm_factor": -1.0000000214441311
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              -1.0,
+              1.0
+            ],
+            "mean_direction_cosine": 0.5
+          },
+          "witness": {
+            "row": 14,
+            "column": 2,
+            "base": -2.28125,
+            "cast_base": -2.28125,
+            "intended_delta": 5.132812411181101,
+            "merged": -2.28125,
+            "observed_delta": 0.0,
+            "residual": -5.132812411181101,
+            "reference_merged": 2.8515625
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000111340903,
+          "relative_residual": 6.316487899579204e-08,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9999999469851547,
+              1.0000000521686456
+            ],
+            "log2_row_norm_factor_range": [
+              -7.648425642297398e-08,
+              7.526344437079072e-08
+            ],
+            "mean_absolute_log2_row_norm_factor": 3.920756018815158e-08,
+            "largest_nonzero_log2_norm_error": {
+              "row": 6,
+              "saved_magnitude": 0.41193416714668274,
+              "target_row_norm": 0.41193416714668274,
+              "saved_row_norm": 0.4119341453080566,
+              "saved_row_norm_scale": 0.2083810716867447,
+              "saved_row_norm_scaled_length": 1.9768309183442025,
+              "row_norm_factor": 0.9999999469851547,
+              "log2_row_norm_factor": -7.648425642297398e-08
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999999999999951,
+              0.9999999999999993
+            ],
+            "mean_direction_cosine": 0.9999999999999982
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -0.2001953125,
+            "cast_base": -0.2001953125,
+            "intended_delta": 0.27668940692680005,
+            "merged": 0.07649412006139755,
+            "observed_delta": 0.27668943256139755,
+            "residual": 2.5634597500268086e-08,
+            "reference_merged": 0.07649409770965576
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 0.5303178278313018,
+          "relative_residual": 0.8908501078928852,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 1,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.7423220847491575,
+              1.4197839034543267
+            ],
+            "log2_column_norm_factor_range": [
+              -0.429882803932987,
+              0.5056713627304975
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.259977092268471,
+            "largest_nonzero_log2_norm_error": {
+              "column": 4,
+              "saved_magnitude": 1.8807271718978882,
+              "target_column_norm": 1.8807271718978882,
+              "saved_column_norm": 2.6702261654498,
+              "saved_column_norm_scale": 1.6036345958709717,
+              "saved_column_norm_scaled_length": 1.665108854800889,
+              "column_norm_factor": 1.4197839034543267,
+              "log2_column_norm_factor": 0.5056713627304975
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              -0.9999999999999992,
+              1.0
+            ],
+            "mean_direction_cosine": 0.7999999999999996
+          },
+          "witness": {
+            "row": 8,
+            "column": 1,
+            "base": 1.7265625,
+            "cast_base": 1.7265625,
+            "intended_delta": -3.2667073034340843,
+            "merged": 1.623701572418213,
+            "observed_delta": -0.10286092758178711,
+            "residual": 3.163846375852297,
+            "reference_merged": -1.5401448011398315
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 1.1669862414032615,
+          "relative_residual": 0.44135615372523734,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.8514539204310173,
+              1.7788429412465883
+            ],
+            "log2_column_norm_factor_range": [
+              -0.2319996396335704,
+              0.8309391368628564
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.3017632039297813,
+            "largest_nonzero_log2_norm_error": {
+              "column": 6,
+              "saved_magnitude": 6.146528244018555,
+              "target_column_norm": 6.146528244018555,
+              "saved_column_norm": 10.933708380045193,
+              "saved_column_norm_scale": 3.800793170928955,
+              "saved_column_norm_scaled_length": 2.8766912295237774,
+              "column_norm_factor": 1.7788429412465883,
+              "log2_column_norm_factor": 0.8309391368628564
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.9999999999999984,
+              1.0
+            ],
+            "mean_direction_cosine": 0.9999999999999992
+          },
+          "witness": {
+            "row": 27,
+            "column": 6,
+            "base": 1.4140625,
+            "cast_base": 1.4140625,
+            "intended_delta": 0.7226034909281962,
+            "merged": 3.800793170928955,
+            "observed_delta": 2.386730670928955,
+            "residual": 1.6641271800007589,
+            "reference_merged": 2.1366660594940186
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "correct-f16-safe-false",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 720,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 115,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000093868047,
+          "relative_residual": 1.7910842400923627e-08,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.9999999688444053,
+              1.0000000311474504
+            ],
+            "log2_column_norm_factor_range": [
+              -4.494802261170911e-08,
+              4.4936271523790765e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 2.890222701240446e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 0,
+              "saved_magnitude": 2.712979316711426,
+              "target_column_norm": 2.712979316711426,
+              "saved_column_norm": 2.712979232186942,
+              "saved_column_norm_scale": 1.265625,
+              "saved_column_norm_scaled_length": 2.1435885291353616,
+              "column_norm_factor": 0.9999999688444053,
+              "log2_column_norm_factor": -4.494802261170911e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              1.0,
+              1.0
+            ],
+            "mean_direction_cosine": 1.0
+          },
+          "witness": {
+            "row": 14,
+            "column": 2,
+            "base": -2.28125,
+            "cast_base": -2.28125,
+            "intended_delta": 5.132812411181101,
+            "merged": 2.8515625,
+            "observed_delta": 5.1328125,
+            "residual": 8.881889890233197e-08,
+            "reference_merged": 2.8515625
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999614790833667,
+          "relative_residual": 0.00020585521237591057,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9998432741350434,
+              1.0001447891002508
+            ],
+            "log2_row_norm_factor_range": [
+              -0.00022612534846027326,
+              0.00020887139612077793
+            ],
+            "mean_absolute_log2_row_norm_factor": 0.00015104432831862738,
+            "largest_nonzero_log2_norm_error": {
+              "row": 4,
+              "saved_magnitude": 0.3013032376766205,
+              "target_row_norm": 0.3013032376766205,
+              "saved_row_norm": 0.3012560156660814,
+              "saved_row_norm_scale": 0.1839599609375,
+              "saved_row_norm_scaled_length": 1.6376173061290902,
+              "row_norm_factor": 0.9998432741350434,
+              "log2_row_norm_factor": -0.00022612534846027326
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999999772516658,
+              0.9999999965283497
+            ],
+            "mean_direction_cosine": 0.99999998773508
+          },
+          "witness": {
+            "row": 0,
+            "column": 10,
+            "base": 0.291015625,
+            "cast_base": 0.291015625,
+            "intended_delta": -0.07220236213575701,
+            "merged": 0.2188720703125,
+            "observed_delta": -0.0721435546875,
+            "residual": 5.88074482570089e-05,
+            "reference_merged": 0.2188720703125
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999945941573818,
+          "relative_residual": 0.00032018520328825907,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.9999446058319768,
+              1.0001591989236396
+            ],
+            "log2_column_norm_factor_range": [
+              -7.99191050479137e-05,
+              0.00022965721754376756
+            ],
+            "mean_absolute_log2_column_norm_factor": 9.830267164085117e-05,
+            "largest_nonzero_log2_norm_error": {
+              "column": 5,
+              "saved_magnitude": 2.9698963165283203,
+              "target_column_norm": 2.9698963165283203,
+              "saved_column_norm": 2.9703691208252323,
+              "saved_column_norm_scale": 1.5283203125,
+              "saved_column_norm_scaled_length": 1.9435514247444332,
+              "column_norm_factor": 1.0001591989236396,
+              "log2_column_norm_factor": 0.00022965721754376756
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              0.99999996933247,
+              0.9999999891116745
+            ],
+            "mean_direction_cosine": 0.9999999779770385
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -2.765625,
+            "cast_base": -2.765625,
+            "intended_delta": -0.18243786027161457,
+            "merged": -2.947265625,
+            "observed_delta": -0.181640625,
+            "residual": 0.0007972352716145714,
+            "reference_merged": -2.947265625
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999874538654361,
+          "relative_residual": 0.0002787467787970422,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.999872035470823,
+              1.0001397640994778
+            ],
+            "log2_column_norm_factor_range": [
+              -0.0001846256046695316,
+              0.0002016228837187331
+            ],
+            "mean_absolute_log2_column_norm_factor": 7.969659738544155e-05,
+            "largest_nonzero_log2_norm_error": {
+              "column": 5,
+              "saved_magnitude": 5.559361457824707,
+              "target_column_norm": 5.559361457824707,
+              "saved_column_norm": 5.560138456972532,
+              "saved_column_norm_scale": 2.201171875,
+              "saved_column_norm_scaled_length": 2.5259901419431556,
+              "column_norm_factor": 1.0001397640994778,
+              "log2_column_norm_factor": 0.0002016228837187331
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.9999999693241736,
+              0.9999999871477087
+            ],
+            "mean_direction_cosine": 0.9999999807035274
+          },
+          "witness": {
+            "row": 27,
+            "column": 1,
+            "base": 2.0625,
+            "cast_base": 2.0625,
+            "intended_delta": 0.03410828647510078,
+            "merged": 2.095703125,
+            "observed_delta": 0.033203125,
+            "residual": -0.0009051614751007797,
+            "reference_merged": 2.095703125
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "correct-f16-safe-true",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 720,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 115,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000093868047,
+          "relative_residual": 1.7910842400923627e-08,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.9999999688444053,
+              1.0000000311474504
+            ],
+            "log2_column_norm_factor_range": [
+              -4.494802261170911e-08,
+              4.4936271523790765e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 2.890222701240446e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 0,
+              "saved_magnitude": 2.712979316711426,
+              "target_column_norm": 2.712979316711426,
+              "saved_column_norm": 2.712979232186942,
+              "saved_column_norm_scale": 1.265625,
+              "saved_column_norm_scaled_length": 2.1435885291353616,
+              "column_norm_factor": 0.9999999688444053,
+              "log2_column_norm_factor": -4.494802261170911e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              1.0,
+              1.0
+            ],
+            "mean_direction_cosine": 1.0
+          },
+          "witness": {
+            "row": 14,
+            "column": 2,
+            "base": -2.28125,
+            "cast_base": -2.28125,
+            "intended_delta": 5.132812411181101,
+            "merged": 2.8515625,
+            "observed_delta": 5.1328125,
+            "residual": 8.881889890233197e-08,
+            "reference_merged": 2.8515625
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999614790833667,
+          "relative_residual": 0.00020585521237591057,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9998432741350434,
+              1.0001447891002508
+            ],
+            "log2_row_norm_factor_range": [
+              -0.00022612534846027326,
+              0.00020887139612077793
+            ],
+            "mean_absolute_log2_row_norm_factor": 0.00015104432831862738,
+            "largest_nonzero_log2_norm_error": {
+              "row": 4,
+              "saved_magnitude": 0.3013032376766205,
+              "target_row_norm": 0.3013032376766205,
+              "saved_row_norm": 0.3012560156660814,
+              "saved_row_norm_scale": 0.1839599609375,
+              "saved_row_norm_scaled_length": 1.6376173061290902,
+              "row_norm_factor": 0.9998432741350434,
+              "log2_row_norm_factor": -0.00022612534846027326
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999999772516658,
+              0.9999999965283497
+            ],
+            "mean_direction_cosine": 0.99999998773508
+          },
+          "witness": {
+            "row": 0,
+            "column": 10,
+            "base": 0.291015625,
+            "cast_base": 0.291015625,
+            "intended_delta": -0.07220236213575701,
+            "merged": 0.2188720703125,
+            "observed_delta": -0.0721435546875,
+            "residual": 5.88074482570089e-05,
+            "reference_merged": 0.2188720703125
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999945941573818,
+          "relative_residual": 0.00032018520328825907,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.9999446058319768,
+              1.0001591989236396
+            ],
+            "log2_column_norm_factor_range": [
+              -7.99191050479137e-05,
+              0.00022965721754376756
+            ],
+            "mean_absolute_log2_column_norm_factor": 9.830267164085117e-05,
+            "largest_nonzero_log2_norm_error": {
+              "column": 5,
+              "saved_magnitude": 2.9698963165283203,
+              "target_column_norm": 2.9698963165283203,
+              "saved_column_norm": 2.9703691208252323,
+              "saved_column_norm_scale": 1.5283203125,
+              "saved_column_norm_scaled_length": 1.9435514247444332,
+              "column_norm_factor": 1.0001591989236396,
+              "log2_column_norm_factor": 0.00022965721754376756
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              0.99999996933247,
+              0.9999999891116745
+            ],
+            "mean_direction_cosine": 0.9999999779770385
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -2.765625,
+            "cast_base": -2.765625,
+            "intended_delta": -0.18243786027161457,
+            "merged": -2.947265625,
+            "observed_delta": -0.181640625,
+            "residual": 0.0007972352716145714,
+            "reference_merged": -2.947265625
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999874538654361,
+          "relative_residual": 0.0002787467787970422,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.999872035470823,
+              1.0001397640994778
+            ],
+            "log2_column_norm_factor_range": [
+              -0.0001846256046695316,
+              0.0002016228837187331
+            ],
+            "mean_absolute_log2_column_norm_factor": 7.969659738544155e-05,
+            "largest_nonzero_log2_norm_error": {
+              "column": 5,
+              "saved_magnitude": 5.559361457824707,
+              "target_column_norm": 5.559361457824707,
+              "saved_column_norm": 5.560138456972532,
+              "saved_column_norm_scale": 2.201171875,
+              "saved_column_norm_scaled_length": 2.5259901419431556,
+              "column_norm_factor": 1.0001397640994778,
+              "log2_column_norm_factor": 0.0002016228837187331
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.9999999693241736,
+              0.9999999871477087
+            ],
+            "mean_direction_cosine": 0.9999999807035274
+          },
+          "witness": {
+            "row": 27,
+            "column": 1,
+            "base": 2.0625,
+            "cast_base": 2.0625,
+            "intended_delta": 0.03410828647510078,
+            "merged": 2.095703125,
+            "observed_delta": 0.033203125,
+            "residual": -0.0009051614751007797,
+            "reference_merged": 2.095703125
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "reset-embedding-magnitudes-f16",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "embedding magnitudes reset to direction norms; Linear stays DoRA"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 605,
+        "unchanged_nonzero_update_elements": 115,
+        "unchanged_nonzero_update_fraction": 0.1597222222222222,
+        "unchanged_reference_energy_fraction": 0.34294778057769437,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 1,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 0,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 115,
+          "gain": 0.0,
+          "relative_residual": 1.0,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 1,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.4999999925680305,
+              1.9999999376888107
+            ],
+            "log2_column_norm_factor_range": [
+              -1.0000000214441311,
+              0.9999999550519774
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.7267226307219681,
+            "largest_nonzero_log2_norm_error": {
+              "column": 4,
+              "saved_magnitude": 7.340154647827148,
+              "target_column_norm": 7.340154647827148,
+              "saved_column_norm": 3.6700772693617694,
+              "saved_column_norm_scale": 1.4609375,
+              "saved_column_norm_scaled_length": 2.5121384517556495,
+              "column_norm_factor": 0.4999999925680305,
+              "log2_column_norm_factor": -1.0000000214441311
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              -1.0,
+              1.0
+            ],
+            "mean_direction_cosine": 0.5
+          },
+          "witness": {
+            "row": 14,
+            "column": 2,
+            "base": -2.28125,
+            "cast_base": -2.28125,
+            "intended_delta": 5.132812411181101,
+            "merged": -2.28125,
+            "observed_delta": 0.0,
+            "residual": -5.132812411181101,
+            "reference_merged": 2.8515625
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999614790833667,
+          "relative_residual": 0.00020585521237591057,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9998432741350434,
+              1.0001447891002508
+            ],
+            "log2_row_norm_factor_range": [
+              -0.00022612534846027326,
+              0.00020887139612077793
+            ],
+            "mean_absolute_log2_row_norm_factor": 0.00015104432831862738,
+            "largest_nonzero_log2_norm_error": {
+              "row": 4,
+              "saved_magnitude": 0.3013032376766205,
+              "target_row_norm": 0.3013032376766205,
+              "saved_row_norm": 0.3012560156660814,
+              "saved_row_norm_scale": 0.1839599609375,
+              "saved_row_norm_scaled_length": 1.6376173061290902,
+              "row_norm_factor": 0.9998432741350434,
+              "log2_row_norm_factor": -0.00022612534846027326
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999999772516658,
+              0.9999999965283497
+            ],
+            "mean_direction_cosine": 0.99999998773508
+          },
+          "witness": {
+            "row": 0,
+            "column": 10,
+            "base": 0.291015625,
+            "cast_base": 0.291015625,
+            "intended_delta": -0.07220236213575701,
+            "merged": 0.2188720703125,
+            "observed_delta": -0.0721435546875,
+            "residual": 5.88074482570089e-05,
+            "reference_merged": 0.2188720703125
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 0.5303121802060915,
+          "relative_residual": 0.8908449857701309,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 1,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.7424342289228866,
+              1.4196717447831366
+            ],
+            "log2_column_norm_factor_range": [
+              -0.4296648693909731,
+              0.5055573896463234
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.25999031702032677,
+            "largest_nonzero_log2_norm_error": {
+              "column": 4,
+              "saved_magnitude": 1.8807271718978882,
+              "target_column_norm": 1.8807271718978882,
+              "saved_column_norm": 2.670015225589329,
+              "saved_column_norm_scale": 1.603515625,
+              "saved_column_norm_scaled_length": 1.665100847139752,
+              "column_norm_factor": 1.4196717447831366,
+              "log2_column_norm_factor": 0.5055573896463234
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              -0.9999999808094056,
+              0.999999998961708
+            ],
+            "mean_direction_cosine": 0.7999999900017862
+          },
+          "witness": {
+            "row": 8,
+            "column": 1,
+            "base": 1.7265625,
+            "cast_base": 1.7265625,
+            "intended_delta": -3.2667073034340843,
+            "merged": 1.6240234375,
+            "observed_delta": -0.1025390625,
+            "residual": 3.1641682409340843,
+            "reference_merged": -1.5400390625
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 1.166954996851076,
+          "relative_residual": 0.44131552272916574,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.8513555137209234,
+              1.7787617215881464
+            ],
+            "log2_column_norm_factor_range": [
+              -0.23216638861904496,
+              0.8308732637771247
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.30174545723659096,
+            "largest_nonzero_log2_norm_error": {
+              "column": 6,
+              "saved_magnitude": 6.146528244018555,
+              "target_column_norm": 6.146528244018555,
+              "saved_column_norm": 10.93320916112061,
+              "saved_column_norm_scale": 3.80078125,
+              "saved_column_norm_scaled_length": 2.8765689057007977,
+              "column_norm_factor": 1.7787617215881464,
+              "log2_column_norm_factor": 0.8308732637771247
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.9999999694298427,
+              0.9999999917871116
+            ],
+            "mean_direction_cosine": 0.9999999815942203
+          },
+          "witness": {
+            "row": 27,
+            "column": 6,
+            "base": 1.4140625,
+            "cast_base": 1.4140625,
+            "intended_delta": 0.7226034909281962,
+            "merged": 3.80078125,
+            "observed_delta": 2.38671875,
+            "residual": 1.6641152590718038,
+            "reference_merged": 2.13671875
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "correct-bf16-safe-false",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 720,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 115,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 0,
+          "gain": 0.9998778640380236,
+          "relative_residual": 0.0013942516874964903,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.9991073240649385,
+              1.0009202727438609
+            ],
+            "log2_column_norm_factor_range": [
+              -0.0012884343073819712,
+              0.0013270623877754783
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.0006538907718277746,
+            "largest_nonzero_log2_norm_error": {
+              "column": 3,
+              "saved_magnitude": 8.610179901123047,
+              "target_column_norm": 8.610179901123047,
+              "saved_column_norm": 8.61810361500579,
+              "saved_column_norm_scale": 4.125,
+              "saved_column_norm_scaled_length": 2.0892372400014034,
+              "column_norm_factor": 1.0009202727438609,
+              "log2_column_norm_factor": 0.0013270623877754783
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              0.9999981245529844,
+              1.0
+            ],
+            "mean_direction_cosine": 0.9999993810395447
+          },
+          "witness": {
+            "row": 22,
+            "column": 3,
+            "base": -2.640625,
+            "cast_base": -2.640625,
+            "intended_delta": -1.3203124882478798,
+            "merged": -3.96875,
+            "observed_delta": -1.328125,
+            "residual": -0.007812511752120166,
+            "reference_merged": -3.953125
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999244671858417,
+          "relative_residual": 0.0016658449310072512,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9990663490972054,
+              1.001852445911951
+            ],
+            "log2_row_norm_factor_range": [
+              -0.001347602720569927,
+              0.0026700422390985
+            ],
+            "mean_absolute_log2_row_norm_factor": 0.000996244898412448,
+            "largest_nonzero_log2_norm_error": {
+              "row": 5,
+              "saved_magnitude": 0.3489348292350769,
+              "target_row_norm": 0.3489348292350769,
+              "saved_row_norm": 0.3495812121330307,
+              "saved_row_norm_scale": 0.1865234375,
+              "saved_row_norm_scaled_length": 1.874194561383369,
+              "row_norm_factor": 1.001852445911951,
+              "log2_row_norm_factor": 0.0026700422390985
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999985613355109,
+              0.9999994465037496
+            ],
+            "mean_direction_cosine": 0.9999989890632804
+          },
+          "witness": {
+            "row": 0,
+            "column": 6,
+            "base": -0.283203125,
+            "cast_base": -0.283203125,
+            "intended_delta": 0.13822963360900622,
+            "merged": -0.14453125,
+            "observed_delta": 0.138671875,
+            "residual": 0.000442241390993775,
+            "reference_merged": -0.14453125
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999616250795033,
+          "relative_residual": 0.002521319290138509,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.9989855286302681,
+              1.0015771709904093
+            ],
+            "log2_column_norm_factor_range": [
+              -0.0014643156930568145,
+              0.002273584321796979
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.0011373725114803453,
+            "largest_nonzero_log2_norm_error": {
+              "column": 8,
+              "saved_magnitude": 2.8597052097320557,
+              "target_column_norm": 2.8597052097320557,
+              "saved_column_norm": 2.8642154538299676,
+              "saved_column_norm_scale": 1.7421875,
+              "saved_column_norm_scaled_length": 1.6440339824674253,
+              "column_norm_factor": 1.0015771709904093,
+              "log2_column_norm_factor": 0.002273584321796979
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              0.9999975402540926,
+              0.9999995283817891
+            ],
+            "mean_direction_cosine": 0.9999987995375864
+          },
+          "witness": {
+            "row": 2,
+            "column": 7,
+            "base": -2.796875,
+            "cast_base": -2.796875,
+            "intended_delta": 0.008373627615875456,
+            "merged": -2.78125,
+            "observed_delta": 0.015625,
+            "residual": 0.007251372384124544,
+            "reference_merged": -2.78125
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999988026879923,
+          "relative_residual": 0.0021802690418084034,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.9993989692081136,
+              1.0007884405918264
+            ],
+            "log2_column_norm_factor_range": [
+              -0.000867364825478379,
+              0.0011370311499857085
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.0005332049083337242,
+            "largest_nonzero_log2_norm_error": {
+              "column": 10,
+              "saved_magnitude": 4.62270975112915,
+              "target_column_norm": 4.62270975112915,
+              "saved_column_norm": 4.626354483141172,
+              "saved_column_norm_scale": 1.765625,
+              "saved_column_norm_scaled_length": 2.6202361674427874,
+              "column_norm_factor": 1.0007884405918264,
+              "log2_column_norm_factor": 0.0011370311499857085
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.999998175701768,
+              0.9999991148217138
+            ],
+            "mean_direction_cosine": 0.9999987395809494
+          },
+          "witness": {
+            "row": 21,
+            "column": 9,
+            "base": -1.0078125,
+            "cast_base": -1.0078125,
+            "intended_delta": -1.0768847892517122,
+            "merged": -2.078125,
+            "observed_delta": -1.0703125,
+            "residual": 0.00657228925171216,
+            "reference_merged": -2.078125
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "correct-bf16-safe-true",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 720,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 115,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 0,
+          "gain": 0.9998778640380236,
+          "relative_residual": 0.0013942516874964903,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.9991073240649385,
+              1.0009202727438609
+            ],
+            "log2_column_norm_factor_range": [
+              -0.0012884343073819712,
+              0.0013270623877754783
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.0006538907718277746,
+            "largest_nonzero_log2_norm_error": {
+              "column": 3,
+              "saved_magnitude": 8.610179901123047,
+              "target_column_norm": 8.610179901123047,
+              "saved_column_norm": 8.61810361500579,
+              "saved_column_norm_scale": 4.125,
+              "saved_column_norm_scaled_length": 2.0892372400014034,
+              "column_norm_factor": 1.0009202727438609,
+              "log2_column_norm_factor": 0.0013270623877754783
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              0.9999981245529844,
+              1.0
+            ],
+            "mean_direction_cosine": 0.9999993810395447
+          },
+          "witness": {
+            "row": 22,
+            "column": 3,
+            "base": -2.640625,
+            "cast_base": -2.640625,
+            "intended_delta": -1.3203124882478798,
+            "merged": -3.96875,
+            "observed_delta": -1.328125,
+            "residual": -0.007812511752120166,
+            "reference_merged": -3.953125
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999244671858417,
+          "relative_residual": 0.0016658449310072512,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9990663490972054,
+              1.001852445911951
+            ],
+            "log2_row_norm_factor_range": [
+              -0.001347602720569927,
+              0.0026700422390985
+            ],
+            "mean_absolute_log2_row_norm_factor": 0.000996244898412448,
+            "largest_nonzero_log2_norm_error": {
+              "row": 5,
+              "saved_magnitude": 0.3489348292350769,
+              "target_row_norm": 0.3489348292350769,
+              "saved_row_norm": 0.3495812121330307,
+              "saved_row_norm_scale": 0.1865234375,
+              "saved_row_norm_scaled_length": 1.874194561383369,
+              "row_norm_factor": 1.001852445911951,
+              "log2_row_norm_factor": 0.0026700422390985
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999985613355109,
+              0.9999994465037496
+            ],
+            "mean_direction_cosine": 0.9999989890632804
+          },
+          "witness": {
+            "row": 0,
+            "column": 6,
+            "base": -0.283203125,
+            "cast_base": -0.283203125,
+            "intended_delta": 0.13822963360900622,
+            "merged": -0.14453125,
+            "observed_delta": 0.138671875,
+            "residual": 0.000442241390993775,
+            "reference_merged": -0.14453125
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999616250795033,
+          "relative_residual": 0.002521319290138509,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.9989855286302681,
+              1.0015771709904093
+            ],
+            "log2_column_norm_factor_range": [
+              -0.0014643156930568145,
+              0.002273584321796979
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.0011373725114803453,
+            "largest_nonzero_log2_norm_error": {
+              "column": 8,
+              "saved_magnitude": 2.8597052097320557,
+              "target_column_norm": 2.8597052097320557,
+              "saved_column_norm": 2.8642154538299676,
+              "saved_column_norm_scale": 1.7421875,
+              "saved_column_norm_scaled_length": 1.6440339824674253,
+              "column_norm_factor": 1.0015771709904093,
+              "log2_column_norm_factor": 0.002273584321796979
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              0.9999975402540926,
+              0.9999995283817891
+            ],
+            "mean_direction_cosine": 0.9999987995375864
+          },
+          "witness": {
+            "row": 2,
+            "column": 7,
+            "base": -2.796875,
+            "cast_base": -2.796875,
+            "intended_delta": 0.008373627615875456,
+            "merged": -2.78125,
+            "observed_delta": 0.015625,
+            "residual": 0.007251372384124544,
+            "reference_merged": -2.78125
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999988026879923,
+          "relative_residual": 0.0021802690418084034,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.9993989692081136,
+              1.0007884405918264
+            ],
+            "log2_column_norm_factor_range": [
+              -0.000867364825478379,
+              0.0011370311499857085
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.0005332049083337242,
+            "largest_nonzero_log2_norm_error": {
+              "column": 10,
+              "saved_magnitude": 4.62270975112915,
+              "target_column_norm": 4.62270975112915,
+              "saved_column_norm": 4.626354483141172,
+              "saved_column_norm_scale": 1.765625,
+              "saved_column_norm_scaled_length": 2.6202361674427874,
+              "column_norm_factor": 1.0007884405918264,
+              "log2_column_norm_factor": 0.0011370311499857085
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.999998175701768,
+              0.9999991148217138
+            ],
+            "mean_direction_cosine": 0.9999987395809494
+          },
+          "witness": {
+            "row": 21,
+            "column": 9,
+            "base": -1.0078125,
+            "cast_base": -1.0078125,
+            "intended_delta": -1.0768847892517122,
+            "merged": -2.078125,
+            "observed_delta": -1.0703125,
+            "residual": 0.00657228925171216,
+            "reference_merged": -2.078125
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "reset-embedding-magnitudes-bf16",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "embedding magnitudes reset to direction norms; Linear stays DoRA"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 602,
+        "unchanged_nonzero_update_elements": 118,
+        "unchanged_nonzero_update_fraction": 0.1638888888888889,
+        "unchanged_reference_energy_fraction": 0.34312325378565384,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 1,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 0,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 115,
+          "gain": 0.0,
+          "relative_residual": 1.0,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 1,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.4999999925680305,
+              1.9999999376888107
+            ],
+            "log2_column_norm_factor_range": [
+              -1.0000000214441311,
+              0.9999999550519774
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.7267226307219681,
+            "largest_nonzero_log2_norm_error": {
+              "column": 4,
+              "saved_magnitude": 7.340154647827148,
+              "target_column_norm": 7.340154647827148,
+              "saved_column_norm": 3.6700772693617694,
+              "saved_column_norm_scale": 1.4609375,
+              "saved_column_norm_scaled_length": 2.5121384517556495,
+              "column_norm_factor": 0.4999999925680305,
+              "log2_column_norm_factor": -1.0000000214441311
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              -1.0,
+              1.0
+            ],
+            "mean_direction_cosine": 0.5
+          },
+          "witness": {
+            "row": 14,
+            "column": 2,
+            "base": -2.28125,
+            "cast_base": -2.28125,
+            "intended_delta": 5.132812411181101,
+            "merged": -2.28125,
+            "observed_delta": 0.0,
+            "residual": -5.132812411181101,
+            "reference_merged": 2.84375
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999244671858417,
+          "relative_residual": 0.0016658449310072512,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9990663490972054,
+              1.001852445911951
+            ],
+            "log2_row_norm_factor_range": [
+              -0.001347602720569927,
+              0.0026700422390985
+            ],
+            "mean_absolute_log2_row_norm_factor": 0.000996244898412448,
+            "largest_nonzero_log2_norm_error": {
+              "row": 5,
+              "saved_magnitude": 0.3489348292350769,
+              "target_row_norm": 0.3489348292350769,
+              "saved_row_norm": 0.3495812121330307,
+              "saved_row_norm_scale": 0.1865234375,
+              "saved_row_norm_scaled_length": 1.874194561383369,
+              "row_norm_factor": 1.001852445911951,
+              "log2_row_norm_factor": 0.0026700422390985
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999985613355109,
+              0.9999994465037496
+            ],
+            "mean_direction_cosine": 0.9999989890632804
+          },
+          "witness": {
+            "row": 0,
+            "column": 6,
+            "base": -0.283203125,
+            "cast_base": -0.283203125,
+            "intended_delta": 0.13822963360900622,
+            "merged": -0.14453125,
+            "observed_delta": 0.138671875,
+            "residual": 0.000442241390993775,
+            "reference_merged": -0.14453125
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 120,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 1,
+          "gain": 0.5298197290596518,
+          "relative_residual": 0.8916911537777181,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 1,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.7417997353923563,
+              1.418743272214518
+            ],
+            "log2_column_norm_factor_range": [
+              -0.4308983416706017,
+              0.5046135510532338
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.260308135726356,
+            "largest_nonzero_log2_norm_error": {
+              "column": 4,
+              "saved_magnitude": 1.8807271718978882,
+              "target_column_norm": 1.8807271718978882,
+              "saved_column_norm": 2.668269022001166,
+              "saved_column_norm_scale": 1.6015625,
+              "saved_column_norm_scaled_length": 1.6660411454446304,
+              "column_norm_factor": 1.418743272214518,
+              "log2_column_norm_factor": 0.5046135510532338
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              -0.9999996087879489,
+              0.9999992210307995
+            ],
+            "mean_direction_cosine": 0.79999888893079
+          },
+          "witness": {
+            "row": 8,
+            "column": 1,
+            "base": 1.7265625,
+            "cast_base": 1.7265625,
+            "intended_delta": -3.2667073034340843,
+            "merged": 1.625,
+            "observed_delta": -0.1015625,
+            "residual": 3.1651448034340843,
+            "reference_merged": -1.5390625
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 405,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 2,
+          "gain": 1.1669643534996181,
+          "relative_residual": 0.44108978900167134,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.8517845936935978,
+              1.7782237153698053
+            ],
+            "log2_column_norm_factor_range": [
+              -0.2314394589212191,
+              0.8304368386509363
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.30147084600610513,
+            "largest_nonzero_log2_norm_error": {
+              "column": 6,
+              "saved_magnitude": 6.146528244018555,
+              "target_column_norm": 6.146528244018555,
+              "saved_column_norm": 10.929902290704119,
+              "saved_column_norm_scale": 3.796875,
+              "saved_column_norm_scaled_length": 2.878657393436476,
+              "column_norm_factor": 1.7782237153698053,
+              "log2_column_norm_factor": 0.8304368386509363
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.9999979349146499,
+              0.9999992507336131
+            ],
+            "mean_direction_cosine": 0.9999987788061184
+          },
+          "witness": {
+            "row": 27,
+            "column": 6,
+            "base": 1.4140625,
+            "cast_base": 1.4140625,
+            "intended_delta": 0.7226034909281962,
+            "merged": 3.796875,
+            "observed_delta": 2.3828125,
+            "residual": 1.6602090090718038,
+            "reference_merged": 2.140625
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "wrong-row-axis-f32",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "authored square-only row-axis error"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 720,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 115,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000093868047,
+          "relative_residual": 1.7910842400923627e-08,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.9999999688444053,
+              1.0000000311474504
+            ],
+            "log2_column_norm_factor_range": [
+              -4.494802261170911e-08,
+              4.4936271523790765e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 2.890222701240446e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 0,
+              "saved_magnitude": 2.712979316711426,
+              "target_column_norm": 2.712979316711426,
+              "saved_column_norm": 2.712979232186942,
+              "saved_column_norm_scale": 1.265625,
+              "saved_column_norm_scaled_length": 2.1435885291353616,
+              "column_norm_factor": 0.9999999688444053,
+              "log2_column_norm_factor": -4.494802261170911e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              1.0,
+              1.0
+            ],
+            "mean_direction_cosine": 1.0
+          },
+          "witness": {
+            "row": 14,
+            "column": 2,
+            "base": -2.28125,
+            "cast_base": -2.28125,
+            "intended_delta": 5.132812411181101,
+            "merged": 2.8515625,
+            "observed_delta": 5.1328125,
+            "residual": 8.881889890233197e-08,
+            "reference_merged": 2.8515625
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000111340903,
+          "relative_residual": 6.316487899579204e-08,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9999999469851547,
+              1.0000000521686456
+            ],
+            "log2_row_norm_factor_range": [
+              -7.648425642297398e-08,
+              7.526344437079072e-08
+            ],
+            "mean_absolute_log2_row_norm_factor": 3.920756018815158e-08,
+            "largest_nonzero_log2_norm_error": {
+              "row": 6,
+              "saved_magnitude": 0.41193416714668274,
+              "target_row_norm": 0.41193416714668274,
+              "saved_row_norm": 0.4119341453080566,
+              "saved_row_norm_scale": 0.2083810716867447,
+              "saved_row_norm_scaled_length": 1.9768309183442025,
+              "row_norm_factor": 0.9999999469851547,
+              "log2_row_norm_factor": -7.648425642297398e-08
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999999999999951,
+              0.9999999999999993
+            ],
+            "mean_direction_cosine": 0.9999999999999982
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -0.2001953125,
+            "cast_base": -0.2001953125,
+            "intended_delta": 0.27668940692680005,
+            "merged": 0.07649412006139755,
+            "observed_delta": 0.27668943256139755,
+            "residual": 2.5634597500268086e-08,
+            "reference_merged": 0.07649409770965576
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 0.623475465453709,
+          "relative_residual": 1.0927315183326185,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 1,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.6496892000511421,
+              1.4788998626909646
+            ],
+            "log2_column_norm_factor_range": [
+              -0.6221783717904013,
+              0.5645243698879324
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.33397806859267565,
+            "largest_nonzero_log2_norm_error": {
+              "column": 7,
+              "saved_magnitude": 4.474488258361816,
+              "target_column_norm": 4.474488258361816,
+              "saved_column_norm": 2.9070266972133165,
+              "saved_column_norm_scale": 2.0322227478027344,
+              "saved_column_norm_scaled_length": 1.4304665668940235,
+              "column_norm_factor": 0.6496892000511421,
+              "log2_column_norm_factor": -0.6221783717904013
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              -0.5255155581462064,
+              0.9691718996115726
+            ],
+            "mean_direction_cosine": 0.7096323275569916
+          },
+          "witness": {
+            "row": 1,
+            "column": 7,
+            "base": 2.078125,
+            "cast_base": 2.078125,
+            "intended_delta": -0.3500492875477217,
+            "merged": -1.1743813753128052,
+            "observed_delta": -3.252506375312805,
+            "residual": -2.9024570877650833,
+            "reference_merged": 1.7280757427215576
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999999951497893,
+          "relative_residual": 8.556079925968239e-08,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.9999998677456642,
+              1.0000000346133529
+            ],
+            "log2_column_norm_factor_range": [
+              -1.9080268703534633e-07,
+              4.993651164186363e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 5.216930374863222e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 7,
+              "saved_magnitude": 5.228446006774902,
+              "target_column_norm": 5.228446006774902,
+              "saved_column_norm": 5.228445315290248,
+              "saved_column_norm_scale": 1.9466907978057861,
+              "saved_column_norm_scaled_length": 2.6858119025288936,
+              "column_norm_factor": 0.9999998677456642,
+              "log2_column_norm_factor": -1.9080268703534633e-07
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.9999999999999981,
+              0.9999999999999997
+            ],
+            "mean_direction_cosine": 0.9999999999999989
+          },
+          "witness": {
+            "row": 35,
+            "column": 7,
+            "base": 0.421875,
+            "cast_base": 0.421875,
+            "intended_delta": 0.969780968069549,
+            "merged": 1.391655683517456,
+            "observed_delta": 0.969780683517456,
+            "residual": -2.8455209299949047e-07,
+            "reference_merged": 1.3916559219360352
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "rotated-token-rows-f32",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "authored token-row rotation; saved column multisets unchanged"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 720,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 115,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 0,
+          "gain": 0.4237623362951904,
+          "relative_residual": 1.4010350079419798,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.9999999688444053,
+              1.0000000311474504
+            ],
+            "log2_column_norm_factor_range": [
+              -4.494802261170911e-08,
+              4.4936271523790765e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 2.890222709249012e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 0,
+              "saved_magnitude": 2.712979316711426,
+              "target_column_norm": 2.712979316711426,
+              "saved_column_norm": 2.712979232186942,
+              "saved_column_norm_scale": 1.265625,
+              "saved_column_norm_scaled_length": 2.1435885291353616,
+              "column_norm_factor": 0.9999999688444053,
+              "log2_column_norm_factor": -4.494802261170911e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              -0.13934704899663206,
+              0.3006475612726356
+            ],
+            "mean_direction_cosine": 0.0674913347735948
+          },
+          "witness": {
+            "row": 0,
+            "column": 3,
+            "base": 1.2890625,
+            "cast_base": 1.2890625,
+            "intended_delta": 0.6445312442630184,
+            "merged": -3.9609375,
+            "observed_delta": -5.25,
+            "residual": -5.894531244263018,
+            "reference_merged": 1.93359375
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000111340903,
+          "relative_residual": 6.316487899579204e-08,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9999999469851547,
+              1.0000000521686456
+            ],
+            "log2_row_norm_factor_range": [
+              -7.648425642297398e-08,
+              7.526344437079072e-08
+            ],
+            "mean_absolute_log2_row_norm_factor": 3.920756018815158e-08,
+            "largest_nonzero_log2_norm_error": {
+              "row": 6,
+              "saved_magnitude": 0.41193416714668274,
+              "target_row_norm": 0.41193416714668274,
+              "saved_row_norm": 0.4119341453080566,
+              "saved_row_norm_scale": 0.2083810716867447,
+              "saved_row_norm_scaled_length": 1.9768309183442025,
+              "row_norm_factor": 0.9999999469851547,
+              "log2_row_norm_factor": -7.648425642297398e-08
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999999999999951,
+              0.9999999999999993
+            ],
+            "mean_direction_cosine": 0.9999999999999982
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -0.2001953125,
+            "cast_base": -0.2001953125,
+            "intended_delta": 0.27668940692680005,
+            "merged": 0.07649412006139755,
+            "observed_delta": 0.27668943256139755,
+            "residual": 2.5634597500268086e-08,
+            "reference_merged": 0.07649409770965576
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 0.630410051098159,
+          "relative_residual": 2.235383587813178,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.9999999464610838,
+              1.0000000556878519
+            ],
+            "log2_column_norm_factor_range": [
+              -7.724033094857024e-08,
+              8.034058551578009e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 4.6083584841371945e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 2,
+              "saved_magnitude": 2.980140447616577,
+              "target_column_norm": 2.980140447616577,
+              "saved_column_norm": 2.9801406135741972,
+              "saved_column_norm_scale": 1.9291428327560425,
+              "saved_column_norm_scaled_length": 1.5448003968252892,
+              "column_norm_factor": 1.0000000556878519,
+              "log2_column_norm_factor": 8.034058551578009e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              -0.6706580999484679,
+              0.2871046312759958
+            ],
+            "mean_direction_cosine": -0.2788047816943808
+          },
+          "witness": {
+            "row": 2,
+            "column": 7,
+            "base": -2.796875,
+            "cast_base": -2.796875,
+            "intended_delta": 0.008373627615875456,
+            "merged": 1.728075623512268,
+            "observed_delta": 4.524950623512268,
+            "residual": 4.516576995896393,
+            "reference_merged": -2.788501262664795
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 0.6384455387788847,
+          "relative_residual": 1.8763363835142706,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.9999998677456642,
+              1.0000000346133529
+            ],
+            "log2_column_norm_factor_range": [
+              -1.9080268703534633e-07,
+              4.993651164186363e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 5.216930374863222e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 7,
+              "saved_magnitude": 5.228446006774902,
+              "target_column_norm": 5.228446006774902,
+              "saved_column_norm": 5.228445315290248,
+              "saved_column_norm_scale": 1.9466907978057861,
+              "saved_column_norm_scaled_length": 2.6858119025288936,
+              "column_norm_factor": 0.9999998677456642,
+              "log2_column_norm_factor": -1.9080268703534633e-07
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              -0.26498663595838295,
+              0.28958883360879345
+            ],
+            "mean_direction_cosine": 0.018019867307188315
+          },
+          "witness": {
+            "row": 14,
+            "column": 0,
+            "base": -2.171875,
+            "cast_base": -2.171875,
+            "intended_delta": -0.6680031695876658,
+            "merged": 1.8890572786331177,
+            "observed_delta": 4.060932278633118,
+            "residual": 4.728935448220783,
+            "reference_merged": -2.8398780822753906
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "unrelated-edit-f32",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "native correct adapted weights plus authored unrelated edit"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 720,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 1,
+        "unadapted_changed_elements": 1
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 115,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000093868047,
+          "relative_residual": 1.7910842400923627e-08,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.9999999688444053,
+              1.0000000311474504
+            ],
+            "log2_column_norm_factor_range": [
+              -4.494802261170911e-08,
+              4.4936271523790765e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 2.890222701240446e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 0,
+              "saved_magnitude": 2.712979316711426,
+              "target_column_norm": 2.712979316711426,
+              "saved_column_norm": 2.712979232186942,
+              "saved_column_norm_scale": 1.265625,
+              "saved_column_norm_scaled_length": 2.1435885291353616,
+              "column_norm_factor": 0.9999999688444053,
+              "log2_column_norm_factor": -4.494802261170911e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              1.0,
+              1.0
+            ],
+            "mean_direction_cosine": 1.0
+          },
+          "witness": {
+            "row": 14,
+            "column": 2,
+            "base": -2.28125,
+            "cast_base": -2.28125,
+            "intended_delta": 5.132812411181101,
+            "merged": 2.8515625,
+            "observed_delta": 5.1328125,
+            "residual": 8.881889890233197e-08,
+            "reference_merged": 2.8515625
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 77,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000111340903,
+          "relative_residual": 6.316487899579204e-08,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              0.9999999469851547,
+              1.0000000521686456
+            ],
+            "log2_row_norm_factor_range": [
+              -7.648425642297398e-08,
+              7.526344437079072e-08
+            ],
+            "mean_absolute_log2_row_norm_factor": 3.920756018815158e-08,
+            "largest_nonzero_log2_norm_error": {
+              "row": 6,
+              "saved_magnitude": 0.41193416714668274,
+              "target_row_norm": 0.41193416714668274,
+              "saved_row_norm": 0.4119341453080566,
+              "saved_row_norm_scale": 0.2083810716867447,
+              "saved_row_norm_scaled_length": 1.9768309183442025,
+              "row_norm_factor": 0.9999999469851547,
+              "log2_row_norm_factor": -7.648425642297398e-08
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.9999999999999951,
+              0.9999999999999993
+            ],
+            "mean_direction_cosine": 0.9999999999999982
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -0.2001953125,
+            "cast_base": -0.2001953125,
+            "intended_delta": 0.27668940692680005,
+            "merged": 0.07649412006139755,
+            "observed_delta": 0.27668943256139755,
+            "residual": 2.5634597500268086e-08,
+            "reference_merged": 0.07649409770965576
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 121,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 0,
+          "gain": 1.0000000110567,
+          "relative_residual": 8.197411320148321e-08,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 1,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              0.9999999464610839,
+              1.0000000556878519
+            ],
+            "log2_column_norm_factor_range": [
+              -7.72403307883989e-08,
+              8.034058551578009e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 4.608358484137195e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 2,
+              "saved_magnitude": 2.980140447616577,
+              "target_column_norm": 2.980140447616577,
+              "saved_column_norm": 2.9801406135741972,
+              "saved_column_norm_scale": 1.9291428327560425,
+              "saved_column_norm_scaled_length": 1.5448003968252892,
+              "column_norm_factor": 1.0000000556878519,
+              "log2_column_norm_factor": 8.034058551578009e-08
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              0.9999999999999976,
+              1.0
+            ],
+            "mean_direction_cosine": 0.9999999999999989
+          },
+          "witness": {
+            "row": 4,
+            "column": 7,
+            "base": -2.765625,
+            "cast_base": -2.765625,
+            "intended_delta": -0.18243786027161457,
+            "merged": -2.9480626583099365,
+            "observed_delta": -0.18243765830993652,
+            "residual": 2.0196167804797938e-07,
+            "reference_merged": -2.9480628967285156
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 407,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999999951497893,
+          "relative_residual": 8.556079925968239e-08,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              0.9999998677456642,
+              1.0000000346133529
+            ],
+            "log2_column_norm_factor_range": [
+              -1.9080268703534633e-07,
+              4.993651164186363e-08
+            ],
+            "mean_absolute_log2_column_norm_factor": 5.216930374863222e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 7,
+              "saved_magnitude": 5.228446006774902,
+              "target_column_norm": 5.228446006774902,
+              "saved_column_norm": 5.228445315290248,
+              "saved_column_norm_scale": 1.9466907978057861,
+              "saved_column_norm_scaled_length": 2.6858119025288936,
+              "column_norm_factor": 0.9999998677456642,
+              "log2_column_norm_factor": -1.9080268703534633e-07
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.9999999999999981,
+              0.9999999999999997
+            ],
+            "mean_direction_cosine": 0.9999999999999989
+          },
+          "witness": {
+            "row": 35,
+            "column": 7,
+            "base": 0.421875,
+            "cast_base": 0.421875,
+            "intended_delta": 0.969780968069549,
+            "merged": 1.391655683517456,
+            "observed_delta": 0.969780683517456,
+            "residual": -2.8455209299949047e-07,
+            "reference_merged": 1.3916559219360352
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "omitted-all-f32",
+        "base": "base",
+        "adapter": "adapter",
+        "kind": "unchanged original base"
+      },
+      "summary": {
+        "adapted_tensors": 4,
+        "checked_tensors": 5,
+        "adapted_elements": 720,
+        "intended_nonzero_elements": 720,
+        "changed_adapted_elements": 0,
+        "unchanged_nonzero_update_elements": 720,
+        "unchanged_nonzero_update_fraction": 1.0,
+        "unchanged_reference_energy_fraction": 1.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 4,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "magnitude_only",
+          "embedding": true,
+          "changed": 0,
+          "intended_nonzero": 115,
+          "unchanged_nonzero": 115,
+          "gain": 0.0,
+          "relative_residual": 1.0,
+          "vectors": {
+            "columns": 5,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 1,
+            "norm_comparable_columns": 4,
+            "column_norm_factor_range": [
+              0.4999999925680305,
+              1.9999999376888107
+            ],
+            "log2_column_norm_factor_range": [
+              -1.0000000214441311,
+              0.9999999550519774
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.7267226307219681,
+            "largest_nonzero_log2_norm_error": {
+              "column": 4,
+              "saved_magnitude": 7.340154647827148,
+              "target_column_norm": 7.340154647827148,
+              "saved_column_norm": 3.6700772693617694,
+              "saved_column_norm_scale": 1.4609375,
+              "saved_column_norm_scaled_length": 2.5121384517556495,
+              "column_norm_factor": 0.4999999925680305,
+              "log2_column_norm_factor": -1.0000000214441311
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 4,
+            "direction_cosine_range": [
+              -1.0,
+              1.0
+            ],
+            "mean_direction_cosine": 0.5
+          },
+          "witness": {
+            "row": 14,
+            "column": 2,
+            "base": -2.28125,
+            "cast_base": -2.28125,
+            "intended_delta": 5.132812411181101,
+            "merged": -2.28125,
+            "observed_delta": 0.0,
+            "residual": -5.132812411181101,
+            "reference_merged": 2.8515625
+          }
+        },
+        {
+          "module": "projection",
+          "embedding": false,
+          "changed": 0,
+          "intended_nonzero": 77,
+          "unchanged_nonzero": 77,
+          "gain": 0.0,
+          "relative_residual": 1.0,
+          "vectors": {
+            "rows": 7,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 7,
+            "row_norm_factor_range": [
+              1.3749132919720055,
+              1.8031694397064086
+            ],
+            "log2_row_norm_factor_range": [
+              0.45934063886538984,
+              0.8505349698920573
+            ],
+            "mean_absolute_log2_row_norm_factor": 0.5838375815276713,
+            "largest_nonzero_log2_norm_error": {
+              "row": 1,
+              "saved_magnitude": 0.18579445779323578,
+              "target_row_norm": 0.18579445779323578,
+              "saved_row_norm": 0.33501888835958493,
+              "saved_row_norm_scale": 0.1826171875,
+              "saved_row_norm_scaled_length": 1.8345419341187967,
+              "row_norm_factor": 1.8031694397064086,
+              "log2_row_norm_factor": 0.8505349698920573
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 7,
+            "direction_cosine_range": [
+              0.36712539270881595,
+              0.9603396945656905
+            ],
+            "mean_direction_cosine": 0.7126224589639706
+          },
+          "witness": {
+            "row": 3,
+            "column": 9,
+            "base": 0.28125,
+            "cast_base": 0.28125,
+            "intended_delta": -0.3218609124632895,
+            "merged": 0.28125,
+            "observed_delta": 0.0,
+            "residual": 0.3218609124632895,
+            "reference_merged": -0.040610913187265396
+          }
+        },
+        {
+          "module": "square",
+          "embedding": true,
+          "changed": 0,
+          "intended_nonzero": 121,
+          "unchanged_nonzero": 121,
+          "gain": 0.0,
+          "relative_residual": 1.0,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 1,
+            "negative_magnitude_columns": 1,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 1,
+            "norm_comparable_columns": 10,
+            "column_norm_factor_range": [
+              1.0371308771363785,
+              1.08392856590241
+            ],
+            "log2_column_norm_factor_range": [
+              0.05259796153941293,
+              0.11626968195546561
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.08666498543787794,
+            "largest_nonzero_log2_norm_error": {
+              "column": 1,
+              "saved_magnitude": -2.0926856994628906,
+              "target_column_norm": 2.0926856994628906,
+              "saved_column_norm": 2.2683218091032926,
+              "saved_column_norm_scale": 1.7265625,
+              "saved_column_norm_scaled_length": 1.3137791473539433,
+              "column_norm_factor": 1.08392856590241,
+              "log2_column_norm_factor": 0.11626968195546561
+            },
+            "zero_numerical_reference_columns": 1,
+            "direction_comparable_columns": 10,
+            "direction_cosine_range": [
+              -0.6669324174449087,
+              0.9850608712160024
+            ],
+            "mean_direction_cosine": 0.6886208168678036
+          },
+          "witness": {
+            "row": 8,
+            "column": 1,
+            "base": 1.7265625,
+            "cast_base": 1.7265625,
+            "intended_delta": -3.2667073034340843,
+            "merged": 1.7265625,
+            "observed_delta": 0.0,
+            "residual": 3.2667073034340843,
+            "reference_merged": -1.5401448011398315
+          }
+        },
+        {
+          "module": "tokens",
+          "embedding": true,
+          "changed": 0,
+          "intended_nonzero": 407,
+          "unchanged_nonzero": 407,
+          "gain": 0.0,
+          "relative_residual": 1.0,
+          "vectors": {
+            "columns": 11,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 11,
+            "column_norm_factor_range": [
+              1.0009902964938437,
+              1.0342927565083984
+            ],
+            "log2_column_norm_factor_range": [
+              0.0014279888911251492,
+              0.04864459820889979
+            ],
+            "mean_absolute_log2_column_norm_factor": 0.03762514825827186,
+            "largest_nonzero_log2_norm_error": {
+              "column": 3,
+              "saved_magnitude": 5.390397548675537,
+              "target_column_norm": 5.390397548675537,
+              "saved_column_norm": 5.575249139295735,
+              "saved_column_norm_scale": 2.390625,
+              "saved_column_norm_scaled_length": 2.3321303589210918,
+              "column_norm_factor": 1.0342927565083984,
+              "log2_column_norm_factor": 0.04864459820889979
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 11,
+            "direction_cosine_range": [
+              0.22759515063143232,
+              0.9008014060934127
+            ],
+            "mean_direction_cosine": 0.7113789305259979
+          },
+          "witness": {
+            "row": 12,
+            "column": 6,
+            "base": 2.78125,
+            "cast_base": 2.78125,
+            "intended_delta": -2.6722027834285567,
+            "merged": 2.78125,
+            "observed_delta": 0.0,
+            "residual": 2.6722027834285567,
+            "reference_merged": 0.10904721915721893
+          }
+        }
+      ],
+      "partial_refusal": null
+    },
+    {
+      "case": {
+        "merged": "llama-merged",
+        "base": "llama-base",
+        "adapter": "llama-adapter",
+        "kind": "native sharded Llama"
+      },
+      "summary": {
+        "adapted_tensors": 3,
+        "checked_tensors": 12,
+        "adapted_elements": 564,
+        "intended_nonzero_elements": 564,
+        "changed_adapted_elements": 564,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "model.embed_tokens",
+          "embedding": true,
+          "changed": 372,
+          "intended_nonzero": 372,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999999865717082,
+          "relative_residual": 8.930560472085818e-08,
+          "vectors": {
+            "columns": 12,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 12,
+            "column_norm_factor_range": [
+              0.9999999472076102,
+              1.0000001300041443
+            ],
+            "log2_column_norm_factor_range": [
+              -7.616332096153931e-08,
+              1.875563221407814e-07
+            ],
+            "mean_absolute_log2_column_norm_factor": 5.602096607879784e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 4,
+              "saved_magnitude": 0.11272990703582764,
+              "target_column_norm": 0.11272990703582764,
+              "saved_column_norm": 0.11272992169118273,
+              "saved_column_norm_scale": 0.03777442127466202,
+              "saved_column_norm_scaled_length": 2.984292489129375,
+              "column_norm_factor": 1.0000001300041443,
+              "log2_column_norm_factor": 1.875563221407814e-07
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 12,
+            "direction_cosine_range": [
+              0.9999999999999982,
+              0.9999999999999999
+            ],
+            "mean_direction_cosine": 0.9999999999999988
+          },
+          "witness": {
+            "row": 28,
+            "column": 1,
+            "base": 0.0439453125,
+            "cast_base": 0.0439453125,
+            "intended_delta": 0.006847608583703896,
+            "merged": 0.05079292878508568,
+            "observed_delta": 0.006847616285085678,
+            "residual": 7.701381782299066e-09,
+            "reference_merged": 0.05079292133450508
+          }
+        },
+        {
+          "module": "model.layers.0.self_attn.q_proj",
+          "embedding": false,
+          "changed": 144,
+          "intended_nonzero": 144,
+          "unchanged_nonzero": 0,
+          "gain": 0.999999986341296,
+          "relative_residual": 2.6962850849676624e-07,
+          "vectors": {
+            "rows": 12,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 12,
+            "row_norm_factor_range": [
+              0.9999998617606269,
+              1.0000001210565612
+            ],
+            "log2_row_norm_factor_range": [
+              -1.9943727175400003e-07,
+              1.7464768996767402e-07
+            ],
+            "mean_absolute_log2_row_norm_factor": 5.551460064521653e-08,
+            "largest_nonzero_log2_norm_error": {
+              "row": 2,
+              "saved_magnitude": 0.07316131889820099,
+              "target_row_norm": 0.07316131889820099,
+              "saved_row_norm": 0.07316130878442613,
+              "saved_row_norm_scale": 0.04267092049121857,
+              "saved_row_norm_scaled_length": 1.7145472359679306,
+              "row_norm_factor": 0.9999998617606269,
+              "log2_row_norm_factor": -1.9943727175400003e-07
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 12,
+            "direction_cosine_range": [
+              0.9999999999999987,
+              1.0
+            ],
+            "mean_direction_cosine": 0.9999999999999996
+          },
+          "witness": {
+            "row": 10,
+            "column": 2,
+            "base": -0.057373046875,
+            "cast_base": -0.057373046875,
+            "intended_delta": -0.008664324365282139,
+            "merged": -0.0660373792052269,
+            "observed_delta": -0.008664332330226898,
+            "residual": -7.964944759297765e-09,
+            "reference_merged": -0.0660373717546463
+          }
+        },
+        {
+          "module": "model.layers.0.self_attn.v_proj",
+          "embedding": false,
+          "changed": 48,
+          "intended_nonzero": 48,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999999618434658,
+          "relative_residual": 2.24052528184681e-07,
+          "vectors": {
+            "rows": 4,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 4,
+            "row_norm_factor_range": [
+              0.9999999620154665,
+              1.000000071954441
+            ],
+            "log2_row_norm_factor_range": [
+              -5.480009917847596e-08,
+              1.0380831156993356e-07
+            ],
+            "mean_absolute_log2_row_norm_factor": 4.87841491670053e-08,
+            "largest_nonzero_log2_norm_error": {
+              "row": 3,
+              "saved_magnitude": 0.05689511448144913,
+              "target_row_norm": 0.05689511448144913,
+              "saved_row_norm": 0.05689511857530529,
+              "saved_row_norm_scale": 0.03872639685869217,
+              "saved_row_norm_scaled_length": 1.4691560070230272,
+              "row_norm_factor": 1.000000071954441,
+              "log2_row_norm_factor": 1.0380831156993356e-07
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 4,
+            "direction_cosine_range": [
+              0.9999999999999994,
+              0.9999999999999998
+            ],
+            "mean_direction_cosine": 0.9999999999999996
+          },
+          "witness": {
+            "row": 3,
+            "column": 4,
+            "base": 0.04052734375,
+            "cast_base": 0.04052734375,
+            "intended_delta": -0.0018009506733839623,
+            "merged": 0.03872639685869217,
+            "observed_delta": -0.0018009468913078308,
+            "residual": 3.7820761314422136e-09,
+            "reference_merged": 0.03872639313340187
+          }
+        }
+      ],
+      "partial_refusal": "Saved base snapshots require an original base for comparison"
+    },
+    {
+      "case": {
+        "merged": "llama-merged",
+        "base": "llama-base",
+        "adapter": "llama-factors",
+        "kind": "native sharded Llama"
+      },
+      "summary": {
+        "adapted_tensors": 3,
+        "checked_tensors": 12,
+        "adapted_elements": 564,
+        "intended_nonzero_elements": 564,
+        "changed_adapted_elements": 564,
+        "unchanged_nonzero_update_elements": 0,
+        "unchanged_nonzero_update_fraction": 0.0,
+        "unchanged_reference_energy_fraction": 0.0,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0
+      },
+      "layers": [
+        {
+          "module": "model.embed_tokens",
+          "embedding": true,
+          "changed": 372,
+          "intended_nonzero": 372,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999999865717082,
+          "relative_residual": 8.930560472085818e-08,
+          "vectors": {
+            "columns": 12,
+            "zero_magnitude_columns": 0,
+            "negative_magnitude_columns": 0,
+            "zero_saved_columns": 0,
+            "nonzero_magnitude_zero_saved_columns": 0,
+            "zero_magnitude_nonzero_saved_columns": 0,
+            "norm_comparable_columns": 12,
+            "column_norm_factor_range": [
+              0.9999999472076102,
+              1.0000001300041443
+            ],
+            "log2_column_norm_factor_range": [
+              -7.616332096153931e-08,
+              1.875563221407814e-07
+            ],
+            "mean_absolute_log2_column_norm_factor": 5.602096607879784e-08,
+            "largest_nonzero_log2_norm_error": {
+              "column": 4,
+              "saved_magnitude": 0.11272990703582764,
+              "target_column_norm": 0.11272990703582764,
+              "saved_column_norm": 0.11272992169118273,
+              "saved_column_norm_scale": 0.03777442127466202,
+              "saved_column_norm_scaled_length": 2.984292489129375,
+              "column_norm_factor": 1.0000001300041443,
+              "log2_column_norm_factor": 1.875563221407814e-07
+            },
+            "zero_numerical_reference_columns": 0,
+            "direction_comparable_columns": 12,
+            "direction_cosine_range": [
+              0.9999999999999982,
+              0.9999999999999999
+            ],
+            "mean_direction_cosine": 0.9999999999999988
+          },
+          "witness": {
+            "row": 28,
+            "column": 1,
+            "base": 0.0439453125,
+            "cast_base": 0.0439453125,
+            "intended_delta": 0.006847608583703896,
+            "merged": 0.05079292878508568,
+            "observed_delta": 0.006847616285085678,
+            "residual": 7.701381782299066e-09,
+            "reference_merged": 0.05079292133450508
+          }
+        },
+        {
+          "module": "model.layers.0.self_attn.q_proj",
+          "embedding": false,
+          "changed": 144,
+          "intended_nonzero": 144,
+          "unchanged_nonzero": 0,
+          "gain": 0.999999986341296,
+          "relative_residual": 2.6962850849676624e-07,
+          "vectors": {
+            "rows": 12,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 12,
+            "row_norm_factor_range": [
+              0.9999998617606269,
+              1.0000001210565612
+            ],
+            "log2_row_norm_factor_range": [
+              -1.9943727175400003e-07,
+              1.7464768996767402e-07
+            ],
+            "mean_absolute_log2_row_norm_factor": 5.551460064521653e-08,
+            "largest_nonzero_log2_norm_error": {
+              "row": 2,
+              "saved_magnitude": 0.07316131889820099,
+              "target_row_norm": 0.07316131889820099,
+              "saved_row_norm": 0.07316130878442613,
+              "saved_row_norm_scale": 0.04267092049121857,
+              "saved_row_norm_scaled_length": 1.7145472359679306,
+              "row_norm_factor": 0.9999998617606269,
+              "log2_row_norm_factor": -1.9943727175400003e-07
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 12,
+            "direction_cosine_range": [
+              0.9999999999999987,
+              1.0
+            ],
+            "mean_direction_cosine": 0.9999999999999996
+          },
+          "witness": {
+            "row": 10,
+            "column": 2,
+            "base": -0.057373046875,
+            "cast_base": -0.057373046875,
+            "intended_delta": -0.008664324365282139,
+            "merged": -0.0660373792052269,
+            "observed_delta": -0.008664332330226898,
+            "residual": -7.964944759297765e-09,
+            "reference_merged": -0.0660373717546463
+          }
+        },
+        {
+          "module": "model.layers.0.self_attn.v_proj",
+          "embedding": false,
+          "changed": 48,
+          "intended_nonzero": 48,
+          "unchanged_nonzero": 0,
+          "gain": 0.9999999618434658,
+          "relative_residual": 2.24052528184681e-07,
+          "vectors": {
+            "rows": 4,
+            "zero_magnitude_rows": 0,
+            "negative_magnitude_rows": 0,
+            "zero_saved_rows": 0,
+            "nonzero_magnitude_zero_saved_rows": 0,
+            "zero_magnitude_nonzero_saved_rows": 0,
+            "norm_comparable_rows": 4,
+            "row_norm_factor_range": [
+              0.9999999620154665,
+              1.000000071954441
+            ],
+            "log2_row_norm_factor_range": [
+              -5.480009917847596e-08,
+              1.0380831156993356e-07
+            ],
+            "mean_absolute_log2_row_norm_factor": 4.87841491670053e-08,
+            "largest_nonzero_log2_norm_error": {
+              "row": 3,
+              "saved_magnitude": 0.05689511448144913,
+              "target_row_norm": 0.05689511448144913,
+              "saved_row_norm": 0.05689511857530529,
+              "saved_row_norm_scale": 0.03872639685869217,
+              "saved_row_norm_scaled_length": 1.4691560070230272,
+              "row_norm_factor": 1.000000071954441,
+              "log2_row_norm_factor": 1.0380831156993356e-07
+            },
+            "zero_numerical_reference_rows": 0,
+            "direction_comparable_rows": 4,
+            "direction_cosine_range": [
+              0.9999999999999994,
+              0.9999999999999998
+            ],
+            "mean_direction_cosine": 0.9999999999999996
+          },
+          "witness": {
+            "row": 3,
+            "column": 4,
+            "base": 0.04052734375,
+            "cast_base": 0.04052734375,
+            "intended_delta": -0.0018009506733839623,
+            "merged": 0.03872639685869217,
+            "observed_delta": -0.0018009468913078308,
+            "residual": 3.7820761314422136e-09,
+            "reference_merged": 0.03872639313340187
+          }
+        }
+      ],
+      "partial_refusal": null
+    }
+  ]
+}

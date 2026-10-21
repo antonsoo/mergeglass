@@ -1,0 +1,453 @@
+{
+  "scope": "one isolated installed CLI process per block setting; not a statistical timing estimate",
+  "oracle": "80-digit roots of integer-residue moments; independently enumerated BF16 values; all native entries checked",
+  "producer_sha256": "dcb7565ccdbcc8af84312883d27e2b339016ed89a059eb7b171b35c430070a72",
+  "driver_sha256": "fef97a8ca0abdbf85842113a8938bb6e3a63b3e74f55bd26f35c02065eef3831",
+  "native_check": {
+    "all_base_entries_checked": 32000384,
+    "all_merged_entries_checked": 32000384,
+    "all_factors_checked": true
+  },
+  "expected": {
+    "intended_nonzero_elements": 32000384,
+    "changed_elements": 6545664,
+    "unchanged_nonzero_update_elements": 25454720,
+    "norms": {
+      "delta": 11.38850553686058,
+      "observed": 9.993943478427322,
+      "residual": 8.906087523348882,
+      "unchanged_reference": 8.401461930955866
+    },
+    "projection_gain": 0.5792629879581078,
+    "relative_residual": 0.7820242519550098,
+    "unchanged_reference_energy_fraction": 0.5442221993770437,
+    "column_norm_factor_range": [
+      0.9989421462833039,
+      1.0000059999820001
+    ],
+    "direction_cosine_range": [
+      0.9999989059092931,
+      1.0
+    ],
+    "largest_absolute_residual": 0.0038975827006047367,
+    "group_counts": [
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7576,
+      7575,
+      7575,
+      7575,
+      7575,
+      7575
+    ]
+  },
+  "measurements": [
+    {
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "Linear LoRA/DoRA uses B @ A and full output rows; Embedding uses (B @ A).T. Embedding DoRA direction = base_float64 + (B_float64 @ A_float64).T * scale; reference_weight[:, column] = magnitude[column] * direction[:, column] / norm(direction[:, column]); delta = reference_weight - base_float64",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear and Embedding LoRA/DoRA and explicit full modules; no architecture execution or quality estimate",
+          "embedding_reference": "directional product = (B_float64 @ A_float64).T * scale; rows are token indices, columns are embedding dimensions; A columns are streamed and B is retained",
+          "embedding_dora_reference": "two passes over token rows; full-vocabulary column norms, then bounded reference/update blocks; no epsilon floor",
+          "dora_columns": "saved full-column norm / abs(saved magnitude), retained in log2 form; direction compares saved and full-reference columns including magnitude sign; zero vectors have no invented ratio or direction"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 128001632,
+              "sha256": "684c6c8ac8bd4ef3b4d12803295abde1b7f488dd9271eba6104b7b207821aec7"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1123,
+              "sha256": "14bde7a5f13addde78a6210bca22f4d5aaf4a9b2a507e57c94120ed095c2bb02"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 8005072,
+              "sha256": "9792e244f49d47dcd897015c4865fbcbf42c5f58bca4f99a4928c96d3dad3965"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 64000864,
+              "sha256": "89204bfc1d81a26b31ee9b396a48be5eb8d55198e9657cb78ec231c353aee715"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 1,
+          "max_adapter_mib": 1
+        },
+        "summary": {
+          "adapted_tensors": 1,
+          "checked_tensors": 1,
+          "adapted_elements": 32000384,
+          "intended_nonzero_elements": 32000384,
+          "changed_adapted_elements": 6545664,
+          "unchanged_nonzero_update_elements": 25454720,
+          "unchanged_nonzero_update_fraction": 0.7954504545945449,
+          "unchanged_reference_energy_fraction": 0.5442221993787094,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "tokens",
+            "weight": "tokens.weight",
+            "adapter_variant": "dora",
+            "weight_layout": "embedding",
+            "reference_product": "(B @ A).T",
+            "shape": [
+              250003,
+              128
+            ],
+            "rank": 8,
+            "alpha": 8.0,
+            "scale": 1.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "observed-update",
+            "elements": 32000384,
+            "intended_nonzero_elements": 32000384,
+            "changed_elements": 6545664,
+            "unchanged_nonzero_update_elements": 25454720,
+            "unchanged_nonzero_update_fraction": 0.7954504545945449,
+            "unchanged_reference_energy_fraction": 0.5442221993787095,
+            "norms": {
+              "delta": 11.388505536860587,
+              "observed": 9.993943478427322,
+              "residual": 8.90608752336509,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 8.401461930968729
+            },
+            "relative_residual": 0.7820242519564324,
+            "observed_to_intended_norm": 0.8775465267220921,
+            "projection_gain": 0.5792629879569863,
+            "cosine_similarity": 0.6600937617754729,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 32,
+              "column": 1,
+              "base": 1.0,
+              "cast_base": 1.0,
+              "intended_delta": 0.003897582700610247,
+              "merged": 1.0,
+              "observed_delta": 0.0,
+              "residual": -0.003897582700610247,
+              "reference_merged": 1.0
+            },
+            "coordinate_axes": {
+              "row": "token_index",
+              "column": "embedding_dimension"
+            },
+            "dora_normalization_axis": 0,
+            "dora_columns": {
+              "columns": 128,
+              "zero_magnitude_columns": 0,
+              "negative_magnitude_columns": 0,
+              "zero_saved_columns": 0,
+              "nonzero_magnitude_zero_saved_columns": 0,
+              "zero_magnitude_nonzero_saved_columns": 0,
+              "norm_comparable_columns": 128,
+              "column_norm_factor_range": [
+                0.9989421462833039,
+                1.0000059999820001
+              ],
+              "log2_column_norm_factor_range": [
+                -0.0015269681079796342,
+                8.656118308754688e-06
+              ],
+              "mean_absolute_log2_column_norm_factor": 0.0011473901105619145,
+              "largest_nonzero_log2_norm_error": {
+                "column": 1,
+                "saved_magnitude": 500.0,
+                "target_column_norm": 500.0,
+                "saved_column_norm": 499.47107314165197,
+                "saved_column_norm_scale": 1.0,
+                "saved_column_norm_scaled_length": 499.47107314165197,
+                "column_norm_factor": 0.9989421462833039,
+                "log2_column_norm_factor": -0.0015269681079796342
+              },
+              "zero_numerical_reference_columns": 0,
+              "direction_comparable_columns": 128,
+              "direction_cosine_range": [
+                0.9999989059092849,
+                0.9999999999999999
+              ],
+              "mean_direction_cosine": 0.9999991794319637
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "Linear DoRA normalizes output rows; Embedding DoRA normalizes full vocabulary columns.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      },
+      "elapsed_seconds": 4.279699153004913,
+      "peak_rss_kib": 47296,
+      "python": "3.10.21",
+      "versions": {
+        "numpy": "1.24.0",
+        "safetensors": "0.6.2"
+      },
+      "runtime_sha256": {
+        "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+        "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "adapter.py": "64bdd5b3c02c7c694f7a97de5673bc521b419dc760c22b5b056f533f76e9dfd9",
+        "audit.py": "078de6f7ed78c2f533070109672c058db9593ed2858f1f4a02f9a120a489b958",
+        "cli.py": "29eb5aed3cebed9349277accbf576e8e2f6dbb3c97923f0509580bfa075aceb7",
+        "dora_columns.py": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6",
+        "dora_norms.py": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c",
+        "dora_rows.py": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a",
+        "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+        "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+      },
+      "model_runtime_imported": false
+    },
+    {
+      "report": {
+        "schema_version": 1,
+        "arithmetic": {
+          "reference": "Linear LoRA/DoRA uses B @ A and full output rows; Embedding uses (B @ A).T. Embedding DoRA direction = base_float64 + (B_float64 @ A_float64).T * scale; reference_weight[:, column] = magnitude[column] * direction[:, column] / norm(direction[:, column]); delta = reference_weight - base_float64",
+          "observed": "merged_float64 - round_to_merged_dtype(base_float64)",
+          "residual": "observed - delta; reported relative to the Frobenius norm of delta",
+          "zero_change": "exact numeric equality to the base rounded to the merged dtype",
+          "reference_merge": "LoRA: round_to_merged_dtype(base_float64 + delta); DoRA: round_to_merged_dtype(reference_weight); ties to even",
+          "projection_gain": "dot(observed, delta) / dot(delta, delta); null for a zero reference",
+          "cosine_similarity": "dot(observed, delta) / (norm(observed) * norm(delta)); null if either is zero",
+          "unchanged_reference_energy": "squared delta norm at unchanged positions / squared delta norm; null if delta is zero",
+          "unadapted": "must equal base rounded to merged dtype; integers require identical dtype/values",
+          "scope": "saved Linear and Embedding LoRA/DoRA and explicit full modules; no architecture execution or quality estimate",
+          "embedding_reference": "directional product = (B_float64 @ A_float64).T * scale; rows are token indices, columns are embedding dimensions; A columns are streamed and B is retained",
+          "embedding_dora_reference": "two passes over token rows; full-vocabulary column norms, then bounded reference/update blocks; no epsilon floor",
+          "dora_columns": "saved full-column norm / abs(saved magnitude), retained in log2 form; direction compares saved and full-reference columns including magnitude sign; zero vectors have no invented ratio or direction"
+        },
+        "inputs": {
+          "base": [
+            {
+              "file": "model.safetensors",
+              "bytes": 128001632,
+              "sha256": "684c6c8ac8bd4ef3b4d12803295abde1b7f488dd9271eba6104b7b207821aec7"
+            }
+          ],
+          "adapter": [
+            {
+              "file": "adapter_config.json",
+              "bytes": 1123,
+              "sha256": "14bde7a5f13addde78a6210bca22f4d5aaf4a9b2a507e57c94120ed095c2bb02"
+            },
+            {
+              "file": "adapter_model.safetensors",
+              "bytes": 8005072,
+              "sha256": "9792e244f49d47dcd897015c4865fbcbf42c5f58bca4f99a4928c96d3dad3965"
+            }
+          ],
+          "merged": [
+            {
+              "file": "model.safetensors",
+              "bytes": 64000864,
+              "sha256": "89204bfc1d81a26b31ee9b396a48be5eb8d55198e9657cb78ec231c353aee715"
+            }
+          ]
+        },
+        "settings": {
+          "block_mib": 16,
+          "max_adapter_mib": 1
+        },
+        "summary": {
+          "adapted_tensors": 1,
+          "checked_tensors": 1,
+          "adapted_elements": 32000384,
+          "intended_nonzero_elements": 32000384,
+          "changed_adapted_elements": 6545664,
+          "unchanged_nonzero_update_elements": 25454720,
+          "unchanged_nonzero_update_fraction": 0.7954504545945449,
+          "unchanged_reference_energy_fraction": 0.5442221993773689,
+          "zero_update_tensors": 0,
+          "no_observed_update_tensors": 0,
+          "unadapted_changed_tensors": 0,
+          "unadapted_changed_elements": 0
+        },
+        "layers": [
+          {
+            "module": "tokens",
+            "weight": "tokens.weight",
+            "adapter_variant": "dora",
+            "weight_layout": "embedding",
+            "reference_product": "(B @ A).T",
+            "shape": [
+              250003,
+              128
+            ],
+            "rank": 8,
+            "alpha": 8.0,
+            "scale": 1.0,
+            "adapter_dtypes": {
+              "A": "F32",
+              "B": "F32",
+              "magnitude": "F32"
+            },
+            "base_dtype": "F32",
+            "merged_dtype": "BF16",
+            "status": "observed-update",
+            "elements": 32000384,
+            "intended_nonzero_elements": 32000384,
+            "changed_elements": 6545664,
+            "unchanged_nonzero_update_elements": 25454720,
+            "unchanged_nonzero_update_fraction": 0.7954504545945449,
+            "unchanged_reference_energy_fraction": 0.5442221993773692,
+            "norms": {
+              "delta": 11.388505536860542,
+              "observed": 9.993943478427322,
+              "residual": 8.906087523352031,
+              "base_cast_drift": 0.0,
+              "unchanged_reference": 8.40146193095835
+            },
+            "relative_residual": 0.7820242519552889,
+            "observed_to_intended_norm": 0.8775465267220955,
+            "projection_gain": 0.5792629879578914,
+            "cosine_similarity": 0.6600937617765017,
+            "reference_merge_mismatches": 0,
+            "reference_merge_overflows": 0,
+            "largest_residual": {
+              "row": 32,
+              "column": 1,
+              "base": 1.0,
+              "cast_base": 1.0,
+              "intended_delta": 0.003897582700605806,
+              "merged": 1.0,
+              "observed_delta": 0.0,
+              "residual": -0.003897582700605806,
+              "reference_merged": 1.0
+            },
+            "coordinate_axes": {
+              "row": "token_index",
+              "column": "embedding_dimension"
+            },
+            "dora_normalization_axis": 0,
+            "dora_columns": {
+              "columns": 128,
+              "zero_magnitude_columns": 0,
+              "negative_magnitude_columns": 0,
+              "zero_saved_columns": 0,
+              "nonzero_magnitude_zero_saved_columns": 0,
+              "zero_magnitude_nonzero_saved_columns": 0,
+              "norm_comparable_columns": 128,
+              "column_norm_factor_range": [
+                0.9989421462833039,
+                1.0000059999820001
+              ],
+              "log2_column_norm_factor_range": [
+                -0.0015269681079796342,
+                8.656118308754688e-06
+              ],
+              "mean_absolute_log2_column_norm_factor": 0.0011473901105619145,
+              "largest_nonzero_log2_norm_error": {
+                "column": 1,
+                "saved_magnitude": 500.0,
+                "target_column_norm": 500.0,
+                "saved_column_norm": 499.47107314165197,
+                "saved_column_norm_scale": 1.0,
+                "saved_column_norm_scaled_length": 499.47107314165197,
+                "column_norm_factor": 0.9989421462833039,
+                "log2_column_norm_factor": -0.0015269681079796342
+              },
+              "zero_numerical_reference_columns": 0,
+              "direction_comparable_columns": 128,
+              "direction_cosine_range": [
+                0.9999989059093068,
+                0.9999999999999999
+              ],
+              "mean_direction_cosine": 0.9999991794319798
+            }
+          }
+        ],
+        "unadapted_changes": [],
+        "limitations": [
+          "Supplied base identity and training provenance are not independently established.",
+          "Equal weights do not distinguish rounding from an omitted or wrong adapter.",
+          "The float64 reference is numerical; it is not a PEFT merge emulator.",
+          "Linear DoRA normalizes output rows; Embedding DoRA normalizes full vocabulary columns.",
+          "Tensor shapes and a global adapter flag do not establish every module's type.",
+          "Operation order and matmul precision can differ from the producer, notably at ties.",
+          "Weight-space changes and residuals do not establish generation or task quality.",
+          "Missing tensors, unsupported variants and nonfinite inputs refuse the whole audit."
+        ]
+      },
+      "elapsed_seconds": 2.2427483439969365,
+      "peak_rss_kib": 67824,
+      "python": "3.10.21",
+      "versions": {
+        "numpy": "1.24.0",
+        "safetensors": "0.6.2"
+      },
+      "runtime_sha256": {
+        "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+        "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "adapter.py": "64bdd5b3c02c7c694f7a97de5673bc521b419dc760c22b5b056f533f76e9dfd9",
+        "audit.py": "078de6f7ed78c2f533070109672c058db9593ed2858f1f4a02f9a120a489b958",
+        "cli.py": "29eb5aed3cebed9349277accbf576e8e2f6dbb3c97923f0509580bfa075aceb7",
+        "dora_columns.py": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6",
+        "dora_norms.py": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c",
+        "dora_rows.py": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a",
+        "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+        "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+      },
+      "model_runtime_imported": false
+    }
+  ]
+}
