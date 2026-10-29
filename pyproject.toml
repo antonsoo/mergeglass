@@ -9,7 +9,7 @@ description = "Measure which LoRA and DoRA weight updates survive in a saved saf
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
-authors = [{name = "Anton Soloviev", email = "anton@praviel.com"}]
+authors = [{name = "Anthony Mercer", email = "anthony@praviel.com"}]
 keywords = ["lora", "dora", "peft", "safetensors", "bfloat16", "model-merging"]
 dependencies = ["numpy>=1.24", "safetensors>=0.6.2"]
 

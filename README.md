@@ -431,6 +431,6 @@ archive and package identities for the published implementation snapshot.
 
 ## License
 
-MIT, copyright 2026 Anton Soloviev. The small constructed fixtures are ours.
+MIT, copyright 2026 Anthony Mercer. The small constructed fixtures are ours.
 Public study inputs retain their upstream terms and are fetched to a throwaway
 directory; their weights are not included in this repository.
