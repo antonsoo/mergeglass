@@ -123,3 +123,14 @@ Its checks remain active under `python -O`. Large matrix payloads are hashed
 in bounded blocks, not decoded into Python lists. The runtime audit's 16 MiB
 adapter cap accommodates this adapter's fixed factor slices; it is not a
 whole-checkpoint RAM limit.
+
+## Publication evidence
+
+The [immutable-source receipt](results/publication.json) records all 80 files
+changed since the previous remote baseline at commit `0d767ab`: 1,767,034 bytes
+were downloaded from GitHub and matched to Git blobs, including this study's
+reports and inspected capture. The remote `main` reference matched that commit.
+The subsequent receipt-only documentation commit is outside that inventory.
+The corresponding hosted CI run executed zero steps; it supplies no hosted
+validation. Clean-build and installed-package results are recorded separately
+in the [self-audit evidence](../trained-bias/audit-verification.md).

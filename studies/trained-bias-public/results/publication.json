@@ -1,0 +1,509 @@
+{
+  "state": "verified",
+  "commit": "0d767abf8c5c8a608338ef76c9bce4b435cd89ab",
+  "baseline": "c877c79a6db730fb177942058de12345babdb684",
+  "files": [
+    {
+      "file": "CHANGELOG.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/CHANGELOG.md",
+      "bytes": 9049,
+      "sha256": "31aeae8c620c1d27d228615a6041a6b92d7e6ba1355f15d0c135315bae235bd6"
+    },
+    {
+      "file": "README.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/README.md",
+      "bytes": 26804,
+      "sha256": "95abe88d3367572ade1b55ee9db24c53a6a51ff080806eafdf9a667786f69f39"
+    },
+    {
+      "file": "docs/arithmetic.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/docs/arithmetic.md",
+      "bytes": 28955,
+      "sha256": "f3396165b54d2c503438183b68c485a30d54ab52950d024f1364692de0d0c2ae"
+    },
+    {
+      "file": "docs/assets/trained-bias-head.png",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/docs/assets/trained-bias-head.png",
+      "bytes": 415014,
+      "sha256": "98564c53f4674f67f97a3f21f37c760d3c052f7b314312a0e0d06b0281bbe6c2"
+    },
+    {
+      "file": "docs/assets/trained-bias-precision.png",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/docs/assets/trained-bias-precision.png",
+      "bytes": 260053,
+      "sha256": "b8a391d9322b6a5291ecf0fc45d802e65e026c34022120b6a60807e1e7e77345"
+    },
+    {
+      "file": "docs/assets/trained-bias-public.png",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/docs/assets/trained-bias-public.png",
+      "bytes": 124148,
+      "sha256": "7cdd4d7571ed712b07b503d9299aa43db4bf55dd273e824fb09c1297c3160bc4"
+    },
+    {
+      "file": "docs/assets/trained-bias-public.txt",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/docs/assets/trained-bias-public.txt",
+      "bytes": 1185,
+      "sha256": "0666ef8e33dc0aa19f4498b9f009c8bf66ddaf0005aa588179a45d2770aafc93"
+    },
+    {
+      "file": "docs/assets/trained-bias.png",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/docs/assets/trained-bias.png",
+      "bytes": 280370,
+      "sha256": "4334e1924666f58d4cd4a4188b0b1a03f38f175b4065bbc8dd8711c680ff2fad"
+    },
+    {
+      "file": "docs/conv1d.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/docs/conv1d.md",
+      "bytes": 5696,
+      "sha256": "feaecf5320a5c328e5928a242f6890727f0b93c42513ed67638b5507fb29f0b3"
+    },
+    {
+      "file": "examples/trained-bias-head/README.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-head/README.md",
+      "bytes": 946,
+      "sha256": "ca9a34558691d643ecef6c4e283717fbb2656cf1da5bda6e2d8a73b887df88e0"
+    },
+    {
+      "file": "examples/trained-bias-head/adapter/adapter_config.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-head/adapter/adapter_config.json",
+      "bytes": 1188,
+      "sha256": "9193c2b73bc0e2d49bb4c670022f1b6d11be543e5f391f1b929459a8cf76e3f5"
+    },
+    {
+      "file": "examples/trained-bias-head/adapter/adapter_model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-head/adapter/adapter_model.safetensors",
+      "bytes": 1888,
+      "sha256": "87bbabcbc4ad5f86a3b987a5f680956dbe06e6243541d86aebf6827f3933707c"
+    },
+    {
+      "file": "examples/trained-bias-head/base/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-head/base/model.safetensors",
+      "bytes": 1008,
+      "sha256": "4466d72af82697e0ad7654e4bb90765ea3190510f61b763ea784912fff2af7e8"
+    },
+    {
+      "file": "examples/trained-bias-head/conflicting-modules_to_save-adapter/adapter_config.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-head/conflicting-modules_to_save-adapter/adapter_config.json",
+      "bytes": 1188,
+      "sha256": "9193c2b73bc0e2d49bb4c670022f1b6d11be543e5f391f1b929459a8cf76e3f5"
+    },
+    {
+      "file": "examples/trained-bias-head/conflicting-modules_to_save-adapter/adapter_model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-head/conflicting-modules_to_save-adapter/adapter_model.safetensors",
+      "bytes": 1856,
+      "sha256": "606f70f17f09b002100c9605a5f2c5a5d3f4a3cb08624a4f0801534033903ad2"
+    },
+    {
+      "file": "examples/trained-bias-head/omitted-head-f32/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-head/omitted-head-f32/model.safetensors",
+      "bytes": 1008,
+      "sha256": "2f140d9302ecbba95b4c4adee15d6598d213bf2556ba44dfd5a4d4f2a8524a80"
+    },
+    {
+      "file": "examples/trained-bias-head/reloaded-f32-safe-false/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-head/reloaded-f32-safe-false/model.safetensors",
+      "bytes": 1008,
+      "sha256": "bd5e9787615216999ce0bd8862f9b9cdbf4350275423cca968a212b0225a74a0"
+    },
+    {
+      "file": "examples/trained-bias-precision/README.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-precision/README.md",
+      "bytes": 952,
+      "sha256": "388ff1a803bf8b3432b5be182efb3103007e368d08e1c745eb1077acbb97ebf0"
+    },
+    {
+      "file": "examples/trained-bias-precision/adapter/adapter_config.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-precision/adapter/adapter_config.json",
+      "bytes": 1137,
+      "sha256": "b6c58d7df609d3e381a16a3cf8ebe29da9ab76d98928c8ce9ea16c3bb2a2d9ad"
+    },
+    {
+      "file": "examples/trained-bias-precision/adapter/adapter_model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-precision/adapter/adapter_model.safetensors",
+      "bytes": 912,
+      "sha256": "01d6143ba2696e3ab1a06cafd7a095d0e4f17228c87d3f773e954ba549756a86"
+    },
+    {
+      "file": "examples/trained-bias-precision/base/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-precision/base/model.safetensors",
+      "bytes": 712,
+      "sha256": "c1440c8d600c66e2338a883ecc38c8fd128281a61d01048deea5b0f39661fa51"
+    },
+    {
+      "file": "examples/trained-bias-precision/merged-bf16-safe-false/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-precision/merged-bf16-safe-false/model.safetensors",
+      "bytes": 564,
+      "sha256": "4a0ec5b8328c04d50acc24225589cc010d3dc8de35a1108c4016caa2d619531f"
+    },
+    {
+      "file": "examples/trained-bias-precision/merged-f32-safe-false/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias-precision/merged-f32-safe-false/model.safetensors",
+      "bytes": 712,
+      "sha256": "285af634dc9da07c7922331e873bb1547953f6092ea1cc7a5012e1b0abea5ff4"
+    },
+    {
+      "file": "examples/trained-bias/README.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/README.md",
+      "bytes": 1239,
+      "sha256": "b78f04796a04ca7afa1e2a6fd1b3e0aa7778f9137f247927b023538f114f0d6d"
+    },
+    {
+      "file": "examples/trained-bias/adapter/adapter_config.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/adapter/adapter_config.json",
+      "bytes": 1137,
+      "sha256": "7d498894e82a3342b993a5ca9c20adf7496f9b881302d47d2b551ad74c0e0c7b"
+    },
+    {
+      "file": "examples/trained-bias/adapter/adapter_model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/adapter/adapter_model.safetensors",
+      "bytes": 912,
+      "sha256": "74d8b43a65296b58671cc542fb479da944be91d8ca04ebff6d47d786e31be830"
+    },
+    {
+      "file": "examples/trained-bias/base/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/base/model.safetensors",
+      "bytes": 712,
+      "sha256": "a4a52ade1920ef276740520f4dcbb76908690eff0b916aaeb19a4a401fef00da"
+    },
+    {
+      "file": "examples/trained-bias/historical-base/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/historical-base/model.safetensors",
+      "bytes": 712,
+      "sha256": "b75ab101b78b8f22c91055720801e43f2051546bd5b61a57cd28c40d034ca35e"
+    },
+    {
+      "file": "examples/trained-bias/historical-in-memory-f32/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/historical-in-memory-f32/model.safetensors",
+      "bytes": 712,
+      "sha256": "d91ecf5acfd582ffdaae44c6b4dd434377c1a92a98fe2691e3af47bcbf7fa718"
+    },
+    {
+      "file": "examples/trained-bias/incomplete-historical-adapter/adapter_config.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/incomplete-historical-adapter/adapter_config.json",
+      "bytes": 1018,
+      "sha256": "4f73cad74b5a74600c168ba040353125df4bcb32c7f66407b9672167fbae9e1f"
+    },
+    {
+      "file": "examples/trained-bias/incomplete-historical-adapter/adapter_model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/incomplete-historical-adapter/adapter_model.safetensors",
+      "bytes": 592,
+      "sha256": "9affe2de1da7f668a8b5aea5c87061599635e9a04c96a2818bafd80d497fa671"
+    },
+    {
+      "file": "examples/trained-bias/omitted-bias-f32/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/omitted-bias-f32/model.safetensors",
+      "bytes": 712,
+      "sha256": "266e0542f832121abd9851281cb79248d8d473b857ada644ab175e0e2559e11a"
+    },
+    {
+      "file": "examples/trained-bias/reloaded-f32-safe-false/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/reloaded-f32-safe-false/model.safetensors",
+      "bytes": 712,
+      "sha256": "78c0db445449cebf663f7a4875d8e8be3d0db342a2bb8619eb12fa4c8dd35d81"
+    },
+    {
+      "file": "examples/trained-bias/scaled-bias-f32/model.safetensors",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/examples/trained-bias/scaled-bias-f32/model.safetensors",
+      "bytes": 712,
+      "sha256": "cf28bf3691cbd1f23b3f92ed41f8a41b3b761a2e4b50b9d9dc86b70c6e7fc976"
+    },
+    {
+      "file": "src/mergeglass/adapter.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/src/mergeglass/adapter.py",
+      "bytes": 17711,
+      "sha256": "afd282211c7c39dceb6580260442ca46efd958a8d4b1c36e76bfee6eb67fe56f"
+    },
+    {
+      "file": "src/mergeglass/audit.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/src/mergeglass/audit.py",
+      "bytes": 50113,
+      "sha256": "96e738f17146739e93de0688b17e512cabc21d2a9e4d14040a010c0f4bbaca5e"
+    },
+    {
+      "file": "src/mergeglass/cli.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/src/mergeglass/cli.py",
+      "bytes": 21534,
+      "sha256": "2fc6b0e0913390394b20b6ce189a7add2de08cf5b9990524dcf156b175b95cc7"
+    },
+    {
+      "file": "src/mergeglass/trained_biases.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/src/mergeglass/trained_biases.py",
+      "bytes": 5965,
+      "sha256": "3290e489574cfd2ddd1b2956890815cb72dcdb80f38a6362f8ec49e5f613c1fb"
+    },
+    {
+      "file": "studies/trained-bias-heads/README.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-heads/README.md",
+      "bytes": 8549,
+      "sha256": "7619bbc0e93842063a365ef1aedca0f693715c80f86edea4594abc25fe7a0424"
+    },
+    {
+      "file": "studies/trained-bias-heads/artifacts/native.tar.gz",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-heads/artifacts/native.tar.gz",
+      "bytes": 13831,
+      "sha256": "81af76e8098c0892edf18844fbb4dbc9e7c122487151df2c723e7b268088657a"
+    },
+    {
+      "file": "studies/trained-bias-heads/measure.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-heads/measure.py",
+      "bytes": 10233,
+      "sha256": "4834eaa7d78d2230d775356bd43829e490558643691855ce176c0eee161bb4ca"
+    },
+    {
+      "file": "studies/trained-bias-heads/produce.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-heads/produce.py",
+      "bytes": 7218,
+      "sha256": "86742784cb6d4bf059eb0a58b0779da5c15ad26ca55ae76b24ee71c7f5de4a99"
+    },
+    {
+      "file": "studies/trained-bias-heads/results/native.json.gz",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-heads/results/native.json.gz",
+      "bytes": 9303,
+      "sha256": "1d1228f2cb968d852ad8e4f6c124cdb0c79f67b683d80001c3a9280ba81d1b7c"
+    },
+    {
+      "file": "studies/trained-bias-heads/results/omitted-head.txt",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-heads/results/omitted-head.txt",
+      "bytes": 2346,
+      "sha256": "c0220d06acc498eaebcaf11487f48692e7ed2a24fd7019e647741d1495f636fa"
+    },
+    {
+      "file": "studies/trained-bias-heads/verify.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-heads/verify.py",
+      "bytes": 14273,
+      "sha256": "df512d63d91b5e5e98a5ed80e700725dd48455bef81129a64fe73a8369402cca"
+    },
+    {
+      "file": "studies/trained-bias-heads/wide-wheel.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-heads/wide-wheel.json",
+      "bytes": 7649,
+      "sha256": "3e81ba810ba3307e027034b56ac4bae8811ef17e31e4540036786cffa9d0d2c5"
+    },
+    {
+      "file": "studies/trained-bias-heads/wide.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-heads/wide.py",
+      "bytes": 3521,
+      "sha256": "7467ce1c847c245585336e6f02c9f043de6c7baaa8d966ec8d585dc7144e34e4"
+    },
+    {
+      "file": "studies/trained-bias-public/README.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-public/README.md",
+      "bytes": 7316,
+      "sha256": "eccf4521cff1f30cd9b8e1cdc2b4d0e5ae94d651ab8d05c8ed96e6b96da16ead"
+    },
+    {
+      "file": "studies/trained-bias-public/produce.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-public/produce.py",
+      "bytes": 8487,
+      "sha256": "bd8f8c2ecb894d35f2ff8fa3f29aa29fded4062311943b33f0f4c475a729f4b4"
+    },
+    {
+      "file": "studies/trained-bias-public/results/public.json.gz",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-public/results/public.json.gz",
+      "bytes": 129436,
+      "sha256": "f870d52a895eb064e747a81898a5851acdb847d4a31a9ef3b592308968953c08"
+    },
+    {
+      "file": "studies/trained-bias-public/sources.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-public/sources.json",
+      "bytes": 2224,
+      "sha256": "82907657b4fdee2c776330125ea76ad8dedb432994d9ea5992a5fa824d11565d"
+    },
+    {
+      "file": "studies/trained-bias-public/verify.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias-public/verify.py",
+      "bytes": 10773,
+      "sha256": "09282d1e451cc78685549dbc8c351c03c1b1e2d26272020c1843581ca6e1dae7"
+    },
+    {
+      "file": "studies/trained-bias/README.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/README.md",
+      "bytes": 9282,
+      "sha256": "4f52ec7a3b3f9e7403abf8ceff88e44343ad90932683f7b5b7d1095147abd5e6"
+    },
+    {
+      "file": "studies/trained-bias/artifacts/historical.tar.gz",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/artifacts/historical.tar.gz",
+      "bytes": 44286,
+      "sha256": "2cc52fb44fdef8be6d5d6fe306f4f2894e3bbde70bb419a6b5f541f1d4cd1197"
+    },
+    {
+      "file": "studies/trained-bias/artifacts/modern.tar.gz",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/artifacts/modern.tar.gz",
+      "bytes": 44486,
+      "sha256": "0926c8180347626100e0ec49d6bfd6b77958b38e9f384b90238b5abd9a60d9aa"
+    },
+    {
+      "file": "studies/trained-bias/artifacts/precision.tar.gz",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/artifacts/precision.tar.gz",
+      "bytes": 5047,
+      "sha256": "1d2a92706031cdb3adfe005d1b18b1d7d5c20e2a13853d9605fca36253720656"
+    },
+    {
+      "file": "studies/trained-bias/audit-verification.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/audit-verification.md",
+      "bytes": 3840,
+      "sha256": "f5117e800dbb4ea454f157c20743b979b9b9592ac232ed118400f09a6c9ebfa6"
+    },
+    {
+      "file": "studies/trained-bias/audit.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/audit.md",
+      "bytes": 3101,
+      "sha256": "79cbd14d3d8eaaf2e8b6601ad639f1e7449d65acd43d5390a703eebc55de176f"
+    },
+    {
+      "file": "studies/trained-bias/precision.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/precision.md",
+      "bytes": 5818,
+      "sha256": "55ef598a8945b71e97469c45b90482e9af7476375ba59776e28ab0a45b1f9393"
+    },
+    {
+      "file": "studies/trained-bias/precision.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/precision.py",
+      "bytes": 5091,
+      "sha256": "cf1a9acc993affb2bc3c437d35ae83acfcfb569ca82ca218c1bf6177acc6d2ba"
+    },
+    {
+      "file": "studies/trained-bias/probe.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/probe.py",
+      "bytes": 8836,
+      "sha256": "3c6d2c419225beedc8ed98eebada00187e1f68df7e229edb7728de6c63629b4f"
+    },
+    {
+      "file": "studies/trained-bias/results/audit/public-bytes.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/audit/public-bytes.json",
+      "bytes": 22935,
+      "sha256": "3bbf946a4d68595b5947a551103a42a5a62813ad43c4e1133339b565f15ae9d8"
+    },
+    {
+      "file": "studies/trained-bias/results/audit/sdist.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/audit/sdist.json",
+      "bytes": 1868,
+      "sha256": "ed55a38bb8123aa2ba6cc8c4f083aef5dbc071f573f4b6a2f39fde99835c7e2c"
+    },
+    {
+      "file": "studies/trained-bias/results/audit/wheel.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/audit/wheel.json",
+      "bytes": 3094,
+      "sha256": "62fe786e329ee4fd385362a646c96a516344918fdfe8dda617b604b18b955b99"
+    },
+    {
+      "file": "studies/trained-bias/results/historical.json.gz",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/historical.json.gz",
+      "bytes": 6676,
+      "sha256": "151e1b60297489a0cf89e8256b62e2045fc58a1248741a3bbdf710482f690a82"
+    },
+    {
+      "file": "studies/trained-bias/results/modern.json.gz",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/modern.json.gz",
+      "bytes": 6206,
+      "sha256": "b130328347df70d0003b0b6310102813b5d66c9d3e5838a8459768750ce29d52"
+    },
+    {
+      "file": "studies/trained-bias/results/omitted.txt",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/omitted.txt",
+      "bytes": 1494,
+      "sha256": "75144e6cdee6f2b801c6fcaf11c6276075db79764eaf243a8395ebf37b23bf99"
+    },
+    {
+      "file": "studies/trained-bias/results/precision-after.txt",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/precision-after.txt",
+      "bytes": 1133,
+      "sha256": "edd2242547251f5428e59d49aeeca493d590572aae0fdef9241f7508ec1cce0f"
+    },
+    {
+      "file": "studies/trained-bias/results/precision-before.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/precision-before.json",
+      "bytes": 2918,
+      "sha256": "18fc2ab5be43270c97a0cabb23d8a5cd4a0dbc310b5c4610b627e2aa8f3d7bde"
+    },
+    {
+      "file": "studies/trained-bias/results/precision-before.txt",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/precision-before.txt",
+      "bytes": 884,
+      "sha256": "d2d9330e5e64179d16894744a886324c059b4febcde931f89ed83736f4efa5d0"
+    },
+    {
+      "file": "studies/trained-bias/results/precision.json.gz",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/precision.json.gz",
+      "bytes": 2492,
+      "sha256": "b59e7d9d12c4d7aa95a39db4c0dbe493fe5ad593e7b638dfde1f0e8e78bd1dc4"
+    },
+    {
+      "file": "studies/trained-bias/results/sdist-installation.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/sdist-installation.json",
+      "bytes": 640,
+      "sha256": "9c60c2a795e885dcba6807ff2b54607b9e69b8be134c1dd9f37148f7599b78d0"
+    },
+    {
+      "file": "studies/trained-bias/results/wheel-installation.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/results/wheel-installation.json",
+      "bytes": 1212,
+      "sha256": "b225d6b7dc9a2f8c3d13e7435119983b2fd6c452651752ed0d670de1b3d8910b"
+    },
+    {
+      "file": "studies/trained-bias/verification.md",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/verification.md",
+      "bytes": 2965,
+      "sha256": "65de9259fa9df0eaaeb49a28e9b132110ee382fafacff36893960f2172528671"
+    },
+    {
+      "file": "studies/trained-bias/verify.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/verify.py",
+      "bytes": 15577,
+      "sha256": "bc7c84010d35a2650d810e2f87d83b58695e4f959b38f10542be2d5d0e72a46c"
+    },
+    {
+      "file": "studies/trained-bias/verify_precision.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/studies/trained-bias/verify_precision.py",
+      "bytes": 8802,
+      "sha256": "75daec48121ac0607f944de41373cfdae835d4db065f2501402b2c299a615d9c"
+    },
+    {
+      "file": "tests/test_audit.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/tests/test_audit.py",
+      "bytes": 18025,
+      "sha256": "20bb3694da76213c2c994359369db37953f9a01f527008442a523b9b569152ef"
+    },
+    {
+      "file": "tests/test_saved_modules.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/tests/test_saved_modules.py",
+      "bytes": 10410,
+      "sha256": "e1ecd29546405035a7111bca15ad8cfd6da2a23ac9977889e3cc9947a1c98b17"
+    },
+    {
+      "file": "tests/test_trained_bias_study.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/tests/test_trained_bias_study.py",
+      "bytes": 7041,
+      "sha256": "62a578d235dd4c212e128e9d415983cfcff4441df15f188dfe226b41b7840672"
+    },
+    {
+      "file": "tests/test_trained_biases.py",
+      "url": "https://raw.githubusercontent.com/antonsoo/mergeglass/0d767abf8c5c8a608338ef76c9bce4b435cd89ab/tests/test_trained_biases.py",
+      "bytes": 16870,
+      "sha256": "e183fda108e8c652fa03f91ac9dc314a4ac58813100496cf5f4fe190491d7b2a"
+    }
+  ],
+  "total_bytes": 1767034,
+  "remote_ref_checked": {
+    "branch": "main",
+    "sha": "0d767abf8c5c8a608338ef76c9bce4b435cd89ab"
+  },
+  "ci": {
+    "url": "https://github.com/antonsoo/mergeglass/actions/runs/41966536025",
+    "jobs": [
+      {
+        "name": "check (3.15)",
+        "conclusion": "failure",
+        "executed_steps": 0
+      },
+      {
+        "name": "check (3.10)",
+        "conclusion": "cancelled",
+        "executed_steps": 0
+      }
+    ],
+    "hosted_validation": "unavailable; no checks executed"
+  },
+  "scope": "Immutable source bytes at the recorded commit; later receipt-only commits are outside this inventory."
+}
