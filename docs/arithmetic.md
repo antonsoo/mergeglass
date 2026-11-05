@@ -357,8 +357,7 @@ base_model.model.<module>.lora_B.weight
 ```
 
 Factor weights are never suffix-searched and no architecture is imported.
-Convolutional/unsupported Conv1D LoRA, quantized checkpoints, trained base biases
-outside full saved modules (`bias: "all"` / `"lora_only"`), aLoRA,
+Convolutional/unsupported Conv1D LoRA, quantized checkpoints, aLoRA,
 base-mutating initializers and other variant payloads refuse. Unknown adapter
 configuration fields also refuse. This version recognizes the saved configuration
 of PEFT 0.21.0; other versions can work only within that explicit field contract.
@@ -431,3 +430,39 @@ local I/O time and disk space for the already saved three inputs.
 Reports retain file names, sizes, hashes and full tensor paths, but no automatic
 machine-specific absolute paths or complete tensor payloads. Names supplied in
 an artifact can themselves contain private information.
+
+
+## Absolute trained base biases
+
+`bias: "all"` and `bias: "lora_only"` declare trained original model biases.
+These are absolute values, separate from the scaled `lora_bias: true` B-bias
+update. Their reference is `round_to_merged_dtype(saved_adapter_bias)`.
+No original bias or LoRA scale is added to this target.
+
+| Saved adapter key | Physical checkpoint tensor | Condition |
+| --- | --- | --- |
+| `base_model.model.<module>.base_layer.bias` | `<module>.bias` | A/B factors establish the wrapped module |
+| `base_model.model.<module>.bias` | `<module>.bias` | Exact literal bias key |
+
+Both aliases present for one tensor refuse. `all` requires every observable
+base bias vector, including vectors outside LoRA targets. `lora_only` requires
+only vectors belonging to observed A/B modules. Absent factor pairs cannot
+establish an omitted target module. Biasless targets have no invented bias.
+Non-vector or non-floating layouts, missing trained values, unexpected adapter
+payloads and changed inventories refuse the entire audit. A name containing
+`bias` elsewhere is unsupported under `all`, because PEFT's substring export
+rule may save other parameter types.
+
+The original base, saved target and merged values are read in bounded blocks.
+Each `trained_biases` row retains the physical tensor name, dtypes, exact
+mismatch count and first flat index/values, target/error norms, and comparisons
+with the dtype-cast original base. The `relative_error` denominator is the
+absolute target norm, with null for a zero norm. Summary fields count trained
+bias vectors, entries, target mismatches and intended changed entries left at
+the base. These do not enter matrix or scaled LoRA B-bias totals.
+
+The complete audit authorizes excluding these validated payload keys from
+factor parsing; the base-independent DoRA path cannot skip them. Trained bias
+combinations with `modules_to_save`, `lora_bias` or `target_parameters` refuse.
+See the [native study](../studies/trained-bias/README.md) for modern complete
+exports, historical missing values and the independent scalar byte oracle.

@@ -117,6 +117,30 @@ are checked completely; unavailable original-base comparisons stay null.
 [Native/public inputs, independent checks, controls and limits](studies/saved-modules/README.md).
 This support is in the source; no registry release accompanies it.
 
+## Correct matrices can still lose trained biases
+
+The source audits adapters with `bias="all"` and complete `bias="lora_only"`
+payloads. These save absolute trained base biases, including biases outside the
+LoRA targets. They need no LoRA scaling. A native synthetic affine model has
+both matrices correctly merged while an authored omission discards all twelve
+trained bias entries; Mergeglass reports the exact affected tensors and indices.
+
+```sh
+uv run --no-dev mergeglass examples/trained-bias/base examples/trained-bias/adapter examples/trained-bias/omitted-bias-f32
+```
+
+![Actual audit of correct matrices and discarded trained base biases](docs/assets/trained-bias.png)
+
+An independent byte reader checks 73 measured comparisons across pinned modern
+and historical PEFT outputs, including FP32/F16/BF16, DoRA and GPT-2 Conv1D.
+Ten incomplete historical comparisons refuse with a missing-trained-value error.
+PEFT 0.18.1 omits trained `lora_only` biases in the retained study; PEFT 0.21.2
+saves them correctly in the same experiment. Missing values cannot be recovered
+from the original base. Combinations with full saved modules, LoRA B bias and
+expert parameter adapters remain unsupported.
+[Complete artifacts, version boundaries, independent oracle and reproduction](studies/trained-bias/README.md).
+No registry release accompanies this source extension.
+
 ## DoRA magnitudes must survive too
 
 The source checkout now audits ordinary Linear **DoRA** adapters. Their saved
@@ -386,12 +410,14 @@ on 65,280 of those deliberately chosen boundary cases.
 - Supply the original base weights for a complete audit. The optional DoRA
   norm-only mode provides partial observations without one. A model name does not establish training
   identity, and the auditor does not reconstruct an unseen architecture.
-- Coverage is the saved A/B pairs and explicit full-module state. If both
+- Coverage is the saved A/B pairs, declared observable trained biases and explicit full-module state. If both
   factors are absent, metadata alone cannot establish that a pair should have
   existed. Saved-module selectors without an observed tensor prefix are
   reported separately; no architecture or missing alias is inferred.
-- Quantized weights, Conv1D DoRA, convolutional adapters, trained base
-  biases (`bias: "all"` / `"lora_only"`) and base-mutating initializers are unsupported.
+- Quantized weights, Conv1D DoRA, convolutional adapters and base-mutating
+  initializers are unsupported. Trained base biases require complete literal
+  saved bias vectors; combinations with full modules, LoRA B biases or expert
+  parameter adapters refuse.
   `lora_bias: true` supports the separate B-bias update on Linear and supported
   Conv1D targets with existing base biases; combining it with DoRA or Embedding
   factors is refused. Complex

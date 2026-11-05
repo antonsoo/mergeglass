@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+Audit absolute trained base biases for PEFT `bias="all"` and complete
+`bias="lora_only"` exports, separately from scaled LoRA B biases and matrix
+totals. Require complete literal vector mappings, retain exact mismatch
+coordinates, stream target comparisons and refuse missing trained values.
+Add runnable lost/scaled-bias controls, modern/historical native archives,
+73 independent measured comparisons and ten incomplete-export refusals.
+[Evidence and reproduction](studies/trained-bias/README.md). No new dependency
+or registry release.
+
 Audit native Embedding DoRA by its complete vocabulary columns, alongside
 Linear DoRA rows. Stream the global column-length pass before measuring
 bounded reference/update blocks; preserve token/dimension coordinates,
@@ -25,8 +34,8 @@ Audit PEFT `lora_bias: true` on Linear and supported Conv1D targets, using
 `base.bias + lora_B.bias * scale` as a separate vector reference. Retain gain,
 residual, rounding, unchanged-update counts and original one-dimensional
 coordinates without mixing them into matrix totals. Require complete declared
-payloads and existing floating base biases; keep `bias: all/lora_only`,
-Embedding combinations and DoRA combinations unsupported. Include 32 native
+payloads and existing floating base biases; keep combinations with trained
+base biases, Embedding factors and DoRA unsupported. Include 32 native
 precision/control cases, a bias-only trained adapter, an independent stdlib
 reader/Decimal oracle and a runnable omission example. No registry release.
 
