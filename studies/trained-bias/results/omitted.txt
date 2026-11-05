@@ -1,0 +1,22 @@
+Mergeglass | saved LoRA merge audit
+
+MODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID
+first                        F32          35         0.0%        1  5.836e-08
+second                       F32          21         0.0%        1  5.751e-08
+
+Of 56 nonzero intended updates, 0 are unchanged (0.00%).
+Those unchanged entries contain 0% of the reference squared norm.
+* Nonzero intended update elements equal to the dtype-cast base.
+
+Trained base biases (all): 12 target mismatches across 12 entries in 3 vectors.
+Target = absolute saved bias rounded to merged dtype, without LoRA scaling.
+Trained bias changes left at the original base: 12.
+TRAINED BASE BIAS                       DTYPE    MISMATCHES / ELEMENTS
+first.bias                              F32             7 / 7
+head.bias                               F32             2 / 2
+second.bias                             F32             3 / 3
+Relative error = ||observed change - intended update|| / ||intended update||.
+Gain = projection of the observed change onto the intended update (ideal 1).
+Checked 6 tensors; 0 unadapted tensor(s) changed.
+Equal weights alone cannot tell rounding from an omitted adapter.
+This measures saved weights, not model quality.
