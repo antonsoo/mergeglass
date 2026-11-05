@@ -148,3 +148,18 @@ replayable numerical evidence; the optional large producer exercises the
 bounded full-state and redundant-copy paths. A dense float64 head alone would
 require 128 MiB. Memory/timing observations include interpreter and library
 resident memory and are specific to the recorded process and machine.
+
+The installed Python 3.10 wheel [measurement receipt](wide-wheel.json) records
+36,580 KiB peak RSS at a 1 MiB block and 50,672 KiB at a 16 MiB block. It includes
+runtime code identities, exact target/output head payload hashes and an
+independent streaming scalar check of all 16,777,216 head source-change values.
+Run the measurement with the intended installed interpreter, outside its source
+checkout, passing an output path outside the producer directory:
+
+```sh
+/tmp/installed-mergeglass/bin/python /path/to/mergeglass/studies/trained-bias-heads/measure.py /tmp/trained-bias-wide /tmp/wide-receipt.json
+```
+
+The receipt is a machine observation; its elapsed times were not isolated from
+other small processes. The audit block size is a work-buffer setting, not a
+promise that total process memory equals that size.

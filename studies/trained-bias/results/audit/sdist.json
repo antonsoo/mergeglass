@@ -1,0 +1,49 @@
+{
+  "state": "verified",
+  "source_commit": "4578392",
+  "installation": "sdist, executed outside checkout",
+  "python": "3.15.1",
+  "versions": {
+    "mergeglass": "0.1.0",
+    "numpy": "2.5.4",
+    "safetensors": "0.8.0"
+  },
+  "runtime_code": {
+    "trained_biases.py": "3290e489574cfd2ddd1b2956890815cb72dcdb80f38a6362f8ec49e5f613c1fb",
+    "dora_columns.py": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6",
+    "adapter.py": "afd282211c7c39dceb6580260442ca46efd958a8d4b1c36e76bfee6eb67fe56f",
+    "__init__.py": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23",
+    "storage.py": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2",
+    "parameter_layouts.py": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4",
+    "dora_norms.py": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c",
+    "cli.py": "2fc6b0e0913390394b20b6ce189a7add2de08cf5b9990524dcf156b175b95cc7",
+    "dora_rows.py": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "audit.py": "96e738f17146739e93de0688b17e512cabc21d2a9e4d14040a010c0f4bbaca5e"
+  },
+  "cases": [
+    {
+      "case": "head",
+      "field": "saved_module_target_mismatches",
+      "value": 27
+    },
+    {
+      "case": "precision",
+      "field": "trained_bias_unchanged_saved_change_elements",
+      "value": 12
+    }
+  ],
+  "packages": [
+    {
+      "file": "mergeglass-0.1.0-py3-none-any.whl",
+      "bytes": 48710,
+      "sha256": "7020c230749b0a8fb27322e9829e0b90e3573fcca200136c4b3b08014977fe07"
+    },
+    {
+      "file": "mergeglass-0.1.0.tar.gz",
+      "bytes": 14372007,
+      "sha256": "75e89d80d0dbb68e0e6b5ebb69868c4527db1eb17027541839aac7781e2420cc"
+    }
+  ],
+  "working_directory_kind": "outside source checkout"
+}

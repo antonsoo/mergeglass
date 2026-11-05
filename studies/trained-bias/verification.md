@@ -1,4 +1,6 @@
-# Local verification, 2026-11-04
+# Initial local verification, 2026-11-04
+
+This is the historical initial checkpoint. See the [follow-up audit and publication evidence](audit-verification.md) for the corrected verifier, saved-change reporting, mixed-head support, installed packages and later push.
 
 The runtime implementation is commit `f2c3fc1`; the fresh source archive and
 installed packages were made from `6996f0e`, which includes the native study,

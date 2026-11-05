@@ -1,0 +1,248 @@
+{
+  "state": "verified",
+  "python": "3.10.21",
+  "machine": {
+    "platform": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "cpu_count": 14,
+    "ram_bytes": 50516488192
+  },
+  "runtime_versions": {
+    "mergeglass": "0.1.0",
+    "numpy": "2.2.6",
+    "safetensors": "0.8.0"
+  },
+  "runtime_code": [
+    {
+      "file": "__init__.py",
+      "sha256": "9ae963590cdb87ddfc3c8ab4b4a08d174b4df957d7c510c83d06c1c16b17ef23"
+    },
+    {
+      "file": "__main__.py",
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    {
+      "file": "adapter.py",
+      "sha256": "afd282211c7c39dceb6580260442ca46efd958a8d4b1c36e76bfee6eb67fe56f"
+    },
+    {
+      "file": "audit.py",
+      "sha256": "96e738f17146739e93de0688b17e512cabc21d2a9e4d14040a010c0f4bbaca5e"
+    },
+    {
+      "file": "cli.py",
+      "sha256": "2fc6b0e0913390394b20b6ce189a7add2de08cf5b9990524dcf156b175b95cc7"
+    },
+    {
+      "file": "dora_columns.py",
+      "sha256": "5568c6cee95a8e693c56aa0258cef9eadb9c8720376d2f6d0ca6d956a19954c6"
+    },
+    {
+      "file": "dora_norms.py",
+      "sha256": "eacd8df1565a908b67e43b3dc961e0e859fde581f67ae52f66c29ab0a3f4d13c"
+    },
+    {
+      "file": "dora_rows.py",
+      "sha256": "66054ed00f3ad82219e56e13942bcf322440c85afe6feadbc4e7f82dd6cf434a"
+    },
+    {
+      "file": "parameter_layouts.py",
+      "sha256": "f6ec8e87c606467f90e83ad2b541381fc90ee980b1b92bbade966a683bbb66b4"
+    },
+    {
+      "file": "storage.py",
+      "sha256": "ae9de833abe938b6f016391d8ec5ff99b2c4dfd60dfc0d9349ecd1c29bf47fe2"
+    },
+    {
+      "file": "trained_biases.py",
+      "sha256": "3290e489574cfd2ddd1b2956890815cb72dcdb80f38a6362f8ec49e5f613c1fb"
+    }
+  ],
+  "producer_observations": {
+    "synthetic": true,
+    "head_shape": [
+      4096,
+      4096
+    ],
+    "head_elements": 16777216,
+    "steps": 3,
+    "max_reload_forward_difference": 0.0,
+    "versions": {
+      "torch": "2.9.1+cpu",
+      "peft": "0.21.2",
+      "transformers": "5.20.1",
+      "safetensors": "0.8.0"
+    }
+  },
+  "producer_files": [
+    {
+      "file": "adapter/adapter_config.json",
+      "bytes": 1133,
+      "sha256": "f467c8930b7752a6a47f846ef1b55000fae81f3003b263b851a48cd086eda322"
+    },
+    {
+      "file": "adapter/adapter_model.safetensors",
+      "bytes": 67208032,
+      "sha256": "b575d5072a535182b4d92c25e779dc6dbc8624212679144d0bdc6a3fc72f250f"
+    },
+    {
+      "file": "base/model.safetensors",
+      "bytes": 67404096,
+      "sha256": "cdecce53d0a3fa283ee7fa93de0e8e8f04548911e84dae6e9ca082858548e38b"
+    },
+    {
+      "file": "merged/model.safetensors",
+      "bytes": 67404096,
+      "sha256": "4f553aa3327f55cd854468541b505f2653377b2861b6a09e184758328bf8bede"
+    },
+    {
+      "file": "observations.json",
+      "bytes": 275,
+      "sha256": "95a6bcdf906bbdac6509575e4a944808609e1fb5ba8f24b570b674a191ccf54e"
+    }
+  ],
+  "head_payload": {
+    "dtype": "F32",
+    "shape": [
+      4096,
+      4096
+    ],
+    "bytes": 67108864,
+    "sha256": "c72dd07679d1a9defcf6578ab93367e48cb26ae51db3a7211d4d82168fdb1847"
+  },
+  "independent_saved_head_changes": 16776828,
+  "dense_float64_head_bytes": 134217728,
+  "runs": [
+    {
+      "block_mib": 1,
+      "max_adapter_mib": 1,
+      "peak_rss_kib": 36580,
+      "elapsed": "0:00.56",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 4,
+        "saved_bias_alias_tensors": 2,
+        "trained_bias_tensors": 1,
+        "trained_bias_elements": 4096,
+        "trained_bias_target_mismatches": 0,
+        "trained_bias_unchanged_expected_change_elements": 0,
+        "trained_bias_saved_change_elements": 4096,
+        "trained_bias_unchanged_saved_change_elements": 0,
+        "trained_bias_cast_erased_change_elements": 0,
+        "adapted_elements": 65536,
+        "intended_nonzero_elements": 65536,
+        "changed_adapted_elements": 65513,
+        "unchanged_nonzero_update_elements": 23,
+        "unchanged_nonzero_update_fraction": 0.0003509521484375,
+        "unchanged_reference_energy_fraction": 1.0878014401197757e-11,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 2,
+        "saved_module_elements": 16781312,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 2
+      },
+      "head": {
+        "module": "head",
+        "weight": "head.weight",
+        "shape": [
+          4096,
+          4096
+        ],
+        "elements": 16777216,
+        "adapter_dtype": "F32",
+        "merged_dtype": "F32",
+        "base_dtype": "F32",
+        "base_shape": [
+          4096,
+          4096
+        ],
+        "base_comparison_unavailable": null,
+        "status": "matches-saved-module",
+        "target_mismatches": 0,
+        "norms": {
+          "target": 36.94667965165767,
+          "error": 0.0,
+          "target_cast_drift": 0.0
+        },
+        "relative_error": 0.0,
+        "changed_from_base_elements": 16776828,
+        "expected_change_elements": 16776828,
+        "unchanged_expected_change_elements": 0,
+        "saved_change_elements": 16776828,
+        "unchanged_saved_change_elements": 0,
+        "cast_erased_change_elements": 0,
+        "first_unchanged_saved_change": null,
+        "first_cast_erased_change": null,
+        "first_mismatch": null
+      }
+    },
+    {
+      "block_mib": 16,
+      "max_adapter_mib": 1,
+      "peak_rss_kib": 50672,
+      "elapsed": "0:00.54",
+      "summary": {
+        "adapted_tensors": 1,
+        "checked_tensors": 4,
+        "saved_bias_alias_tensors": 2,
+        "trained_bias_tensors": 1,
+        "trained_bias_elements": 4096,
+        "trained_bias_target_mismatches": 0,
+        "trained_bias_unchanged_expected_change_elements": 0,
+        "trained_bias_saved_change_elements": 4096,
+        "trained_bias_unchanged_saved_change_elements": 0,
+        "trained_bias_cast_erased_change_elements": 0,
+        "adapted_elements": 65536,
+        "intended_nonzero_elements": 65536,
+        "changed_adapted_elements": 65513,
+        "unchanged_nonzero_update_elements": 23,
+        "unchanged_nonzero_update_fraction": 0.0003509521484375,
+        "unchanged_reference_energy_fraction": 1.0878014401197756e-11,
+        "zero_update_tensors": 0,
+        "no_observed_update_tensors": 0,
+        "unadapted_changed_tensors": 0,
+        "unadapted_changed_elements": 0,
+        "saved_module_tensors": 2,
+        "saved_module_elements": 16781312,
+        "saved_module_target_mismatches": 0,
+        "saved_module_base_comparable_tensors": 2
+      },
+      "head": {
+        "module": "head",
+        "weight": "head.weight",
+        "shape": [
+          4096,
+          4096
+        ],
+        "elements": 16777216,
+        "adapter_dtype": "F32",
+        "merged_dtype": "F32",
+        "base_dtype": "F32",
+        "base_shape": [
+          4096,
+          4096
+        ],
+        "base_comparison_unavailable": null,
+        "status": "matches-saved-module",
+        "target_mismatches": 0,
+        "norms": {
+          "target": 36.946679651657654,
+          "error": 0.0,
+          "target_cast_drift": 0.0
+        },
+        "relative_error": 0.0,
+        "changed_from_base_elements": 16776828,
+        "expected_change_elements": 16776828,
+        "unchanged_expected_change_elements": 0,
+        "saved_change_elements": 16776828,
+        "unchanged_saved_change_elements": 0,
+        "cast_erased_change_elements": 0,
+        "first_unchanged_saved_change": null,
+        "first_cast_erased_change": null,
+        "first_mismatch": null
+      }
+    }
+  ]
+}
