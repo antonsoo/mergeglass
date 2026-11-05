@@ -237,6 +237,7 @@ def adapter_pairs(
     *,
     weight_role: str = "base",
     full_weights: frozenset[str] = frozenset(),
+    trained_bias_weights: frozenset[str] | None = None,
 ) -> list[Pair]:
     config = adapter.config
     if config.get("peft_type") != "LORA":
@@ -260,8 +261,8 @@ def adapter_pairs(
     ):
         if config.get(key):
             raise AuditError(f"Unsupported adapter option: {key}")
-    if config.get("bias", "none") != "none":
-        raise AuditError("Trained bias parameters are unsupported")
+    if config.get("bias", "none") != "none" and trained_bias_weights is None:
+        raise AuditError("Trained base biases require the complete base/adapter/merged audit")
     init = config.get("init_lora_weights", True)
     if init is not True and init is not False and init != "gaussian":
         raise AuditError("Base-mutating or variant LoRA initialization is unsupported")
@@ -288,7 +289,9 @@ def adapter_pairs(
     parameters = parameter_layouts(config, base)
     modules: dict[str, dict[str, Tensor]] = {}
     for name, tensor in sorted(adapter.tensors.items()):
-        if name in full_weights:
+        if name in full_weights or (
+            trained_bias_weights is not None and name in trained_bias_weights
+        ):
             continue
         match = PAIR.fullmatch(name)
         if match is None:

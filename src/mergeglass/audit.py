@@ -14,6 +14,7 @@ from .adapter import Pair, SavedTensor, adapter_pairs, saved_modules
 from .dora_columns import ColumnNorms, DoraColumns
 from .dora_rows import DoraRows
 from .storage import FLOAT_DTYPES, AuditError, Checkpoint, FloatArray, Tensor, cast
+from .trained_biases import bias_mode, trained_biases
 
 CONTRACT = {
     "reference": (
@@ -495,11 +496,16 @@ def _unadapted(base: Tensor, merged: Tensor, elements: int) -> dict[str, Any] | 
 
 
 def _saved_tensor(
-    saved: SavedTensor, base: Tensor | None, merged: Tensor, elements: int
+    saved: SavedTensor,
+    base: Tensor | None,
+    merged: Tensor,
+    elements: int,
+    *,
+    role: str = "Saved-module",
 ) -> dict[str, Any]:
     """Full trained state is an absolute target, never a low-rank update."""
     target = saved.tensor
-    _compatible(target, merged, role="Saved-module")
+    _compatible(target, merged, role=role)
     floating = target.dtype in FLOAT_DTYPES
     unavailable = (
         "absent"
@@ -526,9 +532,7 @@ def _saved_tensor(
             original = target.floats(start, count)
             expected = cast(original, merged.dtype)
             if not np.isfinite(expected).all():
-                raise AuditError(
-                    f"Saved module conversion overflows the merged dtype: {saved.weight}"
-                )
+                raise AuditError(f"{role} conversion overflows the merged dtype: {saved.weight}")
             after = merged.floats(start, count)
             norms["target"].add(expected)
             norms["error"].add(after - expected)
@@ -601,6 +605,8 @@ def audit(
         "merged": Checkpoint(merged),
     }
     before, update, after = inputs["base"], inputs["adapter"], inputs["merged"]
+    trained = trained_biases(update, before)
+    trained_by_weight = {saved.weight: saved for saved in trained}
     full = saved_modules(update, before, after)
     replacements = {saved.weight: saved for saved in full.tensors}
     missing = sorted(before.tensors.keys() - after.tensors.keys())
@@ -610,7 +616,10 @@ def audit(
             f"Base/merged tensor inventories differ; missing={missing[:5]}, extra={extra[:5]}"
         )
     pairs = adapter_pairs(
-        update, before, full_weights=frozenset(saved.tensor.name for saved in full.tensors)
+        update,
+        before,
+        full_weights=frozenset(saved.tensor.name for saved in full.tensors),
+        trained_bias_weights=frozenset(saved.tensor.name for saved in trained),
     )
     for pair in pairs:
         physical_weights = (
@@ -644,10 +653,27 @@ def audit(
     layers = []
     biases = []
     full_results = []
+    trained_results = []
     unrelated = []
     with np.errstate(over="raise", invalid="raise", divide="raise"):
         try:
             for name, counterpart in sorted(after.tensors.items()):
+                if name in trained_by_weight:
+                    row = _saved_tensor(
+                        trained_by_weight[name],
+                        before.tensors[name],
+                        counterpart,
+                        elements,
+                        role="Trained base bias",
+                    )
+                    row["status"] = (
+                        "differs-from-trained-bias"
+                        if row["target_mismatches"]
+                        else "matches-trained-bias"
+                    )
+                    row["bias_mode"] = bias_mode(update)
+                    trained_results.append(row)
+                    continue
                 if name in replacements:
                     full_results.append(
                         _saved_tensor(
@@ -700,6 +726,17 @@ def audit(
         "schema_version": 1,
         "arithmetic": {
             **CONTRACT,
+            **(
+                {
+                    "trained_base_bias_reference": (
+                        "absolute saved base bias rounded to merged dtype, without LoRA scaling; "
+                        "reported separately from matrix updates, LoRA B bias "
+                        "and full saved modules"
+                    )
+                }
+                if trained_results
+                else {}
+            ),
             **(
                 {
                     "expert_parameter_reference": (
@@ -850,12 +887,37 @@ def audit(
                 if embedding_dora
                 else {}
             ),
+            **(
+                {
+                    "scope": (
+                        "saved Linear LoRA/DoRA, Embedding LoRA/DoRA and supported Conv1D LoRA "
+                        "with absolute trained base biases; "
+                        "no architecture execution or quality estimate"
+                    )
+                }
+                if trained_results
+                else {}
+            ),
         },
         "inputs": fingerprints,
         "settings": {"block_mib": block_mib, "max_adapter_mib": max_adapter_mib},
         "summary": {
             "adapted_tensors": len(layers),
             "checked_tensors": len(after.tensors),
+            **(
+                {
+                    "trained_bias_tensors": len(trained_results),
+                    "trained_bias_elements": sum(row["elements"] for row in trained_results),
+                    "trained_bias_target_mismatches": sum(
+                        row["target_mismatches"] for row in trained_results
+                    ),
+                    "trained_bias_unchanged_expected_change_elements": sum(
+                        row["unchanged_expected_change_elements"] for row in trained_results
+                    ),
+                }
+                if trained_results
+                else {}
+            ),
             "adapted_elements": sum(layer["elements"] for layer in layers),
             "intended_nonzero_elements": sum(
                 layer["intended_nonzero_elements"] for layer in layers
@@ -926,6 +988,7 @@ def audit(
             ),
         },
         "layers": layers,
+        **({"trained_biases": trained_results} if trained_results else {}),
         **({"lora_biases": biases} if biases else {}),
         **(
             {

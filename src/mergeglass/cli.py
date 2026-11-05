@@ -215,6 +215,30 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
                     "n/a" if row["relative_residual"] is None else f"{row['relative_residual']:.4g}"
                 )
                 lines.append(f"{name:<39} {row['merged_dtype']:<6} {gain:>9} {residual:>10}")
+    if report.get("trained_biases"):
+        trained = report["trained_biases"]
+        lines.extend(
+            [
+                "",
+                f"Trained base biases ({trained[0]['bias_mode']}): "
+                f"{summary['trained_bias_target_mismatches']:,} target mismatches across "
+                f"{summary['trained_bias_elements']:,} entries in "
+                f"{summary['trained_bias_tensors']:,} vectors.",
+                "Target = absolute saved bias rounded to merged dtype, without LoRA scaling.",
+                f"Trained bias changes left at the original base: "
+                f"{summary['trained_bias_unchanged_expected_change_elements']:,}.",
+            ]
+        )
+        if not summary_only:
+            lines.append("TRAINED BASE BIAS                       DTYPE    MISMATCHES / ELEMENTS")
+            for row in trained:
+                name = ascii(row["weight"])[1:-1]
+                if len(name) > 38:
+                    name = "..." + name[-35:]
+                lines.append(
+                    f"{name:<39} {row['merged_dtype']:<6} "
+                    f"{row['target_mismatches']:>10,} / {row['elements']:,}"
+                )
     if report.get("saved_modules"):
         saved = report["saved_modules"]
         lines.extend(

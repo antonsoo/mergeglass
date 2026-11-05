@@ -290,7 +290,7 @@ def test_global_energy_fraction_weights_layers_without_raw_squares(
     "option,value",
     [
         ("fan_in_fan_out", True),
-        ("bias", "all"),
+        ("bias", "unknown"),
         ("modules_to_save", ["lm_head"]),
         ("target_parameters", ["experts"]),
         ("init_lora_weights", "pissa"),
