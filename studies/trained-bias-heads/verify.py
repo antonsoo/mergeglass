@@ -22,6 +22,8 @@ check, identities, tensors, decode, rounded = [
     READER[name] for name in ("check", "identities", "tensors", "decode", "rounded")
 ]
 VerificationError = READER["VerificationError"]
+saved_change_counts = READER["saved_change_counts"]
+saved_change_witnesses = READER["saved_change_witnesses"]
 PROFILES = ("all-head", "lora-only-head", "dora-all-head", "nested-all-head")
 NATIVE = {f"reloaded-{p}-safe-{s}" for p in ("f32", "f16", "bf16") for s in ("true", "false")}
 OUTPUTS = NATIVE | {"in-memory-f32", "omitted-bias-f32", "scaled-bias-f32", "omitted-head-f32"}
@@ -94,6 +96,14 @@ def verify(root: Path) -> dict[str, Any]:
                 f"Trainable bias coverage differs: {label}",
             )
             counts = {"trained": 0, "full": 0}
+            retention = dict.fromkeys(
+                (
+                    "saved_change_elements",
+                    "unchanged_saved_change_elements",
+                    "cast_erased_change_elements",
+                ),
+                0,
+            )
             for weight, row in {**biases, **full}.items():
                 key = "base_model.model." + weight
                 if weight in biases:
@@ -101,6 +111,29 @@ def verify(root: Path) -> dict[str, Any]:
                 expected = target(adapter[key], saved[weight][0])
                 actual_values = values(saved[weight])
                 baseline = target(original[weight], saved[weight][0])
+                for field, count in saved_change_counts(
+                    values(adapter[key]),
+                    values(original[weight]),
+                    expected,
+                    baseline,
+                    actual_values,
+                ).items():
+                    check(
+                        row[field] == count, f"Saved change count differs: {label}/{weight}/{field}"
+                    )
+                    if weight in biases:
+                        retention[field] += count
+                for field, witness in saved_change_witnesses(
+                    values(adapter[key]),
+                    values(original[weight]),
+                    expected,
+                    baseline,
+                    actual_values,
+                ).items():
+                    check(
+                        row[field] == witness,
+                        f"Saved change witness differs: {label}/{weight}/{field}",
+                    )
                 bad = [
                     i
                     for i, (a, b) in enumerate(zip(expected, actual_values, strict=True))
@@ -148,6 +181,11 @@ def verify(root: Path) -> dict[str, Any]:
                 counts["trained" if weight in biases else "full"] += len(bad)
                 physical_entries += len(expected)
             summary = report["summary"]
+            for field, count in retention.items():
+                check(
+                    summary["trained_bias_" + field] == count,
+                    f"Saved change summary differs: {label}",
+                )
             check(
                 summary["trained_bias_target_mismatches"] == counts["trained"],
                 "Trained bias summary differs",

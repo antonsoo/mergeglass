@@ -1,0 +1,109 @@
+{
+  "source_commit": "258959cabde9137bc514baa3132d980a47a99aa8",
+  "independent_saved_bias_changes": 12,
+  "merged_values_equal_original_base": 12,
+  "summary": {
+    "adapted_tensors": 2,
+    "checked_tensors": 6,
+    "trained_bias_tensors": 3,
+    "trained_bias_elements": 12,
+    "trained_bias_target_mismatches": 0,
+    "trained_bias_unchanged_expected_change_elements": 0,
+    "adapted_elements": 56,
+    "intended_nonzero_elements": 56,
+    "changed_adapted_elements": 56,
+    "unchanged_nonzero_update_elements": 0,
+    "unchanged_nonzero_update_fraction": 0.0,
+    "unchanged_reference_energy_fraction": 0.0,
+    "zero_update_tensors": 0,
+    "no_observed_update_tensors": 0,
+    "unadapted_changed_tensors": 0,
+    "unadapted_changed_elements": 0
+  },
+  "trained_biases": [
+    {
+      "module": "first",
+      "weight": "first.bias",
+      "shape": [
+        7
+      ],
+      "elements": 7,
+      "adapter_dtype": "F32",
+      "merged_dtype": "BF16",
+      "base_dtype": "F32",
+      "base_shape": [
+        7
+      ],
+      "base_comparison_unavailable": null,
+      "status": "matches-trained-bias",
+      "target_mismatches": 0,
+      "norms": {
+        "target": 0.7141473431756871,
+        "error": 0.0,
+        "target_cast_drift": 6.200118726899191e-08
+      },
+      "relative_error": 0.0,
+      "changed_from_base_elements": 0,
+      "expected_change_elements": 0,
+      "unchanged_expected_change_elements": 0,
+      "first_mismatch": null,
+      "bias_mode": "all"
+    },
+    {
+      "module": "head",
+      "weight": "head.bias",
+      "shape": [
+        2
+      ],
+      "elements": 2,
+      "adapter_dtype": "F32",
+      "merged_dtype": "BF16",
+      "base_dtype": "F32",
+      "base_shape": [
+        2
+      ],
+      "base_comparison_unavailable": null,
+      "status": "matches-trained-bias",
+      "target_mismatches": 0,
+      "norms": {
+        "target": 0.4709623896976972,
+        "error": 0.0,
+        "target_cast_drift": 4.2146848510894035e-08
+      },
+      "relative_error": 0.0,
+      "changed_from_base_elements": 0,
+      "expected_change_elements": 0,
+      "unchanged_expected_change_elements": 0,
+      "first_mismatch": null,
+      "bias_mode": "all"
+    },
+    {
+      "module": "second",
+      "weight": "second.bias",
+      "shape": [
+        3
+      ],
+      "elements": 3,
+      "adapter_dtype": "F32",
+      "merged_dtype": "BF16",
+      "base_dtype": "F32",
+      "base_shape": [
+        3
+      ],
+      "base_comparison_unavailable": null,
+      "status": "matches-trained-bias",
+      "target_mismatches": 0,
+      "norms": {
+        "target": 0.536917579392356,
+        "error": 0.0,
+        "target_cast_drift": 4.470348358154297e-08
+      },
+      "relative_error": 0.0,
+      "changed_from_base_elements": 0,
+      "expected_change_elements": 0,
+      "unchanged_expected_change_elements": 0,
+      "first_mismatch": null,
+      "bias_mode": "all"
+    }
+  ]
+}

@@ -525,11 +525,17 @@ def _saved_tensor(
             base.floats(start, min(elements, base.elements - start))
     norms = {name: Squares() for name in ("target", "error", "target_cast_drift")}
     mismatches = changed = intended = unchanged = 0
+    saved_changes = unchanged_saved = cast_erased = 0
+    change_examples: dict[str, Any] = {
+        "first_unchanged_saved_change": None,
+        "first_cast_erased_change": None,
+    }
     first = None
     for start in range(0, target.elements, elements):
         count = min(elements, target.elements - start)
         if floating:
             original = target.floats(start, count)
+            source_target = original
             expected = cast(original, merged.dtype)
             if not np.isfinite(expected).all():
                 raise AuditError(f"{role} conversion overflows the merged dtype: {saved.weight}")
@@ -540,6 +546,7 @@ def _saved_tensor(
         else:
             # Preserve integer identity above 2**53, including scalar buffers.
             expected = target.raw(start, count)
+            source_target = expected
             after = merged.raw(start, count)
         different = after != expected
         mismatches += int(np.count_nonzero(different))
@@ -553,16 +560,41 @@ def _saved_tensor(
         if comparable:
             assert base is not None
             if floating:
-                baseline = cast(base.floats(start, count), merged.dtype)
+                source_base = base.floats(start, count)
+                baseline = cast(source_base, merged.dtype)
                 if not np.isfinite(baseline).all():
                     raise AuditError(f"Base conversion overflows the merged dtype: {saved.weight}")
             else:
                 baseline = base.raw(start, count)
+                source_base = baseline
             intended_change = expected != baseline
+            # Compare directly: a finite saved/base pair can have an
+            # unrepresentable difference even when all absolute targets fit.
+            source_change = source_target != source_base
             same_as_base = after == baseline
+            unchanged_source = source_change & same_as_base
+            erased_source = source_change & ~intended_change
             changed += int(np.count_nonzero(~same_as_base))
             intended += int(np.count_nonzero(intended_change))
             unchanged += int(np.count_nonzero(intended_change & same_as_base))
+            saved_changes += int(np.count_nonzero(source_change))
+            unchanged_saved += int(np.count_nonzero(unchanged_source))
+            cast_erased += int(np.count_nonzero(erased_source))
+            for field, mask in (
+                ("first_unchanged_saved_change", unchanged_source),
+                ("first_cast_erased_change", erased_source),
+            ):
+                if change_examples[field] is None and mask.any():
+                    index = int(np.flatnonzero(mask)[0])
+                    change_examples[field] = {
+                        "flat_index": start + index,
+                        "base": source_base[index].item(),
+                        "saved_target": source_target[index].item(),
+                        "cast_base": baseline[index].item(),
+                        "cast_target": expected[index].item(),
+                        "merged": after[index].item(),
+                        "reference_cast_erased": bool(erased_source[index]),
+                    }
     measured = {name: value.norm() for name, value in norms.items()} if floating else None
     return {
         "module": saved.module,
@@ -583,13 +615,21 @@ def _saved_tensor(
         "changed_from_base_elements": changed if comparable else None,
         "expected_change_elements": intended if comparable else None,
         "unchanged_expected_change_elements": unchanged if comparable else None,
+        "saved_change_elements": saved_changes if comparable else None,
+        "unchanged_saved_change_elements": unchanged_saved if comparable else None,
+        "cast_erased_change_elements": cast_erased if comparable else None,
+        **change_examples,
         "first_mismatch": first,
     }
 
 
 def _bias_alias(alias: BiasAlias, elements: int) -> dict[str, Any]:
     """Validate redundant PEFT wrapper state before allowing factor parsing to skip it."""
-    _compatible(alias.reference, alias.tensor, role="Redundant bias copy")
+    if alias.reference.shape != alias.tensor.shape:
+        raise AuditError(
+            f"Redundant bias copy shape mismatch: {alias.tensor.name}; "
+            f"reference {alias.reference.name}"
+        )
     for start in range(0, alias.tensor.elements, elements):
         count = min(elements, alias.tensor.elements - start)
         reference = alias.reference.floats(start, count)
@@ -755,6 +795,19 @@ def audit(
         "schema_version": 1,
         "arithmetic": {
             **CONTRACT,
+            **(
+                {
+                    "saved_state_change_counts": (
+                        "saved changes compare adapter target and original base before casting; "
+                        "reference cast erasure means their merged-dtype casts are equal; "
+                        "unchanged saved changes mean the actual merge equals the cast base; "
+                        "unavailable original comparisons remain null; "
+                        "integers retain exact identity"
+                    )
+                }
+                if trained_results or full_results
+                else {}
+            ),
             **(
                 {
                     "trained_base_bias_reference": (
@@ -944,6 +997,14 @@ def audit(
                     "trained_bias_unchanged_expected_change_elements": sum(
                         row["unchanged_expected_change_elements"] for row in trained_results
                     ),
+                    **{
+                        f"trained_bias_{field}": sum(row[field] for row in trained_results)
+                        for field in (
+                            "saved_change_elements",
+                            "unchanged_saved_change_elements",
+                            "cast_erased_change_elements",
+                        )
+                    },
                 }
                 if trained_results
                 else {}

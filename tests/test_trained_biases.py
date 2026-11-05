@@ -226,7 +226,7 @@ def test_redundant_saved_bias_copies_are_validated_not_ignored(
         reason = "Nonfinite weights"
     elif fault == "shape":
         data[key] = np.zeros(2, dtype=np.float32)
-        reason = "Redundant bias copy/merged shape mismatch"
+        reason = "Redundant bias copy shape mismatch"
     else:
         data[key] = data[key].astype(np.int32)
         reason = "Unsupported redundant bias copy layout"
@@ -303,3 +303,89 @@ def test_one_named_copy_cannot_be_claimed_for_two_full_saved_biases(tmp_path: Pa
     # the named-slot copy of dense.bias. Equal values do not resolve its identity.
     with pytest.raises(AuditError, match="maps to multiple saved tensors"):
         audit(base, adapter, merged)
+
+
+def test_saved_bias_updates_erased_by_cast_remain_visible_without_target_mismatches(
+    tmp_path: Path,
+) -> None:
+    inputs = bias_fixture(tmp_path, "lora_only")
+    base, adapter, merged = inputs
+    original = load_file(base / "model.safetensors")["linear.bias"]
+    target = np.nextafter(original, np.float32(np.inf))
+    data = load_file(adapter / "adapter_model.safetensors")
+    data["base_model.model.linear.base_layer.bias"] = target
+    save_file(data, adapter / "adapter_model.safetensors")
+    after = load_file(merged / "model.safetensors")
+    after["linear.bias"] = original.astype(np.float16)
+    save_file(after, merged / "model.safetensors")
+    report = audit(*inputs)
+    row = report["trained_biases"][0]
+    assert row["target_mismatches"] == 0
+    assert row["expected_change_elements"] == 0
+    assert row["unchanged_expected_change_elements"] == 0
+    assert row["saved_change_elements"] == 2
+    assert row["unchanged_saved_change_elements"] == 2
+    assert row["cast_erased_change_elements"] == 2
+    assert row["first_cast_erased_change"] == {
+        "flat_index": 0,
+        "base": 0.25,
+        "saved_target": 0.25 + 2**-25,
+        "cast_base": 0.25,
+        "cast_target": 0.25,
+        "merged": 0.25,
+        "reference_cast_erased": True,
+    }
+    assert row["first_unchanged_saved_change"] == row["first_cast_erased_change"]
+    assert report["summary"]["trained_bias_unchanged_saved_change_elements"] == 2
+    assert "Saved bias changes unchanged from cast base: 2 / 2" in render(report)
+    assert "Reference dtype cast erases 2 saved bias changes" in render(report, summary_only=True)
+    # A reference cast can erase a change even if an unrelated final edit
+    # moves that coordinate away from the base. The two counts stay distinct.
+    after["linear.bias"][0] = np.float16(0.5)
+    save_file(after, merged / "model.safetensors")
+    edited = audit(*inputs)["trained_biases"][0]
+    assert edited["target_mismatches"] == 1
+    assert edited["cast_erased_change_elements"] == 2
+    assert edited["unchanged_saved_change_elements"] == 1
+    assert edited["first_cast_erased_change"]["flat_index"] == 0
+    assert edited["first_cast_erased_change"]["merged"] == 0.5
+    assert edited["first_unchanged_saved_change"]["flat_index"] == 1
+
+
+def test_source_change_counts_do_not_subtract_opposite_extreme_finite_values(
+    tmp_path: Path,
+) -> None:
+    base, adapter, merged = bias_fixture(tmp_path)
+    for directory, value in [(base, -1e308), (merged, 1e308)]:
+        path = directory / "model.safetensors"
+        data = load_file(path)
+        data["linear.bias"] = np.array([value, 0.125], dtype=np.float64)
+        save_file(data, path)
+    path = adapter / "adapter_model.safetensors"
+    data = load_file(path)
+    data["base_model.model.linear.base_layer.bias"] = np.array([1e308, 0.125], dtype=np.float64)
+    save_file(data, path)
+    row = next(
+        r for r in audit(base, adapter, merged)["trained_biases"] if r["weight"] == "linear.bias"
+    )
+    assert row["target_mismatches"] == 0
+    assert row["saved_change_elements"] == 1
+    assert row["unchanged_saved_change_elements"] == row["cast_erased_change_elements"] == 0
+
+
+def test_older_bias_report_can_still_render_without_inventing_saved_change_counts(
+    tmp_path: Path,
+) -> None:
+    report = audit(*bias_fixture(tmp_path))
+    fields = (
+        "saved_change_elements",
+        "unchanged_saved_change_elements",
+        "cast_erased_change_elements",
+    )
+    for field in fields:
+        del report["summary"]["trained_bias_" + field]
+        for row in report["trained_biases"]:
+            del row[field]
+    rendered = render(report)
+    assert "0 target mismatches" in rendered
+    assert "Saved bias changes unchanged" not in rendered

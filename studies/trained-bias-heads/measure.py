@@ -18,7 +18,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import Any
+from typing import Any, BinaryIO
 
 import mergeglass
 
@@ -36,13 +36,19 @@ def digest(path: Path) -> str:
     return result.hexdigest()
 
 
+def seek_payload(stream: BinaryIO, name: str) -> dict[str, Any]:
+    length = struct.unpack("<Q", stream.read(8))[0]
+    header = json.loads(stream.read(length))
+    info = header[name]
+    start, _end = info["data_offsets"]
+    stream.seek(8 + length + start)
+    return info
+
+
 def head_payload(path: Path, name: str) -> dict[str, Any]:
     with path.open("rb") as stream:
-        length = struct.unpack("<Q", stream.read(8))[0]
-        header = json.loads(stream.read(length))
-        info = header[name]
+        info = seek_payload(stream, name)
         start, end = info["data_offsets"]
-        stream.seek(8 + length + start)
         result = hashlib.sha256()
         remaining = end - start
         while remaining:
@@ -58,6 +64,34 @@ def head_payload(path: Path, name: str) -> dict[str, Any]:
     }
 
 
+def saved_head_changes(root: Path) -> int:
+    """Compare all FP32 source entries as scalars in fixed-size byte chunks."""
+    with (root / "base/model.safetensors").open("rb") as base:
+        with (root / "adapter/adapter_model.safetensors").open("rb") as adapter:
+            original = seek_payload(base, "head.weight")
+            target = seek_payload(adapter, "base_model.model.head.weight")
+            require(original["dtype"] == target["dtype"] == "F32", "Expected FP32 source heads")
+            require(
+                original["shape"] == target["shape"] == [4096, 4096], "Source head shape differs"
+            )
+            remaining = 4096**2 * 4
+            changed = 0
+            while remaining:
+                count = min(1024 * 1024, remaining)
+                before, after = base.read(count), adapter.read(count)
+                require(len(before) == len(after) == count, "Truncated source head")
+                changed += sum(
+                    a != b
+                    for (a,), (b,) in zip(
+                        struct.iter_unpack("<f", before),
+                        struct.iter_unpack("<f", after),
+                        strict=True,
+                    )
+                )
+                remaining -= count
+    return changed
+
+
 def measure(root: Path) -> dict[str, Any]:
     manifest = json.loads((root / "manifest.json").read_text())
     names = [e["file"] for e in manifest]
@@ -67,7 +101,7 @@ def measure(root: Path) -> dict[str, Any]:
         == {
             p.relative_to(root).as_posix()
             for p in root.rglob("*")
-            if p.is_file() and p.name != "manifest.json"
+            if p.is_file() and p.relative_to(root).as_posix() != "manifest.json"
         },
         "Producer manifest inventory differs",
     )
@@ -89,6 +123,7 @@ def measure(root: Path) -> dict[str, Any]:
     )
     original = head_payload(root / "base/model.safetensors", "head.weight")
     require(original["sha256"] != target["sha256"], "Training did not change the saved head")
+    independent_saved_changes = saved_head_changes(root)
     runs = []
     baseline = None
     with tempfile.TemporaryDirectory(prefix="mergeglass-wide-measure-") as directory:
@@ -127,6 +162,15 @@ def measure(root: Path) -> dict[str, Any]:
             )
             head = next(r for r in report["saved_modules"] if r["weight"] == "head.weight")
             require(head["elements"] == 4096**2, "Wrong audited head size")
+            require(
+                head["saved_change_elements"]
+                == head["expected_change_elements"]
+                == independent_saved_changes
+                and head["unchanged_saved_change_elements"]
+                == head["cast_erased_change_elements"]
+                == 0,
+                "Wide saved-change count differs from independent FP32 scalar comparison",
+            )
             if baseline is not None:
                 require(
                     report["inputs"] == baseline["inputs"], "Block setting changed input identities"
@@ -181,6 +225,7 @@ def measure(root: Path) -> dict[str, Any]:
         "producer_observations": observations,
         "producer_files": manifest,
         "head_payload": target,
+        "independent_saved_head_changes": independent_saved_changes,
         "dense_float64_head_bytes": 4096**2 * 8,
         "runs": runs,
     }

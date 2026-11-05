@@ -473,3 +473,30 @@ are excluded from physical output counts. See the
 [native mixed-head study](../studies/trained-bias-heads/README.md).
 See the [native study](../studies/trained-bias/README.md) for modern complete
 exports, historical missing values and the independent scalar byte oracle.
+
+### Changes before and after the saved-state dtype cast
+
+Absolute trained-bias and full-module rows now also count source-value changes:
+`saved_change_elements` compares saved adapter values with supplied original
+base values before either is rounded to the merged dtype.
+`cast_erased_change_elements` counts those differing values whose two reference
+casts become equal. `unchanged_saved_change_elements` counts differing source
+values whose actual merged values equal the cast base. Reference erasure and
+observed equality are separate conditions.
+
+The existing `expected_change_elements` and
+`unchanged_expected_change_elements` retain their post-cast definitions. Correct
+absolute target comparisons can therefore coexist with complete erasure of
+saved changes. Nullable original-base comparisons stay null. Integer and bool
+source comparisons preserve exact identity and do not pass through float64.
+The new change counts compare values directly without constructing a possibly
+overflowing subtraction.
+
+The first unchanged-source and first reference-erased-source witnesses record
+the original flat coordinate, original base, saved target, both cast values,
+actual saved merge and the reference-erasure flag. The trained-bias summary has
+corresponding `trained_bias_` totals. Full-module totals in the CLI cover only
+comparable original tensors. Older reports lacking these fields still render
+without inferred source counts. These additions describe supplied saved values;
+they do not establish a higher-precision training history or diagnose where a
+producer rounded. [Native precision control and independent scalar checks](../studies/trained-bias/precision.md).

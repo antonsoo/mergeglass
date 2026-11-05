@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+Separate saved absolute-state changes, reference-cast erasure and actual
+checkpoint equality for trained biases and full modules. Preserve all existing
+post-cast fields; add exact counts and first-coordinate/value witnesses with
+null original-base comparisons where unavailable. Correct the misleading
+unqualified CLI label and retain a twelve-case native one-ulp precision control
+with an independent scalar oracle. Integer source identity remains exact.
+[Precision audit](studies/trained-bias/precision.md).
+
 Audit trained base biases beside complete `modules_to_save` state. Validate
 native redundant original/active wrapper bias copies, including retained
 adapter slots in nested module paths, without double-counting physical head

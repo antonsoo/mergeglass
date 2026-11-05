@@ -161,3 +161,39 @@ def test_native_full_head_combination_matrix_is_independently_verified(tmp_path:
         "cast_target": 2**60 + 12,
         "merged": 2**60,
     }
+
+
+def test_native_bias_precision_control_distinguishes_cast_loss_from_wrong_targets(
+    tmp_path: Path,
+) -> None:
+    producer = tmp_path / "precision"
+    producer.mkdir()
+    with tarfile.open(STUDY / "artifacts/precision.tar.gz") as archive:
+        for member in archive.getmembers():
+            data = archive.extractfile(member)
+            assert data is not None
+            path = producer / member.name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data.read())
+    output = tmp_path / "precision.json.gz"
+    run = subprocess.run(
+        [sys.executable, "-O", str(STUDY / "verify_precision.py"), str(producer), str(output)],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert run.returncode == 0, run.stderr
+    receipt = json.loads(gzip.decompress(output.read_bytes()))
+    assert receipt["state"] == "verified"
+    assert receipt["measured_cases"] == 12
+    assert receipt["physical_entries_checked"] == 180
+    bf16 = next(
+        r
+        for r in receipt["results"]
+        if r["profile"] == "bias" and r["merge"] == "merged-bf16-safe-false"
+    )
+    assert bf16["summary"]["trained_bias_target_mismatches"] == 0
+    assert bf16["summary"]["trained_bias_unchanged_expected_change_elements"] == 0
+    assert bf16["summary"]["trained_bias_saved_change_elements"] == 12
+    assert bf16["summary"]["trained_bias_unchanged_saved_change_elements"] == 12
+    assert bf16["summary"]["trained_bias_cast_erased_change_elements"] == 12

@@ -94,6 +94,53 @@ def rounded(value: float, dtype: str) -> float:
     return struct.unpack("<f", (high << 16).to_bytes(4, "little"))[0]
 
 
+def saved_change_counts(
+    target: list[Any],
+    original: list[Any],
+    expected: list[Any],
+    baseline: list[Any],
+    actual: list[Any],
+) -> dict[str, int]:
+    rows = list(zip(target, original, expected, baseline, actual, strict=True))
+    return {
+        "saved_change_elements": sum(t != o for t, o, _e, _b, _a in rows),
+        "unchanged_saved_change_elements": sum(t != o and a == b for t, o, _e, b, a in rows),
+        "cast_erased_change_elements": sum(t != o and e == b for t, o, e, b, _a in rows),
+    }
+
+
+def saved_change_witnesses(
+    target: list[Any],
+    original: list[Any],
+    expected: list[Any],
+    baseline: list[Any],
+    actual: list[Any],
+) -> dict[str, Any]:
+    result: dict[str, Any] = {
+        "first_unchanged_saved_change": None,
+        "first_cast_erased_change": None,
+    }
+    for index, (t, o, e, b, a) in enumerate(
+        zip(target, original, expected, baseline, actual, strict=True)
+    ):
+        if t == o:
+            continue
+        witness = {
+            "flat_index": index,
+            "base": o,
+            "saved_target": t,
+            "cast_base": b,
+            "cast_target": e,
+            "merged": a,
+            "reference_cast_erased": e == b,
+        }
+        if a == b and result["first_unchanged_saved_change"] is None:
+            result["first_unchanged_saved_change"] = witness
+        if e == b and result["first_cast_erased_change"] is None:
+            result["first_cast_erased_change"] = witness
+    return result
+
+
 def verify(root: Path) -> dict[str, Any]:
     file_count = identities(root)
     results: list[dict[str, Any]] = []
@@ -171,6 +218,14 @@ def verify(root: Path) -> dict[str, Any]:
                     f"Trained bias inventory differs: {label}",
                 )
                 mismatches = left_at_base = 0
+                retention = dict.fromkeys(
+                    (
+                        "saved_change_elements",
+                        "unchanged_saved_change_elements",
+                        "cast_erased_change_elements",
+                    ),
+                    0,
+                )
                 for weight in observations["trained_biases"]:
                     key = "base_model.model." + weight
                     wrapped = key.removesuffix(".bias") + ".base_layer.bias"
@@ -180,7 +235,24 @@ def verify(root: Path) -> dict[str, Any]:
                     target = decode(adapter[key if key in adapter else wrapped])
                     expected = [rounded(v, dtype) for v in target]
                     actual = decode(saved[weight])
-                    baseline = [rounded(v, dtype) for v in decode(original[weight])]
+                    row = by_name[weight]
+                    base_values = decode(original[weight])
+                    baseline = [rounded(v, dtype) for v in base_values]
+                    for field, count in saved_change_counts(
+                        target, base_values, expected, baseline, actual
+                    ).items():
+                        check(
+                            row[field] == count,
+                            f"Saved change count differs: {label}/{weight}/{field}",
+                        )
+                        retention[field] += count
+                    for field, witness in saved_change_witnesses(
+                        target, base_values, expected, baseline, actual
+                    ).items():
+                        check(
+                            row[field] == witness,
+                            f"Saved change witness differs: {label}/{weight}/{field}",
+                        )
                     bad = [
                         i for i, (a, b) in enumerate(zip(expected, actual, strict=True)) if a != b
                     ]
@@ -188,7 +260,6 @@ def verify(root: Path) -> dict[str, Any]:
                         e != b and a == b
                         for e, a, b in zip(expected, actual, baseline, strict=True)
                     )
-                    row = by_name[weight]
                     check(
                         row["target_mismatches"] == len(bad),
                         f"Mismatch count differs: {label}/{weight}",
@@ -219,6 +290,11 @@ def verify(root: Path) -> dict[str, Any]:
                     left_at_base += left
                     entries_checked += len(expected)
                 summary = report["summary"]
+                for field, count in retention.items():
+                    check(
+                        summary["trained_bias_" + field] == count,
+                        f"Saved change summary differs: {label}",
+                    )
                 check(
                     summary["trained_bias_target_mismatches"] == mismatches,
                     f"Summary mismatches differ: {label}",

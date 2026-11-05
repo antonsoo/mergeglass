@@ -226,10 +226,21 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
                 f"{summary['trained_bias_tensors']:,} "
                 f"{'vector' if summary['trained_bias_tensors'] == 1 else 'vectors'}.",
                 "Target = absolute saved bias rounded to merged dtype, without LoRA scaling.",
-                f"Trained bias changes left at the original base: "
+                f"Post-cast bias target changes left at the original base: "
                 f"{summary['trained_bias_unchanged_expected_change_elements']:,}.",
             ]
         )
+        if "trained_bias_saved_change_elements" in summary:
+            lines.extend(
+                [
+                    "Saved bias changes unchanged from cast base: "
+                    f"{summary['trained_bias_unchanged_saved_change_elements']:,} / "
+                    f"{summary['trained_bias_saved_change_elements']:,}.",
+                    "Reference dtype cast erases "
+                    f"{summary['trained_bias_cast_erased_change_elements']:,} saved bias changes; "
+                    "this is separate from target mismatches.",
+                ]
+            )
         if not summary_only:
             lines.append("TRAINED BASE BIAS                       DTYPE    MISMATCHES / ELEMENTS")
             for row in trained:
@@ -275,11 +286,21 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
         unavailable = sum(row["base_comparison_unavailable"] is not None for row in saved)
         lines.extend(
             [
-                f"Comparable full-state target changes equal to the original base: {missing:,}.",
+                f"Comparable post-cast full-state target changes equal to the base: {missing:,}.",
                 f"Original-base comparison unavailable for {unavailable:,} full-state tensor(s); "
                 "no missing base aliases or resized values are inferred.",
             ]
         )
+        comparable = [row for row in saved if row.get("saved_change_elements") is not None]
+        if comparable:
+            saved_changes = sum(row["saved_change_elements"] for row in comparable)
+            unchanged = sum(row["unchanged_saved_change_elements"] for row in comparable)
+            erased = sum(row["cast_erased_change_elements"] for row in comparable)
+            lines.append(
+                "Comparable saved full-state changes unchanged: "
+                f"{unchanged:,} / {saved_changes:,}; "
+                f"reference cast erases {erased:,}."
+            )
         if report["unmatched_saved_module_selectors"]:
             lines.append(
                 "Saved-module selectors with no observed tensor prefix: "
@@ -287,9 +308,14 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
                 + "."
             )
         lines.append("")
+    if report.get("trained_biases") or report.get("saved_modules"):
+        lines.append(
+            "Absolute-state relative_error in JSON = ||merged - cast target|| / ||cast target||."
+        )
     lines.extend(
         [
-            "Relative error = ||observed change - intended update|| / ||intended update||.",
+            "Update relative residual = "
+            "||observed change - intended update|| / ||intended update||.",
             "Gain = projection of the observed change onto the intended update (ideal 1).",
             f"Checked {summary['checked_tensors']} tensors; "
             f"{summary['unadapted_changed_tensors']} unadapted tensor(s) changed.",

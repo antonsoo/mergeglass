@@ -134,7 +134,8 @@ def main() -> None:
                 copy.deepcopy(original), destination, local_files_only=True
             ).eval()
             with torch.inference_mode():
-                assert torch.equal(output(recovered, x), output(model, x))
+                if not torch.equal(output(recovered, x), output(model, x)):
+                    raise ValueError("Captured trained biases did not recover the original forward")
             save(recovered.merge_and_unload(), out / "captured-reloaded-f32")
         measurements = []
         for label, dtype in [

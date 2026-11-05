@@ -226,3 +226,25 @@ def test_full_state_casting_and_zero_target_have_explicit_numeric_semantics(tmp_
         )
         == 2
     )
+
+
+def test_precast_full_state_changes_preserve_integer_identity_and_unknown_bases(
+    tmp_path: Path,
+) -> None:
+    base, adapter, merged = full_fixture(tmp_path)
+    report = audit(base, adapter, merged)
+    integer = next(row for row in report["saved_modules"] if row["weight"].endswith(".seen"))
+    assert integer["saved_change_elements"] == 1
+    assert integer["cast_erased_change_elements"] == 0
+    assert integer["unchanged_saved_change_elements"] == 0
+    data = load_file(base / "model.safetensors")
+    del data["model.classifier.dense.weight"]
+    save_file(data, base / "model.safetensors")
+    missing = next(
+        row
+        for row in audit(base, adapter, merged)["saved_modules"]
+        if row["weight"] == "model.classifier.dense.weight"
+    )
+    assert missing["saved_change_elements"] is None
+    assert missing["unchanged_saved_change_elements"] is None
+    assert missing["cast_erased_change_elements"] is None

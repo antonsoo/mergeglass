@@ -10,7 +10,9 @@ Those unchanged entries contain 0% of the reference squared norm.
 
 Trained base biases (all): 0 target mismatches across 10 entries in 2 vectors.
 Target = absolute saved bias rounded to merged dtype, without LoRA scaling.
-Trained bias changes left at the original base: 0.
+Post-cast bias target changes left at the original base: 0.
+Saved bias changes unchanged from cast base: 0 / 10.
+Reference dtype cast erases 0 saved bias changes; this is separate from target mismatches.
 TRAINED BASE BIAS                       DTYPE    MISMATCHES / ELEMENTS
 first.bias                              F32             0 / 7
 second.bias                             F32             0 / 3
@@ -25,10 +27,12 @@ head.dense.weight                       F32            12 / 12
 head.out.bias                           F32             2 / 2
 head.out.weight                         F32             8 / 8
 head.updates                            I64             1 / 1
-Comparable full-state target changes equal to the original base: 27.
+Comparable post-cast full-state target changes equal to the base: 27.
 Original-base comparison unavailable for 0 full-state tensor(s); no missing base aliases or resized values are inferred.
+Comparable saved full-state changes unchanged: 27 / 27; reference cast erases 0.
 
-Relative error = ||observed change - intended update|| / ||intended update||.
+Absolute-state relative_error in JSON = ||merged - cast target|| / ||cast target||.
+Update relative residual = ||observed change - intended update|| / ||intended update||.
 Gain = projection of the observed change onto the intended update (ideal 1).
 Checked 9 tensors; 0 unadapted tensor(s) changed.
 Equal weights alone cannot tell rounding from an omitted adapter.

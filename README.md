@@ -144,6 +144,10 @@ The [nested-head follow-up](studies/trained-bias-heads/README.md) preserves both
 correct matrices and all ten non-head trained biases while exposing 27 lost
 full-head values, including an integer buffer above `2**53`. It retains forty
 native precision/control outputs and six contradictory-copy refusals.
+A separate [precision control](studies/trained-bias/precision.md) has zero bias
+target mismatches in both FP32 and BF16, although BF16 erases all twelve saved
+bias changes. Source-change counts, reference-cast losses and exact witnesses
+keep that loss visible beside the correct target comparison.
 No registry release accompanies this source extension.
 
 ## DoRA magnitudes must survive too
