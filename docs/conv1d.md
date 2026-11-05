@@ -102,9 +102,12 @@ Use the original base from before adapter loading, preserve its dtype, and
 verify any required reserialization. A model name, a matching shape, or a low
 residual does not establish the training base's identity.
 
-Conv1D DoRA, arbitrary custom/transposed modules, convolutional adapters,
-quantization and trained base biases remain outside this extension. Optional
-LoRA B biases now have a [separate vector audit](../studies/lora-bias/README.md).
+Conv1D DoRA, arbitrary custom/transposed modules, convolutional adapters and
+quantization remain unsupported. Absolute trained base biases now have a
+[separate audit](../studies/trained-bias/README.md), including native GPT-2
+controls. Optional LoRA B biases have their
+[scaled vector audit](../studies/lora-bias/README.md); combining the two bias
+modes remains unsupported.
 Signed
 alpha, rsLoRA, supported rank/alpha overrides and explicit full saved modules
 keep their existing contracts. Matching weights do not certify inference

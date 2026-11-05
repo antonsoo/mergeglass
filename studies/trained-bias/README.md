@@ -161,3 +161,5 @@ Names containing `bias` outside a literal floating bias-vector layout also
 refuse under `all`: PEFT's broad substring selection can save other parameters.
 The extension adds no runtime dependency, downloads or input writes. No registry
 release accompanies these source changes.
+
+[Fresh-source, installed-wheel/sdist and visual verification](verification.md).

@@ -1,0 +1,23 @@
+{
+  "installation": "sdist, executed outside checkout",
+  "python": "3.15.1",
+  "versions": {
+    "mergeglass": "0.1.0",
+    "numpy": "2.5.4",
+    "safetensors": "0.8.0"
+  },
+  "omission_bias_target_mismatches": 12,
+  "packages": [
+    {
+      "file": "mergeglass-0.1.0-py3-none-any.whl",
+      "bytes": 46353,
+      "sha256": "677a50442a9653093f6708939d8a859c23de9032d4b003016bff241b3ff4f0e7"
+    },
+    {
+      "file": "mergeglass-0.1.0.tar.gz",
+      "bytes": 13630724,
+      "sha256": "bf0d63f00a3927e5bdc457fd099b80bdca08a7a154daf035388d704e5893b0c2"
+    }
+  ],
+  "packaged_source_commit": "6996f0ea18ae379b717f3e5e0be26c603ef5031b"
+}

@@ -1,0 +1,52 @@
+{
+  "installation": "wheel, executed outside checkout",
+  "python": "3.10.21",
+  "versions": {
+    "mergeglass": "0.1.0",
+    "numpy": "2.2.6",
+    "safetensors": "0.8.0"
+  },
+  "cases": [
+    {
+      "case": "rounding",
+      "exit_code": 0
+    },
+    {
+      "case": "trained-correct",
+      "exit_code": 0,
+      "bias_target_mismatches": 0
+    },
+    {
+      "case": "trained-omitted",
+      "exit_code": 0,
+      "bias_target_mismatches": 12
+    },
+    {
+      "case": "trained-scaled",
+      "exit_code": 0,
+      "bias_target_mismatches": 12
+    },
+    {
+      "case": "historical-incomplete",
+      "exit_code": 2,
+      "reason": "mergeglass: Missing trained base bias: first.bias (bias=lora_only); the original base cannot recover an omitted trained value"
+    }
+  ],
+  "native_replays": [
+    {
+      "archive": "modern",
+      "manifest_files_checked": 73,
+      "bias_entries_checked": 1422,
+      "measured_cases": 36,
+      "refused_cases": 0
+    },
+    {
+      "archive": "historical",
+      "manifest_files_checked": 76,
+      "bias_entries_checked": 1432,
+      "measured_cases": 37,
+      "refused_cases": 10
+    }
+  ],
+  "packaged_source_commit": "6996f0ea18ae379b717f3e5e0be26c603ef5031b"
+}
