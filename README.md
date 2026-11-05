@@ -144,6 +144,11 @@ The [nested-head follow-up](studies/trained-bias-heads/README.md) preserves both
 correct matrices and all ten non-head trained biases while exposing 27 lost
 full-head values, including an integer buffer above `2**53`. It retains forty
 native precision/control outputs and six contradictory-copy refusals.
+A [pinned public CodeGen replay](studies/trained-bias-public/README.md) finds
+153,600 missing saved bias targets despite correct matrix updates, then isolates
+the legacy loading issue with a key-only control. It includes a streaming
+independent bias oracle and exact source identities.
+
 A separate [precision control](studies/trained-bias/precision.md) has zero bias
 target mismatches in both FP32 and BF16, although BF16 erases all twelve saved
 bias changes. Source-change counts, reference-cast losses and exact witnesses

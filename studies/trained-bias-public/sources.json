@@ -1,0 +1,52 @@
+[
+  {
+    "role": "adapter",
+    "repository": "ammarnasr/codegen-350M-mono-java",
+    "revision": "f2fdfe8b4aee794df58b2b65cc7ed6ea386f243e",
+    "files": [
+      {
+        "file": "adapter/adapter_config.json",
+        "bytes": 473,
+        "sha256": "f7ad7d75638d6dcd6cc862704132e0bb8a2b650cffd0a898b6468fd17d7ca875",
+        "url": "https://huggingface.co/ammarnasr/codegen-350M-mono-java/resolve/f2fdfe8b4aee794df58b2b65cc7ed6ea386f243e/adapter_config.json?download=true"
+      },
+      {
+        "file": "adapter/adapter_model.bin",
+        "bytes": 98031501,
+        "sha256": "6404fc74a95556f194950686dec5596665bb24347816c73393ebc4ed1da021e2",
+        "url": "https://huggingface.co/ammarnasr/codegen-350M-mono-java/resolve/f2fdfe8b4aee794df58b2b65cc7ed6ea386f243e/adapter_model.bin?download=true"
+      },
+      {
+        "file": "adapter/README.md",
+        "bytes": 2506,
+        "sha256": "f3ecdca90761a3f6d2f64bb3370cc344b815f1522a88d2519fe40b506f43438a",
+        "url": "https://huggingface.co/ammarnasr/codegen-350M-mono-java/resolve/f2fdfe8b4aee794df58b2b65cc7ed6ea386f243e/README.md?download=true"
+      }
+    ]
+  },
+  {
+    "role": "base",
+    "repository": "Salesforce/codegen-350M-mono",
+    "revision": "d9107f71cca463240db1143f4a75a927a27fcb27",
+    "files": [
+      {
+        "file": "base/config.json",
+        "bytes": 999,
+        "sha256": "36aab701e9361a923d5cbe017f5c4a5d807ce01108505cfad1baefa1665da94f",
+        "url": "https://huggingface.co/Salesforce/codegen-350M-mono/resolve/d9107f71cca463240db1143f4a75a927a27fcb27/config.json?download=true"
+      },
+      {
+        "file": "base/README.md",
+        "bytes": 3658,
+        "sha256": "2da5eb0ad60ebbd8e83745c1f7f3e17ba4d83fb7b8c8995de76a4596ee8fadbc",
+        "url": "https://huggingface.co/Salesforce/codegen-350M-mono/resolve/d9107f71cca463240db1143f4a75a927a27fcb27/README.md?download=true"
+      },
+      {
+        "file": "base/pytorch_model.bin",
+        "bytes": 797367631,
+        "sha256": "90e20f4887289739a435452f26974d97937adb41485f9c1a7b3d3810aac6773d",
+        "url": "https://huggingface.co/Salesforce/codegen-350M-mono/resolve/d9107f71cca463240db1143f4a75a927a27fcb27/pytorch_model.bin?download=true"
+      }
+    ]
+  }
+]

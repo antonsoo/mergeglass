@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+Retain a pinned public CodeGen legacy-bias reproduction: native PEFT 0.21.2
+merging preserves 81 matrix updates while missing 153,600 FP32 bias targets.
+Isolate loading with a 41-key-only control, compare every non-bias control
+payload byte-for-byte, and independently check 875,520 saved-bias coordinates
+across five outputs. Keep representation and supplied-base limits explicit.
+[Public study](studies/trained-bias-public/README.md).
+
 Separate saved absolute-state changes, reference-cast erasure and actual
 checkpoint equality for trained biases and full modules. Preserve all existing
 post-cast fields; add exact counts and first-coordinate/value witnesses with

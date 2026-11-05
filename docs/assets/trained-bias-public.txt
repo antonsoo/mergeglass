@@ -1,0 +1,21 @@
+Mergeglass | saved LoRA merge audit
+
+Adapted matrices: 81 (F32: 81).
+Matrix states: 81 observed; 0 with no observed update.
+Zero-reference matrices: 0 unchanged; 0 changed.
+Gain range: 1..1; relative residual range: 1.995e-07..6.672e-07.
+
+Of 304,087,040 nonzero intended updates, 143 are unchanged (0.00%).
+Those unchanged entries contain 9.737e-18% of the reference squared norm.
+
+Trained base biases (all): 153,600 target mismatches across 175,104 entries in 62 vectors.
+Target = absolute saved bias rounded to merged dtype, without LoRA scaling.
+Post-cast bias target changes left at the original base: 153,600.
+Saved bias changes unchanged from cast base: 153,600 / 175,104.
+Reference dtype cast erases 0 saved bias changes; this is separate from target mismatches.
+Absolute-state relative_error in JSON = ||merged - cast target|| / ||cast target||.
+Update relative residual = ||observed change - intended update|| / ||intended update||.
+Gain = projection of the observed change onto the intended update (ideal 1).
+Checked 165 tensors; 0 unadapted tensor(s) changed.
+Equal weights alone cannot tell rounding from an omitted adapter.
+This measures saved weights, not model quality.
