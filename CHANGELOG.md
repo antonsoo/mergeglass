@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+Require complete precision/safe-merge coverage and exact manifest inventory in
+the trained-bias native oracle. Keep numerical checks active under optimized
+Python, reject mislabeled dtypes, and retain explicit verified/expected counts.
+Audit mutation controls reproduce the former incomplete-case and disabled-check
+false successes. Existing native numerical rows are unchanged.
+
 Audit absolute trained base biases for PEFT `bias="all"` and complete
 `bias="lora_only"` exports, separately from scaled LoRA B biases and matrix
 totals. Require complete literal vector mappings, retain exact mismatch

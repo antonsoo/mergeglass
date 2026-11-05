@@ -116,8 +116,11 @@ uv run python studies/trained-bias/verify.py /tmp/trained-bias-modern /tmp/train
 uv run python studies/trained-bias/verify.py /tmp/trained-bias-historical /tmp/trained-bias-historical.json.gz
 ```
 
-This verifies 73 modern and 76 historical file identities before comparing
-values. Complete retained reports: [modern](results/modern.json.gz) and
+This requires the complete declared precision/safe-merge matrix and exact
+manifest coverage before comparing values. It verifies 73 modern and 76
+historical file identities, rejects mislabeled saved dtypes, and keeps all
+numerical checks active under `python -O` and `PYTHONOPTIMIZE`. A successful
+receipt includes `state: verified` and the expected/measured case totals. Complete retained reports: [modern](results/modern.json.gz) and
 [historical](results/historical.json.gz). Hashes, counts and coordinates can be
 replayed without the producer dependencies.
 

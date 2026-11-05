@@ -1,7 +1,8 @@
-"""Independent saved-bias oracle: stdlib safetensors bytes and scalar rounding.
+"""Independent saved-bias oracle with mandatory case and precision coverage.
 
 No NumPy, Torch, PEFT, or Mergeglass storage helpers are used by the oracle.
-The auditor is imported only to obtain the report under comparison.
+The auditor is imported only to obtain the report under comparison. Explicit
+checks remain active under python -O and PYTHONOPTIMIZE.
 """
 
 from __future__ import annotations
@@ -17,6 +18,39 @@ from typing import Any
 
 from mergeglass import AuditError, audit
 
+PROFILES = ("all", "lora_only", "dora-all", "conv1d-all")
+NATIVE_MERGES = tuple(
+    f"reloaded-{precision}-safe-{safe}"
+    for precision in ("f32", "f16", "bf16")
+    for safe in ("false", "true")
+)
+CONTROLS = ("in-memory-f32", "omitted-bias-f32", "scaled-bias-f32")
+
+
+class VerificationError(ValueError):
+    """The complete declared evidence contract was not verified."""
+
+
+def check(condition: bool, message: str) -> None:
+    if not condition:
+        raise VerificationError(message)
+
+
+def identities(root: Path) -> int:
+    manifest = json.loads((root / "manifest.json").read_text())
+    names = [entry["file"] for entry in manifest]
+    check(len(names) == len(set(names)), "Duplicate manifest file identity")
+    actual = {p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file()}
+    actual.discard("manifest.json")
+    check(set(names) == actual, "Manifest must cover exactly every producer file")
+    for entry in manifest:
+        data = (root / entry["file"]).read_bytes()
+        check(len(data) == entry["bytes"], f"Byte count differs: {entry['file']}")
+        check(
+            hashlib.sha256(data).hexdigest() == entry["sha256"], f"SHA-256 differs: {entry['file']}"
+        )
+    return len(manifest)
+
 
 def tensors(directory: Path) -> dict[str, tuple[str, list[int], bytes]]:
     result = {}
@@ -27,8 +61,10 @@ def tensors(directory: Path) -> dict[str, tuple[str, list[int], bytes]]:
         for name, info in header.items():
             if name == "__metadata__":
                 continue
+            check(name not in result, f"Duplicate stored tensor: {name}")
             start, end = info["data_offsets"]
             result[name] = (info["dtype"], info["shape"], raw[8 + size + start : 8 + size + end])
+    check(bool(result), f"No stored tensors: {directory.name}")
     return result
 
 
@@ -41,7 +77,8 @@ def decode(tensor: tuple[str, list[int], bytes]) -> list[float]:
         ]
     else:
         values = [float(v) for (v,) in struct.iter_unpack({"F32": "<f", "F16": "<e"}[dtype], raw)]
-    assert len(values) == math.prod(shape)
+    check(len(values) == math.prod(shape), "Decoded tensor size differs from its shape")
+    check(all(math.isfinite(v) for v in values), "Nonfinite oracle input")
     return values
 
 
@@ -50,38 +87,61 @@ def rounded(value: float, dtype: str) -> float:
         return struct.unpack("<f", struct.pack("<f", value))[0]
     if dtype == "F16":
         return struct.unpack("<e", struct.pack("<e", value))[0]
-    assert dtype == "BF16"
+    check(dtype == "BF16", f"Unsupported oracle dtype: {dtype}")
     bits = int.from_bytes(struct.pack("<f", value), "little")
     high, low = bits >> 16, bits & 65535
     high += int(low > 32768 or low == 32768 and high & 1)
     return struct.unpack("<f", (high << 16).to_bytes(4, "little"))[0]
 
 
-def main() -> None:
-    root, destination = map(Path, sys.argv[1:])
-    manifest = json.loads((root / "manifest.json").read_text())
-    for entry in manifest:
-        data = (root / entry["file"]).read_bytes()
-        assert len(data) == entry["bytes"]
-        assert hashlib.sha256(data).hexdigest() == entry["sha256"]
+def verify(root: Path) -> dict[str, Any]:
+    file_count = identities(root)
     results: list[dict[str, Any]] = []
-    entries_checked = 0
-    for profile in ["all", "lora_only", "dora-all", "conv1d-all"]:
+    entries_checked = expected_measured = expected_refused = 0
+    for profile in PROFILES:
         source = root / profile
         observations = json.loads((source / "observations.json").read_text())
+        check(observations["profile"] == profile, f"Profile identity differs: {profile}")
+        names = [row["name"] for row in observations["merges"]]
+        check(
+            len(names) == len(set(names)) and set(names) == set(NATIVE_MERGES),
+            f"Incomplete native precision/safe-merge declarations: {profile}",
+        )
+        missing = bool(observations["missing_trained_bias_keys"])
+        check(not missing or profile == "lora_only", "Unexpected missing-bias profile")
+        expected_names = set(NATIVE_MERGES + CONTROLS)
+        if missing:
+            expected_names.add("captured-reloaded-f32")
+        outputs = {
+            p.name
+            for p in source.iterdir()
+            if p.is_dir() and (p / "model.safetensors").exists() and p.name != "base"
+        }
+        check(
+            outputs == expected_names,
+            f"Incomplete or unexpected merge cases: {profile}; "
+            f"missing={sorted(expected_names - outputs)}, extra={sorted(outputs - expected_names)}",
+        )
         original = tensors(source / "base")
-        outputs = [
-            p
-            for p in sorted(source.iterdir())
-            if (p / "model.safetensors").exists() and p.name != "base"
-        ]
         adapter_names = ["adapter"]
-        if (source / "captured-complete-adapter").is_dir():
-            adapter_names.append("captured-complete-adapter")
+        captured = source / "captured-complete-adapter"
+        check(captured.is_dir() == missing, f"Captured adapter coverage differs: {profile}")
+        if missing:
+            adapter_names.append(captured.name)
+            expected_refused += len(outputs)
+        expected_measured += len(outputs)
         for adapter_name in adapter_names:
             adapter = tensors(source / adapter_name)
-            for merge in outputs:
-                identity = {"profile": profile, "adapter": adapter_name, "merge": merge.name}
+            for name in sorted(outputs):
+                merge = source / name
+                identity = {"profile": profile, "adapter": adapter_name, "merge": name}
+                label = f"{profile}/{adapter_name}/{name}"
+                saved = tensors(merge)
+                dtype = "BF16" if "-bf16-" in name else "F16" if "-f16-" in name else "F32"
+                check(
+                    all(t[0] == dtype for t in saved.values()),
+                    f"Stored precision differs from declared {dtype}: {label}",
+                )
                 try:
                     report = audit(
                         source / "base",
@@ -91,24 +151,36 @@ def main() -> None:
                         max_adapter_mib=1,
                     )
                 except AuditError as error:
-                    assert observations["missing_trained_bias_keys"] and adapter_name == "adapter"
-                    assert str(error).startswith("Missing trained base bias:")
+                    check(
+                        missing and adapter_name == "adapter",
+                        f"Unexpected refusal: {label}: {error}",
+                    )
+                    check(
+                        str(error).startswith("Missing trained base bias:"),
+                        f"Wrong refusal reason: {label}: {error}",
+                    )
                     results.append({**identity, "refusal": str(error)})
                     continue
-                assert not (observations["missing_trained_bias_keys"] and adapter_name == "adapter")
-                saved = tensors(merge)
+                check(
+                    not (missing and adapter_name == "adapter"),
+                    f"Incomplete adapter was accepted: {label}",
+                )
                 by_name = {row["weight"]: row for row in report["trained_biases"]}
-                assert sorted(by_name) == observations["trained_biases"]
+                check(
+                    sorted(by_name) == observations["trained_biases"],
+                    f"Trained bias inventory differs: {label}",
+                )
                 mismatches = left_at_base = 0
-                for name in observations["trained_biases"]:
-                    key = "base_model.model." + name
+                for weight in observations["trained_biases"]:
+                    key = "base_model.model." + weight
                     wrapped = key.removesuffix(".bias") + ".base_layer.bias"
-                    assert (key in adapter) != (wrapped in adapter)
+                    check(
+                        (key in adapter) != (wrapped in adapter), f"Bias alias ambiguity: {weight}"
+                    )
                     target = decode(adapter[key if key in adapter else wrapped])
-                    dtype = saved[name][0]
                     expected = [rounded(v, dtype) for v in target]
-                    actual = decode(saved[name])
-                    baseline = [rounded(v, dtype) for v in decode(original[name])]
+                    actual = decode(saved[weight])
+                    baseline = [rounded(v, dtype) for v in decode(original[weight])]
                     bad = [
                         i for i, (a, b) in enumerate(zip(expected, actual, strict=True)) if a != b
                     ]
@@ -116,11 +188,20 @@ def main() -> None:
                         e != b and a == b
                         for e, a, b in zip(expected, actual, baseline, strict=True)
                     )
-                    row = by_name[name]
-                    assert row["target_mismatches"] == len(bad)
-                    assert row["unchanged_expected_change_elements"] == left
+                    row = by_name[weight]
+                    check(
+                        row["target_mismatches"] == len(bad),
+                        f"Mismatch count differs: {label}/{weight}",
+                    )
+                    check(
+                        row["unchanged_expected_change_elements"] == left,
+                        f"Base equality count differs: {label}/{weight}",
+                    )
                     error = math.hypot(*(a - b for a, b in zip(expected, actual, strict=True)))
-                    assert math.isclose(row["norms"]["error"], error, rel_tol=1e-13, abs_tol=1e-15)
+                    check(
+                        math.isclose(row["norms"]["error"], error, rel_tol=1e-13, abs_tol=1e-15),
+                        f"Error norm differs: {label}/{weight}",
+                    )
                     first = (
                         None
                         if not bad
@@ -130,50 +211,84 @@ def main() -> None:
                             "merged": actual[bad[0]],
                         }
                     )
-                    assert row["first_mismatch"] == first
+                    check(
+                        row["first_mismatch"] == first,
+                        f"Mismatch coordinate differs: {label}/{weight}",
+                    )
                     mismatches += len(bad)
                     left_at_base += left
                     entries_checked += len(expected)
-                assert report["summary"]["trained_bias_target_mismatches"] == mismatches
-                assert (
-                    report["summary"]["trained_bias_unchanged_expected_change_elements"]
-                    == left_at_base
+                summary = report["summary"]
+                check(
+                    summary["trained_bias_target_mismatches"] == mismatches,
+                    f"Summary mismatches differ: {label}",
                 )
-                assert report["summary"]["unadapted_changed_tensors"] == 0
-                # Independently verify each fault preserves every saved matrix byte.
-                if merge.name in ["omitted-bias-f32", "scaled-bias-f32"]:
+                check(
+                    summary["trained_bias_unchanged_expected_change_elements"] == left_at_base,
+                    f"Summary base equality differs: {label}",
+                )
+                check(summary["unadapted_changed_tensors"] == 0, f"Unadapted change: {label}")
+                if name in ("omitted-bias-f32", "scaled-bias-f32"):
                     native = tensors(source / "in-memory-f32")
-                    assert all(
-                        value == native[name]
-                        for name, value in saved.items()
-                        if name not in by_name
+                    check(set(saved) == set(native), f"Fault tensor inventory differs: {label}")
+                    check(
+                        all(
+                            value == native[key]
+                            for key, value in saved.items()
+                            if key not in by_name
+                        ),
+                        f"Fault changes a non-bias tensor: {label}",
                     )
-                    assert mismatches == sum(row["elements"] for row in by_name.values())
-                elif not observations["missing_trained_bias_keys"] or merge.name in [
-                    "in-memory-f32",
-                    "captured-reloaded-f32",
-                ]:
-                    assert mismatches == 0
+                    check(
+                        mismatches == sum(row["elements"] for row in by_name.values()),
+                        f"Fault does not affect every declared bias: {label}",
+                    )
+                elif not missing or name in ("in-memory-f32", "captured-reloaded-f32"):
+                    check(mismatches == 0, f"Native merge has incorrect bias targets: {label}")
                 else:
-                    assert mismatches == 10
+                    check(mismatches == 10, f"Historical omission count differs: {label}")
                 results.append(
-                    {
-                        **identity,
-                        "summary": report["summary"],
-                        "trained_biases": report["trained_biases"],
-                    }
+                    {**identity, "summary": summary, "trained_biases": report["trained_biases"]}
                 )
-    output = {
-        "manifest_files_checked": len(manifest),
+    measured = sum("summary" in r for r in results)
+    refused = sum("refusal" in r for r in results)
+    check(
+        measured == expected_measured and refused == expected_refused,
+        "Complete case matrix was not verified",
+    )
+    return {
+        "state": "verified",
+        "manifest_files_checked": file_count,
         "bias_entries_checked": entries_checked,
-        "measured_cases": sum("summary" in r for r in results),
-        "refused_cases": sum("refusal" in r for r in results),
+        "measured_cases": measured,
+        "refused_cases": refused,
+        "expected_measured_cases": expected_measured,
+        "expected_refused_cases": expected_refused,
         "results": results,
     }
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_bytes(gzip.compress((json.dumps(output, indent=2) + "\n").encode(), mtime=0))
+
+
+def main() -> int:
+    if len(sys.argv) != 3:
+        print("usage: verify.py PRODUCER_DIRECTORY OUTPUT.json.gz", file=sys.stderr)
+        return 2
+    root, destination = map(Path, sys.argv[1:])
+    try:
+        check(
+            not destination.resolve().is_relative_to(root.resolve()),
+            "Write verification output outside the producer directory",
+        )
+        output = verify(root)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(
+            gzip.compress((json.dumps(output, indent=2) + "\n").encode(), mtime=0)
+        )
+    except (VerificationError, OSError, ValueError, KeyError, TypeError, struct.error) as error:
+        print(f"verification failed: {error}", file=sys.stderr)
+        return 2
     print(json.dumps({key: value for key, value in output.items() if key != "results"}, indent=2))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
