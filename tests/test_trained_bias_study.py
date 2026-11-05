@@ -123,3 +123,41 @@ def test_forged_complete_receipt_is_refused_under_optimization(
     assert result.returncode == 2
     assert expected in result.stderr, result.stderr
     assert not output.exists()
+
+
+def test_native_full_head_combination_matrix_is_independently_verified(tmp_path: Path) -> None:
+    study = ROOT / "studies/trained-bias-heads"
+    producer = tmp_path / "heads"
+    producer.mkdir()
+    with tarfile.open(study / "artifacts/native.tar.gz") as archive:
+        for member in archive.getmembers():
+            data = archive.extractfile(member)
+            assert data is not None
+            dest = producer / member.name
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_bytes(data.read())
+    output = tmp_path / "heads.json.gz"
+    result = subprocess.run(
+        [sys.executable, "-O", str(study / "verify.py"), str(producer), str(output)],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    receipt = json.loads(gzip.decompress(output.read_bytes()))
+    assert receipt["state"] == "verified"
+    assert receipt["measured_cases"] == 40
+    assert receipt["refused_cases"] == 6
+    assert receipt["physical_entries_checked"] == 910
+    assert receipt["alias_entries_checked"] == 200
+    nested = next(
+        r
+        for r in receipt["results"]
+        if r.get("profile") == "nested-all-head" and r.get("merge") == "omitted-head-f32"
+    )
+    counter = next(r for r in nested["saved_modules"] if r["weight"] == "head.updates")
+    assert counter["first_mismatch"] == {
+        "flat_index": 0,
+        "cast_target": 2**60 + 12,
+        "merged": 2**60,
+    }

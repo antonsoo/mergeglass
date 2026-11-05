@@ -14,7 +14,7 @@ from .adapter import Pair, SavedTensor, adapter_pairs, saved_modules
 from .dora_columns import ColumnNorms, DoraColumns
 from .dora_rows import DoraRows
 from .storage import FLOAT_DTYPES, AuditError, Checkpoint, FloatArray, Tensor, cast
-from .trained_biases import bias_mode, trained_biases
+from .trained_biases import BiasAlias, bias_mode, trained_biases
 
 CONTRACT = {
     "reference": (
@@ -587,6 +587,29 @@ def _saved_tensor(
     }
 
 
+def _bias_alias(alias: BiasAlias, elements: int) -> dict[str, Any]:
+    """Validate redundant PEFT wrapper state before allowing factor parsing to skip it."""
+    _compatible(alias.reference, alias.tensor, role="Redundant bias copy")
+    for start in range(0, alias.tensor.elements, elements):
+        count = min(elements, alias.tensor.elements - start)
+        reference = alias.reference.floats(start, count)
+        expected = cast(reference, alias.tensor.dtype)
+        actual = alias.tensor.floats(start, count)
+        if not np.isfinite(expected).all() or not np.array_equal(actual, expected):
+            raise AuditError(
+                f"Redundant bias copy differs from {alias.reference_kind}: {alias.tensor.name}"
+            )
+    return {
+        "tensor": alias.tensor.name,
+        "reference_tensor": alias.reference.name,
+        "reference_kind": alias.reference_kind,
+        "elements": alias.tensor.elements,
+        "dtype": alias.tensor.dtype,
+        "reference_dtype": alias.reference.dtype,
+        "comparison": "equal to reference rounded to copy dtype",
+    }
+
+
 def audit(
     base: str | Path,
     adapter: str | Path,
@@ -605,9 +628,10 @@ def audit(
         "merged": Checkpoint(merged),
     }
     before, update, after = inputs["base"], inputs["adapter"], inputs["merged"]
-    trained = trained_biases(update, before)
-    trained_by_weight = {saved.weight: saved for saved in trained}
     full = saved_modules(update, before, after)
+    bias_state = trained_biases(update, before, full)
+    trained = bias_state.tensors
+    trained_by_weight = {saved.weight: saved for saved in trained}
     replacements = {saved.weight: saved for saved in full.tensors}
     missing = sorted(before.tensors.keys() - after.tensors.keys())
     extra = sorted(after.tensors.keys() - before.tensors.keys() - replacements.keys())
@@ -619,7 +643,10 @@ def audit(
         update,
         before,
         full_weights=frozenset(saved.tensor.name for saved in full.tensors),
-        trained_bias_weights=frozenset(saved.tensor.name for saved in trained),
+        trained_bias_weights=frozenset(
+            [saved.tensor.name for saved in trained]
+            + [alias.tensor.name for alias in bias_state.aliases]
+        ),
     )
     for pair in pairs:
         physical_weights = (
@@ -655,8 +682,10 @@ def audit(
     full_results = []
     trained_results = []
     unrelated = []
+    alias_results = []
     with np.errstate(over="raise", invalid="raise", divide="raise"):
         try:
+            alias_results = [_bias_alias(alias, elements) for alias in bias_state.aliases]
             for name, counterpart in sorted(after.tensors.items()):
                 if name in trained_by_weight:
                     row = _saved_tensor(
@@ -891,7 +920,7 @@ def audit(
                 {
                     "scope": (
                         "saved Linear LoRA/DoRA, Embedding LoRA/DoRA and supported Conv1D LoRA "
-                        "with absolute trained base biases; "
+                        "with absolute trained base biases and explicit full modules; "
                         "no architecture execution or quality estimate"
                     )
                 }
@@ -904,6 +933,7 @@ def audit(
         "summary": {
             "adapted_tensors": len(layers),
             "checked_tensors": len(after.tensors),
+            **({"saved_bias_alias_tensors": len(alias_results)} if alias_results else {}),
             **(
                 {
                     "trained_bias_tensors": len(trained_results),
@@ -988,6 +1018,7 @@ def audit(
             ),
         },
         "layers": layers,
+        **({"saved_bias_aliases": alias_results} if alias_results else {}),
         **({"trained_biases": trained_results} if trained_results else {}),
         **({"lora_biases": biases} if biases else {}),
         **(

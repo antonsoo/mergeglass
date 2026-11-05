@@ -142,7 +142,7 @@ def test_biasless_model_has_no_invented_bias_targets(tmp_path: Path, mode: str) 
 
 @pytest.mark.parametrize(
     "option,value",
-    [("lora_bias", True), ("modules_to_save", ["head"]), ("target_parameters", ["experts"])],
+    [("lora_bias", True), ("target_parameters", ["experts"])],
 )
 def test_unverified_combination_refuses(tmp_path: Path, option: str, value: object) -> None:
     inputs = bias_fixture(tmp_path)
@@ -155,3 +155,151 @@ def test_no_base_mode_cannot_authorize_skipping_bias_payload(tmp_path: Path) -> 
     _, adapter, merged = bias_fixture(tmp_path)
     with pytest.raises(AuditError, match="complete base/adapter/merged audit"):
         audit_dora_norms(adapter, merged)
+
+
+def saved_head_fixture(
+    tmp_path: Path, mode: str = "all", *, nested: bool = False
+) -> tuple[Path, Path, Path]:
+    base, adapter, merged = bias_fixture(tmp_path, mode)
+    change_config(adapter, modules_to_save=["head"])
+    module = "head.dense" if nested else "head"
+    for directory, weight, bias in [(base, 0.25, 0.5), (merged, 0.75, -0.125)]:
+        path = directory / "model.safetensors"
+        data = load_file(path)
+        data.pop("head.bias")
+        data[module + ".weight"] = np.full((1, 2), weight, dtype=np.float32)
+        data[module + ".bias"] = np.array([bias], dtype=np.float32)
+        save_file(data, path)
+    path = adapter / "adapter_model.safetensors"
+    data = load_file(path)
+    data.pop("base_model.model.head.bias", None)
+    data[f"base_model.model.{module}.weight"] = np.full((1, 2), 0.75, dtype=np.float32)
+    data[f"base_model.model.{module}.bias"] = np.array([-0.125], dtype=np.float32)
+    if mode == "all":
+        suffix = "dense.bias" if nested else "bias"
+        data[f"base_model.model.head.modules_to_save.{'default.' if nested else ''}{suffix}"] = (
+            np.array([-0.125], dtype=np.float32)
+        )
+        data[f"base_model.model.head.original_module.{suffix}"] = np.array([0.5], dtype=np.float32)
+    save_file(data, path)
+    return base, adapter, merged
+
+
+@pytest.mark.parametrize("mode", ["all", "lora_only"])
+@pytest.mark.parametrize("nested", [False, True])
+def test_full_saved_head_and_trained_bias_have_separate_complete_measurements(
+    tmp_path: Path, mode: str, nested: bool
+) -> None:
+    report = audit(*saved_head_fixture(tmp_path, mode, nested=nested))
+    summary = report["summary"]
+    assert summary["trained_bias_tensors"] == 1
+    assert summary["trained_bias_elements"] == 2
+    assert summary["trained_bias_target_mismatches"] == 0
+    assert summary["saved_module_tensors"] == 2
+    assert summary["saved_module_elements"] == 3
+    assert summary["saved_module_target_mismatches"] == 0
+    assert summary["unadapted_changed_tensors"] == 0
+    assert report["layers"][0]["relative_residual"] == 0
+    if mode == "all":
+        aliases = report["saved_bias_aliases"]
+        assert len(aliases) == summary["saved_bias_alias_tensors"] == 2
+        assert {a["reference_kind"] for a in aliases} == {"original-base", "saved-full-module"}
+        assert "Validated 2 redundant" in render(report, summary_only=True)
+    else:
+        assert "saved_bias_aliases" not in report
+
+
+@pytest.mark.parametrize("alias", ["original_module", "modules_to_save"])
+@pytest.mark.parametrize("fault", ["value", "nonfinite", "shape", "integer"])
+def test_redundant_saved_bias_copies_are_validated_not_ignored(
+    tmp_path: Path, alias: str, fault: str
+) -> None:
+    inputs = saved_head_fixture(tmp_path)
+    path = inputs[1] / "adapter_model.safetensors"
+    data = load_file(path)
+    key = f"base_model.model.head.{alias}.bias"
+    if fault == "value":
+        data[key] += 1
+        reason = "Redundant bias copy differs"
+    elif fault == "nonfinite":
+        data[key][0] = np.nan
+        reason = "Nonfinite weights"
+    elif fault == "shape":
+        data[key] = np.zeros(2, dtype=np.float32)
+        reason = "Redundant bias copy/merged shape mismatch"
+    else:
+        data[key] = data[key].astype(np.int32)
+        reason = "Unsupported redundant bias copy layout"
+    save_file(data, path)
+    with pytest.raises(AuditError, match=reason):
+        audit(*inputs)
+
+
+def test_missing_canonical_full_target_is_not_recovered_from_a_wrapper_copy(tmp_path: Path) -> None:
+    inputs = saved_head_fixture(tmp_path)
+    path = inputs[1] / "adapter_model.safetensors"
+    data = load_file(path)
+    del data["base_model.model.head.bias"]
+    save_file(data, path)
+    with pytest.raises(AuditError, match="Incomplete saved module"):
+        audit(*inputs)
+
+
+def test_bias_copy_cannot_occupy_another_full_saved_tensors_key(tmp_path: Path) -> None:
+    inputs = saved_head_fixture(tmp_path)
+    base, adapter, merged = inputs
+    for directory in [base, merged]:
+        path = directory / "model.safetensors"
+        data = load_file(path)
+        data["head.original_module.bias"] = np.zeros(1, dtype=np.float32)
+        save_file(data, path)
+    # This key is already the claimed redundant copy of head.bias. It cannot
+    # also be authorized as the canonical target of a distinct saved tensor.
+    with pytest.raises(AuditError, match="overlaps a full saved tensor"):
+        audit(base, adapter, merged)
+
+
+def test_multiple_named_bias_copies_are_not_assumed_to_be_one_active_adapter(
+    tmp_path: Path,
+) -> None:
+    inputs = saved_head_fixture(tmp_path, nested=True)
+    path = inputs[1] / "adapter_model.safetensors"
+    data = load_file(path)
+    data["base_model.model.head.modules_to_save.other.dense.bias"] = data[
+        "base_model.model.head.modules_to_save.default.dense.bias"
+    ].copy()
+    save_file(data, path)
+    with pytest.raises(AuditError, match="Ambiguous saved-module bias copies"):
+        audit(*inputs)
+
+
+def test_literal_named_copy_is_compared_to_the_known_full_target(tmp_path: Path) -> None:
+    inputs = saved_head_fixture(tmp_path, nested=True)
+    path = inputs[1] / "adapter_model.safetensors"
+    data = load_file(path)
+    data["base_model.model.head.modules_to_save.trained_v2.dense.bias"] = data.pop(
+        "base_model.model.head.modules_to_save.default.dense.bias"
+    )
+    save_file(data, path)
+    report = audit(*inputs)
+    assert report["summary"]["saved_module_target_mismatches"] == 0
+    assert report["summary"]["saved_bias_alias_tensors"] == 2
+
+
+def test_one_named_copy_cannot_be_claimed_for_two_full_saved_biases(tmp_path: Path) -> None:
+    base, adapter, merged = saved_head_fixture(tmp_path, nested=True)
+    for directory in [base, merged]:
+        path = directory / "model.safetensors"
+        data = load_file(path)
+        data["head.default.dense.bias"] = data["head.dense.bias"].copy()
+        save_file(data, path)
+    path = adapter / "adapter_model.safetensors"
+    data = load_file(path)
+    data["base_model.model.head.default.dense.bias"] = data[
+        "base_model.model.head.dense.bias"
+    ].copy()
+    save_file(data, path)
+    # The same spelling could mean the legacy copy of default.dense.bias or
+    # the named-slot copy of dense.bias. Equal values do not resolve its identity.
+    with pytest.raises(AuditError, match="maps to multiple saved tensors"):
+        audit(base, adapter, merged)

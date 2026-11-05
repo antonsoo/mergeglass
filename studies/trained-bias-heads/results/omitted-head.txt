@@ -1,0 +1,35 @@
+Mergeglass | saved LoRA merge audit
+
+MODULE                       DTYPE   CHANGED    UNCHANGED*     GAIN  REL.RESID
+first                        F32          35         0.0%        1  6.394e-08
+second                       F32          21         0.0%        1  7.192e-08
+
+Of 56 nonzero intended updates, 0 are unchanged (0.00%).
+Those unchanged entries contain 0% of the reference squared norm.
+* Nonzero intended update elements equal to the dtype-cast base.
+
+Trained base biases (all): 0 target mismatches across 10 entries in 2 vectors.
+Target = absolute saved bias rounded to merged dtype, without LoRA scaling.
+Trained bias changes left at the original base: 0.
+TRAINED BASE BIAS                       DTYPE    MISMATCHES / ELEMENTS
+first.bias                              F32             0 / 7
+second.bias                             F32             0 / 3
+
+Validated 4 redundant full-module bias copies against original/saved state (see JSON).
+
+Full saved modules: 27 target mismatches across 27 elements in 5 tensors.
+Target = absolute adapter state rounded to merged dtype; integer/bool values are compared exactly.
+FULL SAVED TENSOR                       DTYPE    MISMATCHES / ELEMENTS
+head.dense.bias                         F32             4 / 4
+head.dense.weight                       F32            12 / 12
+head.out.bias                           F32             2 / 2
+head.out.weight                         F32             8 / 8
+head.updates                            I64             1 / 1
+Comparable full-state target changes equal to the original base: 27.
+Original-base comparison unavailable for 0 full-state tensor(s); no missing base aliases or resized values are inferred.
+
+Relative error = ||observed change - intended update|| / ||intended update||.
+Gain = projection of the observed change onto the intended update (ideal 1).
+Checked 9 tensors; 0 unadapted tensor(s) changed.
+Equal weights alone cannot tell rounding from an omitted adapter.
+This measures saved weights, not model quality.

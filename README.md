@@ -136,9 +136,14 @@ and historical PEFT outputs, including FP32/F16/BF16, DoRA and GPT-2 Conv1D.
 Ten incomplete historical comparisons refuse with a missing-trained-value error.
 PEFT 0.18.1 omits trained `lora_only` biases in the retained study; PEFT 0.21.2
 saves them correctly in the same experiment. Missing values cannot be recovered
-from the original base. Combinations with full saved modules, LoRA B bias and
-expert parameter adapters remain unsupported.
+from the original base. Complete full saved modules can be audited beside
+these biases; redundant PEFT wrapper copies are validated against their original/canonical targets.
+Combinations with LoRA B bias and expert parameter adapters remain unsupported.
 [Complete artifacts, version boundaries, independent oracle and reproduction](studies/trained-bias/README.md).
+The [nested-head follow-up](studies/trained-bias-heads/README.md) preserves both
+correct matrices and all ten non-head trained biases while exposing 27 lost
+full-head values, including an integer buffer above `2**53`. It retains forty
+native precision/control outputs and six contradictory-copy refusals.
 No registry release accompanies this source extension.
 
 ## DoRA magnitudes must survive too
@@ -416,8 +421,9 @@ on 65,280 of those deliberately chosen boundary cases.
   reported separately; no architecture or missing alias is inferred.
 - Quantized weights, Conv1D DoRA, convolutional adapters and base-mutating
   initializers are unsupported. Trained base biases require complete literal
-  saved bias vectors; combinations with full modules, LoRA B biases or expert
-  parameter adapters refuse.
+  saved bias vectors; redundant full-module copies must agree with their
+  declared references. Combinations with LoRA B biases or expert parameter
+  adapters refuse.
   `lora_bias: true` supports the separate B-bias update on Linear and supported
   Conv1D targets with existing base biases; combining it with DoRA or Embedding
   factors is refused. Complex

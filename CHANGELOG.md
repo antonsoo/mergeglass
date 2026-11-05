@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+Audit trained base biases beside complete `modules_to_save` state. Validate
+native redundant original/active wrapper bias copies, including retained
+adapter slots in nested module paths, without double-counting physical head
+values. Refuse contradictions, missing reference state and ambiguous ownership.
+Retain forty native precision/control outputs, six contradictory-adapter
+refusals and exact integer identity above `2**53`.
+[Native study](studies/trained-bias-heads/README.md).
+
 Require complete precision/safe-merge coverage and exact manifest inventory in
 the trained-bias native oracle. Keep numerical checks active under optimized
 Python, reject mislabeled dtypes, and retain explicit verified/expected counts.

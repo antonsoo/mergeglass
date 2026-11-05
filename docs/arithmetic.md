@@ -463,6 +463,13 @@ the base. These do not enter matrix or scaled LoRA B-bias totals.
 
 The complete audit authorizes excluding these validated payload keys from
 factor parsing; the base-independent DoRA path cannot skip them. Trained bias
-combinations with `modules_to_save`, `lora_bias` or `target_parameters` refuse.
+combinations with `lora_bias` or `target_parameters` refuse. Full saved modules
+are measured in their own category. Redundant `original_module` bias copies
+are checked against the original base; `modules_to_save` copies (including
+native retained adapter-name components for nested modules) are checked
+against canonical full saved targets. Unknown, contradictory, reused or
+ambiguous copies refuse. These copies are listed in `saved_bias_aliases` and
+are excluded from physical output counts. See the
+[native mixed-head study](../studies/trained-bias-heads/README.md).
 See the [native study](../studies/trained-bias/README.md) for modern complete
 exports, historical missing values and the independent scalar byte oracle.

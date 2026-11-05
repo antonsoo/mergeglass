@@ -223,7 +223,8 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
                 f"Trained base biases ({trained[0]['bias_mode']}): "
                 f"{summary['trained_bias_target_mismatches']:,} target mismatches across "
                 f"{summary['trained_bias_elements']:,} entries in "
-                f"{summary['trained_bias_tensors']:,} vectors.",
+                f"{summary['trained_bias_tensors']:,} "
+                f"{'vector' if summary['trained_bias_tensors'] == 1 else 'vectors'}.",
                 "Target = absolute saved bias rounded to merged dtype, without LoRA scaling.",
                 f"Trained bias changes left at the original base: "
                 f"{summary['trained_bias_unchanged_expected_change_elements']:,}.",
@@ -239,6 +240,15 @@ def render(report: dict[str, Any], *, summary_only: bool = False) -> str:
                     f"{name:<39} {row['merged_dtype']:<6} "
                     f"{row['target_mismatches']:>10,} / {row['elements']:,}"
                 )
+    if report.get("saved_bias_aliases"):
+        lines.extend(
+            [
+                "",
+                f"Validated {summary['saved_bias_alias_tensors']:,} redundant "
+                "full-module bias copies "
+                "against original/saved state (see JSON).",
+            ]
+        )
     if report.get("saved_modules"):
         saved = report["saved_modules"]
         lines.extend(

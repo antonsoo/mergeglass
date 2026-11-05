@@ -158,8 +158,10 @@ ambiguous, nonfinite, mismatched or unexplained payloads refuse the entire
 audit. Biasless models have no invented bias vectors. No tied alias, architecture
 or missing trained value is reconstructed.
 
-Trained-base-bias combinations with `modules_to_save`, `lora_bias`, expert
-parameter adapters, and the base-independent DoRA mode remain unsupported.
+Trained-base-bias combinations with `lora_bias`, expert parameter adapters
+and the base-independent DoRA mode remain unsupported. Complete full saved
+modules are supported by the [mixed-head extension](../trained-bias-heads/README.md),
+with explicit validation of redundant wrapper copies.
 Names containing `bias` outside a literal floating bias-vector layout also
 refuse under `all`: PEFT's broad substring selection can save other parameters.
 The extension adds no runtime dependency, downloads or input writes. No registry
