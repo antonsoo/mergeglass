@@ -398,3 +398,7 @@ before aggregation. This reproduces the reported aggregates from recorded
 native outputs; the model-inference reproduction uses the producer steps above.
 The pinned question/reference files under `benchmark/` keep individual cases
 readable without decoding a tokenizer or downloading weights.
+
+On 2026-11-25 `retain.py`'s path check was generalized to reject any
+`/home/<user>/` path instead of naming one. `results/archive.json` records the
+hash of the script version that built the retained archive.

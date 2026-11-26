@@ -7,6 +7,7 @@ import gzip
 import hashlib
 import io
 import json
+import re
 import tarfile
 from pathlib import Path
 
@@ -59,7 +60,8 @@ def main() -> None:
         assert not Path(name).is_absolute() and ".." not in Path(name).parts
         assert name not in blobs
         raw = path.read_bytes()
-        assert b"/tmp/claude-1000/" not in raw and b"/home/antonsoloviev/" not in raw, path
+        # No local scratch or home-directory paths in the retained archive.
+        assert b"/tmp/claude-1000/" not in raw and not re.search(rb"/home/[^/\s]+/", raw), path
         blobs[name] = raw
         originals[name] = path
 
